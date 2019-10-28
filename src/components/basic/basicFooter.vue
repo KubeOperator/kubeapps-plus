@@ -1,5 +1,7 @@
 <template>
-    <div>basicFooter</div>
+    <div class="footer">
+
+    </div>
 </template>
 
 <script>
@@ -10,5 +12,8 @@ export default {
 </script>
 
 <style scoped>
-
+.footer{
+  height: 60px;
+  background-color: #545c64;
+}
 </style>

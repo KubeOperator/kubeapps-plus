@@ -14,7 +14,7 @@
           <el-button plain
                      @click="handleToken()"
                      style="margin-top:20px;width: 100%;">登录</el-button>
-          <div style="margin-top: 50px"><span ><a href="mailto:support@fit2cloud.com" target="_blank">Forget Token | Ask For Help</a></span></div>
+          <div style="margin-top: 50px"><span ><a href="https://github.com/f2c-innovation/kubeapps_plus_dashborad/issues" target="_blank">Forget Token | Ask For Help</a></span></div>
         </div>
       </div>
 

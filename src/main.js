@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import App from './App.vue'
 import './plugins/element.js'
+import router from './route/router.js'
 import VueRouter from 'vue-router'
 import ElementUI from 'element-ui'
 import locale from 'element-ui/lib/locale/lang/en'
@@ -12,4 +13,5 @@ Vue.use(VueRouter)
 
 new Vue({
   render: h => h(App),
+  router,
 }).$mount('#app')

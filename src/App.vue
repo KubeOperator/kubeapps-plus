@@ -5,9 +5,7 @@
         <basicHeader></basicHeader>
       </el-header>
       <el-main>
-        <mainLogin>
-
-        </mainLogin>
+        <router-view></router-view>
       </el-main>
       <el-footer>
         <basicFooter></basicFooter>

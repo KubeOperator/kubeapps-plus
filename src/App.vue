@@ -16,14 +16,12 @@
 
 <script>
   import basicHeader from "./components/basic/basicHeader.vue"
-  import mainLogin from "./components/login/mainLogin.vue"
   import basicFooter from "./components/basic/basicFooter.vue"
   export default {
     name: "app",
     components: {
       basicHeader,
-      basicFooter,
-      mainLogin
+      basicFooter
     }
   };
 </script>

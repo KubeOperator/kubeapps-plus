@@ -41,9 +41,9 @@ export default {
   .box-card {
     position: relative;
     top:20%;
-    left: 12%;
-    height: 240px;
-    width: 75%;
+    left: 20%;
+    height: 60%;
+    width: 60%;
     background-color: white;
     box-shadow: 15 15px 15px #DDD;
   }

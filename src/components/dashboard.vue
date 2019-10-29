@@ -18,7 +18,7 @@
       </el-col>
       <el-col :md={span:4,offest:2} :lg={span:6,offset:7}>
         <div style="margin: 1.2em 0;">
-             <el-button type="primary">新建应用</el-button>
+             <el-button type="primary">{{$t('message.hello')}}</el-button>
         </div>
       </el-col>
     </el-row>

@@ -1,6 +1,7 @@
 <template>
     <div class="footer">
         <img class="login_footer" src="../../.././static/img/white-logo.png"/>
+        <div class="login_footer_p">浙ICP备14038283号 2014-2018 版权所有©杭州飞致云信息科技有限公司</div>
     </div>
 </template>
 
@@ -17,8 +18,13 @@ export default {
   background-color: rgb(0,74,113);
 }
 .login_footer{
-    width: 20%;
-    height: 40%;
-    margin: 30px 0 0 0;
+    width: 200px;
+    height: 40px;
+    margin: 20px 0 0 0;
+}
+.login_footer_p{
+    color: #FFF;
+    font-size: 14px;
+    margin: 5px 0 0 0;
 }
 </style>

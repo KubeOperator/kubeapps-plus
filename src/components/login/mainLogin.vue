@@ -23,6 +23,7 @@
 </template>
 
 <script>
+import Store from "../store/store.js"
 export default {
   name: "mainLogin",
   data(){
@@ -32,8 +33,9 @@ export default {
   },
   methods:{
     handleToken(){
-      if(this.input.length > 7){
-        console.log("OK")
+      if(this.input.length > 2){
+        Store.save('accessToken', this.input)
+        this.$router.push("/dashboard")
       }else{
         console.log("False")
       }

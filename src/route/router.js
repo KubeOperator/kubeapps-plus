@@ -1,6 +1,6 @@
 import VueRouter from 'vue-router'
 
-import mainLogin from "../components/basic/mainLogin.vue"
+import mainLogin from "../components/login/mainLogin.vue"
 import dashboard from "../components/dashboard.vue"
 
 // 2. 定义路由

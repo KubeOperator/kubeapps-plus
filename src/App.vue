@@ -31,7 +31,16 @@ export default {
 </script>
 
 <style>
-@import "./assets/css/normalize.css"; 
+@import "./assets/css/normalize.css";
+@font-face {
+  font-family: 'iconfont';  /* project id 1481498 */
+  src: url('//at.alicdn.com/t/font_1481498_z0wwcntpqo9.eot');
+  src: url('//at.alicdn.com/t/font_1481498_z0wwcntpqo9.eot?#iefix') format('embedded-opentype'),
+  url('//at.alicdn.com/t/font_1481498_z0wwcntpqo9.woff2') format('woff2'),
+  url('//at.alicdn.com/t/font_1481498_z0wwcntpqo9.woff') format('woff'),
+  url('//at.alicdn.com/t/font_1481498_z0wwcntpqo9.ttf') format('truetype'),
+  url('//at.alicdn.com/t/font_1481498_z0wwcntpqo9.svg#iconfont') format('svg');
+}
 #app {
   font-family: "Avenir", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;

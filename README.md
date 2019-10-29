@@ -1,4 +1,4 @@
-# kubeapps_plus_dashborad
+# kubeapps_plus_dashboard
 
 ## Project setup
 ```

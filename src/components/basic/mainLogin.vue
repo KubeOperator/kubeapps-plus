@@ -1,8 +1,10 @@
 <template>
   <div class="main_login">
     <el-card class="box-card">
-      <p class="login_context">Your cluster operator should provide you with a Kubernetes API token. Click here for more info on how to create and use Bearer Tokens.</p>
-      <el-input placeholder="请输入token" v-model="input" show-password></el-input>
+      <img class="login_img" src="../../.././static/img/login-banner.png"/>
+      <p class="login_context">Your cluster operator should provide you with a Kubernetes API token.
+        Click here for more info on how to create and use Bearer Tokens.</p>
+      <el-input type="textarea" placeholder="请输入token" v-model="input" show-password></el-input>
         <el-button round
         style="margin-top:20px;"
         >登录</el-button>
@@ -36,17 +38,22 @@ export default {
   .clearfix:after {
     clear: both
   }
-
   .box-card {
     position: relative;
-    top:calc(50% - 120px);
-    left:calc(50vw - 240px);
+    top:20%;
+    left: 12%;
     height: 240px;
-    width: 480px;
-    background: linear-gradient(-40deg, #1683C6 36%, #1A3663 100%);
+    width: 75%;
+    background-color: white;
+    box-shadow: 15 15px 15px #DDD;
+  }
+  .login_img{
+    width: 100%;
+    height: 50%;
+    display: block;
   }
   .login_context{
-    color: white;
+    color: #888;
     text-align: left;
   }
 </style>

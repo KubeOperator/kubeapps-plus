@@ -2,9 +2,8 @@
   <div>
     <el-menu
       :default-active="activeIndex"
-      class="el-menu-demo"
+      class="el-menu"
       mode="horizontal"
-      background-color="#545c64"
       @select="handleSelect"
     >
       <el-menu-item index="1" disabled>
@@ -33,4 +32,7 @@ export default {
 .logo_header{
   height:2.1875em;
 }
+  .el-menu{
+    background: linear-gradient(-40deg, #1683C6 36%, #1A3663 100%);
+  }
 </style>

@@ -4,8 +4,9 @@
       <img class="login_img" src="../../.././static/img/login-banner.png"/>
       <p class="login_context">Your cluster operator should provide you with a Kubernetes API token.
         Click here for more info on how to create and use Bearer Tokens.</p>
-      <el-input type="textarea" placeholder="请输入token" v-model="input" show-password></el-input>
+      <el-input placeholder="请输入token" v-model="input" show-password></el-input>
         <el-button round
+        @click="handleToken()"
         style="margin-top:20px;"
         >登录</el-button>
     </el-card>
@@ -14,13 +15,27 @@
 
 <script>
 export default {
-  name: "mainLogin"
+  name: "mainLogin",
+  data(){
+    return {
+      input:''
+    }
+  },
+  methods:{
+    handleToken(){
+      if(this.input.length > 7){
+        console.log("OK")
+      }else{
+        console.log("False")
+      }
+    }
+  }
 };
 </script>
 
 <style scoped>
 .main_login {
-  height: calc(100vh - 120px);
+  height: calc(100vh - 160px);
 }
   .text {
     font-size: 14px;

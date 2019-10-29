@@ -1,6 +1,7 @@
 import VueRouter from 'vue-router'
 
 import mainLogin from "../components/basic/mainLogin.vue"
+import dashboard from "../components/dashboard.vue"
 
 // 2. 定义路由
 // 每个路由应该映射一个组件。 其中"component" 可以是
@@ -9,7 +10,7 @@ import mainLogin from "../components/basic/mainLogin.vue"
 // 我们晚点再讨论嵌套路由。
 const routes = [
   { path: '/', component: mainLogin },
-  { path: '/bar', component: mainLogin }
+  { path: '/dashboard', component: dashboard }
 ]
 
 // 3. 创建 router 实例，然后传 `routes` 配置

@@ -1,10 +1,8 @@
 <template>
   <div>
     <el-menu
-      :default-active="activeIndex"
       class="el-menu"
       mode="horizontal"
-      @select="handleSelect"
     >
       <el-menu-item index="1" disabled>
         <img src="../../assets/image/logo.svg" alt="" class="logo_header">

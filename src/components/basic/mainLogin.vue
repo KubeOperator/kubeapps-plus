@@ -23,8 +23,8 @@ export default {
   },
   methods:{
     handleToken(){
-      if(this.input.length > 7){
-        console.log("OK")
+      if(this.input.length > 2){
+      this.$router.push("/dashboard")
       }else{
         console.log("False")
       }

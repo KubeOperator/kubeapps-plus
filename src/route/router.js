@@ -9,7 +9,7 @@ import dashboard from "../components/dashboard.vue"
 // 或者，只是一个组件配置对象。
 // 我们晚点再讨论嵌套路由。
 const routes = [
-  { name:'login', path: '/', component: mainLogin },
+  { name: 'login', path: '/', component: mainLogin },
   { path: '/dashboard', component: dashboard }
 ]
 
@@ -17,12 +17,14 @@ var router = new VueRouter({
   routes // (缩写) 相当于 routes: routes
 })
 
-router.beforeEach((to,from,next) => {
-  
-  
-  if (Store.fetch("accessToken") === null) {
-    next({ path: '/' })
+router.beforeEach((to, from, next) => {
+
+  if (to.name != 'login') {
+    if (Store.fetch("accessToken") === null) {
+      next({ path: '/' })
+    }
   }
+
   next()
 })
 

@@ -48,60 +48,46 @@ export default {
 </script>
 
 <style scoped>
-.main_login {
-  height: calc(100vh - 160px);
-}
-  .text {
-    font-size: 14px;
+  .main_login {
+    height: calc(100vh - 160px);
   }
-
   .item {
     margin-bottom: 18px;
-  }
-
-  .clearfix:before,
-  .clearfix:after {
-    display: table;
-    content: "";
-  }
-  .clearfix:after {
-    clear: both
   }
   .box-card {
     position: relative;
     top:calc(40% - 160px);
     left: calc(50vw - 425px);
-    height: 488px;
+    height: 397px;
     width: 850px;
     background-color: white;
   }
   .login_img{
-    width: 100%;
-    height: 100%;
+    max-width: 100%;
+    max-height: 100%;
     display: block;
   }
   .box-card-right{
     position: relative;
-    float: right;
-    width: 377px;
-    height: 428px;
-    padding: 10px;
+    float: left;
+    max-width: 397px;
+    max-height: 428px;
+    padding: 1em;
+    margin: 0 0 0 4em;
   }
   .box-card-left{
     position: relative;
     float: left;
-    width: 397px;
-    height: 448px;
+    max-width: 397px;
+    max-height: 448px;
   }
   .main{
-    width: 100%;
-    height: 100%;
+    max-width: 100%;
+    max-height: 100%;
   }
   .login_title{
-    margin-top: 50px;
     font-weight: bold;
-    font-size: 30px;
-    font-family: "Interstate", "Fira Sans", -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol;
+    font-size: 1.5em;
   }
   .login_label{
     text-align: left;

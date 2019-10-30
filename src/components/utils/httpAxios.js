@@ -1,4 +1,7 @@
 import axios from 'axios'
+import store from '../store/store.js'
+
+
 
 // 请求时的拦截器
 axios.interceptors.request.use(config => {
@@ -79,6 +82,7 @@ const httpServer = (opts, data) => {
       'X-Requested-With': 'XMLHttpRequest',
       'Accept': 'application/json',
       'Content-Type': 'application/json; charset=UTF-8',
+      'Authorization' : 'Bearer ' + store.fetch('accessToken')
     } : {
       'X-Requested-With': 'XMLHttpRequest',
       'Content-Type': 'application/json',

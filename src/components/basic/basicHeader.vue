@@ -4,7 +4,7 @@
       class="el-menu"
       mode="horizontal"
     >
-      <el-menu-item index="1" readonly>
+      <el-menu-item index="1">
         <img src="../../assets/image/logo.svg" alt class="logo_header" />
         <i class="iconfont">&#xea35;</i>
       </el-menu-item>

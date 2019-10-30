@@ -10,28 +10,8 @@
     >
       <el-menu-item index="1">
         <img src="../../assets/image/logo.svg" alt class="logo_header" />
+        <i class="iconfont">&#xea35;</i>
       </el-menu-item>
-      <el-menu-item index="2">
-        <i class="iconfont">&#xe643;</i>
-        <i>400-052-0755</i>
-      </el-menu-item>
-      <el-menu-item index="3">
-        <i class="iconfont">&#xe64a;</i>
-        <i>预约演示</i>
-      </el-menu-item>
-      <el-menu-item index="4">
-        <i class="iconfont">&#xe64e;</i>
-        <i>客户支持门户</i>
-      </el-menu-item>
-      <el-menu-item index="5">
-        <i class="iconfont">&#xe7d9;</i>
-        <i>合作伙伴项目报备</i>
-      </el-menu-item>
-      <!-- <el-submenu index="6">
-        <template slot="title">我的工作台</template>
-        <el-menu-item index="2-1">选项1</el-menu-item>
-        <el-menu-item index="2-2">选项2</el-menu-item>
-      </el-submenu> -->
     </el-menu>
   </div>
 </template>

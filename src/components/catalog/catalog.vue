@@ -74,11 +74,6 @@ export default {
     width: auto;
     margin: 1em;
   }
-  .time {
-    font-size: 13px;
-    color: #999;
-  }
-
   .bottom {
     margin-top: 13px;
     line-height: 12px;

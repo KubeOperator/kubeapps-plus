@@ -14,7 +14,7 @@ module.exports = {
                 changeOrigin: true, //是否跨域
                 ws: true,
                 pathRewrite: {
-                    "^/api": ""
+                    "^/rpc": ""
                 }
             }
         }

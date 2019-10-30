@@ -1,12 +1,10 @@
 <template>
   <div>
     <el-menu
-      :default-active="activeIndex"
       class="el-menu"
       mode="horizontal"
       text-color="#FFF"
       active-text-color="#888"
-      @select="handleSelect"
     >
       <el-menu-item index="1">
         <img src="../../assets/image/logo.svg" alt class="logo_header" />

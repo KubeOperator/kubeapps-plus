@@ -23,6 +23,8 @@
 
 <script>
 import Store from "../store/store.js"
+import apiSetting from '../utils/apiSetting.js'
+import http from '../utils/httpAxios.js'
 export default {
   name: "mainLogin",
   data(){
@@ -34,6 +36,10 @@ export default {
     handleToken(){
       if(this.input.length > 2){
         Store.save('accessToken', this.input)
+        http(apiSetting.kubernetes.getInfo).then((res) => {
+          console.log(res)
+        })
+        // Store.save('accessToken', this.input)
         this.$router.push("/dashboard")
       }else{
         console.log("False")

@@ -1,4 +1,5 @@
 export default{
+    //accessToken
     fetch(key){
         return JSON.parse(window.localStorage.getItem(key))
     },

@@ -15,15 +15,18 @@
 </template>
 
 <script>
-  import basicHeader from "./components/basic/basicHeader.vue"
-  import basicFooter from "./components/basic/basicFooter.vue"
-  export default {
-    name: "app",
-    components: {
-      basicHeader,
-      basicFooter
-    }
-  };
+import basicHeader from "./components/basic/basicHeader.vue";
+import basicFooter from "./components/basic/basicFooter.vue";
+export default {
+  name: "app",
+  components: {
+    basicHeader,
+    basicFooter
+  },
+  mounted() {
+
+  }
+};
 </script>
 
 <style>

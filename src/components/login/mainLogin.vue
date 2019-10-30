@@ -6,18 +6,17 @@
           <img class="login_img" src="../../.././static/img/login-banner.png"/>
         </div>
         <div class="box-card-right">
-          <div class="login_title"><span><i class="iconfont login_title">&#xe650;</i> Login</span></div>
-          <div class="login_label">Kubernetes API Token</div>
-          <el-tooltip class="item" effect="dark" content="Your cluster operator should provide you with a Kubernetes API token." placement="bottom">
-            <el-input style="margin-top: 20px;" placeholder="请输入token" v-model="input" show-password></el-input>
+          <div class="login_title"><span><i class="iconfont login_title">&#xe650;</i> {{ $t('message.login') }}</span></div>
+          <div class="login_label">{{$t('message.k8s_api_token')}}</div>
+          <el-tooltip class="item" effect="dark" :content=" $t('message.token_warn_alert') " placement="bottom">
+            <el-input style="margin-top: 20px;" :placeholder="$t('message.token_placeholder')" v-model="input" show-password></el-input>
           </el-tooltip>
           <el-button plain
                      @click="handleToken()"
-                     style="margin-top:20px;width: 100%;">登录</el-button>
-          <div style="margin-top: 50px"><span ><a href="https://github.com/f2c-innovation/kubeapps_plus_dashborad/issues" target="_blank">Forget Token | Ask For Help</a></span></div>
+                     style="margin-top:20px;width: 100%;">{{$t('message.login')}}</el-button>
+          <div style="margin-top: 50px"><span ><a href="https://github.com/f2c-innovation/kubeapps_plus_dashborad" target="_blank">{{$t('message.ask_for_help')}}</a></span></div>
         </div>
       </div>
-
     </el-card>
   </div>
 </template>

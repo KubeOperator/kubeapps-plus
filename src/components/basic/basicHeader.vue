@@ -1,14 +1,10 @@
 <template>
   <div>
     <el-menu
-      :default-active="activeIndex"
       class="el-menu"
       mode="horizontal"
-      text-color="#FFF"
-      active-text-color="#888"
-      @select="handleSelect"
     >
-      <el-menu-item index="1">
+      <el-menu-item index="1" readonly>
         <img src="../../assets/image/logo.svg" alt class="logo_header" />
         <i class="iconfont">&#xea35;</i>
       </el-menu-item>
@@ -35,9 +31,6 @@ export default {
 }
 .el-menu {
   background-color: rgb(0, 74, 113);
-}
-.el-menu li:hover {
-  background-color: rgb(15, 74, 113);
 }
 .el-menu li i {
   vertical-align: middle;

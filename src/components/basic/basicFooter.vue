@@ -1,7 +1,7 @@
 <template>
     <div class="footer">
         <img class="login_footer" src="../../.././static/img/white-logo.png"/>
-        <div class="login_footer_p">浙ICP备14038283号 2014-2018 版权所有©杭州飞致云信息科技有限公司</div>
+        <div class="login_footer_p"><i class="iconfont">&#xea0a;</i></div>
     </div>
 </template>
 

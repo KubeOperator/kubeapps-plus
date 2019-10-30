@@ -23,8 +23,6 @@
 </template>
 
 <script>
-import apiSetting from '@/utils/apiSetting.js'
-import http from '@/utils/httpAxios.js'
 import Store from "../store/store.js"
 export default {
   name: "mainLogin",

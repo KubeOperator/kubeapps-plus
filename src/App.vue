@@ -7,7 +7,7 @@
       <el-main>
         <router-view></router-view>
       </el-main>
-      <el-footer>
+      <el-footer v-if="this.$route.path != '/catalog'">
         <basicFooter></basicFooter>
       </el-footer>
     </el-container>
@@ -30,12 +30,12 @@
   @import "./assets/css/normalize.css";
   @font-face {
     font-family: 'iconfont';  /* project id 1481498 */
-    src: url('//at.alicdn.com/t/font_1481498_rti3n692cg9.eot');
-    src: url('//at.alicdn.com/t/font_1481498_rti3n692cg9.eot?#iefix') format('embedded-opentype'),
-    url('//at.alicdn.com/t/font_1481498_rti3n692cg9.woff2') format('woff2'),
-    url('//at.alicdn.com/t/font_1481498_rti3n692cg9.woff') format('woff'),
-    url('//at.alicdn.com/t/font_1481498_rti3n692cg9.ttf') format('truetype'),
-    url('//at.alicdn.com/t/font_1481498_rti3n692cg9.svg#iconfont') format('svg');
+    src: url('//at.alicdn.com/t/font_1481498_pldtt9piblo.eot');
+    src: url('//at.alicdn.com/t/font_1481498_pldtt9piblo.eot?#iefix') format('embedded-opentype'),
+    url('//at.alicdn.com/t/font_1481498_pldtt9piblo.woff2') format('woff2'),
+    url('//at.alicdn.com/t/font_1481498_pldtt9piblo.woff') format('woff'),
+    url('//at.alicdn.com/t/font_1481498_pldtt9piblo.ttf') format('truetype'),
+    url('//at.alicdn.com/t/font_1481498_pldtt9piblo.svg#iconfont') format('svg');
   }
   .iconfont{
     font-family:"iconfont" !important;

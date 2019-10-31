@@ -63,23 +63,13 @@ export default {
       this.loading = true;
       http(apiSetting.kubernetes.getInfo).then(res => {
         if (res.status == 200) {
-          http(apiSetting.kubernetes.getNamespaces).then(resu => {
-            if (resu.status == 200) {
-              console.log(200);
-            } else {
-              //Error Message
-              this.loading = false
-              this.errorMessage()
-            }
-          });
+          this.$router.push("/dashboard")
         } else {
           //Error Message
           this.loading = false
           this.errorMessage()
         }
       });
-      // window.alert("Dashboard");
-      // this.$router.push("/dashboard")
     },
       errorMessage() {
         const h = this.$createElement;

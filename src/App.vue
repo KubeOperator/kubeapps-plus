@@ -7,7 +7,7 @@
       <el-main>
         <router-view></router-view>
       </el-main>
-      <el-footer v-if="this.$route.path != '/catalog'">
+      <el-footer>
         <basicFooter></basicFooter>
       </el-footer>
     </el-container>
@@ -42,7 +42,7 @@ export default {
   }
   .iconfont{
     font-family:"iconfont" !important;
-    font-size:14px;
+    font-size:16px;
     font-style:normal;
     -webkit-font-smoothing: antialiased;
     -webkit-text-stroke-width: 0.2px;

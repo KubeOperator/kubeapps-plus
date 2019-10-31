@@ -1,6 +1,6 @@
 <template>
     <div class="footer">
-        <img class="login_footer" src="../../.././static/img/white-logo.png"/>
+        <img class="login_footer" src="../../.././static/img/logo-white.png"/>
         <div class="login_footer_p"><i class="iconfont">&#xea0a;</i></div>
     </div>
 </template>
@@ -18,9 +18,9 @@ export default {
   background-color: rgb(0,74,113);
 }
 .login_footer{
-    width: 200px;
-    height: 40px;
-    margin: 20px 0 0 0;
+    max-width: 200px;
+    max-height: 50px;
+    margin: 1em 0 0 0;
 }
 .login_footer_p{
     color: #FFF;

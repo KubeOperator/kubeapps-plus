@@ -5,7 +5,7 @@
         <div class="grid-content">
           <h1 style="float: left">{{$t('message.catalog')}}</h1>
           <el-input class="catalog-search"
-                  placeholder="search charts..."
+                  :placeholder="$t('message.search_charts')"
                   prefix-icon="el-icon-search"
                   v-model="input"
                   clearable>

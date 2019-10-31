@@ -28,7 +28,7 @@
         <i class="iconfont">&#xe641;</i>
         {{$t('message.configuration')}}
       </el-menu-item>
-      <el-submenu index="7" class="change_lang" v-if="this.$route.path != '/'">
+      <el-submenu index="7" class="header-right" v-if="this.$route.path != '/'">
         <template slot="title">
           <i class="iconfont">&#xe7bb;</i>
           {{$t('message.namespace')}}
@@ -42,7 +42,6 @@
 </template>
 
 <script>
-import Store from "../store/store.js";
 export default {
   name: "basicHeader",
   props: {
@@ -200,6 +199,9 @@ export default {
 }
 .el-menu {
   background-color: rgb(0, 74, 113);
+}
+.el-menu li {
+    font-weight: bold;
 }
 .el-menu li i {
   vertical-align: middle;

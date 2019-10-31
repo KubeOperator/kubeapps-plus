@@ -9,7 +9,7 @@ const serviceModule = {
       url: '/rpc/api/kube/',
       method: 'get'
     },
-    namebase: {
+    getNamespaces: {
       url: '/rpc/api/kube/api/v1/namespaces/',
       method: 'get'
     },

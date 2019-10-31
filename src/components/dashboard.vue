@@ -1,12 +1,12 @@
 <template>
-  <div>
+  <div class="dashborad">
     <el-row style="margin-top:10px border-bottom: 2px solid #f1f1f1;">
       <el-col :md="6" :lg="4">
         <h1 class="app_title">Applications</h1>
       </el-col>
       <el-col :md="{span:4,offest:2}" :lg="3">
         <div style="margin: 1.2em 0;">
-          <el-input placeholder="请输入内容" v-model="input4">
+          <el-input placeholder="请输入内容">
             <i slot="prefix" class="el-input__icon el-icon-search"></i>
           </el-input>
         </div>
@@ -58,12 +58,25 @@
 </template>
 
 <script>
+import Store from "./store/store.js";
+import apiSetting from "./utils/apiSetting.js";
+import http from "./utils/httpAxios.js";
 export default {
   name: "dashboard",
   data() {
     return {
       radio: ""
     };
+  },
+  created:function(){
+    this.getNamespaces()
+  },
+  methods:{
+    getNamespaces(){
+       http(apiSetting.kubernetes.getNamespaces).then(res => {
+         Store.save("Namespaces", res.data);
+       })
+    }
   }
 };
 </script>
@@ -85,5 +98,8 @@ export default {
 }
 .margin-t-bigger {
     margin-top: 1.875em;
+}
+.dashborad{
+  height: calc(100vh - 160px);
 }
 </style>

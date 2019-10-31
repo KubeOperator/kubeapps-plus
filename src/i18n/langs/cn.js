@@ -10,7 +10,6 @@ const cn = {
         'error_network': '网络错误，请检查网络',
         'language':'语言',
         'catalog': '目录',
-        'error_network': '网络错误，请检查网络'
     },
     ...zhLocale
 }

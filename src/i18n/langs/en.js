@@ -10,7 +10,6 @@ const en = {
         'error_network': 'Network Error',
         'language': 'language',
         'catalog': 'Catalog',
-        'error_network': 'Network Error'
     },
     ...enLocale
 }

@@ -8,13 +8,12 @@ const en = {
         'token_placeholder': 'Please enter token',
         'ask_for_help': 'Forget Token | Ask For Help',
         'error_network': 'Network Error',
+        'language': 'language',
         'application': 'Application',
         'catalog': 'Catalog',
         'namespace': 'NAMESPACE',
         'configuration': 'Configuration',
-        'internationalization': 'Internationalization',
-        'chinese': 'Chinese',
-        'english': 'English'
+        'logout': 'Logout'
     },
     ...enLocale
 }

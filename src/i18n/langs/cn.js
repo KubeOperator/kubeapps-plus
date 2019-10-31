@@ -8,14 +8,12 @@ const cn = {
         'token_placeholder': '请输入token',
         'ask_for_help': '忘记令牌 | 寻求帮助',
         'error_network': '网络错误，请检查网络',
+        'language':'语言',
         'application': '应用',
         'catalog': '目录',
         'namespace': '命名空间',
         'configuration': '配置',
-        'internationalization': '国际化',
-        'logout': '注销',
-        'chinese': '中文',
-        'english': '英文'
+        'logout': '注销'
     },
     ...zhLocale
 }

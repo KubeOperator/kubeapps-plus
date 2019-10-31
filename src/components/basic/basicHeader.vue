@@ -9,7 +9,7 @@
     >
       <el-menu-item index="1">
         <img src="../../assets/image/logo.svg" alt class="logo_header" />
-        <i class="iconfont" style="color: #fc5a4a;margin-top: 5px;">&#xeb9b;</i>
+        <i class="icon_font" style="color: #fc5a4a;margin-top: 5px;">&#xeb9b;</i>
       </el-menu-item>
       <el-menu-item
         index="2"
@@ -93,6 +93,14 @@ export default {
 <style scoped>
 .logo_header {
   height: 2.1875em;
+}
+.icon_font{
+  font-family:"iconfont" !important;
+  font-size:14px;
+  font-style:normal;
+  -webkit-font-smoothing: antialiased;
+  -webkit-text-stroke-width: 0.2px;
+  -moz-osx-font-smoothing: grayscale;
 }
 .el-menu {
   background-color: rgb(0, 74, 113);

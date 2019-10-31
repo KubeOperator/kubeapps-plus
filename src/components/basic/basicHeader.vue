@@ -7,7 +7,7 @@
                active-text-color="#ffffff">
       <el-menu-item index="1">
         <img src="../../assets/image/logo.svg" alt class="logo_header" />
-        <i class="iconfont">&#xea35;</i>
+        <i class="iconfont" style="color: #fc5a4a">&#xeb9b;</i>
       </el-menu-item>
         <el-menu-item index="2" v-if="this.$route.path != '/'">
             {{$t('message.application')}}

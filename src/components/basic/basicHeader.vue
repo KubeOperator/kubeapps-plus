@@ -4,10 +4,10 @@
                mode="horizontal"
                text-color="#ffffff"
                background-color="#004971"
-               active-text-color="#ffffff">
+               active-text-color="#ffb876">
       <el-menu-item index="1">
         <img src="../../assets/image/logo.svg" alt class="logo_header" />
-        <i class="iconfont" style="color: #fc5a4a">&#xeb9b;</i>
+        <i class="iconfont" style="color: #fc5a4a;margin-top: 5px;">&#xeb9b;</i>
       </el-menu-item>
         <el-menu-item index="2" v-if="this.$route.path != '/'">
             {{$t('message.application')}}
@@ -32,7 +32,7 @@
             <i class="iconfont">&#xe641;</i>
             {{$t('message.configuration')}}
         </el-menu-item>
-        <el-submenu index="7" class="change_lang" v-if="this.$route.path != '/'">
+        <el-submenu index="7" class="header-right" v-if="this.$route.path != '/'">
             <template slot="title">
                 <i class="iconfont">&#xe7bb;</i>
                 {{$t('message.namespace')}}
@@ -208,9 +208,6 @@ export default {
 .el-menu li i {
   vertical-align: middle;
   color:white;
-}
-.change_lang {
-  float: right !important;
 }
 .header-right{
     float: right !important;

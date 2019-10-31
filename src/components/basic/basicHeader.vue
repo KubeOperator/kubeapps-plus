@@ -9,44 +9,40 @@
         <img src="../../assets/image/logo.svg" alt class="logo_header" />
         <i class="iconfont" style="color: #fc5a4a;margin-top: 5px;">&#xeb9b;</i>
       </el-menu-item>
-        <el-menu-item index="2" v-if="this.$route.path != '/'">
-            {{$t('message.application')}}
-        </el-menu-item>
-        <el-menu-item index="3" v-if="this.$route.path != '/'">
-            {{$t('message.catalog')}}
-        </el-menu-item>
+      <el-menu-item index="2" v-if="this.$route.path != '/'" @click="$router.push('/dashboard')">{{$t('message.application')}}</el-menu-item>
+      <el-menu-item index="3" v-if="this.$route.path != '/'" @click="$router.push('/catalog')">{{$t('message.catalog')}}</el-menu-item>
 
-        <el-menu-item index="4" class="header-right" v-if="this.$route.path != '/'">
-            <i class="iconfont">&#xe85f;</i>
-            {{$t('message.logout')}}
-        </el-menu-item>
-        <el-submenu index="5" class="header-right">
-            <template slot="title">
-                <i class="iconfont">&#xe655;</i>
-                {{$t('message.language')}}
-            </template>
-            <el-menu-item index="5-1" @click='changeLangToZH()'>中文</el-menu-item>
-            <el-menu-item index="5-2" @click='changeLangToEnglish()'>English</el-menu-item>
-        </el-submenu>
-        <el-menu-item index="6" class="header-right" v-if="this.$route.path != '/'">
-            <i class="iconfont">&#xe641;</i>
-            {{$t('message.configuration')}}
-        </el-menu-item>
-        <el-submenu index="7" class="header-right" v-if="this.$route.path != '/'">
-            <template slot="title">
-                <i class="iconfont">&#xe7bb;</i>
-                {{$t('message.namespace')}}
-            </template>
-            <div v-for="item in this.nameSpaces.items" :key="item.metadata.name">
-                <el-menu-item index="">{{item.metadata.name}}</el-menu-item>
-            </div>
-        </el-submenu>
+      <el-menu-item index="4" class="header-right" @click="logout()" v-if="this.$route.path != '/'">
+        <i class="iconfont">&#xe85f;</i>
+        {{$t('message.logout')}}
+      </el-menu-item>
+      <el-submenu index="5" class="header-right">
+        <template slot="title">
+          <i class="iconfont">&#xe655;</i>
+          {{$t('message.language')}}
+        </template>
+        <el-menu-item index="5-1" @click="changeLangToZH()">中文</el-menu-item>
+        <el-menu-item index="5-2" @click="changeLangToEnglish()">English</el-menu-item>
+      </el-submenu>
+      <el-menu-item index="6" class="header-right" v-if="this.$route.path != '/'">
+        <i class="iconfont">&#xe641;</i>
+        {{$t('message.configuration')}}
+      </el-menu-item>
+      <el-submenu index="7" class="change_lang" v-if="this.$route.path != '/'">
+        <template slot="title">
+          <i class="iconfont">&#xe7bb;</i>
+          {{$t('message.namespace')}}
+        </template>
+        <div v-for="item in this.nameSpaces.items" :key="item.metadata.name">
+          <el-menu-item index>{{item.metadata.name}}</el-menu-item>
+        </div>
+      </el-submenu>
     </el-menu>
-
   </div>
 </template>
 
 <script>
+import Store from "../store/store.js";
 export default {
   name: "basicHeader",
   props: {
@@ -203,19 +199,20 @@ export default {
   height: 2.1875em;
 }
 .el-menu {
-    background-color: rgb(0, 74, 113);
+  background-color: rgb(0, 74, 113);
 }
 .el-menu li i {
   vertical-align: middle;
-  color:white;
+  color: white;
 }
 .header-right{
     float: right !important;
 }
-.el-submenu__title,.el-menu-item{
+.el-submenu__title,
+.el-menu-item {
   border-bottom: 0 !important;
 }
-.el-submenu >>> .el-submenu__title{
+.el-submenu >>> .el-submenu__title {
   border-bottom: 0 !important;
 }
 </style>

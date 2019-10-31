@@ -7,7 +7,8 @@ const cn = {
         'token_warn_alert': '集群操作员应该为您提供一个kubernetes api令牌。',
         'token_placeholder': '请输入token',
         'ask_for_help': '忘记令牌 | 寻求帮助',
-        'error_network': '网络错误，请检查网络'
+        'error_network': '网络错误，请检查网络',
+        'language':'语言',
     },
     ...zhLocale
 }

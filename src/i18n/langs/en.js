@@ -7,7 +7,8 @@ const en = {
         'token_warn_alert': 'Your cluster operator should provide you with a Kubernetes API token.',
         'token_placeholder': 'Please enter token',
         'ask_for_help': 'Forget Token | Ask For Help',
-        'error_network': 'Network Error'
+        'error_network': 'Network Error',
+        'language': 'language'
     },
     ...enLocale
 }

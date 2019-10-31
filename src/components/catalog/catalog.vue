@@ -3,7 +3,7 @@
     <el-row>
       <el-col :span="24">
         <div class="grid-content">
-          <h1 style="float: left">{{$t('catalog')}}</h1>
+          <h1 style="float: left">{{$t('message.catalog')}}</h1>
           <el-input class="catalog-search"
                   placeholder="search charts..."
                   prefix-icon="el-icon-search"
@@ -22,7 +22,7 @@
           </div>
           <div style="padding: 1em;">
             <h3 class="catalog-label">{{catalog.name}}</h3>
-            <h5 style="height: 1em">{{catalog.description}}</h5>
+            <h5 class="catalog-desc">{{catalog.description}}</h5>
             <div class="bottom clearfix">
               <el-button type="text" class="button-left" disabled>
                 {{catalog.version}}
@@ -59,7 +59,14 @@ export default {
         {name:'airflow', description: 'Airflow is a platform to programmatically author schedule and mon itor workflows', version: '1.10.5', operate: 'stable', image: 'https://hub.kubeapps.com/api/chartsvc/v1/assets/stable/airflow/logo'},
         {name:'airflow', description: 'Airflow is a platform to programmatically author schedule and mon itor workflows', version: '1.10.5', operate: 'bitnami', image: 'https://hub.kubeapps.com/api/chartsvc/v1/assets/bitnami/airflow/logo'},
         {name:'ambassador', description: 'A Helm chart for Aerospike in Kubernetes', version: '0.85.0', operate: 'stable', image: 'https://hub.kubeapps.com/api/chartsvc/v1/assets/stable/ambassador/logo'},
-        {name:'anchore-engine', description: 'Anchore container analysis and policy evaluation engine service', version: '0.5.1', operate: 'incubator', image: 'https://hub.kubeapps.com/api/chartsvc/v1/assets/stable/anchore-engine/logo'}
+        {name:'anchore-engine', description: 'Anchore container analysis and policy evaluation engine service', version: '0.5.1', operate: 'incubator', image: 'https://hub.kubeapps.com/api/chartsvc/v1/assets/stable/anchore-engine/logo'},
+        {name:'anchore-engine', description: 'Anchore container analysis and policy evaluation engine service', version: '0.5.1', operate: 'incubator', image: 'https://hub.kubeapps.com/api/chartsvc/v1/assets/bitnami/apache/logo'},
+        {name:'anchore-engine', description: 'Anchore container analysis and policy evaluation engine service', version: '0.5.1', operate: 'incubator', image: 'https://hub.kubeapps.com/api/chartsvc/v1/assets/stable/anchore-engine/logo'},
+        {name:'anchore-engine', description: 'Anchore container analysis and policy evaluation engine service', version: '0.5.1', operate: 'incubator', image: 'https://hub.kubeapps.com/api/chartsvc/v1/assets/stable/apm-server/logo'},
+        {name:'anchore-engine', description: 'Anchore container analysis and policy evaluation engine service', version: '0.5.1', operate: 'incubator', image: 'https://hub.kubeapps.com/api/chartsvc/v1/assets/stable/atlantis/logo'},
+        {name:'anchore-engine', description: 'Anchore container analysis and policy evaluation engine service', version: '0.5.1', operate: 'incubator', image: 'https://hub.kubeapps.com/api/chartsvc/v1/assets/stable/anchore-engine/logo'},
+        {name:'anchore-engine', description: 'Anchore container analysis and policy evaluation engine service', version: '0.5.1', operate: 'incubator', image: 'https://hub.kubeapps.com/api/chartsvc/v1/assets/argo/argo-cd/logo'},
+        {name:'anchore-engine', description: 'Anchore container analysis and policy evaluation engine service Anchore container analysis and policy evaluation engine service', version: '0.5.1', operate: 'incubator', image: 'https://hub.kubeapps.com/api/chartsvc/v1/assets/stable/anchore-engine/logo'}
       ];
     }
   }
@@ -76,8 +83,8 @@ export default {
   }
   .catalog-search{
     float: left;
-    width: auto;
-    margin: 1em;
+    width: 40%;
+    margin: 20px 0 0 1em;
   }
   .bottom {
     line-height: 12px;
@@ -124,6 +131,15 @@ export default {
     text-align: center;
     background-color: #f1f1f1;
     box-sizing: border-box;
+  }
+
+  .catalog-desc{
+    height: 2em;
+    overflow : hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
   }
 
   .catalog-label{

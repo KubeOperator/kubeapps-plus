@@ -58,9 +58,9 @@
 </template>
 
 <script>
-import Store from "./store/store.js";
-import apiSetting from "./utils/apiSetting.js";
-import http from "./utils/httpAxios.js";
+// import Store from "./store/store.js";
+// import apiSetting from "./utils/apiSetting.js";
+// import http from "./utils/httpAxios.js";
 export default {
   name: "dashboard",
   data() {
@@ -73,9 +73,7 @@ export default {
   },
   methods:{
     getNamespaces(){
-       http(apiSetting.kubernetes.getNamespaces).then(res => {
-         Store.save("Namespaces", res.data);
-       })
+
     }
   }
 };

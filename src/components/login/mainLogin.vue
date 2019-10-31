@@ -63,24 +63,36 @@ export default {
       this.loading = true;
       http(apiSetting.kubernetes.getInfo).then(res => {
         if (res.status == 200) {
-          this.$router.push("/dashboard")
+          http(apiSetting.kubernetes.getNamespaces).then(res => {
+            if (res.status == 200) {
+              Store.save("Namespaces", res.data);
+              this.$router.push("/dashboard");
+            } else {
+              this.loading = false;
+              this.errorMessage();
+            }
+          });
         } else {
           //Error Message
-          this.loading = false
-          this.errorMessage()
+          this.loading = false;
+          this.errorMessage();
         }
       });
     },
-      errorMessage() {
-        const h = this.$createElement;
+    errorMessage() {
+      const h = this.$createElement;
 
-        this.$notify({
-          title: 'Error',
-          message: h('i', { style: 'color: black'}, this.$t('message.error_network')),
-          type: 'error',
-          offset: 100
-        });
-      },
+      this.$notify({
+        title: "Error",
+        message: h(
+          "i",
+          { style: "color: black" },
+          this.$t("message.error_network")
+        ),
+        type: "error",
+        offset: 100
+      });
+    }
   }
 };
 </script>

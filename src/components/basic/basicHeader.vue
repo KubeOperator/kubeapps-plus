@@ -1,10 +1,12 @@
 <template>
   <div>
-      <el-menu class="el-menu"
-               mode="horizontal"
-               text-color="#ffffff"
-               background-color="#004971"
-               active-text-color="#ffb876">
+    <el-menu
+      class="el-menu"
+      mode="horizontal"
+      text-color="#ffffff"
+      background-color="#004971"
+      active-text-color="#ffb876"
+    >
       <el-menu-item index="1">
         <img src="../../assets/image/logo.svg" alt class="logo_header" />
         <i class="iconfont" style="color: #fc5a4a;margin-top: 5px;">&#xeb9b;</i>
@@ -39,10 +41,10 @@
       <el-submenu index="7" class="header-right" v-if="this.$route.path != '/'">
         <template slot="title">
           <i class="iconfont">&#xe7bb;</i>
-          {{$t('message.namespace')}}
+          {{(activeNamespace=='')?$t('message.namespace'):activeNamespace}}
         </template>
         <div v-for="item in this.nameSpaces.items" :key="item.metadata.name">
-          <el-menu-item index>{{item.metadata.name}}</el-menu-item>
+          <el-menu-item index @click="activeSpace(item.metadata.name)">{{item.metadata.name}}</el-menu-item>
         </div>
       </el-submenu>
     </el-menu>
@@ -50,7 +52,7 @@
 </template>
 
 <script>
-import Store from '../store/store.js'
+import Store from "../store/store.js";
 export default {
   name: "basicHeader",
   props: {
@@ -58,7 +60,8 @@ export default {
   },
   data() {
     return {
-        nameSpaces: {}
+      nameSpaces: {},
+      activeNamespace: ""
     };
   },
   created: function() {
@@ -67,11 +70,21 @@ export default {
     this.nameSpaces = Store.fetch("Namespaces");
   },
   methods: {
-    changeLangToZH(){
-       this.$i18n.locale = 'cn'
+    changeLangToZH() {
+      this.$i18n.locale = "cn";
     },
     changeLangToEnglish() {
       this.$i18n.locale = "en";
+    },
+    activeSpace(name) {
+      Store.save("activeNamespace", name);
+      this.activeNamespace = name;
+    },
+    logout() {
+      Store.save("activeNamespace", "");
+      Store.save("accessToken", null);
+      Store.save("Namespaces", null);
+      this.$router.push("/")
     }
   }
 };
@@ -85,14 +98,14 @@ export default {
   background-color: rgb(0, 74, 113);
 }
 .el-menu li {
-    font-weight: bold;
+  font-weight: bold;
 }
 .el-menu li i {
   vertical-align: middle;
   color: white;
 }
-.header-right{
-    float: right !important;
+.header-right {
+  float: right !important;
 }
 .el-submenu__title,
 .el-menu-item {

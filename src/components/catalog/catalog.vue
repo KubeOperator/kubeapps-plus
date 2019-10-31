@@ -44,29 +44,29 @@ export default {
   name: "catalog",
   data(){
     return {
+      input: '',
       currentDate: new Date(),
       catalogList: catalogList
     }
   },
   created() {
     this.init()
-    console.log(this.catalogList)
   },
   methods:{
     init(){
       this.catalogList = [
         {name:'aerosplike', description: 'A Helm chart for Aerospike in Kubernetes', version: 'v4.5.0.5', operate: 'stable', image: 'https://hub.kubeapps.com/api/chartsvc/v1/assets/stable/aerospike/logo'},
-        {name:'airflow', description: 'Airflow is a platform to programmatically author schedule and mon itor workflows', version: '1.10.5', operate: 'stable', image: 'https://hub.kubeapps.com/api/chartsvc/v1/assets/stable/airflow/logo'},
-        {name:'airflow', description: 'Airflow is a platform to programmatically author schedule and mon itor workflows', version: '1.10.5', operate: 'bitnami', image: 'https://hub.kubeapps.com/api/chartsvc/v1/assets/bitnami/airflow/logo'},
+        {name:'airflow1', description: 'Airflow is a platform to programmatically author schedule and mon itor workflows', version: '1.10.5', operate: 'stable', image: 'https://hub.kubeapps.com/api/chartsvc/v1/assets/stable/airflow/logo'},
+        {name:'airflow2', description: 'Airflow is a platform to programmatically author schedule and mon itor workflows', version: '1.10.5', operate: 'bitnami', image: 'https://hub.kubeapps.com/api/chartsvc/v1/assets/bitnami/airflow/logo'},
         {name:'ambassador', description: 'A Helm chart for Aerospike in Kubernetes', version: '0.85.0', operate: 'stable', image: 'https://hub.kubeapps.com/api/chartsvc/v1/assets/stable/ambassador/logo'},
-        {name:'anchore-engine', description: 'Anchore container analysis and policy evaluation engine service', version: '0.5.1', operate: 'incubator', image: 'https://hub.kubeapps.com/api/chartsvc/v1/assets/stable/anchore-engine/logo'},
-        {name:'anchore-engine', description: 'Anchore container analysis and policy evaluation engine service', version: '0.5.1', operate: 'incubator', image: 'https://hub.kubeapps.com/api/chartsvc/v1/assets/bitnami/apache/logo'},
-        {name:'anchore-engine', description: 'Anchore container analysis and policy evaluation engine service', version: '0.5.1', operate: 'incubator', image: 'https://hub.kubeapps.com/api/chartsvc/v1/assets/stable/anchore-engine/logo'},
-        {name:'anchore-engine', description: 'Anchore container analysis and policy evaluation engine service', version: '0.5.1', operate: 'incubator', image: 'https://hub.kubeapps.com/api/chartsvc/v1/assets/stable/apm-server/logo'},
-        {name:'anchore-engine', description: 'Anchore container analysis and policy evaluation engine service', version: '0.5.1', operate: 'incubator', image: 'https://hub.kubeapps.com/api/chartsvc/v1/assets/stable/atlantis/logo'},
-        {name:'anchore-engine', description: 'Anchore container analysis and policy evaluation engine service', version: '0.5.1', operate: 'incubator', image: 'https://hub.kubeapps.com/api/chartsvc/v1/assets/stable/anchore-engine/logo'},
-        {name:'anchore-engine', description: 'Anchore container analysis and policy evaluation engine service', version: '0.5.1', operate: 'incubator', image: 'https://hub.kubeapps.com/api/chartsvc/v1/assets/argo/argo-cd/logo'},
-        {name:'anchore-engine', description: 'Anchore container analysis and policy evaluation engine service Anchore container analysis and policy evaluation engine service', version: '0.5.1', operate: 'incubator', image: 'https://hub.kubeapps.com/api/chartsvc/v1/assets/stable/anchore-engine/logo'}
+        {name:'anchore-engine1', description: 'Anchore container analysis and policy evaluation engine service', version: '0.5.1', operate: 'incubator', image: 'https://hub.kubeapps.com/api/chartsvc/v1/assets/stable/anchore-engine/logo'},
+        {name:'anchore-engine2', description: 'Anchore container analysis and policy evaluation engine service', version: '0.5.1', operate: 'incubator', image: 'https://hub.kubeapps.com/api/chartsvc/v1/assets/bitnami/apache/logo'},
+        {name:'anchore-engine3', description: 'Anchore container analysis and policy evaluation engine service', version: '0.5.1', operate: 'incubator', image: 'https://hub.kubeapps.com/api/chartsvc/v1/assets/stable/anchore-engine/logo'},
+        {name:'anchore-engine4', description: 'Anchore container analysis and policy evaluation engine service', version: '0.5.1', operate: 'incubator', image: 'https://hub.kubeapps.com/api/chartsvc/v1/assets/stable/apm-server/logo'},
+        {name:'anchore-engine5', description: 'Anchore container analysis and policy evaluation engine service', version: '0.5.1', operate: 'incubator', image: 'https://hub.kubeapps.com/api/chartsvc/v1/assets/stable/atlantis/logo'},
+        {name:'anchore-engine6', description: 'Anchore container analysis and policy evaluation engine service', version: '0.5.1', operate: 'incubator', image: 'https://hub.kubeapps.com/api/chartsvc/v1/assets/stable/anchore-engine/logo'},
+        {name:'anchore-engine7', description: 'Anchore container analysis and policy evaluation engine service', version: '0.5.1', operate: 'incubator', image: 'https://hub.kubeapps.com/api/chartsvc/v1/assets/argo/argo-cd/logo'},
+        {name:'anchore-engine8', description: 'Anchore container analysis and policy evaluation engine service Anchore container analysis and policy evaluation engine service', version: '0.5.1', operate: 'incubator', image: 'https://hub.kubeapps.com/api/chartsvc/v1/assets/stable/anchore-engine/logo'}
       ];
     }
   }

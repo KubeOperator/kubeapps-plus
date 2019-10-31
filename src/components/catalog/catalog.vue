@@ -3,7 +3,7 @@
     <el-row>
       <el-col :span="24">
         <div class="grid-content">
-          <h1 style="float: left">{{'Catalog'}}</h1>
+          <h1 style="float: left">{{$t('message.catalog')}}</h1>
           <el-input class="catalog-search"
                   placeholder="search charts..."
                   prefix-icon="el-icon-search"
@@ -14,15 +14,20 @@
       </el-col>
     </el-row>
     <el-divider></el-divider>
-    <el-row>
-      <el-col :span="8" v-for="catalog in catalogList" :key="catalog.name">
+    <el-row :gutter="20">
+      <el-col :xs="24" :sm="12" :md="8" :lg="6" :xl="4" v-for="catalog in catalogList" :key="catalog.name" class="el-col">
         <el-card :body-style="{ padding: '0px' }">
-          0
-          <div style="padding: 14px;">
-            <span>{{catalog.name}}</span>
+          <div class="catalog-image">
+            <img :src="catalog.image" class="image">
+          </div>
+          <div style="padding: 1em;">
+            <h3 class="catalog-label">{{catalog.name}}</h3>
+            <h5 class="catalog-desc">{{catalog.description}}</h5>
             <div class="bottom clearfix">
-              {{catalog.description}}
-              <el-button type="text" class="button">
+              <el-button type="text" class="button-left" disabled>
+                {{catalog.version}}
+              </el-button>
+              <el-button type="text" class="button-right">
                 {{catalog.operate}}
               </el-button>
             </div>
@@ -54,7 +59,14 @@ export default {
         {name:'airflow', description: 'Airflow is a platform to programmatically author schedule and mon itor workflows', version: '1.10.5', operate: 'stable', image: 'https://hub.kubeapps.com/api/chartsvc/v1/assets/stable/airflow/logo'},
         {name:'airflow', description: 'Airflow is a platform to programmatically author schedule and mon itor workflows', version: '1.10.5', operate: 'bitnami', image: 'https://hub.kubeapps.com/api/chartsvc/v1/assets/bitnami/airflow/logo'},
         {name:'ambassador', description: 'A Helm chart for Aerospike in Kubernetes', version: '0.85.0', operate: 'stable', image: 'https://hub.kubeapps.com/api/chartsvc/v1/assets/stable/ambassador/logo'},
-        {name:'anchore-engine', description: 'Anchore container analysis and policy evaluation engine service', version: '0.5.1', operate: 'incubator', image: 'https://hub.kubeapps.com/api/chartsvc/v1/assets/stable/anchore-engine/logo'}
+        {name:'anchore-engine', description: 'Anchore container analysis and policy evaluation engine service', version: '0.5.1', operate: 'incubator', image: 'https://hub.kubeapps.com/api/chartsvc/v1/assets/stable/anchore-engine/logo'},
+        {name:'anchore-engine', description: 'Anchore container analysis and policy evaluation engine service', version: '0.5.1', operate: 'incubator', image: 'https://hub.kubeapps.com/api/chartsvc/v1/assets/bitnami/apache/logo'},
+        {name:'anchore-engine', description: 'Anchore container analysis and policy evaluation engine service', version: '0.5.1', operate: 'incubator', image: 'https://hub.kubeapps.com/api/chartsvc/v1/assets/stable/anchore-engine/logo'},
+        {name:'anchore-engine', description: 'Anchore container analysis and policy evaluation engine service', version: '0.5.1', operate: 'incubator', image: 'https://hub.kubeapps.com/api/chartsvc/v1/assets/stable/apm-server/logo'},
+        {name:'anchore-engine', description: 'Anchore container analysis and policy evaluation engine service', version: '0.5.1', operate: 'incubator', image: 'https://hub.kubeapps.com/api/chartsvc/v1/assets/stable/atlantis/logo'},
+        {name:'anchore-engine', description: 'Anchore container analysis and policy evaluation engine service', version: '0.5.1', operate: 'incubator', image: 'https://hub.kubeapps.com/api/chartsvc/v1/assets/stable/anchore-engine/logo'},
+        {name:'anchore-engine', description: 'Anchore container analysis and policy evaluation engine service', version: '0.5.1', operate: 'incubator', image: 'https://hub.kubeapps.com/api/chartsvc/v1/assets/argo/argo-cd/logo'},
+        {name:'anchore-engine', description: 'Anchore container analysis and policy evaluation engine service Anchore container analysis and policy evaluation engine service', version: '0.5.1', operate: 'incubator', image: 'https://hub.kubeapps.com/api/chartsvc/v1/assets/stable/anchore-engine/logo'}
       ];
     }
   }
@@ -71,22 +83,33 @@ export default {
   }
   .catalog-search{
     float: left;
-    width: auto;
-    margin: 1em;
+    width: 40%;
+    margin: 20px 0 0 1em;
   }
   .bottom {
-    margin-top: 13px;
     line-height: 12px;
+    text-align: left;
   }
 
-  .button {
+  .button-left {
+    padding: 0;
+    float: left;
+  }
+
+  .button-right {
     padding: 0;
     float: right;
   }
 
   .image {
-    width: 100%;
+    max-width: 7em;
+    max-height: 6em;
     display: block;
+    margin: 1em;
+  }
+
+  .el-col{
+    padding: 10px 0;
   }
 
   .clearfix:before,
@@ -97,5 +120,36 @@ export default {
 
   .clearfix:after {
     clear: both
+  }
+
+  .catalog-image{
+    display: flex;
+    height: calc(72px + 2em);
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    text-align: center;
+    background-color: #f1f1f1;
+    box-sizing: border-box;
+  }
+
+  .catalog-desc{
+    height: 2em;
+    overflow : hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+  }
+
+  .catalog-label{
+    word-wrap: break-word;
+    text-align: center;
+    -webkit-box-flex: 1;
+    -ms-flex: 1;
+    flex: 1;
+    font-size: 1.1em;
+    font-weight: 700;
+    margin: 0;
   }
 </style>

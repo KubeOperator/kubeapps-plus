@@ -8,7 +8,9 @@ const en = {
         'token_placeholder': 'Please enter token',
         'ask_for_help': 'Forget Token | Ask For Help',
         'error_network': 'Network Error',
-        'language': 'language'
+        'language': 'language',
+        'catalog': 'Catalog',
+        'error_network': 'Network Error'
     },
     ...enLocale
 }

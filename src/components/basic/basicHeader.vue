@@ -1,15 +1,13 @@
 <template>
   <div>
-    <el-menu
-      class="el-menu"
-      mode="horizontal"
-      text-color="#ffffff"
-      background-color="#004971"
-      active-text-color="#ffffff"
-    >
+      <el-menu class="el-menu"
+               mode="horizontal"
+               text-color="#ffffff"
+               background-color="#004971"
+               active-text-color="#ffb876">
       <el-menu-item index="1">
         <img src="../../assets/image/logo.svg" alt class="logo_header" />
-        <i class="iconfont" style="color: #fc5a4a">&#xeb9b;</i>
+        <i class="iconfont" style="color: #fc5a4a;margin-top: 5px;">&#xeb9b;</i>
       </el-menu-item>
       <el-menu-item
         index="2"
@@ -38,7 +36,7 @@
         <i class="iconfont">&#xe641;</i>
         {{$t('message.configuration')}}
       </el-menu-item>
-      <el-submenu index="7" class="change_lang" v-if="this.$route.path != '/'">
+      <el-submenu index="7" class="header-right" v-if="this.$route.path != '/'">
         <template slot="title">
           <i class="iconfont">&#xe7bb;</i>
           {{$t('message.namespace')}}
@@ -52,7 +50,7 @@
 </template>
 
 <script>
-import Store from "../store/store.js";
+import Store from '../store/store.js'
 export default {
   name: "basicHeader",
   props: {
@@ -60,7 +58,7 @@ export default {
   },
   data() {
     return {
-      nameSpaces: {}
+        nameSpaces: {}
     };
   },
   created: function() {
@@ -69,12 +67,8 @@ export default {
     this.nameSpaces = Store.fetch("Namespaces");
   },
   methods: {
-    logout() {
-      Store.save("accessToken", null);
-      this.$router.push("/");
-    },
-    changeLangToZH() {
-      this.$i18n.locale = "cn";
+    changeLangToZH(){
+       this.$i18n.locale = 'cn'
     },
     changeLangToEnglish() {
       this.$i18n.locale = "en";
@@ -90,15 +84,15 @@ export default {
 .el-menu {
   background-color: rgb(0, 74, 113);
 }
+.el-menu li {
+    font-weight: bold;
+}
 .el-menu li i {
   vertical-align: middle;
   color: white;
 }
-.change_lang {
-  float: right !important;
-}
-.header-right {
-  float: right !important;
+.header-right{
+    float: right !important;
 }
 .el-submenu__title,
 .el-menu-item {

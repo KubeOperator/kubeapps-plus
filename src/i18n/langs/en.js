@@ -13,7 +13,8 @@ const en = {
         'catalog': 'Catalog',
         'namespace': 'NAMESPACE',
         'configuration': 'Configuration',
-        'logout': 'Logout'
+        'logout': 'Logout',
+        'search_charts': 'search charts...'
     },
     ...enLocale
 }

@@ -13,7 +13,8 @@ const cn = {
         'catalog': '目录',
         'namespace': '命名空间',
         'configuration': '配置',
-        'logout': '注销'
+        'logout': '注销',
+        'search_charts': '发现图表...'
     },
     ...zhLocale
 }

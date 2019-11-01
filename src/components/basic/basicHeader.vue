@@ -45,10 +45,10 @@
       <el-submenu index="7" class="header-right" v-if="this.$route.path != '/'">
         <template slot="title">
           <i class="iconfont">&#xe7bb;</i>
-          {{(activeNamespace=='')?$t('message.namespace'):activeNamespace}}
+          {{(getActivespace=='')?$t('message.namespace'):getActivespace}}
         </template>
         <div v-for="item in getnamespace" :key="item.metadata.name">
-          <el-menu-item index @click="activeSpace(item.metadata.name)">{{item.metadata.name}}</el-menu-item>
+          <el-menu-item index @click="changeActiveSpace(item.metadata.name)">{{item.metadata.name}}</el-menu-item>
         </div>
       </el-submenu>
     </el-menu>
@@ -56,7 +56,7 @@
 </template>
 
 <script>
-import Store from "../store/store.js";
+// import Store from "../store/store.js";
 export default {
   name: "basicHeader",
   props: {
@@ -71,7 +71,7 @@ export default {
   created: function() {
     //默认从session 里取namespaces
     // this.nameSpaces = sessionStorage.getItem('nameSpaces')
-    this.nameSpaces = Store.fetch("Namespaces");
+    // this.nameSpaces = Store.fetch("Namespaces");
   },
   methods: {
     changeLangToZH() {
@@ -80,29 +80,28 @@ export default {
     changeLangToEnglish() {
       this.$i18n.locale = "en";
     },
-    activeSpace(name) {
-      Store.save("activeNamespace", name);
-      this.activeNamespace = name;
-    },
     logout() {
-      Store.save("activeNamespace", "");
-      Store.save("accessToken", null);
-      Store.save("Namespaces", null);
-      this.$router.push("/")
+      this.$store.commit("signOut");
+      this.$router.push("/");
     },
     appRepositories() {
-      console.log('go...appRepositories')
+      console.log("go...appRepositories");
     },
     serviceBroker() {
-      console.log('go...serviceBroker')
+      console.log("go...serviceBroker");
+    },
+    changeActiveSpace(name) {
+      this.$store.commit("updateActiveSapce", name);
+      //todo 处理加载逻辑
     }
   },
-  computed:{
-    getnamespace:function(){
-      console.log(this.$store.getters)
-      return this.$store.getters;
+  computed: {
+    getnamespace() {
+      return this.$store.state.namespaces.items;
+    },
+    getActivespace() {
+      return this.$store.state.namespaces.activeSpace;
     }
-
   }
 };
 </script>
@@ -111,10 +110,10 @@ export default {
 .logo_header {
   height: 2.1875em;
 }
-.icon_font{
-  font-family:"iconfont" !important;
-  font-size:14px;
-  font-style:normal;
+.icon_font {
+  font-family: "iconfont" !important;
+  font-size: 14px;
+  font-style: normal;
   -webkit-font-smoothing: antialiased;
   -webkit-text-stroke-width: 0.2px;
   -moz-osx-font-smoothing: grayscale;

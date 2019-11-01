@@ -65,6 +65,7 @@ export default {
         if (res.status == 200) {
           http(apiSetting.kubernetes.getNamespaces).then(res => {
             if (res.status == 200) {
+              console.log(res.data)
               this.$store.commit('initNamespace',res.data)
               // Store.save("Namespaces", res.data);
               this.$router.push("/dashboard");

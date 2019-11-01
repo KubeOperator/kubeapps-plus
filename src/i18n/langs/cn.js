@@ -14,7 +14,9 @@ const cn = {
         'namespace': '命名空间',
         'configuration': '配置',
         'logout': '注销',
-        'search_charts': '发现图表...'
+        'search_charts': '发现图表...',
+        'app_repositories': '应用存储库',
+        'service_broker': '服务代理'
     },
     ...zhLocale
 }

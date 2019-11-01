@@ -14,7 +14,9 @@ const en = {
         'namespace': 'NAMESPACE',
         'configuration': 'Configuration',
         'logout': 'Logout',
-        'search_charts': 'search charts...'
+        'search_charts': 'search charts...',
+        'app_repositories': 'App Repositories',
+        'service_broker': 'Service Broker'
     },
     ...enLocale
 }

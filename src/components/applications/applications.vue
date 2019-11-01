@@ -1,6 +1,6 @@
 <template>
   <div class="dashborad">
-    <el-row style="margin-top:10px border-bottom: 2px solid #f1f1f1;">
+    <el-row style="margin-top:10px;border-bottom: 2px solid #f1f1f1;">
       <el-col :md="6" :lg="4">
         <h1 class="app_title">Applications</h1>
       </el-col>

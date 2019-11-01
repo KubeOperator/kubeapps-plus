@@ -43,7 +43,7 @@
           <i class="iconfont">&#xe7bb;</i>
           {{(activeNamespace=='')?$t('message.namespace'):activeNamespace}}
         </template>
-        <div v-for="item in this.nameSpaces.items" :key="item.metadata.name">
+        <div v-for="item in getnamespace" :key="item.metadata.name">
           <el-menu-item index @click="activeSpace(item.metadata.name)">{{item.metadata.name}}</el-menu-item>
         </div>
       </el-submenu>
@@ -86,6 +86,13 @@ export default {
       Store.save("Namespaces", null);
       this.$router.push("/")
     }
+  },
+  computed:{
+    getnamespace:function(){
+      console.log(this.$store.getters)
+      return this.$store.getters;
+    }
+
   }
 };
 </script>

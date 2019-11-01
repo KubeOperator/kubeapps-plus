@@ -66,20 +66,21 @@ export default {
           http(apiSetting.kubernetes.getNamespaces).then(res => {
             if (res.status == 200) {
               Store.save("Namespaces", res.data);
-              this.$router.push("/dashboard");
+              this.$router.push("/applications");
             } else {
+              //Error Message
               this.loading = false;
-              this.errorMessage();
+              this.errorMessage(res.data.status + ': ' + res.data.message);
             }
           });
         } else {
           //Error Message
           this.loading = false;
-          this.errorMessage();
+          this.errorMessage(res.data.status + ': ' + res.data.message);
         }
       });
     },
-    errorMessage() {
+    errorMessage(message) {
       const h = this.$createElement;
 
       this.$notify({
@@ -87,7 +88,7 @@ export default {
         message: h(
           "i",
           { style: "color: black" },
-          this.$t("message.error_network")
+          message
         ),
         type: "error",
         offset: 100

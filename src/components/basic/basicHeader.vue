@@ -34,10 +34,14 @@
         <el-menu-item index="5-1" @click="changeLangToZH()">中文</el-menu-item>
         <el-menu-item index="5-2" @click="changeLangToEnglish()">English</el-menu-item>
       </el-submenu>
-      <el-menu-item index="6" class="header-right" v-if="this.$route.path != '/'">
-        <i class="iconfont">&#xe641;</i>
-        {{$t('message.configuration')}}
-      </el-menu-item>
+      <el-submenu index="6" class="header-right" v-if="this.$route.path != '/'">
+        <template slot="title">
+          <i class="iconfont">&#xe641;</i>
+          {{$t('message.configuration')}}
+        </template>
+        <el-menu-item index="6-1" @click="appRepositories">{{$t('message.app_repositories')}}</el-menu-item>
+        <el-menu-item index="6-2" @click="serviceBroker">{{$t('message.service_broker')}}</el-menu-item>
+      </el-submenu>
       <el-submenu index="7" class="header-right" v-if="this.$route.path != '/'">
         <template slot="title">
           <i class="iconfont">&#xe7bb;</i>
@@ -85,6 +89,12 @@ export default {
       Store.save("accessToken", null);
       Store.save("Namespaces", null);
       this.$router.push("/")
+    },
+    appRepositories() {
+      console.log('go...appRepositories')
+    },
+    serviceBroker() {
+      console.log('go...serviceBroker')
     }
   },
   computed:{

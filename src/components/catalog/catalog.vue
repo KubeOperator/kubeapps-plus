@@ -25,7 +25,7 @@
             <h5 class="catalog-desc">{{catalog.description}}</h5>
             <div class="bottom clearfix">
               <el-button type="text" class="button-left" disabled>
-                {{catalog.version}}
+                <i class="iconfont">&#xe67b;</i>&nbsp;{{catalog.version}}
               </el-button>
               <el-button size="medium" type="primary" class="button-right" v-show="catalog.operate == 'stable'
               || catalog.operate == 'bitnami'" round>
@@ -59,7 +59,7 @@ export default {
   methods:{
     init(){
       this.catalogList = [
-        {name:'aerosplike', description: 'A Helm chart for Aerospike in Kubernetes', version: 'v4.5.0.5', operate: 'stable', image: 'https://hub.kubeapps.com/api/chartsvc/v1/assets/stable/aerospike/logo'},
+        {name:'aerosplike', description: 'A Helm chart for Aerospike in Kubernetes', version: '4.5.0.5', operate: 'stable', image: 'https://hub.kubeapps.com/api/chartsvc/v1/assets/stable/aerospike/logo'},
         {name:'airflow1', description: 'Airflow is a platform to programmatically author schedule and mon itor workflows', version: '1.10.5', operate: 'stable', image: 'https://hub.kubeapps.com/api/chartsvc/v1/assets/stable/airflow/logo'},
         {name:'airflow2', description: 'Airflow is a platform to programmatically author schedule and mon itor workflows', version: '1.10.5', operate: 'bitnami', image: 'https://hub.kubeapps.com/api/chartsvc/v1/assets/bitnami/airflow/logo'},
         {name:'ambassador', description: 'A Helm chart for Aerospike in Kubernetes', version: '0.85.0', operate: 'stable', image: 'https://hub.kubeapps.com/api/chartsvc/v1/assets/stable/ambassador/logo'},

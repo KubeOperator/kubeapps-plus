@@ -1,7 +1,7 @@
 import VueRouter from 'vue-router'
 
 import mainLogin from "../components/login/mainLogin.vue"
-import dashboard from "../components/dashboard.vue"
+import applications from "../components/applications/applications.vue"
 import catalog from "../components/catalog/catalog.vue"
 
 // 2. 定义路由
@@ -11,7 +11,7 @@ import catalog from "../components/catalog/catalog.vue"
 // 我们晚点再讨论嵌套路由。
 const routes = [
   { path: '/', component: mainLogin,meta: {allowBack: false} },
-  { path: '/dashboard', component: dashboard },
+  { path: '/applications', component: applications },
   { path: '/catalog', component: catalog }
 ]
 

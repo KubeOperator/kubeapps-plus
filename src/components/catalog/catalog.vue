@@ -27,7 +27,11 @@
               <el-button type="text" class="button-left" disabled>
                 {{catalog.version}}
               </el-button>
-              <el-button type="text" class="button-right">
+              <el-button size="medium" type="primary" class="button-right" v-show="catalog.operate == 'stable'
+              || catalog.operate == 'bitnami'" round>
+                {{catalog.operate}}
+              </el-button>
+              <el-button type="warning" class="button-right" v-show="catalog.operate == 'incubator'" round>
                 {{catalog.operate}}
               </el-button>
             </div>
@@ -92,12 +96,12 @@ export default {
   }
 
   .button-left {
-    padding: 0;
+    padding: 5px;
     float: left;
   }
 
   .button-right {
-    padding: 0;
+    padding: 5px;
     float: right;
   }
 

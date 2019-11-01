@@ -42,15 +42,15 @@
         <el-menu-item index="6-1" @click="appRepositories">{{$t('message.app_repositories')}}</el-menu-item>
         <el-menu-item index="6-2" @click="serviceBroker">{{$t('message.service_broker')}}</el-menu-item>
       </el-submenu>
-<!--      <el-submenu index="7" class="header-right" v-if="this.$route.path != '/'">-->
-<!--        <template slot="title">-->
-<!--          <i class="iconfont">&#xe7bb;</i>-->
-<!--          {{(activeNamespace=='')?$t('message.namespace'):activeNamespace}}-->
-<!--        </template>-->
-<!--        <div v-for="item in this.nameSpaces.items" :key="item.metadata.name">-->
-<!--          <el-menu-item index @click="activeSpace(item.metadata.name)">{{item.metadata.name}}</el-menu-item>-->
-<!--        </div>-->
-<!--      </el-submenu>-->
+      <el-submenu index="7" class="header-right" v-if="this.$route.path != '/'">
+        <template slot="title">
+          <i class="iconfont">&#xe7bb;</i>
+          {{(activeNamespace=='')?$t('message.namespace'):activeNamespace}}
+        </template>
+        <div v-for="item in this.nameSpaces.items" :key="item.metadata.name">
+          <el-menu-item index @click="activeSpace(item.metadata.name)">{{item.metadata.name}}</el-menu-item>
+        </div>
+      </el-submenu>
     </el-menu>
   </div>
 </template>
@@ -96,6 +96,13 @@ export default {
     serviceBroker() {
       console.log('go...serviceBroker')
     }
+  },
+  computed:{
+    getnamespace:function(){
+      console.log(this.$store.getters)
+      return this.$store.getters;
+    }
+
   }
 };
 </script>

@@ -64,8 +64,7 @@ export default {
   },
   data() {
     return {
-      nameSpaces: {},
-      activeNamespace: ""
+      activeNamespace: this.getActivespace
     };
   },
   created: function() {

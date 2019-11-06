@@ -8,7 +8,11 @@ import Resource from 'vue-resource'
 import vuex from 'vuex'
 import store from './components/store/index.js'
 
-
+// 自定义过滤器
+import * as filters from './components/utils/splitName.js'
+Object.keys(filters).forEach(key => {
+  Vue.filter(key, filters[key])
+})
 
 Vue.config.productionTip = false
 Vue.use(VueRouter)

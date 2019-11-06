@@ -3,10 +3,10 @@
  * @name example: aerospike
  * @author: maguohao
  */
-export function splitName (id, name) {
+export function splitName (id) {
     if (id == null || name == null) {
         return ''
     }
-    let str = id.split('/').get(0)
+    let str = id.split('/')[0]
     return str
 }

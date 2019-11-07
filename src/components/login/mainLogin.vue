@@ -49,6 +49,7 @@
 import Store from "../store/store.js";
 import apiSetting from "../utils/apiSetting.js";
 import http from "../utils/httpAxios.js";
+import errorMessage from '../utils/errorMessage.js';
 export default {
   name: "mainLogin",
   data() {
@@ -72,30 +73,16 @@ export default {
             } else {
               //Error Message
               this.loading = false;
-              this.errorMessage(res.data.status + ': ' + res.data.message);
+              errorMessage(this, res);
             }
           });
         } else {
           //Error Message
           this.loading = false;
-          this.errorMessage(res.data.status + ': ' + res.data.message);
+          errorMessage(this, res);
         }
       });
     },
-    errorMessage(message) {
-      const h = this.$createElement;
-
-      this.$notify({
-        title: "Error",
-        message: h(
-          "i",
-          { style: "color: black" },
-          message
-        ),
-        type: "error",
-        offset: 100
-      });
-    }
   }
 };
 </script>

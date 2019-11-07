@@ -15,7 +15,7 @@
     </el-row>
     <el-divider></el-divider>
     <el-row :gutter="20">
-      <el-col :xs="24" :sm="12" :md="8" :lg="6" :xl="4" v-for="catalog in catalogList" :key="catalog.attributes.name" class="el-col">
+      <el-col :xs="24" :sm="12" :md="8" :lg="6" :xl="4" v-for="(catalog, index) in catalogList" :key="index" class="el-col">
         <el-card :body-style="{ padding: '0px' }">
           <div class="catalog-image">
             <img v-show="catalog.attributes.icon" :src="catalog.attributes.icon | searchImage(catalog.attributes.icon)" class="image">
@@ -70,7 +70,8 @@ export default {
             } else {
                 //Error Message
                 this.loading = false;
-                errorMessage(this, res.data.status + ': ' + res.data.message);
+                console.error(res)
+                errorMessage(this, res);
             }
         })
 

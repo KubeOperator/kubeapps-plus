@@ -18,17 +18,18 @@
       <el-col :xs="24" :sm="12" :md="8" :lg="6" :xl="4" v-for="catalog in catalogList" :key="catalog.attributes.name" class="el-col">
         <el-card :body-style="{ padding: '0px' }">
           <div class="catalog-image">
-            <img :src="catalog.attributes.icon" class="image">
+            <img v-show="catalog.attributes.icon" :src="catalog.attributes.icon" class="image">
+            <img v-show="!catalog.attributes.icon" src="../../.././static/catalog/default.png" class="image">
           </div>
           <div style="padding: 1em;">
             <h3 class="catalog-label">{{catalog.attributes.name}}</h3>
             <h5 class="catalog-desc">{{catalog.attributes.description}}</h5>
             <div class="bottom clearfix">
               <el-button type="text" class="button-left" disabled>
-                <i class="iconfont">&#xe67b;</i>&nbsp;{{catalog.relationships.latestChartVersion.data.app_version}}
+                <i class="iconfont">&#xe67b;</i>&nbsp;{{catalog.relationships.latestChartVersion.data.app_version ? catalog.relationships.latestChartVersion.data.app_version : catalog.relationships.latestChartVersion.data.version}}
               </el-button>
               <el-button size="medium" type="primary" class="button-right" v-show="catalog.id.indexOf('stable') > -1
-              || catalog.id.indexOf('bitnami') > -1" round>
+              || catalog.id.indexOf('bitnami') > -1 || catalog.id.indexOf('svc-cat') > -1" round>
                   {{catalog.id | splitName(catalog.id)}}
               </el-button>
               <el-button type="warning" class="button-right" v-show="catalog.id.indexOf('incubator') > -1" round>
@@ -17852,8 +17853,7 @@ export default {
   .button-left {
     padding: 5px;
     float: left;
-      width: 70%;
-      height: 1em;
+      height: 24px;
       overflow : hidden;
       text-overflow: ellipsis;
       display: -webkit-box;
@@ -17916,5 +17916,10 @@ export default {
     font-size: 1.1em;
     font-weight: 700;
     margin: 0;
+    overflow : hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
   }
 </style>

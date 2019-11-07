@@ -18,7 +18,7 @@
       <el-col :xs="24" :sm="12" :md="8" :lg="6" :xl="4" v-for="catalog in catalogList" :key="catalog.attributes.name" class="el-col">
         <el-card :body-style="{ padding: '0px' }">
           <div class="catalog-image">
-            <img v-show="catalog.attributes.icon" :src="catalog.attributes.icon" class="image">
+            <img v-show="catalog.attributes.icon" :src="catalog.attributes.icon | searchImage(catalog.attributes.icon)" class="image">
             <img v-show="!catalog.attributes.icon" src="../../.././static/catalog/default.png" class="image">
           </div>
           <div style="padding: 1em;">
@@ -17851,7 +17851,7 @@ export default {
   }
 
   .button-left {
-    padding: 5px;
+    padding: 5px 0 5px 5px;
     float: left;
       height: 24px;
       overflow : hidden;

@@ -13,6 +13,10 @@ import * as filters from './components/utils/splitName.js'
 Object.keys(filters).forEach(key => {
   Vue.filter(key, filters[key])
 })
+import * as searchs from './components/utils/searchImage.js'
+Object.keys(searchs).forEach(key => {
+  Vue.filter(key, searchs[key])
+})
 
 Vue.config.productionTip = false
 Vue.use(VueRouter)

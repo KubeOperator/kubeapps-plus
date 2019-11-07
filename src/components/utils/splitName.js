@@ -1,6 +1,6 @@
 /**
  * @id example: stable/aerospike
- * @name example: aerospike
+ * @return example: stable
  * @author: maguohao
  */
 export function splitName (id) {

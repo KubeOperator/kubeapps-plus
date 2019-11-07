@@ -11,6 +11,10 @@ const serviceModule = {
     checkAuth: {
       url: '/api/kube/',
       method: 'get'
+    },
+    getRelease:{
+      url:'/rpc/api/tiller-deploy/v1/namespaces/',
+      method:'get'
     }
   }
 }

@@ -112,19 +112,16 @@ export default {
       releases: []
     };
   },
-  created: function() {},
-  mounted: function() {},
+  created: function() {
+
+  },
+  mounted: function() {
+    this.$store.dispatch('getRelease')
+  },
   methods: {
     getReleaseApp() {
       console.log(this.releases);
-
     },
-    startLoading() {
-      this.loading = true;
-    },
-    endLoading() {
-      this.loading = false;
-    }
   },
   computed: {
     getRelease() {
@@ -142,7 +139,7 @@ export default {
       this.loading = val;
     },
     getRelease(val) {
-      this.releases = val.data
+      this.releases = val.data;
     }
   }
 };

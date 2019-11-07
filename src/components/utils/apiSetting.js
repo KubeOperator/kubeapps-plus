@@ -15,6 +15,10 @@ const serviceModule = {
     getRelease:{
       url:'/rpc/api/tiller-deploy/v1/namespaces/',
       method:'get'
+    },
+    getCharts: {
+      url:'/api/chartsvc/v1/charts',
+      method:'get'
     }
   }
 }

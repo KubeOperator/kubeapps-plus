@@ -1,5 +1,5 @@
 <template>
-  <div class="dashborad"  element-loading-text="Loading">
+  <div class="dashborad" element-loading-text="Loading">
     <el-row style="margin-top:10px;border-bottom: 2px solid #f1f1f1;">
       <el-col :md="6" :lg="4">
         <h1 class="app_title">Applications</h1>
@@ -61,7 +61,7 @@
         :md="8"
         :lg="6"
         :xl="4"
-        v-for="catalog in this.$store.state.namespaces.releases"
+        v-for="catalog in this.releases"
         :key="catalog.chartMetadata.name"
         class="el-col"
       >
@@ -108,17 +108,16 @@ export default {
   data() {
     return {
       radio: "",
-      loading: this.getLoadingState,
+      loading: false,
+      releases: []
     };
   },
-  created: function() {
-
-  },
+  created: function() {},
   mounted: function() {},
   methods: {
     getReleaseApp() {
-      this.$store.dispatch('getRelease')
-      console.log(this.getRelease)
+      console.log(this.releases);
+
     },
     startLoading() {
       this.loading = true;
@@ -131,8 +130,19 @@ export default {
     getRelease() {
       return this.$store.state.namespaces.releases;
     },
-    getLoadingState(){
+    getLoadingState() {
       return this.$store.state.namespaces.loadingState;
+    },
+    getReleaseApi() {
+      return this.$store.state.namespaces.api;
+    }
+  },
+  watch: {
+    getLoadingState(val) {
+      this.loading = val;
+    },
+    getRelease(val) {
+      this.releases = val.data
     }
   }
 };

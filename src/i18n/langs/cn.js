@@ -10,7 +10,7 @@ const cn = {
         'error_network': '网络错误，请检查网络',
         'language':'语言',
         'application': '我的应用',
-        'catalog': '应用目录',
+        'catalog': '应用商店',
         'namespace': '命名空间',
         'configuration': '配置',
         'logout': '注销',

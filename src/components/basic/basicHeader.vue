@@ -91,6 +91,7 @@ export default {
     },
     changeActiveSpace(name) {
       this.$store.commit("updateActiveSapce", name);
+      this.$store.dispatch('getRelease')
       //todo 处理加载逻辑
     }
   },

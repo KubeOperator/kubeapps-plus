@@ -67,6 +67,7 @@ export default {
             if (res.status == 200) {
               console.log(res.data)
               this.$store.commit('initNamespace',res.data)
+              this.$store.dispatch('getRelease')
               this.$router.push("/applications");
             } else {
               //Error Message

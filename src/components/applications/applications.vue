@@ -69,21 +69,17 @@
         :key="index"
         class="el-col"
       >
-        <el-card :body-style="{ padding: '0px' }" v-if="catalog.status!='DELETED' || showdelete">
-          <div class="catalog-image">
-            <img
-              v-show="catalog.icon"
-              :src="catalog.icon"
-              class="image"
-            />
-            <img
-              v-show="!catalog.icon"
-              src="../../.././static/catalog/default.png"
-              class="image"
-            />
+        <el-card
+          :body-style="{ padding: '0px' }"
+          v-if="catalog.status!='DELETED' || showdelete"
+          @click.native="$router.push('/apps/ns/'+ catalog.namespace + '/' + catalog.releaseName)"
+        >
+          <div class="catalog-image" >
+            <img v-show="catalog.icon" :src="catalog.icon" class="image" />
+            <img v-show="!catalog.icon" src="../../.././static/catalog/default.png" class="image" />
           </div>
           <div style="padding: 1em;">
-            <h3 class="catalog-label">{{catalog.chartMetadata.name}}</h3>
+            <h3 class="catalog-label">{{catalog.releaseName}}</h3>
             <div class="bottom clearfix">
               <el-button type="text" class="button-left" disabled>
                 <i class="iconfont">&#xe67b;</i>
@@ -130,7 +126,7 @@ export default {
   methods: {
     getReleaseApp() {
       console.log(this.releases);
-    }
+    },
   },
   computed: {
     getRelease() {
@@ -187,7 +183,7 @@ export default {
   margin: 20px 0 0 1em;
 }
 .bottom {
-  margin-top: 20px; 
+  margin-top: 20px;
   line-height: 12px;
   text-align: left;
 }

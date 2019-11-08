@@ -19,19 +19,19 @@
               width="50">
       </el-table-column>
       <el-table-column
-              prop="repo"
+              prop="metadata.name"
               :label="$t('message.repo')"
               width="180">
       </el-table-column>
       <el-table-column
-              prop="url"
+              prop="spec.url"
               :label="$t('message.url')">
       </el-table-column>
       <el-table-column :label="$t('message.actions')">
         <template slot-scope="scope">
           <el-button
                   size="medium" icon="el-icon-refresh"
-                  @click="handleEdit(scope.$index, scope.row)">{{$t('message.refresh')}}</el-button>
+                  @click="refresh(scope.$index, scope.row.metadata.name)">{{$t('message.refresh')}}</el-button>
 <!--          <el-button-->
 <!--                  size="mini"-->
 <!--                  type="danger"-->
@@ -39,11 +39,16 @@
         </template>
       </el-table-column>
     </el-table>
-    <el-button class="gred-btn" type="primary" icon="el-icon-refresh">{{$t('message.refresh_all')}}</el-button>
+    <el-button class="gred-btn" type="primary" icon="el-icon-refresh" @click="refreshAll()">{{$t('message.refresh_all')}}</el-button>
   </div>
 </template>
 
 <script>
+  import apiSetting from "../utils/apiSetting.js";
+  import http from "../utils/httpAxios.js";
+  import errorMessage from '../utils/errorMessage.js';
+  import getParamApi from "../utils/getParamApi";
+
   export default {
     data() {
       return {
@@ -61,6 +66,41 @@
             repo: 'svc-cat',
             url: 'https://svc-catalog-charts.storage.googleapis.com'
         }]
+      }
+    },
+    created(){
+      this.init()
+    },
+    methods: {
+      init : async function () {
+        await http(apiSetting.kubernetes.getAppRepositories).then(res => {
+          if (res.status == 200) {
+            console.log(res)
+            this.tableData = res.data.items
+          } else {
+            //Error Message
+            this.loading = false;
+            errorMessage(this, res);
+          }
+        })
+      },
+      refresh (index, name) {
+        http(getParamApi(apiSetting.kubernetes.getAppRepositories, name)).then(res => {
+          if (res.status == 200) {
+            delete this.tableData[index]
+            let repo = res.data
+            this.tableData.push(repo)
+          } else {
+            //Error Message
+            this.loading = false;
+            errorMessage(this, res);
+          }
+        })
+      },
+      refreshAll () {
+        for (let [i, v] of this.tableData) {
+          this.refresh(i, v.metadata.name)
+        }
       }
     }
   }

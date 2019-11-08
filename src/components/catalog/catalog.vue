@@ -71,7 +71,6 @@ export default {
         await http(apiSetting.kubernetes.getCharts).then(res => {
             if (res.status == 200) {
                 this.catalogList = res.data.data
-                sessionStorage.setItem('Charts', JSON.stringify(res.data.data))
             } else {
                 //Error Message
                 this.loading = false;

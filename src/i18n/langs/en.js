@@ -17,6 +17,8 @@ const en = {
         'search_charts': 'search charts...',
         'app_repositories': 'App Repositories',
         'service_broker': 'Service Broker',
+        'Show_deleted_apps' : 'Show deleted apps',
+        'Deploy_App':'Deploy App',
         'refresh': 'Refresh',
         'refresh_all': 'Refresh All',
         'repo': 'Repo',

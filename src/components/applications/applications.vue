@@ -2,7 +2,7 @@
   <div class="dashborad" element-loading-text="Loading">
     <el-row style="margin-top:10px;border-bottom: 2px solid #f1f1f1;">
       <el-col :md="6" :lg="4">
-        <h1 class="app_title">Applications</h1>
+        <h1 class="app_title">{{$t('message.application')}}</h1>
       </el-col>
       <el-col :md="{span:4,offest:2}" :lg="3">
         <div style="margin: 1.2em 0;">
@@ -13,12 +13,16 @@
       </el-col>
       <el-col :md="6" :lg="4">
         <div style="margin: 1.8em 0;">
-          <el-switch active-text="显示已删除的应用" inactive-text></el-switch>
+          <el-switch
+            v-model="showdelete"
+            :active-text="this.$t('message.Show_deleted_apps')"
+            inactive-text
+          ></el-switch>
         </div>
       </el-col>
       <el-col :md="{span:4,offest:2}" :lg="{span:6,offset:7}">
         <div style="margin: 1.2em 0;">
-          <el-button type="primary" @click="getReleaseApp">{{$t('message.hello')}}</el-button>
+          <el-button type="primary" @click="getReleaseApp">{{$t('message.Deploy_App')}}</el-button>
         </div>
       </el-col>
     </el-row>
@@ -61,36 +65,42 @@
         :md="8"
         :lg="6"
         :xl="4"
-        v-for="catalog in this.releases"
-        :key="catalog.chartMetadata.name"
+        v-for="(catalog, index) in this.releases"
+        :key="index"
         class="el-col"
       >
-        <el-card :body-style="{ padding: '0px' }">
+        <el-card :body-style="{ padding: '0px' }" v-if="catalog.status!='DELETED' || showdelete">
           <div class="catalog-image">
-            <img :src="catalog.chartMetadata.icon" class="image" />
+            <img
+              v-show="catalog.icon"
+              :src="catalog.icon"
+              class="image"
+            />
+            <img
+              v-show="!catalog.icon"
+              src="../../.././static/catalog/default.png"
+              class="image"
+            />
           </div>
           <div style="padding: 1em;">
             <h3 class="catalog-label">{{catalog.chartMetadata.name}}</h3>
-            <h5 class="catalog-desc">{{catalog.chartMetadata.description}}</h5>
             <div class="bottom clearfix">
               <el-button type="text" class="button-left" disabled>
                 <i class="iconfont">&#xe67b;</i>
-                &nbsp;{{catalog.chartMetadata.version}}
+                &nbsp;{{catalog.version}}
               </el-button>
               <el-button
-                size="medium"
+                size="small"
                 type="primary"
                 class="button-right"
-                v-show="catalog.operate == 'stable'
-              || catalog.operate == 'bitnami'"
                 round
-              >{{catalog.operate}}</el-button>
+              >{{catalog.namespace}}</el-button>
               <el-button
-                type="warning"
+                :type="catalog.status != 'DELETED'?'success':'warning'"
+                size="small"
                 class="button-right"
-                v-show="catalog.operate == 'incubator'"
                 round
-              >{{catalog.operate}}</el-button>
+              >{{catalog.status}}</el-button>
             </div>
           </div>
         </el-card>
@@ -107,21 +117,20 @@ export default {
   name: "dashboard",
   data() {
     return {
+      showdelete: true,
       radio: "",
       loading: false,
       releases: []
     };
   },
-  created: function() {
-
-  },
+  created: function() {},
   mounted: function() {
-    this.$store.dispatch('getRelease')
+    this.$store.dispatch("getRelease");
   },
   methods: {
     getReleaseApp() {
       console.log(this.releases);
-    },
+    }
   },
   computed: {
     getRelease() {
@@ -178,13 +187,20 @@ export default {
   margin: 20px 0 0 1em;
 }
 .bottom {
+  margin-top: 20px; 
   line-height: 12px;
   text-align: left;
 }
 
 .button-left {
-  padding: 5px;
+  padding: 5px 0 5px 5px;
   float: left;
+  height: 24px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
 }
 
 .button-right {
@@ -242,5 +258,10 @@ export default {
   font-size: 1.1em;
   font-weight: 700;
   margin: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
 }
 </style>

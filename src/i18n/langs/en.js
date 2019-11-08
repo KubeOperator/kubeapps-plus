@@ -21,8 +21,8 @@ const en = {
         'refresh_all': 'Refresh All',
         'repo': 'Repo',
         'url': 'URL',
-        'actions': 'Actions'
-
+        'actions': 'Actions',
+        'search': 'Search'
     },
     ...enLocale
 }

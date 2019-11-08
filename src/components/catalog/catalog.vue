@@ -10,10 +10,13 @@
                   v-model="input"
                   clearable>
           </el-input>
+          <el-button
+                  size="medium" icon="el-icon-search" class="catalog-search-btn"
+                  @click="handleSelect(input)">{{$t('message.search')}}</el-button>
         </div>
       </el-col>
     </el-row>
-    <el-divider></el-divider>
+    <el-dsearchivider></el-dsearchivider>
     <el-row :gutter="20">
       <el-col :xs="24" :sm="12" :md="8" :lg="6" :xl="4" v-for="(catalog, index) in catalogList" :key="index" class="el-col">
         <el-card :body-style="{ padding: '0px' }">
@@ -26,7 +29,8 @@
             <h5 class="catalog-desc">{{catalog.attributes.description}}</h5>
             <div class="bottom clearfix">
               <el-button type="text" class="button-left" disabled>
-                <i class="iconfont">&#xe67b;</i>&nbsp;{{catalog.relationships.latestChartVersion.data.app_version ? catalog.relationships.latestChartVersion.data.app_version : catalog.relationships.latestChartVersion.data.version}}
+                <i class="iconfont">&#xe67b;</i>&nbsp;
+                {{catalog.relationships.latestChartVersion.data.app_version ? catalog.relationships.latestChartVersion.data.app_version : catalog.relationships.latestChartVersion.data.version}}
               </el-button>
               <el-button size="medium" type="primary" class="button-right" v-show="catalog.id.indexOf('stable') > -1
               || catalog.id.indexOf('bitnami') > -1 || catalog.id.indexOf('svc-cat') > -1" round>
@@ -47,6 +51,7 @@
 import apiSetting from "../utils/apiSetting.js";
 import http from "../utils/httpAxios.js";
 import errorMessage from '../utils/errorMessage.js';
+import common from '../common/common.js';
 
 let catalogList = []
 export default {
@@ -65,16 +70,18 @@ export default {
     init : async function (){
         await http(apiSetting.kubernetes.getCharts).then(res => {
             if (res.status == 200) {
-                console.log('getCharts: ', res.data.data)
                 this.catalogList = res.data.data
             } else {
                 //Error Message
                 this.loading = false;
-                console.error(res)
                 errorMessage(this, res);
             }
         })
 
+    },
+    handleSelect : async function (key) {
+        await this.init()
+        this.catalogList = common.search(key, this.catalogList)
     }
   }
 };
@@ -93,6 +100,12 @@ export default {
     width: 40%;
     margin: 20px 0 0 1em;
   }
+  .catalog-search-btn{
+    float: left;
+    width: 16%;
+    margin: 20px 0 0 1em;
+    padding: 11.5px 20px;
+  }
   .bottom {
     line-height: 12px;
     text-align: left;
@@ -101,12 +114,13 @@ export default {
   .button-left {
     padding: 5px 0 5px 5px;
     float: left;
-      height: 24px;
-      overflow : hidden;
-      text-overflow: ellipsis;
-      display: -webkit-box;
-      -webkit-line-clamp: 1;
-      -webkit-box-orient: vertical;
+    max-width: 70%;
+    height: 24px;
+    overflow : hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
   }
 
   .button-right {

@@ -7,7 +7,7 @@ let arr = []
 var search = function (key, json) {
     let jsonObj
     if (json instanceof String) {
-        jsonObj = JSON.stringify(json)
+        jsonObj = JSON.parse(json)
     } else {
         jsonObj = json
     }

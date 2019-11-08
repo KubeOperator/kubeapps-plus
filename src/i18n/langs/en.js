@@ -16,7 +16,13 @@ const en = {
         'logout': 'Logout',
         'search_charts': 'search charts...',
         'app_repositories': 'App Repositories',
-        'service_broker': 'Service Broker'
+        'service_broker': 'Service Broker',
+        'refresh': 'Refresh',
+        'refresh_all': 'Refresh All',
+        'repo': 'Repo',
+        'url': 'URL',
+        'actions': 'Actions'
+
     },
     ...enLocale
 }

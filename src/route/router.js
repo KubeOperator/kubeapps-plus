@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 import mainLogin from "../components/login/mainLogin.vue"
 import applications from "../components/applications/applications.vue"
 import catalog from "../components/catalog/catalog.vue"
+import repositories from "../components/configuration/appRepositories.vue"
 
 // 2. 定义路由
 // 每个路由应该映射一个组件。 其中"component" 可以是
@@ -12,7 +13,8 @@ import catalog from "../components/catalog/catalog.vue"
 const routes = [
   { path: '/', component: mainLogin,meta: {allowBack: false} },
   { path: '/applications', component: applications },
-  { path: '/catalog', component: catalog }
+  { path: '/catalog', component: catalog },
+  { path: '/repositories', component: repositories }
 ]
 
 // 3. 创建 router 实例，然后传 `routes` 配置

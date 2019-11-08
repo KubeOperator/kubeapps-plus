@@ -16,7 +16,12 @@ const cn = {
         'logout': '注销',
         'search_charts': '发现图表...',
         'app_repositories': '应用存储库',
-        'service_broker': '服务代理'
+        'service_broker': '服务代理',
+        'refresh': '刷新',
+        'refresh_all': '刷新全部',
+        'repo': '仓库名称',
+        'url': '网址',
+        'actions': '操作'
     },
     ...zhLocale
 }

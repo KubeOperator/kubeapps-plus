@@ -45,7 +45,7 @@ export default {
             api.url =
                 apiSetting.kubernetes.getRelease.url +
                 n.items[0].metadata.name +
-                "/releases";
+                "/releases?statuses=all";
             api.method = apiSetting.kubernetes.getRelease.method;
             state.api = api
         },
@@ -58,7 +58,7 @@ export default {
             api.url =
                 apiSetting.kubernetes.getRelease.url +
                 n +
-                "/releases";
+                "/releases?statuses=all";
             api.method = apiSetting.kubernetes.getRelease.method;
             state.api = api
         },

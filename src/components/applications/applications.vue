@@ -2,7 +2,7 @@
   <div class="dashborad" element-loading-text="Loading">
     <el-row style="margin-top:10px;border-bottom: 2px solid #f1f1f1;">
       <el-col :md="6" :lg="4">
-        <h1 class="app_title">Applications</h1>
+        <h1 class="app_title">{{$t('message.application')}}</h1>
       </el-col>
       <el-col :md="{span:4,offest:2}" :lg="3">
         <div style="margin: 1.2em 0;">
@@ -13,12 +13,12 @@
       </el-col>
       <el-col :md="6" :lg="4">
         <div style="margin: 1.8em 0;">
-          <el-switch active-text="显示已删除的应用" inactive-text></el-switch>
+          <el-switch v-model="showdelete" :active-text="this.$t('message.Show_deleted_apps')" inactive-text></el-switch>
         </div>
       </el-col>
       <el-col :md="{span:4,offest:2}" :lg="{span:6,offset:7}">
         <div style="margin: 1.2em 0;">
-          <el-button type="primary" @click="getReleaseApp">{{$t('message.hello')}}</el-button>
+          <el-button type="primary" @click="getReleaseApp">{{$t('message.Deploy_App')}}</el-button>
         </div>
       </el-col>
     </el-row>
@@ -65,13 +65,13 @@
         :key="catalog.chartMetadata.name"
         class="el-col"
       >
-        <el-card :body-style="{ padding: '0px' }">
+        <el-card :body-style="{ padding: '0px' }" v-if="catalog.status!='DELETED' || showdelete">
           <div class="catalog-image">
             <img :src="catalog.chartMetadata.icon" class="image" />
           </div>
           <div style="padding: 1em;">
             <h3 class="catalog-label">{{catalog.chartMetadata.name}}</h3>
-            <h5 class="catalog-desc">{{catalog.chartMetadata.description}}</h5>
+            <!-- <h5 class="catalog-desc">{{catalog.chartMetadata.description}}</h5> -->
             <div class="bottom clearfix">
               <el-button type="text" class="button-left" disabled>
                 <i class="iconfont">&#xe67b;</i>
@@ -107,9 +107,10 @@ export default {
   name: "dashboard",
   data() {
     return {
+      showdelete:true,
       radio: "",
       loading: false,
-      releases: []
+      releases: [],
     };
   },
   created: function() {

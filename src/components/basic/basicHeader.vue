@@ -84,10 +84,10 @@ export default {
       this.$router.push("/");
     },
     appRepositories() {
-      console.log("go...appRepositories");
+      this.$router.push("/repositories");
     },
     serviceBroker() {
-      console.log("go...serviceBroker");
+      this.$router.push("/");
     },
     changeActiveSpace(name) {
       this.$store.commit("updateActiveSapce", name);

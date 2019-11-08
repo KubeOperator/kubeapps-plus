@@ -19,6 +19,11 @@ const cn = {
         'service_broker': '服务代理',
         'Show_deleted_apps' : '显示已删除应用',
         'Deploy_App':'部署应用',
+        'refresh': '刷新',
+        'refresh_all': '刷新全部',
+        'repo': '仓库名称',
+        'url': '网址',
+        'actions': '操作'
     },
     ...zhLocale
 }

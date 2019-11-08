@@ -44,7 +44,6 @@ function errorState (response) {
   }
 }
 
-
 function successState (res) {
   //  ..隐藏loading
   console.log(res)

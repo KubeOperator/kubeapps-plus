@@ -23,7 +23,8 @@ const cn = {
         'refresh_all': '刷新全部',
         'repo': '仓库名称',
         'url': '网址',
-        'actions': '操作'
+        'actions': '操作',
+        'search': '搜索'
     },
     ...zhLocale
 }

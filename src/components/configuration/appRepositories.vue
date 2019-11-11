@@ -32,10 +32,6 @@
           <el-button
                   size="medium" icon="el-icon-refresh"
                   @click="refresh(scope.$index, scope.row.metadata.name)">{{$t('message.refresh')}}</el-button>
-<!--          <el-button-->
-<!--                  size="mini"-->
-<!--                  type="danger"-->
-<!--                  @click="handleDelete(scope.$index, scope.row)">删除</el-button>-->
         </template>
       </el-table-column>
     </el-table>
@@ -48,6 +44,7 @@
   import http from "../utils/httpAxios.js";
   import errorMessage from '../utils/errorMessage.js';
   import getParamApi from "../utils/getParamApi";
+  import loading from '../utils/loading.js';
 
   export default {
     data() {
@@ -69,6 +66,7 @@
       }
     },
     created(){
+      loading(this, 1000)
       this.init()
     },
     methods: {

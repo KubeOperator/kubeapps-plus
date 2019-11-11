@@ -16,7 +16,7 @@
         </div>
       </el-col>
     </el-row>
-    <el-dsearchivider></el-dsearchivider>
+    <el-divider></el-divider>
     <el-row :gutter="20">
       <el-col :xs="24" :sm="12" :md="8" :lg="6" :xl="4" v-for="(catalog, index) in catalogList" :key="index" class="el-col">
         <el-card :body-style="{ padding: '0px' }">
@@ -65,7 +65,7 @@ export default {
     }
   },
   created() {
-    loading(this)
+    loading(this, 2000)
     this.init()
   },
   methods:{

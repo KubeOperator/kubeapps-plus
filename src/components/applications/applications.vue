@@ -68,10 +68,10 @@
         v-for="(catalog, index) in this.releases"
         :key="index"
         class="el-col"
+        v-show="catalog.status!='DELETED' || showdelete"
       >
         <el-card
           :body-style="{ padding: '0px' }"
-          v-if="catalog.status!='DELETED' || showdelete"
           @click.native="$router.push('/apps/ns/'+ catalog.namespace + '/' + catalog.releaseName)"
         >
           <div class="catalog-image" >
@@ -151,6 +151,9 @@ export default {
 </script>
 <style scoped>
 .app_title {
+}
+.el-row {
+  margin:0px !important;
 }
 .alert {
   background-color: #ffffff;

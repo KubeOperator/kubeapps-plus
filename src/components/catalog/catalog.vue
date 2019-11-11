@@ -1,5 +1,6 @@
 <template>
   <div class="catalog-content">
+    <!-- header start -->
     <el-row>
       <el-col :span="24">
         <div class="grid-content">
@@ -10,18 +11,26 @@
                   v-model="input"
                   clearable>
           </el-input>
-          <el-button
-                  size="medium" icon="el-icon-search" class="catalog-search-btn"
-                  @click="handleSelect(input)">{{$t('message.search')}}</el-button>
+          <el-button size="medium" icon="el-icon-search" class="catalog-search-btn" @click="handleSelect(input)">
+            {{$t('message.search')}}
+          </el-button>
         </div>
       </el-col>
     </el-row>
+    <!-- header end -->
+
+    <!-- 间隔线 start -->
     <el-divider></el-divider>
+    <!-- 间隔线 end -->
+
+    <!-- foot start -->
     <el-row :gutter="20">
-      <el-col :xs="24" :sm="12" :md="8" :lg="6" :xl="4" v-for="(catalog, index) in catalogList" :key="index" class="el-col">
+      <el-col :xs="24" :sm="12" :md="8" :lg="6" :xl="4" v-for="(catalog, index) in catalogList"
+              :key="index" class="el-col">
         <el-card :body-style="{ padding: '0px' }">
-          <div class="catalog-image">
-            <img v-show="catalog.attributes.icon" :src="catalog.attributes.icon | searchImage(catalog.attributes.icon)" class="image">
+          <div class="catalog-image" @click="goDetails(catalog)">
+            <img v-show="catalog.attributes.icon" :src="catalog.attributes.icon |
+              searchImage(catalog.attributes.icon)" class="image">
             <img v-show="!catalog.attributes.icon" src="../../.././static/catalog/default.png" class="image">
           </div>
           <div style="padding: 1em;">
@@ -30,7 +39,9 @@
             <div class="bottom clearfix">
               <el-button type="text" class="button-left" disabled>
                 <i class="iconfont">&#xe67b;</i>&nbsp;
-                {{catalog.relationships.latestChartVersion.data.app_version ? catalog.relationships.latestChartVersion.data.app_version : catalog.relationships.latestChartVersion.data.version}}
+                {{catalog.relationships.latestChartVersion.data.app_version ?
+                    catalog.relationships.latestChartVersion.data.app_version :
+                    catalog.relationships.latestChartVersion.data.version}}
               </el-button>
               <el-button size="medium" type="primary" class="button-right" v-show="catalog.id.indexOf('stable') > -1
               || catalog.id.indexOf('bitnami') > -1 || catalog.id.indexOf('svc-cat') > -1" round>
@@ -44,6 +55,7 @@
         </el-card>
       </el-col>
     </el-row>
+    <!-- foot end -->
   </div>
 </template>
 
@@ -82,6 +94,9 @@ export default {
     handleSelect : async function (key) {
         await this.init()
         this.catalogList = common.search(key, this.catalogList)
+    },
+    goDetails (catalog) {
+      this.$router.push({name: '/catalogDetails', params: {catalog: catalog}})
     }
   }
 };

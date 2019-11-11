@@ -73,6 +73,7 @@ export default {
 }
 .el-main {
   padding: inherit !important;
+  flex: 1 1;
 }
 .el-header {
   padding: inherit !important;

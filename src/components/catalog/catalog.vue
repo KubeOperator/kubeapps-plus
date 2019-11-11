@@ -52,6 +52,7 @@ import apiSetting from "../utils/apiSetting.js";
 import http from "../utils/httpAxios.js";
 import errorMessage from '../utils/errorMessage.js';
 import common from '../common/common.js';
+import loading from '../utils/loading.js';
 
 let catalogList = []
 export default {
@@ -64,6 +65,7 @@ export default {
     }
   },
   created() {
+    loading(this)
     this.init()
   },
   methods:{

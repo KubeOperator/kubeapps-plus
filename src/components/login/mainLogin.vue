@@ -1,6 +1,6 @@
 <template>
   <div class="main_login">
-    <el-card class="box-card" v-loading="loading" element-loading-text="loading">
+    <el-card class="box-card">
       <div class="main">
         <div class="box-card-left">
           <img class="login_img" src="../../.././static/img/login-banner.png" />
@@ -55,13 +55,11 @@ export default {
   data() {
     return {
       input: "",
-      loading: false
     };
   },
   methods: {
     handleToken() {
       Store.save("accessToken", this.input);
-      this.loading = true;
       http(apiSetting.kubernetes.getInfo).then(res => {
         if (res.status == 200) {
           http(apiSetting.kubernetes.getNamespaces).then(res => {
@@ -72,13 +70,11 @@ export default {
               this.$router.push("/applications");
             } else {
               //Error Message
-              this.loading = false;
               errorMessage(this, res);
             }
           });
         } else {
           //Error Message
-          this.loading = false;
           errorMessage(this, res);
         }
       });

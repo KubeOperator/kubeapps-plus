@@ -87,7 +87,7 @@ export default {
       this.$router.push("/repositories");
     },
     serviceBroker() {
-      this.$router.push("/");
+      this.$router.push("/brokers");
     },
     changeActiveSpace(name) {
       this.$store.commit("updateActiveSapce", name);

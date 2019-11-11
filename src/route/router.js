@@ -4,6 +4,7 @@ import mainLogin from "../components/login/mainLogin.vue"
 import applications from "../components/applications/applications.vue"
 import catalog from "../components/catalog/catalog.vue"
 import repositories from "../components/configuration/appRepositories.vue"
+import brokers from "../components/configuration/serviceBroker.vue"
 import apps from "../components/applications/apps.vue"
 
 // 2. 定义路由
@@ -16,6 +17,7 @@ const routes = [
   { path: '/applications', component: applications },
   { path: '/catalog', component: catalog },
   { path: '/repositories', component: repositories },
+  { path: '/brokers', component: brokers },
   {path: '/apps/ns/:namespace/:id',component: apps }
 ]
 

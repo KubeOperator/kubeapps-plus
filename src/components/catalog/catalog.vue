@@ -75,11 +75,9 @@ export default {
                 this.catalogList = res.data.data
             } else {
                 //Error Message
-                this.loading = false;
                 errorMessage(this, res);
             }
         })
-
     },
     handleSelect : async function (key) {
         await this.init()

@@ -17,7 +17,7 @@ const routes = [
   { path: '/', component: mainLogin,meta: {allowBack: false} },
   { path: '/applications', component: applications },
   { path: '/catalog', component: catalog },
-  { path: '/catalogDetails', component: catalogDetails, props: {catalog : {}} },
+  { path: '/catalogDetails', component: catalogDetails, props: { id: '', icon : '', desc: '', version: ''}},
   { path: '/repositories', component: repositories },
   { path: '/brokers', component: brokers },
   { path: '/apps/ns/:namespace/:id',component: apps }

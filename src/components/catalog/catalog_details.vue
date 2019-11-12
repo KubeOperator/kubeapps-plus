@@ -33,6 +33,10 @@
 
 <script>
 import loading from '../utils/loading.js';
+// import apiSetting from "../utils/apiSetting.js";
+// import http from "../utils/httpAxios.js";
+// import getParamApi from "../utils/getParamApi";
+// import errorMessage from '../utils/errorMessage.js';
 
 export default {
   data(){
@@ -41,14 +45,23 @@ export default {
     }
   },
   created() {
+    alert(111)
+    console.log(this.$route)
     loading(this, 2000)
     this.init()
 
   },
   methods:{
-    init (){
-      this.catalog = this.$route.params.catalog
-      console.log(this.catalog)
+    init : async () => {
+      // await http(getParamApi(apiSetting.kubernetes.getCharts, this.$route.params.id, 'versions')).then(res => {
+      //   if (res.status == 200) {
+      //     this.catalog = res.data.data
+      //   } else {
+      //     //Error Message
+      //     errorMessage(this, res);
+      //   }
+      // })
+
     }
   }
 };

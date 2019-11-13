@@ -45,6 +45,7 @@ export default {
 
 <style>
 @import "./assets/css/normalize.css";
+@import "./assets/css/ma.min.css";
 @font-face {
   font-family: "iconfont"; /* project id 1481498 */
   src: url("//at.alicdn.com/t/font_1481498_ytrqu85r3p.eot");
@@ -64,7 +65,7 @@ export default {
   -moz-osx-font-smoothing: grayscale;
 }
 #app {
-  font-family: "Avenir", Helvetica, Arial, sans-serif;
+  font-family: Helvetica, Helvetica Neue, "Avenir", Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;

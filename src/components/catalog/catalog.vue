@@ -81,7 +81,7 @@ export default {
     }
   },
   created() {
-    loading(this, 2000)
+    loading(this, 1500)
     this.init()
   },
   methods:{
@@ -106,8 +106,7 @@ export default {
         desc: desc,
         version: version
       }
-      console.log(params)
-      this.$router.push({path : '/catalogDetails', params : JSON.stringify(params)})
+      this.$router.push({name : 'catalogDetails', params : params})
     }
   }
 };
@@ -140,7 +139,7 @@ export default {
   .button-left {
     padding: 5px 0 5px 5px;
     float: left;
-    max-width: 70%;
+    max-width: 60%;
     height: 24px;
     overflow : hidden;
     text-overflow: ellipsis;
@@ -159,6 +158,7 @@ export default {
     max-height: 6em;
     display: block;
     margin: 1em;
+    cursor: hand;
   }
 
   .el-col{
@@ -187,7 +187,7 @@ export default {
   }
 
   .catalog-desc{
-    height: 2em;
+    height: 2.4em;
     overflow : hidden;
     text-overflow: ellipsis;
     display: -webkit-box;

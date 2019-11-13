@@ -24,7 +24,8 @@ const cn = {
         'repo': '仓库名称',
         'url': '网址',
         'actions': '操作',
-        'search': '搜索'
+        'search': '搜索',
+        'deploy': '部署'
     },
     ...zhLocale
 }

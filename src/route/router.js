@@ -14,13 +14,13 @@ import apps from "../components/applications/apps.vue"
 // 或者，只是一个组件配置对象。
 // 我们晚点再讨论嵌套路由。
 const routes = [
-  { path: '/', component: mainLogin,meta: {allowBack: false} },
-  { path: '/applications', component: applications },
-  { path: '/catalog', component: catalog },
-  { path: '/catalogDetails', component: catalogDetails, props: { id: '', icon : '', desc: '', version: ''}},
-  { path: '/repositories', component: repositories },
-  { path: '/brokers', component: brokers },
-  { path: '/apps/ns/:namespace/:id',component: apps }
+  { name: '/', path: '/', component: mainLogin,meta: {allowBack: false} },
+  { name: 'applications', path: '/applications', component: applications },
+  { name: 'catalog', path: '/catalog', component: catalog },
+  { name: 'catalogDetails', path: '/catalogDetails', component: catalogDetails, props: { id: '', icon : '', desc: '', version: ''}},
+  { name: 'repositories', path: '/repositories', component: repositories },
+  { name: 'brokers', path: '/brokers', component: brokers },
+  { name: 'apps', path: '/apps/ns/:namespace/:id',component: apps }
 ]
 
 // 3. 创建 router 实例，然后传 `routes` 配置

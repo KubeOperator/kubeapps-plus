@@ -3,7 +3,7 @@
  * time: UTC时间格式一般为 "2019-11-16T05:23:20.000Z"
  * @author: maguohao
  */
-var UTC2GMT = function (time) {
+export function UTC2GMT (time) {
     alert(time)
     if(!time){
         return '-';
@@ -20,5 +20,3 @@ var UTC2GMT = function (time) {
     alert(dateStr)
     return dateStr;
 }
-
-export default UTC2GMT

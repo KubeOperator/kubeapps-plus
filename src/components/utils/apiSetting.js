@@ -27,6 +27,10 @@ const serviceModule = {
     getServiceBrokers: {
       url: 'api/kube/apis/servicecatalog.k8s.io/v1beta1',
       method:'get'
+    },
+    getReadme: {
+      url:'/api/chartsvc/v1/assets',
+      method:'get'
     }
   }
 }

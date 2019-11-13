@@ -4,29 +4,30 @@
     <el-row>
       <el-row :gutter="20">
         <el-col :span="4">
-          <div class="grid-content bg-purple">
-            <img src="https://hub.kubeapps.com/api/chartsvc/v1/assets/stable/aerospike/logo" class="image"/>
-<!--            <img v-show="catalog.attributes.icon" :src="catalog.attributes.icon | searchImage(catalog.attributes.icon)" class="image">-->
-<!--            <img v-show="!catalog.attributes.icon" src="../../.././static/catalog/default.png" class="image">-->
+          <div class="grid-content bg-purple grid-img">
+            <img v-show="catalog.icon" :src="catalog.icon | searchImage(catalog.icon)" class="image">
+            <img v-show="!catalog.icon" src="../../.././static/catalog/default.png" class="image">
           </div>
         </el-col>
         <el-col :span="20">
-          <div class="grid-content bg-purple">
-            <el-col :span="16">
-              <h1 class="h1">
-                {{'stable/aerospike'}}
-              </h1>
-              <h5 class="h5">
-                {{'v4.5.0.5 - stable'}}
-              </h5>
-              <h5 class="h5">
-                {{'A Helm chart for Aerospike in Kubernetes'}}
-                <el-button type="success"
-                        size="medium" icon="el-icon-download" class="deploy"
-                        @click="deploy(catalog)">{{$t('message.deploy')}}</el-button>
-              </h5>
-            </el-col>
-          </div>
+          <el-col :span="19">
+            <div class="grid-content bg-purple">
+                <h1 class="h1">
+                  {{catalog.id}}
+                </h1>
+                <h5 class="h5">
+                  {{catalog.version}}&nbsp;{{'-'}}&nbsp;{{catalog.id | splitName(catalog.id)}}
+                </h5>
+                  <h5 class="h5">
+                    {{catalog.desc}}
+                  </h5>
+            </div>
+          </el-col>
+          <el-col :span="1" class="deploy">
+            <el-button type="success"
+                       size="medium" icon="el-icon-download"
+                       @click="deploy(catalog)">{{$t('message.deploy')}}</el-button>
+          </el-col>
         </el-col>
       </el-row>
     </el-row>
@@ -41,11 +42,64 @@
       <el-main>
         <vue-markdown class="article" :source="README"></vue-markdown>
       </el-main>
+
       <el-aside>
         <div class="ChartViewSidebar__section">
           <h2>{{'Chart Versions'}}</h2>
+          <div class="ChartVersionsList">
+            <ul class="remove-style padding-l-reset margin-b-reset">
+              <li style="height: 15px" v-for="(char, index) in chartVersionList" :key="index">
+                <a @click="selectChart()">
+                  {{char.attributes.version}} {{'-'}} {{char.attributes.created | UTC2GMT(char.attributes.created)}}
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="ChartViewSidebar__section">
+          <h2>{{'App Version'}}</h2>
+          <div class="ChartVersionsList">
+            {{catalog.version}}
+          </div>
+        </div>
+        <div class="ChartViewSidebar__section">
+          <h2>{{'Home'}}</h2>
+          <div class="ChartVersionsList">
+            <ul class="remove-style padding-l-reset margin-b-reset">
+              <li style="height: 15px">
+                <a @click="selectChart()">
+                  {{'https://httpd.apache.org'}}
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="ChartViewSidebar__section">
+          <h2>{{'Maintainers'}}</h2>
+          <div class="ChartVersionsList">
+            <ul class="remove-style padding-l-reset margin-b-reset">
+              <li style="height: 15px">
+                <a @click="selectChart()">
+                  {{catalog.id | splitName(catalog.id)}}
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="ChartViewSidebar__section">
+          <h2>{{'Related'}}</h2>
+          <div class="ChartVersionsList">
+            <ul class="remove-style padding-l-reset margin-b-reset">
+              <li style="height: 15px">
+                <a @click="selectChart()">
+                  {{'https://github.com/bitnami/bitnami-docker-apache'}}
+                </a>
+              </li>
+            </ul>
+          </div>
         </div>
       </el-aside>
+
     </el-container>
     <!-- foot end -->
   </div>
@@ -53,12 +107,12 @@
 
 <script>
 import loading from '../utils/loading.js';
-// import showdown from 'showdown'
 import VueMarkdown from 'vue-markdown'
-// import apiSetting from "../utils/apiSetting.js";
-// import http from "../utils/httpAxios.js";
-// import getParamApi from "../utils/getParamApi";
-// import errorMessage from '../utils/errorMessage.js';
+import apiSetting from "../utils/apiSetting.js";
+import http from "../utils/httpAxios.js";
+import getParamApi from "../utils/getParamApi";
+import errorMessage from '../utils/errorMessage.js';
+
 export default {
   name:'document',
   components:{
@@ -67,7 +121,10 @@ export default {
   data(){
     return {
       catalog: {},
-      README: `# README`
+      README: '',
+      id: '',
+      versionNew: '',
+      chartVersionList: []
     }
   },
   mounted () {
@@ -76,183 +133,38 @@ export default {
     // this.html = converter.makeHtml(text)
   },
   created() {
-    this
+    this.catalog = this.$route.params
+    this.id = this.$route.params.id
+    console.log(this.id)
     loading(this, 1000)
     this.init()
-    this.README = `# Aerospike Helm Chart
-
-This is an implementation of Aerospike StatefulSet found here:
-
-* <https://github.com/aerospike/aerospike-kubernetes>
-
-## Pre Requisites
-
-* Kubernetes 1.9+
-
-* PV support on underlying infrastructure (only if you are provisioning persistent volume).
-
-* Requires at least \`v2.5.0\` version of helm to support
-
-## StatefulSet Details
-
-* <https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/>
-
-## StatefulSet Caveats
-
-* <https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/#limitations>
-
-## Chart Details
-
-This chart will do the following:
-
-* Implement a dynamically scalable Aerospike cluster using Kubernetes StatefulSets
-
-### Installing the Chart
-
-To install the chart with the release name \`my-aerospike\` using a dedicated namespace(recommended):
-
-\`\`\`sh
-helm repo add incubator http://storage.googleapis.com/kubernetes-charts-incubator
-helm install --name my-aerospike --namespace aerospike stable/aerospike
-\`\`\`
-
-The chart can be customized using the following configurable parameters:
-
-| Parameter                       | Description                                                     | Default                      |
-| ------------------------------- | ----------------------------------------------------------------| -----------------------------|
-| \`image.repository\`              | Aerospike Container image name                                  | \`aerospike/aerospike-server\` |
-| \`image.tag\`                     | Aerospike Container image tag                                   | \`4.5.0.5\`                    |
-| \`image.pullPolicy\`              | Aerospike Container pull policy                                 | \`Always\`                     |
-| \`replicaCount\`                  | Aerospike Brokers                                               | \`1\`                          |
-| \`command\`                       | Custom command (Docker Entrypoint)                              | \`[]\`                         |
-| \`args\`                          | Custom args (Docker Cmd)                                        | \`[]\`                         |
-| \`labels\`                        | Map of labels to add to the statefulset                         | \`{}\`                         |
-| \`annotations\`                   | Map of annotations to add to the statefulset                    | \`{}\`                         |
-| \`tolerations\`                   | List of node taints to tolerate                                 | \`[]\`                         |
-| \`persistentVolume\`              | Config of persistent volumes for storage-engine                 | \`{}\`                         |
-| \`confFile\`                      | Config filename. This file should be included in the chart path | \`aerospike.conf\`             |
-| \`resources\`                     | Resource requests and limits                                    | \`{}\`                         |
-| \`nodeSelector\`                  | Labels for pod assignment                                       | \`{}\`                         |
-| \`terminationGracePeriodSeconds\` | Wait time before forcefully terminating container               | \`30\`                         |
-| \`service.type\`                  | Kubernetes Service type                                         | \`ClusterIP\`                  |
-| \`service.annotations\`           | Kubernetes service annotations, evaluated as a template         | \`{}\`                         |
-| \`service.loadBalancerIP\`        | Static IP Address to use for LoadBalancer service type          | \`nil\`                        |
-| \`service.clusterIP\`             | Static clusterIP or None for headless services                  | \`None\`                       |
-| \`meshService.annotations\`       | Kubernetes service annotations, evaluated as a template         | \`{}\`                         |
-
-Specify parameters using \`--set key=value[,key=value]\` argument to \`helm install\`
-
-Alternatively a YAML file that specifies the values for the parameters can be provided like this:
-
-\`\`\`sh
-helm install --name my-aerospike -f values.yaml stable/aerospike
-\`\`\`
-
-### Conf files for Aerospike
-
-There is one conf file added to each Aerospike release. This conf file can be replaced with a custom file and updating the \`confFile\` value.
-
-If you modify the \`aerospike.conf\` (and you use more than 1 replica), you want to add the \`#REPLACE_THIS_LINE_WITH_MESH_CONFIG\` comment to the config file (see the default conf file). This will update your mesh to connect each replica.
-
-## Known Limitations
-
-* Persistent volume claims tested only on GCP
-* Aerospike cluster is not accessible via an external endpoint
-`
   },
   methods:{
-    init : async () => {
-      this.README = `# Aerospike Helm Chart
-
-This is an implementation of Aerospike StatefulSet found here:
-
-* <https://github.com/aerospike/aerospike-kubernetes>
-
-## Pre Requisites
-
-* Kubernetes 1.9+
-
-* PV support on underlying infrastructure (only if you are provisioning persistent volume).
-
-* Requires at least \`v2.5.0\` version of helm to support
-
-## StatefulSet Details
-
-* <https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/>
-
-## StatefulSet Caveats
-
-* <https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/#limitations>
-
-## Chart Details
-
-This chart will do the following:
-
-* Implement a dynamically scalable Aerospike cluster using Kubernetes StatefulSets
-
-### Installing the Chart
-
-To install the chart with the release name \`my-aerospike\` using a dedicated namespace(recommended):
-
-\`\`\`sh
-helm repo add incubator http://storage.googleapis.com/kubernetes-charts-incubator
-helm install --name my-aerospike --namespace aerospike stable/aerospike
-\`\`\`
-
-The chart can be customized using the following configurable parameters:
-
-| Parameter                       | Description                                                     | Default                      |
-| ------------------------------- | ----------------------------------------------------------------| -----------------------------|
-| \`image.repository\`              | Aerospike Container image name                                  | \`aerospike/aerospike-server\` |
-| \`image.tag\`                     | Aerospike Container image tag                                   | \`4.5.0.5\`                    |
-| \`image.pullPolicy\`              | Aerospike Container pull policy                                 | \`Always\`                     |
-| \`replicaCount\`                  | Aerospike Brokers                                               | \`1\`                          |
-| \`command\`                       | Custom command (Docker Entrypoint)                              | \`[]\`                         |
-| \`args\`                          | Custom args (Docker Cmd)                                        | \`[]\`                         |
-| \`labels\`                        | Map of labels to add to the statefulset                         | \`{}\`                         |
-| \`annotations\`                   | Map of annotations to add to the statefulset                    | \`{}\`                         |
-| \`tolerations\`                   | List of node taints to tolerate                                 | \`[]\`                         |
-| \`persistentVolume\`              | Config of persistent volumes for storage-engine                 | \`{}\`                         |
-| \`confFile\`                      | Config filename. This file should be included in the chart path | \`aerospike.conf\`             |
-| \`resources\`                     | Resource requests and limits                                    | \`{}\`                         |
-| \`nodeSelector\`                  | Labels for pod assignment                                       | \`{}\`                         |
-| \`terminationGracePeriodSeconds\` | Wait time before forcefully terminating container               | \`30\`                         |
-| \`service.type\`                  | Kubernetes Service type                                         | \`ClusterIP\`                  |
-| \`service.annotations\`           | Kubernetes service annotations, evaluated as a template         | \`{}\`                         |
-| \`service.loadBalancerIP\`        | Static IP Address to use for LoadBalancer service type          | \`nil\`                        |
-| \`service.clusterIP\`             | Static clusterIP or None for headless services                  | \`None\`                       |
-| \`meshService.annotations\`       | Kubernetes service annotations, evaluated as a template         | \`{}\`                         |
-
-Specify parameters using \`--set key=value[,key=value]\` argument to \`helm install\`
-
-Alternatively a YAML file that specifies the values for the parameters can be provided like this:
-
-\`\`\`sh
-helm install --name my-aerospike -f values.yaml stable/aerospike
-\`\`\`
-
-### Conf files for Aerospike
-
-There is one conf file added to each Aerospike release. This conf file can be replaced with a custom file and updating the \`confFile\` value.
-
-If you modify the \`aerospike.conf\` (and you use more than 1 replica), you want to add the \`#REPLACE_THIS_LINE_WITH_MESH_CONFIG\` comment to the config file (see the default conf file). This will update your mesh to connect each replica.
-
-## Known Limitations
-
-* Persistent volume claims tested only on GCP
-* Aerospike cluster is not accessible via an external endpoint
-`
-      // await http(getParamApi(apiSetting.kubernetes.getCharts, this.$route.params.id, 'versions')).then(res => {
-      //   if (res.status == 200) {
-      //     this.catalog = res.data.data
-      //   } else {
-      //     //Error Message
-      //     errorMessage(this, res);
-      //   }
-      // })
+    init : async function() {
+      await http(getParamApi(apiSetting.kubernetes.getCharts, this.id, 'versions')).then(res => {
+        if (res.status == 200) {
+          console.log(res.data.data)
+          this.chartVersionList = res.data.data
+          this.versionNew = res.data.data[0].attributes.version
+          http(getParamApi(apiSetting.kubernetes.getReadme, this.id, 'versions', this.versionNew, 'README.md')).then(res => {
+            if (res.status == 200) {
+              this.README = res.data
+            } else {
+              //Error Message
+              errorMessage(this, res);
+            }
+          })
+        } else {
+          //Error Message
+          errorMessage(this, res);
+        }
+      })
     },
     deploy (key){
       console.log(key)
+    },
+    selectChart () {
+      console.log('111')
     }
   }
 };
@@ -267,11 +179,11 @@ If you modify the \`aerospike.conf\` (and you use more than 1 replica), you want
     min-height: 5em;
     text-align: left;
   }
+  .grid-img{
+    text-align: center !important;
+  }
   .image {
-    max-width: 7em;
-    max-height: 6em;
-    display: block;
-    margin: 1em;
+    margin-top: 25px;
   }
   .h1{
     margin: 0.625em 0 0.3125em;
@@ -281,10 +193,10 @@ If you modify the \`aerospike.conf\` (and you use more than 1 replica), you want
     color: #44add5;
     margin: 0.625em 0 0.3125em;
     font-size: 1.25em;
+    max-width: 80%;
   }
   .deploy{
-    float: right;
-    margin-top: -1em;
+    margin: 10% 1% 0 0;
   }
   .el-aside {
     background-color: #D3DCE6;
@@ -303,12 +215,32 @@ If you modify the \`aerospike.conf\` (and you use more than 1 replica), you want
     text-align: left;
     min-height: 1px;
     box-sizing: border-box;
-    padding: 0 0.625em;
+    padding: 0 1.625em;
     font-size: 1em;
     color: #1C2B39;
     line-height: 1.5;
     font-weight: 400;
     text-rendering: optimizeLegibility;
+  }
+  .ChartViewSidebar__section{
+    padding-top: .1px;
+    overflow-wrap: break-word;
+    max-height: 150px;
+  }
+  .padding-l-reset {
+    padding-left: 0;
+  }
+  .remove-style {
+    list-style: none;
+  }
+  .margin-b-reset {
+    margin-bottom: 0;
+  }
+  .margin-b-reset li {
+    max-height: 20px;
+  }
+  .ChartVersionsList_li {
+    max-height: 20px;
   }
 </style>
 

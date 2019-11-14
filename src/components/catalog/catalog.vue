@@ -28,11 +28,7 @@
       <el-col :xs="24" :sm="12" :md="8" :lg="6" :xl="4" v-for="(catalog, index) in catalogList"
               :key="index" class="el-col">
         <el-card :body-style="{ padding: '0px' }">
-          <div class="catalog-image" @click="goDetails(catalog.id, catalog.attributes.icon,
-                    catalog.attributes.description,
-                    catalog.relationships.latestChartVersion.data.app_version ?
-                    catalog.relationships.latestChartVersion.data.app_version :
-                    catalog.relationships.latestChartVersion.data.version)">
+          <div class="catalog-image" @click="goDetails(catalog)">
             <a><img v-show="catalog.attributes.icon" :src="catalog.attributes.icon |
               searchImage(catalog.attributes.icon)" class="image"></a>
             <a><img v-show="!catalog.attributes.icon" src="../../.././static/catalog/default.png" class="image"></a>
@@ -99,14 +95,11 @@ export default {
         await this.init()
         this.catalogList = common.search(key, this.catalogList)
     },
-    goDetails (id, icon, desc, version) {
-      let params = {
-        id: id,
-        icon : icon,
-        desc: desc,
-        version: version
-      }
-      this.$router.push({name : 'catalogDetails', params : params})
+    goDetails (catalog) {
+      console.log(catalog)
+      sessionStorage.removeItem('catalogDetailsByParams')
+      sessionStorage.setItem('catalogDetailsByParams', JSON.stringify(catalog))
+      this.$router.push({name : 'catalogDetails', params : catalog})
     }
   }
 };

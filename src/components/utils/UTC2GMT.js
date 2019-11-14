@@ -4,7 +4,6 @@
  * @author: maguohao
  */
 export function UTC2GMT (time) {
-    alert(time)
     if(!time){
         return '-';
     }
@@ -17,6 +16,5 @@ export function UTC2GMT (time) {
     let day = formatFunc(date2.getDate());
 
     var dateStr = year+'年'+mon+'月'+day+'日';
-    alert(dateStr)
     return dateStr;
 }

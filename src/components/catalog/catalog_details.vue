@@ -16,7 +16,7 @@
                   {{catalog.id}}
                 </h1>
                 <h5 class="h5">
-                  {{catalog.version}}&nbsp;{{'-'}}&nbsp;{{catalog.id | splitName(catalog.id)}}
+                  {{catalog.appVersion}}&nbsp;{{'-'}}&nbsp;{{catalog.id | splitName(catalog.id)}}
                 </h5>
                   <h5 class="h5">
                     {{catalog.desc}}
@@ -44,59 +44,40 @@
       </el-main>
 
       <el-aside>
-        <div class="ChartViewSidebar__section">
-          <h2>{{'Chart Versions'}}</h2>
-          <div class="ChartVersionsList">
-            <ul class="remove-style padding-l-reset margin-b-reset">
-              <li style="height: 15px" v-for="(char, index) in chartVersionList" :key="index">
-                <a @click="selectChart()">
+        <div class="el-collapse-right">
+          <el-collapse v-model="activeNames">
+            <el-collapse-item title="Chart Versions" name="1" active>
+              <div v-for="(char, index) in chartVersionList" :key="index">
+                <a @click="selectChart(char)">
                   {{char.attributes.version}} {{'-'}} {{char.attributes.created | UTC2GMT(char.attributes.created)}}
                 </a>
-              </li>
-            </ul>
-          </div>
-        </div>
-        <div class="ChartViewSidebar__section">
-          <h2>{{'App Version'}}</h2>
-          <div class="ChartVersionsList">
-            {{catalog.version}}
-          </div>
-        </div>
-        <div class="ChartViewSidebar__section">
-          <h2>{{'Home'}}</h2>
-          <div class="ChartVersionsList">
-            <ul class="remove-style padding-l-reset margin-b-reset">
-              <li style="height: 15px">
+              </div>
+            </el-collapse-item>
+            <el-collapse-item title="App Version" name="2" active>
+              <div>{{catalog.appVersion}}</div>
+            </el-collapse-item>
+            <el-collapse-item title="Home" name="3" active>
+              <div>
                 <a @click="selectChart()">
                   {{'https://httpd.apache.org'}}
                 </a>
-              </li>
-            </ul>
-          </div>
-        </div>
-        <div class="ChartViewSidebar__section">
-          <h2>{{'Maintainers'}}</h2>
-          <div class="ChartVersionsList">
-            <ul class="remove-style padding-l-reset margin-b-reset">
-              <li style="height: 15px">
+              </div>
+            </el-collapse-item>
+            <el-collapse-item title="Maintainers" name="4" active>
+              <div>
                 <a @click="selectChart()">
-                  {{catalog.id | splitName(catalog.id)}}
+                  {{'gsemet'}}
                 </a>
-              </li>
-            </ul>
-          </div>
-        </div>
-        <div class="ChartViewSidebar__section">
-          <h2>{{'Related'}}</h2>
-          <div class="ChartVersionsList">
-            <ul class="remove-style padding-l-reset margin-b-reset">
-              <li style="height: 15px">
+              </div>
+            </el-collapse-item>
+            <el-collapse-item title="Related" name="5" class="is-active">
+              <div>
                 <a @click="selectChart()">
                   {{'https://github.com/bitnami/bitnami-docker-apache'}}
                 </a>
-              </li>
-            </ul>
-          </div>
+              </div>
+            </el-collapse-item>
+          </el-collapse>
         </div>
       </el-aside>
 
@@ -122,40 +103,37 @@ export default {
     return {
       catalog: {},
       README: '',
-      id: '',
-      versionNew: '',
-      chartVersionList: []
+      chartVersionList: [],
+      activeNames: ['1', '2', '3', '4', '5']
     }
   },
   mounted () {
-    // let converter = new showdown.Converter()
-    // let text = this.README.toString()
-    // this.html = converter.makeHtml(text)
   },
   created() {
-    this.catalog = this.$route.params
-    this.id = this.$route.params.id
-    console.log(this.id)
+    let chart = this.$route.params.catalog ? this.$route.params.catalog : JSON.parse(sessionStorage.getItem('catalogDetailsByParams'))
+    this.catalog = {
+      id: chart.id,
+      icon: chart.attributes.icon,
+      version: chart.relationships.latestChartVersion.data.version,
+      appVersion: chart.relationships.latestChartVersion.data.app_version,
+      desc: chart.attributes.description
+    }
     loading(this, 1000)
     this.init()
   },
   methods:{
     init : async function() {
-      await http(getParamApi(apiSetting.kubernetes.getCharts, this.id, 'versions')).then(res => {
+      await http(getParamApi(apiSetting.kubernetes.getCharts, this.catalog.id, 'versions')).then(res => {
         if (res.status == 200) {
-          console.log(res.data.data)
           this.chartVersionList = res.data.data
-          this.versionNew = res.data.data[0].attributes.version
-          http(getParamApi(apiSetting.kubernetes.getReadme, this.id, 'versions', this.versionNew, 'README.md')).then(res => {
+          http(getParamApi(apiSetting.kubernetes.getReadme, this.catalog.id, 'versions', this.catalog.version, 'README.md')).then(res => {
             if (res.status == 200) {
               this.README = res.data
             } else {
-              //Error Message
               errorMessage(this, res);
             }
           })
         } else {
-          //Error Message
           errorMessage(this, res);
         }
       })
@@ -163,8 +141,16 @@ export default {
     deploy (key){
       console.log(key)
     },
-    selectChart () {
-      console.log('111')
+    selectChart (catalog) {
+      loading(this, 1000)
+      this.catalog = {
+        id: catalog.id,
+        version: catalog.attributes.version,
+        appVersion: catalog.attributes.app_version,
+        desc: catalog.relationships.chart.data.description,
+        icon: catalog.relationships.chart.data.icon
+      }
+      this.init()
     }
   }
 };
@@ -199,7 +185,7 @@ export default {
     margin: 10% 1% 0 0;
   }
   .el-aside {
-    background-color: #D3DCE6;
+    padding: 1em;
     color: #333;
     text-align: center;
     line-height: 200px;
@@ -222,25 +208,10 @@ export default {
     font-weight: 400;
     text-rendering: optimizeLegibility;
   }
-  .ChartViewSidebar__section{
-    padding-top: .1px;
-    overflow-wrap: break-word;
-    max-height: 150px;
-  }
-  .padding-l-reset {
-    padding-left: 0;
-  }
-  .remove-style {
-    list-style: none;
-  }
-  .margin-b-reset {
-    margin-bottom: 0;
-  }
   .margin-b-reset li {
     max-height: 20px;
   }
-  .ChartVersionsList_li {
-    max-height: 20px;
+  .el-collapse-right{
   }
 </style>
 

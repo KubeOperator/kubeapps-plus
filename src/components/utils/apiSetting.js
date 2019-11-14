@@ -27,6 +27,9 @@ const serviceModule = {
     getServiceBrokers: {
       url: 'api/kube/apis/servicecatalog.k8s.io/v1beta1',
       method:'get'
+    },
+    getAppDetail:{
+      url: '/rpc/api/tiller-deploy/v1/namespaces/kubeapps/releases/kubeapps'
     }
   }
 }

@@ -24,7 +24,8 @@ const en = {
         'repo': 'Repo',
         'url': 'URL',
         'actions': 'Actions',
-        'search': 'Search'
+        'search': 'Search',
+        'deploy': 'Deploy'
     },
     ...enLocale
 }

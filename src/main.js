@@ -18,6 +18,11 @@ Object.keys(searchs).forEach(key => {
   Vue.filter(key, searchs[key])
 })
 
+import * as utc2gmts from './components/utils/UTC2GMT.js'
+Object.keys(utc2gmts).forEach(key => {
+  Vue.filter(key, utc2gmts[key])
+})
+
 Vue.config.productionTip = false
 Vue.use(VueRouter)
 Vue.use(Resource)

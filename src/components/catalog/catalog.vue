@@ -24,7 +24,7 @@
     <!-- 间隔线 end -->
 
     <!-- foot start -->
-    <el-row :gutter="20">
+    <el-row :gutter="20" class="el-row-body">
       <el-col :xs="24" :sm="12" :md="8" :lg="6" :xl="4" v-for="(catalog, index) in catalogList"
               :key="index" class="el-col">
         <el-card :body-style="{ padding: '0px' }">
@@ -33,9 +33,9 @@
                     catalog.relationships.latestChartVersion.data.app_version ?
                     catalog.relationships.latestChartVersion.data.app_version :
                     catalog.relationships.latestChartVersion.data.version)">
-            <img v-show="catalog.attributes.icon" :src="catalog.attributes.icon |
-              searchImage(catalog.attributes.icon)" class="image">
-            <img v-show="!catalog.attributes.icon" src="../../.././static/catalog/default.png" class="image">
+            <a><img v-show="catalog.attributes.icon" :src="catalog.attributes.icon |
+              searchImage(catalog.attributes.icon)" class="image"></a>
+            <a><img v-show="!catalog.attributes.icon" src="../../.././static/catalog/default.png" class="image"></a>
           </div>
           <div style="padding: 1em;">
             <h3 class="catalog-label">{{catalog.attributes.name}}</h3>
@@ -81,7 +81,7 @@ export default {
     }
   },
   created() {
-    loading(this, 2000)
+    loading(this, 1500)
     this.init()
   },
   methods:{
@@ -106,8 +106,7 @@ export default {
         desc: desc,
         version: version
       }
-      console.log(params)
-      this.$router.push({path : '/catalogDetails', params : JSON.stringify(params)})
+      this.$router.push({name : 'catalogDetails', params : params})
     }
   }
 };
@@ -124,13 +123,14 @@ export default {
   .catalog-search{
     float: left;
     width: 40%;
-    margin: 20px 0 0 1em;
+    margin: 30px 0 0 1em;
   }
   .catalog-search-btn{
     float: left;
     width: 16%;
-    margin: 20px 0 0 1em;
+    margin: 35px 0 0 1em;
     padding: 11.5px 20px;
+    height: 38px;
   }
   .bottom {
     line-height: 12px;
@@ -140,7 +140,7 @@ export default {
   .button-left {
     padding: 5px 0 5px 5px;
     float: left;
-    max-width: 70%;
+    max-width: 60%;
     height: 24px;
     overflow : hidden;
     text-overflow: ellipsis;
@@ -150,7 +150,7 @@ export default {
   }
 
   .button-right {
-    padding: 5px;
+    padding: 0 5px;
     float: right;
   }
 
@@ -159,6 +159,7 @@ export default {
     max-height: 6em;
     display: block;
     margin: 1em;
+    cursor: hand;
   }
 
   .el-col{
@@ -187,28 +188,33 @@ export default {
   }
 
   .catalog-desc{
-    height: 2em;
+    height: 2.4em;
     overflow : hidden;
     text-overflow: ellipsis;
     display: -webkit-box;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
-  }
+    font-size: 0.7em;
+    font-weight: normal;
+}
 
-  .catalog-label{
-    word-wrap: break-word;
-    text-align: center;
-    -webkit-box-flex: 1;
-    -ms-flex: 1;
-    flex: 1;
-    font-size: 1.1em;
-    font-weight: 700;
-    margin: 0;
-    overflow : hidden;
-    text-overflow: ellipsis;
-    display: -webkit-box;
-    -webkit-line-clamp: 1;
-    -webkit-box-orient: vertical;
+.catalog-label{
+  word-wrap: break-word;
+  text-align: center;
+  -webkit-box-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  font-size: 1.1em;
+  font-weight: 700;
+  margin: 0;
+  overflow : hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+}
+  .el-row-body{
+    line-height: 1.15;
   }
 </style>
 

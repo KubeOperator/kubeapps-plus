@@ -41,8 +41,8 @@
                   </div>
               </div>
           </div>
-          <div class="ace-xcode-btn">
-              <el-button type="primary" size="medium" icon="el-icon-success">{{$t('message.submit')}}</el-button>
+          <div>
+              <el-button class="ace-xcode-btn" type="primary" size="medium" icon="el-icon-success">{{$t('message.submit')}}</el-button>
           </div>
       </div>
       </el-main>
@@ -132,6 +132,7 @@
     }
     .ace-xcode-btn{
         margin: 2em 0 0 0;
+        width: 20%;
     }
 </style>
 

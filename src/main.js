@@ -7,6 +7,7 @@ import i18n from './i18n/i18n'
 import Resource from 'vue-resource'
 import vuex from 'vuex'
 import store from './components/store/index.js'
+import ace from 'ace-builds'
 
 // 自定义过滤器
 import * as filters from './components/utils/splitName.js'
@@ -27,7 +28,7 @@ Vue.config.productionTip = false
 Vue.use(VueRouter)
 Vue.use(Resource)
 Vue.use(vuex)
-
+Vue.use(ace)
 
 new Vue({
   render: h => h(App),

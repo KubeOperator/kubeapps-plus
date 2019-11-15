@@ -137,23 +137,26 @@ export default {
       await http(getParamApi(apiSetting.kubernetes.getCharts, this.chartName, 'versions')).then(res => {
         if (res.status == 200) {
           this.chartVersionList = res.data.data
-          this.queryreadme()
+          http(getParamApi(apiSetting.kubernetes.getReadme, this.chartName, 'versions', this.catalog.version, 'README.md')).then(res => {
+            if (res.status == 200) {
+              this.README = res.data
+            } else {
+              errorMessage(this, res);
+            }
+          })
         } else {
           errorMessage(this, res);
         }
       })
     },
-    queryreadme : async function() {
-        await http(getParamApi(apiSetting.kubernetes.getReadme, this.chartName, 'versions', this.catalog.version, 'README.md')).then(res => {
-            if (res.status == 200) {
-                this.README = res.data
-            } else {
-                errorMessage(this, res);
-            }
-        })
-    },
-    deploy (key){
-      console.log(key)
+    deploy (){
+      let params = {
+        name : this.chartName,
+        chartVersionList : this.chartVersionList
+      }
+      sessionStorage.removeItem('chartDeploy')
+      sessionStorage.setItem('chartDeploy', JSON.stringify(params))
+      this.$router.push({name : 'chartDeploy', params : params})
     },
     selectChart (catalog) {
       loading(this, 1000)

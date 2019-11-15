@@ -34,6 +34,10 @@ const serviceModule = {
     getReadme: {
       url: '/api/chartsvc/v1/assets',
       method: 'get'
+    },
+    getYaml: {
+      url: '/api/chartsvc/v1/assets',
+      method: 'get'
     }
   }
 }

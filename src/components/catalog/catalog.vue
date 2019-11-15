@@ -96,10 +96,22 @@ export default {
         this.catalogList = common.search(key, this.catalogList)
     },
     goDetails (catalog) {
-      console.log(catalog)
+        console.log(JSON.stringify(catalog))
+      let params = {
+          id: catalog.id,
+          icon: catalog.attributes.icon,
+          version: catalog.relationships.latestChartVersion.data.version,
+          appVersion: catalog.relationships.latestChartVersion.data.app_version,
+          desc: catalog.attributes.description,
+          home: catalog.attributes.home,
+          sources: catalog.attributes.sources,
+          maintainers: catalog.attributes.maintainers
+      }
       sessionStorage.removeItem('catalogDetailsByParams')
-      sessionStorage.setItem('catalogDetailsByParams', JSON.stringify(catalog))
-      this.$router.push({name : 'catalogDetails', params : catalog})
+      sessionStorage.removeItem('chartName')
+      sessionStorage.setItem('chartName', catalog.id)
+      sessionStorage.setItem('catalogDetailsByParams', JSON.stringify(params))
+      this.$router.push({name : 'catalogDetails', params : params})
     }
   }
 };

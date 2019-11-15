@@ -49,31 +49,31 @@
       <el-aside>
         <div class="el-collapse-right">
           <el-collapse v-model="activeNames">
-            <el-collapse-item title="Chart Versions" name="1">
+            <el-collapse-item :title="$t('message.chart_versions')" name="1">
               <div v-for="(char, index) in chartVersionList" :key="index">
                 <a @click="selectChart(char)">
                   {{char.attributes.version}} {{'-'}} {{char.attributes.created | UTC2GMT(char.attributes.created)}}
                 </a>
               </div>
             </el-collapse-item>
-            <el-collapse-item title="App Version" name="2">
+            <el-collapse-item :title="$t('message.app_version')" name="2">
               <div>{{catalog.appVersion}}</div>
             </el-collapse-item>
-            <el-collapse-item title="Home" name="3">
+            <el-collapse-item :title="$t('message.home')" name="3">
               <div>
                 <a :href="catalog.home" target="_blank">
                   {{catalog.home}}
                 </a>
               </div>
             </el-collapse-item>
-            <el-collapse-item title="Maintainers" name="4">
+            <el-collapse-item :title="$t('message.maintainers')" name="4">
               <div v-for="maintainer in catalog.maintainers" :key="maintainer.name">
                 <div>
                   {{maintainer.name}}
                 </div>
               </div>
             </el-collapse-item>
-            <el-collapse-item title="Related" name="5">
+            <el-collapse-item :title="$t('message.related')" name="5">
               <div v-for="source in catalog.sources" :key="source">
                 <a :href="source" target="_blank">
                   {{source}}

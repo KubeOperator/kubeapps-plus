@@ -17,15 +17,21 @@ const en = {
         'search_charts': 'search charts...',
         'app_repositories': 'App Repositories',
         'service_broker': 'Service Brokers',
-        'Show_deleted_apps' : 'Show deleted apps',
-        'Deploy_App':'Deploy App',
+        'show_deleted_apps' : 'Show deleted apps',
+        'deploy_app':'Deploy App',
         'refresh': 'Refresh',
         'refresh_all': 'Refresh All',
         'repo': 'Repo',
         'url': 'URL',
         'actions': 'Actions',
         'search': 'Search',
-        'deploy': 'Deploy'
+        'deploy': 'Deploy',
+        'related': 'Related',
+        'maintainers': 'Maintainers',
+        'home': 'Home',
+        'app_version': 'App Version',
+        'chart_versions': 'Chart Versions',
+        'submit': 'Submit'
     },
     ...enLocale
 }

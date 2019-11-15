@@ -17,15 +17,21 @@ const cn = {
         'search_charts': '发现图表...',
         'app_repositories': '应用存储库',
         'service_broker': '服务代理',
-        'Show_deleted_apps' : '显示已删除应用',
-        'Deploy_App':'部署应用',
+        'show_deleted_apps' : '显示已删除应用',
+        'deploy_app':'部署应用',
         'refresh': '刷新',
         'refresh_all': '刷新全部',
         'repo': '仓库名称',
         'url': '网址',
         'actions': '操作',
         'search': '搜索',
-        'deploy': '部署'
+        'deploy': '部署',
+        'related': '相关',
+        'maintainers': '维护者',
+        'home': '网址',
+        'app_version': '应用版本',
+        'chart_versions': '图表版本',
+        'submit': '提交'
     },
     ...zhLocale
 }

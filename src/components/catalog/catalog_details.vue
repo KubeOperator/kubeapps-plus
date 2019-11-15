@@ -39,47 +39,51 @@
 
     <!-- foot start -->
     <el-container>
+      <!-- left start-->
       <el-main>
         <vue-markdown class="article" :source="README"></vue-markdown>
       </el-main>
+      <!-- left end-->
 
+      <!-- right start-->
       <el-aside>
         <div class="el-collapse-right">
           <el-collapse v-model="activeNames">
-            <el-collapse-item title="Chart Versions" name="1" active>
+            <el-collapse-item :title="$t('message.chart_versions')" name="1">
               <div v-for="(char, index) in chartVersionList" :key="index">
                 <a @click="selectChart(char)">
                   {{char.attributes.version}} {{'-'}} {{char.attributes.created | UTC2GMT(char.attributes.created)}}
                 </a>
               </div>
             </el-collapse-item>
-            <el-collapse-item title="App Version" name="2" active>
+            <el-collapse-item :title="$t('message.app_version')" name="2">
               <div>{{catalog.appVersion}}</div>
             </el-collapse-item>
-            <el-collapse-item title="Home" name="3" active>
+            <el-collapse-item :title="$t('message.home')" name="3">
               <div>
-                <a @click="selectChart()">
-                  {{'https://httpd.apache.org'}}
+                <a :href="catalog.home" target="_blank">
+                  {{catalog.home}}
                 </a>
               </div>
             </el-collapse-item>
-            <el-collapse-item title="Maintainers" name="4" active>
-              <div>
-                <a @click="selectChart()">
-                  {{'gsemet'}}
-                </a>
+            <el-collapse-item :title="$t('message.maintainers')" name="4">
+              <div v-for="maintainer in catalog.maintainers" :key="maintainer.name">
+                <div>
+                  {{maintainer.name}}
+                </div>
               </div>
             </el-collapse-item>
-            <el-collapse-item title="Related" name="5" class="is-active">
-              <div>
-                <a @click="selectChart()">
-                  {{'https://github.com/bitnami/bitnami-docker-apache'}}
+            <el-collapse-item :title="$t('message.related')" name="5">
+              <div v-for="source in catalog.sources" :key="source">
+                <a :href="source" target="_blank">
+                  {{source}}
                 </a>
               </div>
             </el-collapse-item>
           </el-collapse>
         </div>
       </el-aside>
+      <!-- right end-->
 
     </el-container>
     <!-- foot end -->
@@ -104,39 +108,49 @@ export default {
       catalog: {},
       README: '',
       chartVersionList: [],
-      activeNames: ['1', '2', '3', '4', '5']
+      activeNames: ['1', '2', '3', '4', '5'],
+      chartName: ''
     }
   },
   mounted () {
   },
   created() {
-    let chart = this.$route.params.catalog ? this.$route.params.catalog : JSON.parse(sessionStorage.getItem('catalogDetailsByParams'))
+    let chart = this.$route.params.params ? this.$route.params.params : JSON.parse(sessionStorage.getItem('catalogDetailsByParams'))
+    this.chartName = sessionStorage.getItem('chartName')
     this.catalog = {
       id: chart.id,
-      icon: chart.attributes.icon,
-      version: chart.relationships.latestChartVersion.data.version,
-      appVersion: chart.relationships.latestChartVersion.data.app_version,
-      desc: chart.attributes.description
+      icon: chart.icon,
+      version: chart.version,
+      appVersion: chart.appVersion,
+      desc: chart.desc,
+      home: chart.home,
+      sources: chart.sources,
+      maintainers: chart.maintainers
     }
+      this.chartName
+    console.log('chart: ', chart)
     loading(this, 1000)
     this.init()
   },
   methods:{
     init : async function() {
-      await http(getParamApi(apiSetting.kubernetes.getCharts, this.catalog.id, 'versions')).then(res => {
+      await http(getParamApi(apiSetting.kubernetes.getCharts, this.chartName, 'versions')).then(res => {
         if (res.status == 200) {
           this.chartVersionList = res.data.data
-          http(getParamApi(apiSetting.kubernetes.getReadme, this.catalog.id, 'versions', this.catalog.version, 'README.md')).then(res => {
-            if (res.status == 200) {
-              this.README = res.data
-            } else {
-              errorMessage(this, res);
-            }
-          })
+          this.queryreadme()
         } else {
           errorMessage(this, res);
         }
       })
+    },
+    queryreadme : async function() {
+        await http(getParamApi(apiSetting.kubernetes.getReadme, this.chartName, 'versions', this.catalog.version, 'README.md')).then(res => {
+            if (res.status == 200) {
+                this.README = res.data
+            } else {
+                errorMessage(this, res);
+            }
+        })
     },
     deploy (key){
       console.log(key)
@@ -148,8 +162,14 @@ export default {
         version: catalog.attributes.version,
         appVersion: catalog.attributes.app_version,
         desc: catalog.relationships.chart.data.description,
-        icon: catalog.relationships.chart.data.icon
+        icon: catalog.relationships.chart.data.icon,
+        home: catalog.relationships.chart.data.home,
+        sources: catalog.relationships.chart.data.sources,
+        maintainers: catalog.relationships.chart.data.maintainers
       }
+      console.log(this.catalog)
+      sessionStorage.removeItem('catalogDetailsByParams')
+      sessionStorage.setItem('catalogDetailsByParams', JSON.stringify(this.catalog))
       this.init()
     }
   }

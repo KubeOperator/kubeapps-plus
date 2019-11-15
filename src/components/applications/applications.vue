@@ -15,14 +15,14 @@
         <div style="margin: 1.8em 0;">
           <el-switch
             v-model="showdelete"
-            :active-text="this.$t('message.Show_deleted_apps')"
+            :active-text="this.$t('message.show_deleted_apps')"
             inactive-text
           ></el-switch>
         </div>
       </el-col>
       <el-col :md="{span:4,offest:2}" :lg="{span:6,offset:7}">
         <div style="margin: 1.2em 0;">
-          <el-button type="primary" @click="getReleaseApp">{{$t('message.Deploy_App')}}</el-button>
+          <el-button type="primary" @click="getReleaseApp">{{$t('message.deploy_app')}}</el-button>
         </div>
       </el-col>
     </el-row>

@@ -83,8 +83,10 @@ const httpServer = (opts, data) => {
       'Content-Type': 'application/json; charset=UTF-8',
       'Authorization' : 'Bearer ' + store.fetch('accessToken')
     } : {
-      'X-Requested-With': 'XMLHttpRequest',
-      'Content-Type': 'application/json',
+      'Accept': 'application/json, text/plain, */*',
+      'Accept-Encoding': 'gzip, deflate, br',
+      'Content-Type': 'application/json; charset=UTF-8',
+      'Authorization' : 'Bearer ' + store.fetch('accessToken')
     }
   }
 

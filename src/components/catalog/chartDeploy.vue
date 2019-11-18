@@ -42,7 +42,7 @@
               </div>
           </div>
           <div>
-              <el-button class="ace-xcode-btn" type="primary" size="medium" icon="el-icon-success">{{$t('message.submit')}}</el-button>
+              <el-button class="ace-xcode-btn" type="primary" size="medium" icon="el-icon-success" @click="submit(name, version, chartName)">{{$t('message.submit')}}</el-button>
           </div>
       </div>
       </el-main>
@@ -62,6 +62,7 @@
     import getParamApi from "../utils/getParamApi";
     import errorMessage from '../utils/errorMessage.js';
     import loading from '../utils/loading.js';
+    import noticeMessage from "../utils/noticeMessage";
 
     export default {
         data() {
@@ -70,8 +71,8 @@
                 version: '',
                 chartName: '',
                 valuesYaml: '',
-                aceEditor: null,
                 name: '',
+                aceEditor: null,
                 themePath: 'ace/theme/monokai', // 不导入 webpack-resolver，该模块路径会报错
                 modePath: 'ace/mode/yaml' // 同上
             }
@@ -117,6 +118,24 @@
                     option.label = o.attributes.version
                     this.options.push(option)
                 }
+            },
+            submit(name, version, chartName) {
+                console.log(name, version, this.aceEditor.getValue(), this.$store.state.namespaces.activeSpace)
+                let params = {
+                    appRepositoryResourceName : chartName.split('/')[0],
+                    chartName : chartName.split('/')[1],
+                    releaseName : name,
+                    values : this.aceEditor.getValue(),
+                    version : version
+                }
+                http(getParamApi(apiSetting.kubernetes.deployReleases, this.$store.state.namespaces.activeSpace, 'releases'), params).then(res => {
+                    if (res.status == 200) {
+                        noticeMessage(this, name + ' 部署成功 ', 'success')
+                        this.$router.push('catalog')
+                    } else {
+                        noticeMessage(this, res.data, 'error');
+                    }
+                })
             }
         }
     }

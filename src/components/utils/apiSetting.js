@@ -38,6 +38,10 @@ const serviceModule = {
     getYaml: {
       url: '/api/chartsvc/v1/assets',
       method: 'get'
+    },
+    deployReleases: {
+      url: 'api/tiller-deploy/v1/namespaces',
+      method: 'post'
     }
   }
 }

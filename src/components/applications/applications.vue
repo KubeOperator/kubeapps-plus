@@ -76,7 +76,7 @@
         >
           <div class="catalog-image" >
             <img v-show="catalog.icon" :src="catalog.icon" class="image" />
-            <img v-show="!catalog.icon" src="../../.././static/catalog/default.png" class="image" />
+            <img v-show="!catalog.icon" src="../../assets/image/default.png" class="image" />
           </div>
           <div style="padding: 1em;">
             <h3 class="catalog-label">{{catalog.releaseName}}</h3>

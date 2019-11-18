@@ -1,12 +1,21 @@
 package main
 
 import (
+	"context"
 	"fmt"
+	"net/http"
+	"net/http/httputil"
+	"net/url"
+	"os"
+	"os/signal"
+	"syscall"
+	"time"
+
 	"github.com/gorilla/mux"
 	"github.com/heptiolabs/healthcheck"
-	"os"
-
+	"github.com/kubeapps/kubeapps/cmd/tiller-proxy/internal/handler"
 	"github.com/spf13/pflag"
+	"github.com/urfave/negroni"
 	"k8s.io/client-go/kubernetes"
 	"k8s.io/client-go/rest"
 	"k8s.io/helm/pkg/helm"
@@ -108,7 +117,7 @@ func main() {
 		}
 
 		proxy = tillerProxy.NewProxy(kubeClient, helmClient, timeout)
-		//chartutils := chartUtils.NewChart(kubeClient, appRepoClient, helmChartUtil.LoadArchive, userAgent())
+		chartutils := chartUtils.NewChart(kubeClient, appRepoClient, helmChartUtil.LoadArchive, userAgent())
 
 		r := mux.NewRouter()
 
@@ -117,7 +126,99 @@ func main() {
 		r.Handle("/live", health)
 		r.Handle("/ready", health)
 
-		//authGate := handler.AuthGate()
+		authGate := handler.AuthGate()
 
+		// HTTP Handler
+		h := handler.TillerProxy{
+			DisableAuth: disableAuth,
+			ListLimit:   listLimit,
+			ChartClient: chartutils,
+			ProxyClient: proxy,
+		}
+
+		// Routes
+		apiv1 := r.PathPrefix("/v1").Subrouter()
+		apiv1.Methods("GET").Path("/releases").Handler(negroni.New(
+			authGate,
+			negroni.Wrap(handler.WithoutParams(h.ListAllReleases)),
+		))
+		apiv1.Methods("GET").Path("/namespaces/{namespace}/releases").Handler(negroni.New(
+			authGate,
+			negroni.Wrap(handler.WithParams(h.ListReleases)),
+		))
+		apiv1.Methods("POST").Path("/namespaces/{namespace}/releases").Handler(negroni.New(
+			authGate,
+			negroni.Wrap(handler.WithParams(h.CreateRelease)),
+		))
+		apiv1.Methods("GET").Path("/namespaces/{namespace}/releases/{releaseName}").Handler(negroni.New(
+			authGate,
+			negroni.Wrap(handler.WithParams(h.GetRelease)),
+		))
+		apiv1.Methods("PUT").Path("/namespaces/{namespace}/releases/{releaseName}").Handler(negroni.New(
+			authGate,
+			negroni.Wrap(handler.WithParams(h.OperateRelease)),
+		))
+		apiv1.Methods("DELETE").Path("/namespaces/{namespace}/releases/{releaseName}").Handler(negroni.New(
+			authGate,
+			negroni.Wrap(handler.WithParams(h.DeleteRelease)),
+		))
+
+		// Chartsvc reverse proxy
+		parsedChartsvcURL, err := url.Parse(chartsvcURL)
+		if err != nil {
+			log.Fatalf("Unable to parse the chartsvc URL: %v", err)
+		}
+		chartsvcProxy := httputil.NewSingleHostReverseProxy(parsedChartsvcURL)
+		chartsvcPrefix := "/chartsvc"
+		chartsvcRouter := r.PathPrefix(chartsvcPrefix).Subrouter()
+
+		//Logos不需要验证，因此请跳过该步骤
+		chartsvcRouter.Methods("GET").Path("/v1/assets/{repo}/{id}/logo").Handler(negroni.New(
+			negroni.Wrap(http.StripPrefix(chartsvcPrefix, chartsvcProxy)),
+		))
+		chartsvcRouter.Methods("GET").Handler(negroni.New(
+			authGate,
+			negroni.Wrap(http.StripPrefix(chartsvcPrefix, chartsvcProxy)),
+		))
+
+		n := negroni.Classic()
+		n.UseHandler(r)
+
+		port := os.Getenv("PORT")
+		if port == "" {
+			port = "8080"
+		}
+
+		addr := ":" + port
+
+		srv := &http.Server{
+			Addr:    addr,
+			Handler: n,
+		}
+
+		go func() {
+			log.WithFields(log.Fields{"addr": addr}).Info("Started Tiller Proxy")
+			err = srv.ListenAndServe()
+			if err != nil {
+				log.Info(err)
+			}
+		}()
+
+		//捕捉SIGINT和SIGTERM
+		//设置发送信号通知的通道。
+		c := make(chan os.Signal, 1)
+		signal.Notify(c, os.Interrupt, syscall.SIGTERM)
+		log.Debug("Set system to get notified on signals")
+		s := <-c
+		log.Infof("Received signal: %v. Waiting for existing requests to finish", s)
+		//设置一个足够高的超时值，让k8s终止宽限期秒生效
+		//相应地，如果需要，发送一个SIGKILL
+		ctx, cancel := context.WithTimeout(context.Background(), time.Second*3600)
+		defer cancel()
+		//如果没有连接，则不阻止，否则将等待
+		//直到最后期限
+		srv.Shutdown(ctx)
+		log.Info("All requests have been served. Exiting")
+		os.Exit(0)
 	}
 }

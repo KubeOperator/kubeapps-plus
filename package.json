@@ -28,6 +28,7 @@
     "@vue/cli-plugin-babel": "^4.0.0",
     "@vue/cli-plugin-eslint": "^4.0.0",
     "@vue/cli-service": "^4.0.0",
+    "ace-builds": "^1.4.7",
     "babel-eslint": "^10.0.3",
     "dev-server": "^0.1.0",
     "eslint": "^5.16.0",

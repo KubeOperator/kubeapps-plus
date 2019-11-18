@@ -3,7 +3,7 @@
     <el-card class="box-card">
       <div class="main">
         <div class="box-card-left">
-          <img class="login_img" src="../../.././static/img/login-banner.png" />
+          <img class="login_img" src="../../assets/image/login-banner.png" />
         </div>
         <div class="box-card-right">
           <div class="login_title">

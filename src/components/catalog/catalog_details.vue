@@ -6,7 +6,7 @@
         <el-col :span="4">
           <div class="grid-content bg-purple grid-img">
             <img v-show="catalog.icon" :src="catalog.icon | searchImage(catalog.icon)" class="image">
-            <img v-show="!catalog.icon" src="../../.././static/catalog/default.png" class="image">
+            <img v-show="!catalog.icon" src="../../assets/image/default.png" class="image">
           </div>
         </el-col>
         <el-col :span="20">

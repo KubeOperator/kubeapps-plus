@@ -62,9 +62,9 @@
 <script>
 import apiSetting from "../utils/apiSetting.js";
 import http from "../utils/httpAxios.js";
-import errorMessage from '../utils/errorMessage.js';
 import common from '../common/common.js';
 import loading from '../utils/loading.js';
+import noticeMessage from "../utils/noticeMessage";
 
 let catalogList = []
 export default {
@@ -87,7 +87,7 @@ export default {
                 this.catalogList = res.data.data
             } else {
                 //Error Message
-                errorMessage(this, res);
+              noticeMessage(this, res, 'error');
             }
         })
     },
@@ -96,7 +96,6 @@ export default {
         this.catalogList = common.search(key, this.catalogList)
     },
     goDetails (catalog) {
-        console.log(JSON.stringify(catalog))
       let params = {
           id: catalog.id,
           icon: catalog.attributes.icon,

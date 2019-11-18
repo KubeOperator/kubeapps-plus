@@ -20,7 +20,7 @@
       <div class="foot-gril margin-t-normal">
           <div>
             <label>{{'Name'}}</label>
-            <el-input style="width: 100%;" pattern="[a-z0-9]([-a-z0-9]*[a-z0-9])?(\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*" v-model="name" placeholder="请输入内容"></el-input>
+            <el-input style="width: 100%;" pattern="[a-z0-9]([-a-z0-9]*[a-z0-9])?(\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*" v-model="releaseName" placeholder="请输入内容"></el-input>
           </div>
           <div>
               <label>{{'Version'}}</label>
@@ -42,7 +42,7 @@
               </div>
           </div>
           <div>
-              <el-button class="ace-xcode-btn" type="primary" size="medium" icon="el-icon-success" @click="submit(name, version, chartName)">{{$t('message.submit')}}</el-button>
+              <el-button class="ace-xcode-btn" type="primary" size="medium" icon="el-icon-success" @click="submit(releaseName, version, chartName)">{{$t('message.submit')}}</el-button>
           </div>
       </div>
       </el-main>
@@ -70,8 +70,7 @@
                 options: [],
                 version: '',
                 chartName: '',
-                valuesYaml: '',
-                name: '',
+                releaseName: '',
                 aceEditor: null,
                 themePath: 'ace/theme/monokai', // 不导入 webpack-resolver，该模块路径会报错
                 modePath: 'ace/mode/yaml' // 同上
@@ -94,15 +93,13 @@
             init : async function() {
                 await http(getParamApi(apiSetting.kubernetes.getYaml, this.chartName, 'versions', this.version, 'values.yaml')).then(res => {
                     if (res.status == 200) {
-                        console.log(res.data)
-                        this.valuesYaml = res.data
                         this.aceEditor = ace.edit(this.$refs.ace, {
                             maxLines: 30, // 最大行数，超过会自动出现滚动条
                             minLines: 10, // 最小行数，还未到最大行数时，编辑器会自动伸缩大小
                             fontSize: 14, // 编辑器内字体大小
                             theme: this.themePath, // 默认设置的主题
                             mode: this.modePath, // 默认设置的语言模式
-                            value: this.valuesYaml ? this.valuesYaml : '',
+                            value: res.data ? res.data : '',
                             tabSize: 4 // 制表符设置为 4 个空格大小
                         })
                     } else {
@@ -119,19 +116,19 @@
                     this.options.push(option)
                 }
             },
-            submit(name, version, chartName) {
-                console.log(name, version, this.aceEditor.getValue(), this.$store.state.namespaces.activeSpace)
+            submit(releaseName, version, chartName) {
+                console.log(releaseName, version, this.aceEditor.getValue(), this.$store.state.namespaces.activeSpace)
                 let params = {
                     appRepositoryResourceName : chartName.split('/')[0],
                     chartName : chartName.split('/')[1],
-                    releaseName : name,
+                    releaseName : releaseName,
                     values : this.aceEditor.getValue(),
                     version : version
                 }
                 http(getParamApi(apiSetting.kubernetes.deployReleases, this.$store.state.namespaces.activeSpace, 'releases'), params).then(res => {
                     if (res.status == 200) {
-                        noticeMessage(this, name + ' 部署成功 ', 'success')
-                        this.$router.push('catalog')
+                        noticeMessage(this, releaseName + ' 部署成功 ', 'success')
+                        this.$router.push('/apps/ns/' + this.$store.state.namespaces.activeSpace + '/' + releaseName)
                     } else {
                         noticeMessage(this, res.data, 'error');
                     }

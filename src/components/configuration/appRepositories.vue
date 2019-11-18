@@ -49,20 +49,7 @@
   export default {
     data() {
       return {
-        tableData: [
-          {
-          repo: 'bitnami',
-          url: 'https://charts.bitnami.com/bitnami'
-        }, {
-            repo: 'incubator',
-            url: 'https://kubernetes-charts-incubator.storage.googleapis.com'
-        }, {
-            repo: 'stable',
-            url: 'https://kubernetes-charts.storage.googleapis.com'
-        }, {
-            repo: 'svc-cat',
-            url: 'https://svc-catalog-charts.storage.googleapis.com'
-        }]
+        tableData: []
       }
     },
     created(){

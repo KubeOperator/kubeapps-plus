@@ -96,7 +96,7 @@ import VueMarkdown from 'vue-markdown'
 import apiSetting from "../utils/apiSetting.js";
 import http from "../utils/httpAxios.js";
 import getParamApi from "../utils/getParamApi";
-import errorMessage from '../utils/errorMessage.js';
+import noticeMessage from '../utils/noticeMessage.js';
 
 export default {
   name:'document',
@@ -127,8 +127,6 @@ export default {
       sources: chart.sources,
       maintainers: chart.maintainers
     }
-      this.chartName
-    console.log('chart: ', chart)
     loading(this, 1000)
     this.init()
   },
@@ -141,11 +139,11 @@ export default {
             if (res.status == 200) {
               this.README = res.data
             } else {
-              errorMessage(this, res);
+                noticeMessage(this, res, 'error');
             }
           })
         } else {
-          errorMessage(this, res);
+            noticeMessage(this, res, 'error');
         }
       })
     },
@@ -170,7 +168,6 @@ export default {
         sources: catalog.relationships.chart.data.sources,
         maintainers: catalog.relationships.chart.data.maintainers
       }
-      console.log(this.catalog)
       sessionStorage.removeItem('catalogDetailsByParams')
       sessionStorage.setItem('catalogDetailsByParams', JSON.stringify(this.catalog))
       this.init()

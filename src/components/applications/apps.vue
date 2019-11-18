@@ -5,7 +5,7 @@
         <el-card :body-style="{ padding: '0px'}" style="text-align:left">
           <div class="catalog-image">
             <img v-show="catalog.icon" :src="catalog.icon" class="image" />
-            <img v-show="!catalog.icon" src="../../.././static/catalog/default.png" class="image" />
+            <img v-show="!catalog.icon" src="../../assets/image/default.png" class="image" />
           </div>
           <div style="padding: 1em;">
             <h5 class="catalog-label" style="font-size: 18px;">{{catalog.releaseName}}</h5>

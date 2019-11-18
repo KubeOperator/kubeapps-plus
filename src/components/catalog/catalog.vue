@@ -44,7 +44,7 @@
                     catalog.relationships.latestChartVersion.data.version}}
               </el-button>
               <el-button size="medium" type="primary" class="button-right" v-show="catalog.id.indexOf('stable') > -1
-              || catalog.id.indexOf('bitnami') > -1 || catalog.id.indexOf('svc-cat') > -1" round>
+                  || catalog.id.indexOf('bitnami') > -1 || catalog.id.indexOf('svc-cat') > -1" round>
                   {{catalog.id | splitName(catalog.id)}}
               </el-button>
               <el-button type="warning" class="button-right" v-show="catalog.id.indexOf('incubator') > -1" round>
@@ -81,54 +81,58 @@ export default {
     this.init()
   },
   methods:{
-    init : async function (){
-        await http(apiSetting.kubernetes.getCharts).then(res => {
-            if (res.status == 200) {
-                this.catalogList = res.data.data
-            } else {
-                //Error Message
-              noticeMessage(this, res, 'error');
-            }
-        })
-    },
-    handleSelect : async function (key) {
-        await this.init()
-        this.catalogList = common.search(key, this.catalogList)
-    },
-    goDetails (catalog) {
-      let params = {
-          id: catalog.id,
-          icon: catalog.attributes.icon,
-          version: catalog.relationships.latestChartVersion.data.version,
-          appVersion: catalog.relationships.latestChartVersion.data.app_version,
-          desc: catalog.attributes.description,
-          home: catalog.attributes.home,
-          sources: catalog.attributes.sources,
-          maintainers: catalog.attributes.maintainers
+      init : async function (){
+          await http(apiSetting.kubernetes.getCharts).then(res => {
+              if (res.status == 200) {
+                  this.catalogList = res.data.data
+              } else {
+                  //Error Message
+                  noticeMessage(this, res, 'error');
+              }
+          })
+      },
+      handleSelect : async function (key) {
+          await this.init()
+          this.catalogList = common.search(key, this.catalogList)
+      },
+      goDetails (catalog) {
+          let params = {
+              id: catalog.id,
+              icon: catalog.attributes.icon,
+              version: catalog.relationships.latestChartVersion.data.version,
+              appVersion: catalog.relationships.latestChartVersion.data.app_version,
+              desc: catalog.attributes.description,
+              home: catalog.attributes.home,
+              sources: catalog.attributes.sources,
+              maintainers: catalog.attributes.maintainers
+          }
+          sessionStorage.removeItem('catalogDetailsByParams')
+          sessionStorage.removeItem('chartName')
+          sessionStorage.setItem('chartName', catalog.id)
+          sessionStorage.setItem('catalogDetailsByParams', JSON.stringify(params))
+          this.$router.push({name : 'catalogDetails', params : params})
       }
-      sessionStorage.removeItem('catalogDetailsByParams')
-      sessionStorage.removeItem('chartName')
-      sessionStorage.setItem('chartName', catalog.id)
-      sessionStorage.setItem('catalogDetailsByParams', JSON.stringify(params))
-      this.$router.push({name : 'catalogDetails', params : params})
-    }
   }
 };
 </script>
 
 <style scoped>
+
   .catalog-content{
     padding: 1em;
   }
+
   .grid-content {
     border-radius: 4px;
     min-height: 5em;
   }
+
   .catalog-search{
     float: left;
     width: 40%;
     margin: 30px 0 0 1em;
   }
+
   .catalog-search-btn{
     float: left;
     width: 16%;
@@ -136,6 +140,7 @@ export default {
     padding: 11.5px 20px;
     height: 38px;
   }
+
   .bottom {
     line-height: 12px;
     text-align: left;
@@ -170,8 +175,7 @@ export default {
     padding: 10px 0;
   }
 
-  .clearfix:before,
-  .clearfix:after {
+  .clearfix:before, .clearfix:after {
     display: table;
     content: "";
   }
@@ -202,23 +206,25 @@ export default {
     font-weight: normal;
 }
 
-.catalog-label{
-  word-wrap: break-word;
-  text-align: center;
-  -webkit-box-flex: 1;
-  -ms-flex: 1;
-  flex: 1;
-  font-size: 1.1em;
-  font-weight: 700;
-  margin: 0;
-  overflow : hidden;
-  text-overflow: ellipsis;
-  display: -webkit-box;
-  -webkit-line-clamp: 1;
-  -webkit-box-orient: vertical;
-}
+  .catalog-label{
+    word-wrap: break-word;
+    text-align: center;
+    -webkit-box-flex: 1;
+    -ms-flex: 1;
+    flex: 1;
+    font-size: 1.1em;
+    font-weight: 700;
+    margin: 0;
+    overflow : hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+  }
+
   .el-row-body{
     line-height: 1.15;
   }
+
 </style>
 

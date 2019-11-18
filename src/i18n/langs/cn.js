@@ -31,7 +31,10 @@ const cn = {
         'home': '网址',
         'app_version': '应用版本',
         'chart_versions': '图表版本',
-        'submit': '提交'
+        'submit': '提交',
+        'name': '名称',
+        'version': '版本',
+        'values_yaml': '值(YAML)'
     },
     ...zhLocale
 }

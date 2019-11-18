@@ -12,21 +12,21 @@
         <el-col :span="20">
           <el-col :span="19">
             <div class="grid-content bg-purple">
-                <h1 class="h1">
-                  {{catalog.id}}
-                </h1>
-                <h5 class="h5">
-                  {{catalog.appVersion}}&nbsp;{{'-'}}&nbsp;{{catalog.id | splitName(catalog.id)}}
-                </h5>
-                  <h5 class="h5">
-                    {{catalog.desc}}
-                  </h5>
+              <h1 class="h1">
+                {{catalog.id}}
+              </h1>
+              <h5 class="h5">
+                {{catalog.appVersion}}&nbsp;{{'-'}}&nbsp;{{catalog.id | splitName(catalog.id)}}
+              </h5>
+              <h5 class="h5">
+                {{catalog.desc}}
+              </h5>
             </div>
           </el-col>
           <el-col :span="1" class="deploy">
             <el-button type="success"
-                       size="medium" icon="el-icon-download"
-                       @click="deploy(catalog)">{{$t('message.deploy')}}</el-button>
+             size="medium" icon="el-icon-download"
+             @click="deploy(catalog)">{{$t('message.deploy')}}</el-button>
           </el-col>
         </el-col>
       </el-row>
@@ -139,11 +139,11 @@ export default {
             if (res.status == 200) {
               this.README = res.data
             } else {
-                noticeMessage(this, res, 'error');
+              noticeMessage(this, res, 'error');
             }
           })
         } else {
-            noticeMessage(this, res, 'error');
+          noticeMessage(this, res, 'error');
         }
       })
     },
@@ -177,23 +177,29 @@ export default {
 </script>
 
 <style scoped>
+
   .catalog-content{
     padding: 1em;
   }
+
   .grid-content {
     border-radius: 4px;
     min-height: 5em;
     text-align: left;
   }
+
   .grid-img{
     text-align: center !important;
   }
+
   .image {
     margin-top: 25px;
   }
+
   .h1{
     margin: 0.625em 0 0.3125em;
   }
+
   .h5{
     font-weight: normal;
     color: #44add5;
@@ -201,9 +207,11 @@ export default {
     font-size: 1.25em;
     max-width: 80%;
   }
+
   .deploy{
     margin: 10% 1% 0 0;
   }
+
   .el-aside {
     padding: 1em;
     color: #333;
@@ -217,6 +225,7 @@ export default {
     text-align: center;
     line-height: 160px;
   }
+
   .article{
     text-align: left;
     min-height: 1px;
@@ -228,10 +237,13 @@ export default {
     font-weight: 400;
     text-rendering: optimizeLegibility;
   }
+
   .margin-b-reset li {
     max-height: 20px;
   }
+
   .el-collapse-right{
   }
+  
 </style>
 

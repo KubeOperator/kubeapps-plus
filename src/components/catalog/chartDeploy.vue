@@ -1,54 +1,61 @@
 <template>
   <div class="catalog-content">
-      <!-- header start -->
-      <el-row>
-          <el-col :span="24">
-              <div class="grid-content">
-                  <h1 style="float: left">{{chartName}}</h1>
-              </div>
-          </el-col>
-      </el-row>
-      <!-- header end -->
+    <!-- header start -->
+    <el-row>
+      <el-col :span="24">
+        <div class="grid-content">
+          <h1 style="float: left">{{chartName}}</h1>
+        </div>
+      </el-col>
+    </el-row>
+    <!-- header end -->
 
-      <!-- 间隔线 start -->
-      <el-divider></el-divider>
-      <!-- 间隔线 end -->
+    <!-- 间隔线 start -->
+    <el-divider></el-divider>
+    <!-- 间隔线 end -->
 
-      <!-- foot start -->
-      <el-container>
-        <el-main>
-      <div class="foot-gril margin-t-normal">
+    <!-- foot start -->
+    <el-container>
+      <el-main>
+        <div class="foot-gril margin-t-normal">
+
           <div>
-            <label>{{'Name'}}</label>
+            <label>{{$t('message.name')}}</label>
             <el-input style="width: 100%;" pattern="[a-z0-9]([-a-z0-9]*[a-z0-9])?(\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*" v-model="releaseName" placeholder="请输入内容"></el-input>
           </div>
+
           <div>
-              <label>{{'Version'}}</label>
-              <el-select style="width: 100%;" v-model="version" placeholder="请选择">
+            <label>{{$t('message.version')}}</label>
+            <el-select style="width: 100%;" v-model="version" @change="onChange(version)" placeholder="请选择">
               <el-option
-                      v-for="item in options"
-                      :key="item.value"
-                      :label="item.label"
-                      :value="item.value">
+                v-for="item in options"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value"
+                >
               </el-option>
-          </el-select>
+            </el-select>
           </div>
+
           <div class="margin-t-normal">
-              <label>{{'Values (YAML)'}}</label>
-              <div class="ace-container">
-                  <!-- 官方文档中使用 id，这里禁止使用，在后期打包后容易出现问题，使用 ref 或者 DOM 就行 -->
-                  <div class="ace-editor" ref="ace">
-                  </div>
-              </div>
+            <label>{{$t('message.values_yaml')}}</label>
+            <div class="ace-container">
+              <!-- 官方文档中使用 id，这里禁止使用，在后期打包后容易出现问题，使用 ref 或者 DOM 就行 -->
+              <div class="ace-editor" ref="ace">
+            </div>
           </div>
+
+        </div>
+
           <div>
-              <el-button class="ace-xcode-btn" type="primary" size="medium" icon="el-icon-success" @click="submit(releaseName, version, chartName)">{{$t('message.submit')}}</el-button>
+            <el-button class="ace-xcode-btn" type="primary" size="medium" icon="el-icon-success" @click="submit(releaseName, version, chartName)">{{$t('message.submit')}}</el-button>
           </div>
+
       </div>
       </el-main>
-        <el-aside></el-aside>
-      </el-container>
-      <!-- foot end -->
+      <el-aside></el-aside>
+    </el-container>
+    <!-- foot end -->
   </div>
 </template>
 
@@ -116,8 +123,10 @@
                     this.options.push(option)
                 }
             },
+            onChange () {
+               this.init()
+            },
             submit(releaseName, version, chartName) {
-                console.log(releaseName, version, this.aceEditor.getValue(), this.$store.state.namespaces.activeSpace)
                 let params = {
                     appRepositoryResourceName : chartName.split('/')[0],
                     chartName : chartName.split('/')[1],
@@ -126,6 +135,7 @@
                     version : version
                 }
                 http(getParamApi(apiSetting.kubernetes.deployReleases, this.$store.state.namespaces.activeSpace, 'releases'), params).then(res => {
+                    loading(this, 2000)
                     if (res.status == 200) {
                         noticeMessage(this, releaseName + ' 部署成功 ', 'success')
                         this.$router.push('/apps/ns/' + this.$store.state.namespaces.activeSpace + '/' + releaseName)
@@ -139,16 +149,20 @@
 </script>
 
 <style scoped>
+
     .catalog-content{
         padding: 1em;
     }
+
     .foot-gril{
         padding: 1em;
         text-align: left;
     }
+
     .ace-xcode-btn{
         margin: 2em 0 0 0;
         width: 20%;
     }
+
 </style>
 

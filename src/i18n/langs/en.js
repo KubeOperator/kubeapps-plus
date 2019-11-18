@@ -31,7 +31,10 @@ const en = {
         'home': 'Home',
         'app_version': 'App Version',
         'chart_versions': 'Chart Versions',
-        'submit': 'Submit'
+        'submit': 'Submit',
+        'name': 'Name',
+        'version': 'Version',
+        'values_yaml': 'Values(YAML)'
     },
     ...enLocale
 }

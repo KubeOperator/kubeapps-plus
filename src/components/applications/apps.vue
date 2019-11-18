@@ -33,7 +33,7 @@
           <h6>Access URLs</h6>
           <p>The current application does not expose a public URL.</p>
         </div>
-        <div v-show="this.note != ''">
+        <div v-show="this.note != undefined">
           <h6>Notes</h6>
           <section class="AppNotes Terminal elevation-1">
             <div class="Terminal__Top type-small">

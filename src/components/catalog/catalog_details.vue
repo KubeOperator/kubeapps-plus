@@ -150,6 +150,7 @@ export default {
     deploy (){
       let params = {
         name : this.chartName,
+        version : this.catalog.version,
         chartVersionList : this.chartVersionList
       }
       sessionStorage.removeItem('chartDeploy')
@@ -244,6 +245,6 @@ export default {
 
   .el-collapse-right{
   }
-  
+
 </style>
 

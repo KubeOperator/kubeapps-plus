@@ -89,15 +89,15 @@
         },
         created : async function(){
             let chart = this.$route.params.params ? this.$route.params.params : JSON.parse(sessionStorage.getItem('chartDeploy'))
-            console.log('chart', chart)
             this.chartName = chart.name
-            this.version = chart.chartVersionList[0].attributes.version
+            this.version = chart.version
             loading(this, 1000)
             this.getOptions(chart)
             this.init()
         },
         methods:{
             init : async function() {
+                this.releaseName = this.chartName.split('/')[1] + '-' + this.randomWord(false, 6, 10)
                 await http(getParamApi(apiSetting.kubernetes.getYaml, this.chartName, 'versions', this.version, 'values.yaml')).then(res => {
                     if (res.status == 200) {
                         this.aceEditor = ace.edit(this.$refs.ace, {
@@ -114,6 +114,25 @@
                     }
                 })
             },
+            /*
+            ** randomWord 产生任意长度随机字母数字组合
+            ** randomFlag-是否任意长度 min-任意长度最小位[固定位数] max-任意长度最大位
+            */
+            randomWord (randomFlag, min, max){
+                let str = "",
+                range = min,
+                arr = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
+
+                // 随机产生
+                if(randomFlag){
+                  range = Math.round(Math.random() * (max-min)) + min;
+                }
+                for(let i=0; i<range; i++){
+                  let pos = Math.round(Math.random() * (arr.length-1));
+                  str += arr[pos];
+                }
+                return str;
+            },
             getOptions (chart) {
                 for (let o of chart.chartVersionList){
                     let option = {}
@@ -126,23 +145,38 @@
             onChange () {
                this.init()
             },
-            submit(releaseName, version, chartName) {
-                let params = {
+            submit : async function(releaseName, version, chartName) {
+                if(!releaseName) {
+                  noticeMessage(this, ' 名称不允许为空，请填写名称 ', 'warning')
+                }else if(!version) {
+                  noticeMessage(this, ' 版本不允许为空，请填写版本 ', 'warning')
+                }else if (!this.aceEditor.getValue()) {
+                  noticeMessage(this, ' 值(YAML)不允许为空，请填写值(YAML) ', 'warning')
+                }else {
+                  noticeMessage(this, ' 正在部署，请稍等 ', 'success')
+                  let params = {
                     appRepositoryResourceName : chartName.split('/')[0],
                     chartName : chartName.split('/')[1],
                     releaseName : releaseName,
                     values : this.aceEditor.getValue(),
                     version : version
-                }
-                http(getParamApi(apiSetting.kubernetes.deployReleases, this.$store.state.namespaces.activeSpace, 'releases'), params).then(res => {
+                  }
+                  await http(getParamApi(apiSetting.kubernetes.deployReleases, this.$store.state.namespaces.activeSpace, 'releases'), params).then(res => {
                     loading(this, 2000)
-                    if (res.status == 200) {
+                    setTimeout(()=>{
+                      if (res.status == 200) {
                         noticeMessage(this, releaseName + ' 部署成功 ', 'success')
-                        this.$router.push('/apps/ns/' + this.$store.state.namespaces.activeSpace + '/' + releaseName)
-                    } else {
+                        console.log('/apps/ns/' + this.$store.state.namespaces.activeSpace + '/' + releaseName)
+                        setTimeout(()=>{
+                          this.$router.push('/apps/ns/' + this.$store.state.namespaces.activeSpace + '/' + releaseName)
+                        }, 2000)
+                      } else {
                         noticeMessage(this, res.data, 'error');
-                    }
-                })
+                      }
+                    }, 3000)
+                  })
+                }
+
             }
         }
     }

@@ -19,13 +19,15 @@
       <el-col :span="14" :offset="2" style="text-align:left">
         <el-row>
           <el-col :span="3">
-            <el-button type="primary">{{(this.status)?'Ready':'Not Ready'}}</el-button>
+            <el-button
+              :type="(this.status)?'success':'warning'"
+            >{{(this.status)?'Ready':'Not Ready'}}</el-button>
           </el-col>
           <el-col :offset="14" :span="3">
             <el-button @click="getdebug">Upgrade</el-button>
           </el-col>
           <el-col :offset="1" :span="3">
-            <el-button type="danger">Delete</el-button>
+            <el-button type="danger" @click="dialogVisible = true">Delete</el-button>
           </el-col>
         </el-row>
         <div v-show="this.AccessURLs!=''"></div>
@@ -111,6 +113,14 @@
         </div>
       </el-col>
     </el-row>
+    <el-dialog title="提示" :visible.sync="dialogVisible" width="30%">
+      <p>Are you sure you want to delete this?</p>
+      <el-switch v-model="purge" active-text="Purge release"></el-switch>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="dialogVisible = false">取 消</el-button>
+        <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
+      </span>
+    </el-dialog>
   </div>
 </template>
 
@@ -141,6 +151,11 @@ export default {
     printdebug(data, log) {
       console.log(data, log);
     },
+    handleClose(done) {
+      this.$confirm("确认关闭？").then(_ => {
+        done(_);
+      });
+    },
     getResources: async function() {
       await http(this.url).then(res => {
         let _this = this;
@@ -163,14 +178,12 @@ export default {
         jsyaml.loadAll(res.data.data.manifest, function(doc) {
           console.log(doc);
           if (doc.kind == "Secret") {
-              _this.secrets.push({
-                name: doc.metadata.name,
-                type: doc.type
-                // key: Base64.decode(doc.data["tls.crt"]),
-                // crt: Base64.decode(doc.data["tls.key"])
-              });
-          } else if (doc.kind == "Service") {
-            _this.services.push({ name: doc.metadata.name, kind: doc.kind });
+            _this.secrets.push({
+              name: doc.metadata.name,
+              type: doc.type
+              // key: Base64.decode(doc.data["tls.crt"]),
+              // crt: Base64.decode(doc.data["tls.key"])
+            });
           } else if (doc.kind != "Deployment") {
             _this.resources.push({ name: doc.metadata.name, kind: doc.kind });
           } else if (doc.kind == "Deployment") {
@@ -189,7 +202,9 @@ export default {
         basicurl.method = "get";
         http(basicurl).then(res => {
           if (res.status == 200) {
-            ((res.data.status.availableReplicas>0)&&(this.status))?(this.status=true):(this.status=false)
+            res.data.status.availableReplicas > 0 && this.status
+              ? (this.status = true)
+              : (this.status = false);
             this.deployments.push({
               name: res.data.metadata["name"],
               desired: res.data.status.replicas ? res.data.status.replicas : 0,
@@ -244,6 +259,7 @@ export default {
       url: {
         method: "get"
       },
+      dialogVisible: false,
       services: [],
       serviceDetail: [],
       secrets: [],
@@ -255,8 +271,9 @@ export default {
       aceEditor: null,
       valuesYaml: "",
       note: "",
-      status:'',
+      status: "",
       catalog: {},
+      purge: false,
       themePath: "ace/theme/monokai", // 不导入 webpack-resolver，该模块路径会报错
       modePath: "ace/mode/yaml" // 同上
     };

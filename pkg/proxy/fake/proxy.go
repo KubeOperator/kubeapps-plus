@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2018 Bitnami
+Copyright (c) 2014-2019 FIT2CLOUD 飞致云.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -20,7 +20,7 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/kubeapps/kubeapps/pkg/proxy"
+	"github.com/kubeapps_plus/pkg/proxy"
 	"k8s.io/helm/pkg/proto/hapi/chart"
 	"k8s.io/helm/pkg/proto/hapi/release"
 )

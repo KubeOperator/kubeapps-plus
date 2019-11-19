@@ -1,7 +1,7 @@
 <template>
   <div style="height: calc(100vh - 160px);" class="main_page">
     <el-row>
-      <el-col :span="4" :offset="2" >
+      <el-col :span="4" :offset="2">
         <el-card :body-style="{ padding: '0px'}" style="text-align:left">
           <div class="catalog-image">
             <img v-show="catalog.icon" :src="catalog.icon" class="image" />
@@ -19,10 +19,10 @@
       <el-col :span="14" :offset="2" style="text-align:left">
         <el-row>
           <el-col :span="3">
-            <el-button type="primary">Status</el-button>
+            <el-button type="primary">{{(this.status)?'Ready':'Not Ready'}}</el-button>
           </el-col>
           <el-col :offset="14" :span="3">
-            <el-button>Upgrade</el-button>
+            <el-button @click="getdebug">Upgrade</el-button>
           </el-col>
           <el-col :offset="1" :span="3">
             <el-button type="danger">Delete</el-button>
@@ -121,7 +121,7 @@ import "ace-builds/src-noconflict/theme-monokai"; // 默认设置的主题
 import "ace-builds/src-noconflict/mode-javascript"; // 默认设置的语言模式
 import http from "../utils/httpAxios.js";
 import jsyaml from "js-yaml";
-import { Base64 } from "js-base64";
+// import { Base64 } from "js-base64";
 
 export default {
   created: function() {
@@ -130,20 +130,15 @@ export default {
       this.$route.params.namespace +
       "/releases/" +
       this.$route.params.id;
-    console.log(this.url);
   },
   mounted: function() {
     this.getResources();
   },
   methods: {
     getdebug() {
-      // console.log(this.services)
-      // console.log(this.serviceDetail)
       console.log(this.deployments);
     },
     printdebug(data, log) {
-      // console.log(this.services)
-      // console.log(this.serviceDetail)
       console.log(data, log);
     },
     getResources: async function() {
@@ -166,19 +161,20 @@ export default {
           tabSize: 4 // 制表符设置为 4 个空格大小
         });
         jsyaml.loadAll(res.data.data.manifest, function(doc) {
+          console.log(doc);
           if (doc.kind == "Secret") {
-            console.log(doc.data);
-            _this.secrets.push({
-              name: doc.metadata.name,
-              type: doc.type,
-              key: Base64.decode(doc.data["tls.crt"]),
-              crt: Base64.decode(doc.data["tls.key"])
-            });
-            console.log();
+              _this.secrets.push({
+                name: doc.metadata.name,
+                type: doc.type
+                // key: Base64.decode(doc.data["tls.crt"]),
+                // crt: Base64.decode(doc.data["tls.key"])
+              });
           } else if (doc.kind == "Service") {
             _this.services.push({ name: doc.metadata.name, kind: doc.kind });
           } else if (doc.kind != "Deployment") {
             _this.resources.push({ name: doc.metadata.name, kind: doc.kind });
+          } else if (doc.kind == "Deployment") {
+            _this.services.push({ name: doc.metadata.name, kind: doc.kind });
           }
         });
       });
@@ -193,11 +189,16 @@ export default {
         basicurl.method = "get";
         http(basicurl).then(res => {
           if (res.status == 200) {
+            ((res.data.status.availableReplicas>0)&&(this.status))?(this.status=true):(this.status=false)
             this.deployments.push({
               name: res.data.metadata["name"],
-              desired: res.data.status.replicas,
-              update: res.data.status.updatedReplicas,
+              desired: res.data.status.replicas ? res.data.status.replicas : 0,
+              update: res.data.status.updatedReplicas
+                ? res.data.status.updatedReplicas
+                : 0,
               available: res.data.status.availableReplicas
+                ? res.data.status.availableReplicas
+                : 0
             });
           }
         });
@@ -254,6 +255,7 @@ export default {
       aceEditor: null,
       valuesYaml: "",
       note: "",
+      status:'',
       catalog: {},
       themePath: "ace/theme/monokai", // 不导入 webpack-resolver，该模块路径会报错
       modePath: "ace/mode/yaml" // 同上
@@ -356,7 +358,6 @@ group::after,
   display: block;
   margin: 1em;
 }
-.label{
-
+.label {
 }
 </style>

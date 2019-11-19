@@ -14,7 +14,7 @@
       <el-menu-item
         index="2"
         v-if="this.$route.path != '/'"
-        @click="$router.push('applications')"
+        @click="$router.push('/applications')"
       >{{$t('message.application')}}</el-menu-item>
       <el-menu-item
         index="3"

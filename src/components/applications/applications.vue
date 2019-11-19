@@ -6,7 +6,7 @@
       </el-col>
       <el-col :md="{span:4,offest:2}" :lg="3">
         <div style="margin: 1.2em 0;">
-          <el-input placeholder="请输入内容">
+          <el-input placeholder="请输入内容" v-model="search">
             <i slot="prefix" class="el-input__icon el-icon-search"></i>
           </el-input>
         </div>
@@ -68,7 +68,7 @@
         v-for="(catalog, index) in this.releases"
         :key="index"
         class="el-col"
-        v-show="catalog.status!='DELETED' || showdelete"
+        v-show="(catalog.status!='DELETED' || showdelete) && (catalog.releaseName.search(search)>=0)"
       >
         <el-card
           :body-style="{ padding: '0px' }"
@@ -92,7 +92,7 @@
                 round
               >{{catalog.namespace}}</el-button>
               <el-button
-                :type="catalog.status != 'DELETED'?'success':'warning'"
+                :type="checkType(catalog.status)"
                 size="small"
                 class="button-right"
                 round
@@ -116,7 +116,8 @@ export default {
       showdelete: true,
       radio: "",
       loading: false,
-      releases: []
+      releases: [],
+      search:'',
     };
   },
   created: function() {},
@@ -125,8 +126,17 @@ export default {
   },
   methods: {
     getReleaseApp() {
-      console.log(this.releases);
+      this.$router.push('/catalog')
     },
+    checkType(type){
+      if(type=='DELETE'){
+        return 'warning'
+      }else if(type=='FAILED'){
+        return 'danger'
+      }else{
+        return 'success'
+      }
+    }
   },
   computed: {
     getRelease() {

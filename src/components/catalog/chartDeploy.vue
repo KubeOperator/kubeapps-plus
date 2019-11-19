@@ -21,7 +21,7 @@
 
           <div>
             <label>{{$t('message.name')}}</label>
-            <el-input style="width: 100%;" pattern="[a-z0-9]([-a-z0-9]*[a-z0-9])?(\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*" v-model="releaseName" placeholder="请输入内容"></el-input>
+            <el-input style="width: 100%;" pattern="[a-z0-9]([-a-z0-9]*[a-z0-9])?(\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*" v-model="releaseName" placeholder="请输入内容" required></el-input>
           </div>
 
           <div>
@@ -67,7 +67,6 @@
     import apiSetting from "../utils/apiSetting.js";
     import http from "../utils/httpAxios.js";
     import getParamApi from "../utils/getParamApi";
-    import errorMessage from '../utils/errorMessage.js';
     import loading from '../utils/loading.js';
     import noticeMessage from "../utils/noticeMessage";
 
@@ -110,7 +109,7 @@
                             tabSize: 4 // 制表符设置为 4 个空格大小
                         })
                     } else {
-                        errorMessage(this, res);
+                      noticeMessage(this, res, 'error');
                     }
                 })
             },
@@ -131,7 +130,7 @@
                   let pos = Math.round(Math.random() * (arr.length-1));
                   str += arr[pos];
                 }
-                return str;
+                return str.toLowerCase();
             },
             getOptions (chart) {
                 for (let o of chart.chartVersionList){
@@ -147,34 +146,42 @@
             },
             submit : async function(releaseName, version, chartName) {
                 if(!releaseName) {
-                  noticeMessage(this, ' 名称不允许为空，请填写名称 ', 'warning')
-                }else if(!version) {
-                  noticeMessage(this, ' 版本不允许为空，请填写版本 ', 'warning')
-                }else if (!this.aceEditor.getValue()) {
-                  noticeMessage(this, ' 值(YAML)不允许为空，请填写值(YAML) ', 'warning')
-                }else {
-                  noticeMessage(this, ' 正在部署，请稍等 ', 'success')
-                  let params = {
-                    appRepositoryResourceName : chartName.split('/')[0],
-                    chartName : chartName.split('/')[1],
-                    releaseName : releaseName,
-                    values : this.aceEditor.getValue(),
-                    version : version
-                  }
-                  await http(getParamApi(apiSetting.kubernetes.deployReleases, this.$store.state.namespaces.activeSpace, 'releases'), params).then(res => {
-                    loading(this, 2000)
-                    setTimeout(()=>{
-                      if (res.status == 200) {
-                        noticeMessage(this, releaseName + ' 部署成功 ', 'success')
-                        console.log('/apps/ns/' + this.$store.state.namespaces.activeSpace + '/' + releaseName)
+                    noticeMessage(this, ' 名称不允许为空，请填写名称 ', 'warning')
+                } else if(!version) {
+                    noticeMessage(this, ' 版本不允许为空，请填写版本 ', 'warning')
+                } else if (!this.aceEditor.getValue()) {
+                    noticeMessage(this, ' 值(YAML)不允许为空，请填写值(YAML) ', 'warning')
+                } else {
+                    noticeMessage(this, ' 正在部署，请稍等 ', 'success')
+                    let params = {
+                        appRepositoryResourceName : chartName.split('/')[0],
+                        chartName : chartName.split('/')[1],
+                        releaseName : releaseName,
+                        values : this.aceEditor.getValue(),
+                        version : version
+                    }
+                    await http(getParamApi(apiSetting.kubernetes.deployReleases, this.$store.state.namespaces.activeSpace, 'releases'), params).then(res => {
+                        loading(this, 10000)
                         setTimeout(()=>{
-                          this.$router.push('/apps/ns/' + this.$store.state.namespaces.activeSpace + '/' + releaseName)
-                        }, 2000)
-                      } else {
-                        noticeMessage(this, res.data, 'error');
-                      }
-                    }, 3000)
-                  })
+                            if (!!res && res.status == 200) {
+                                noticeMessage(this, releaseName + ' 部署成功 ', 'success')
+                                console.log('/apps/ns/' + this.$store.state.namespaces.activeSpace + '/' + releaseName)
+                                this.$router.push('/apps/ns/' + this.$store.state.namespaces.activeSpace + '/' + releaseName)
+                            } else {
+                                setTimeout(()=>{
+                                    if (res) {
+                                        noticeMessage(this, res.data, 'error');
+                                    } else {
+                                        if(res.status == 200){
+                                            noticeMessage(this, releaseName + ' 部署成功 ', 'success')
+                                            console.log('/apps/ns/' + this.$store.state.namespaces.activeSpace + '/' + releaseName)
+                                            this.$router.push('/apps/ns/' + this.$store.state.namespaces.activeSpace + '/' + releaseName)
+                                        }
+                                    }
+                                }, 5000)
+                            }
+                        }, 10000)
+                    })
                 }
 
             }

@@ -6,7 +6,7 @@ RUN apt-get update
 
 COPY . /app
 
-RUN cd /app && npm install && npm run build
+RUN cd /app && yarn install && yarn build
 
 
 

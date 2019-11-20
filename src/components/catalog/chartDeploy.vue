@@ -85,6 +85,15 @@
         beforeMount () {
         },
         mounted () {
+            this.aceEditor = ace.edit(this.$refs.ace, {
+                maxLines: 30, // 最大行数，超过会自动出现滚动条
+                minLines: 10, // 最小行数，还未到最大行数时，编辑器会自动伸缩大小
+                fontSize: 14, // 编辑器内字体大小
+                theme: this.themePath, // 默认设置的主题
+                mode: this.modePath, // 默认设置的语言模式
+                value: '',
+                tabSize: 4 // 制表符设置为 4 个空格大小
+            })
         },
         created : async function(){
             let chart = this.$route.params.params ? this.$route.params.params : JSON.parse(sessionStorage.getItem('chartDeploy'))
@@ -99,17 +108,9 @@
                 this.releaseName = this.chartName.split('/')[1] + '-' + this.randomWord(false, 6, 10)
                 await http(getParamApi(apiSetting.kubernetes.getYaml, this.chartName, 'versions', this.version, 'values.yaml')).then(res => {
                     if (res.status == 200) {
-                        this.aceEditor = ace.edit(this.$refs.ace, {
-                            maxLines: 30, // 最大行数，超过会自动出现滚动条
-                            minLines: 10, // 最小行数，还未到最大行数时，编辑器会自动伸缩大小
-                            fontSize: 14, // 编辑器内字体大小
-                            theme: this.themePath, // 默认设置的主题
-                            mode: this.modePath, // 默认设置的语言模式
-                            value: res.data ? res.data : '',
-                            tabSize: 4 // 制表符设置为 4 个空格大小
-                        })
+                        this.aceEditor.setValue(res.data)
                     } else {
-                      noticeMessage(this, res, 'error');
+                        noticeMessage(this, res, 'error');
                     }
                 })
             },
@@ -124,25 +125,25 @@
 
                 // 随机产生
                 if(randomFlag){
-                  range = Math.round(Math.random() * (max-min)) + min;
+                    range = Math.round(Math.random() * (max-min)) + min;
                 }
                 for(let i=0; i<range; i++){
-                  let pos = Math.round(Math.random() * (arr.length-1));
-                  str += arr[pos];
+                    let pos = Math.round(Math.random() * (arr.length-1));
+                    str += arr[pos];
                 }
                 return str.toLowerCase();
             },
             getOptions (chart) {
                 for (let o of chart.chartVersionList){
                     let option = {}
-                    console.log(o.attributes.version)
                     option.value = o.attributes.version
                     option.label = o.attributes.version
                     this.options.push(option)
                 }
             },
             onChange () {
-               this.init()
+                this.init()
+
             },
             submit : async function(releaseName, version, chartName) {
                 if(!releaseName) {
@@ -172,11 +173,9 @@
                                     if (res) {
                                         noticeMessage(this, res.data, 'error');
                                     } else {
-                                        if(res.status == 200){
-                                            noticeMessage(this, releaseName + ' 部署成功 ', 'success')
-                                            console.log('/apps/ns/' + this.$store.state.namespaces.activeSpace + '/' + releaseName)
-                                            this.$router.push('/apps/ns/' + this.$store.state.namespaces.activeSpace + '/' + releaseName)
-                                        }
+                                        noticeMessage(this, releaseName + ' 部署成功 ', 'success')
+                                        console.log('/apps/ns/' + this.$store.state.namespaces.activeSpace + '/' + releaseName)
+                                        this.$router.push('/apps/ns/' + this.$store.state.namespaces.activeSpace + '/' + releaseName)
                                     }
                                 }, 5000)
                             }

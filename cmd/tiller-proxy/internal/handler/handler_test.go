@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2018 Bitnami
+Copyright (c) 2014-2019 FIT2CLOUD 飞致云.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -28,10 +28,10 @@ import (
 	"k8s.io/helm/pkg/proto/hapi/chart"
 	"k8s.io/helm/pkg/proto/hapi/release"
 
-	"github.com/kubeapps/kubeapps/pkg/auth"
-	authFake "github.com/kubeapps/kubeapps/pkg/auth/fake"
-	chartFake "github.com/kubeapps/kubeapps/pkg/chart/fake"
-	proxyFake "github.com/kubeapps/kubeapps/pkg/proxy/fake"
+	"github.com/kubeapps_plus/pkg/auth"
+	authFake "github.com/kubeapps_plus/pkg/auth/fake"
+	chartFake "github.com/kubeapps_plus/pkg/chart/fake"
+	proxyFake "github.com/kubeapps_plus/pkg/proxy/fake"
 )
 
 func TestErrorCodeWithDefault(t *testing.T) {

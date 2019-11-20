@@ -13,7 +13,7 @@ import (
 
 	"github.com/gorilla/mux"
 	"github.com/heptiolabs/healthcheck"
-	"github.com/kubeapps/kubeapps/cmd/tiller-proxy/internal/handler"
+	"github.com/kubeapps_plus/cmd/tiller-proxy/internal/handler"
 	"github.com/spf13/pflag"
 	"github.com/urfave/negroni"
 	"k8s.io/client-go/kubernetes"
@@ -22,9 +22,9 @@ import (
 	"k8s.io/helm/pkg/helm/environment"
 	"k8s.io/helm/pkg/tlsutil"
 
-	appRepo "github.com/kubeapps/kubeapps/cmd/apprepository-controller/pkg/client/clientset/versioned"
-	chartUtils "github.com/kubeapps/kubeapps/pkg/chart"
-	tillerProxy "github.com/kubeapps/kubeapps/pkg/proxy"
+	appRepo "github.com/kubeapps_plus/cmd/apprepository-controller/pkg/client/clientset/versioned"
+	chartUtils "github.com/kubeapps_plus/pkg/chart"
+	tillerProxy "github.com/kubeapps_plus/pkg/proxy"
 	log "github.com/sirupsen/logrus"
 	helmChartUtil "k8s.io/helm/pkg/chartutil"
 )

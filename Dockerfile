@@ -1,11 +1,10 @@
-FROM node:8.9 AS build
+FROM node:latest AS build
 WORKDIR /app
 
-RUN yarn install 
-
+RUN apt-get update
 COPY . /app
-RUN yarn run build
+RUN cd /app && yarn install && yarn build
 
 FROM bitnami/nginx:1.16.1-debian-9-r52
-COPY --from=build /app/build /app
+COPY --from=build /app/dist /app
 

@@ -1,30 +1,12 @@
-FROM node:latest as node-static
-
+FROM node:8.9 AS build
 WORKDIR /app
 
-RUN apt-get update
+COPY package.json yarn.lock /app/
+RUN yarn install --frozen-lockfile
 
 COPY . /app
+RUN yarn run build
 
-RUN cd /app && yarn install && yarn build
-
-
-
-FROM nginx
-
-MAINTAINER support support@fit2cloud.com
-
-WORKDIR /app
-
-COPY --from=node-static /app .
-
-RUN cp -ar /app/dist/* /usr/share/nginx/html/ \
-
-    && ln -sf /dev/stdout /var/log/nginx/access.log \
-
-	&& ln -sf /dev/stderr /var/log/nginx/error.log
-
-EXPOSE 9090
-
-CMD ["nginx", "-g", "daemon off;"]
+FROM bitnami/nginx:1.16.1-debian-9-r52
+COPY --from=build /app/build /app
 

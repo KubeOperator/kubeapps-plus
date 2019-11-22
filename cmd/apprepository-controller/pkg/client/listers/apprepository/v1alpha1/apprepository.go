@@ -1,5 +1,5 @@
 /*
-Copyright 2014-2019 FIT2CLOUD 飞致云..
+Copyright 2014-2019 FIT2CLOUD 飞致云.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -19,7 +19,7 @@ limitations under the License.
 package v1alpha1
 
 import (
-	v1alpha1 "github.com/kubeapps_plus/cmd/apprepository-controller/pkg/apis/apprepository/v1alpha1"
+	v1alpha1 "github.com/kubeapps/kubeapps/cmd/apprepository-controller/pkg/apis/apprepository/v1alpha1"
 	"k8s.io/apimachinery/pkg/api/errors"
 	"k8s.io/apimachinery/pkg/labels"
 	"k8s.io/client-go/tools/cache"

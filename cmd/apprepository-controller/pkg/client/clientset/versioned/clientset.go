@@ -33,8 +33,8 @@ type Interface interface {
 	Kubeapps() kubeappsv1alpha1.KubeappsV1alpha1Interface
 }
 
-// Clientset contains the clients for groups. Each group has exactly one
-// version included in a Clientset.
+//Clientset包含组的客户端。每组只有一个
+//客户端集中包含的版本
 type Clientset struct {
 	*discovery.DiscoveryClient
 	kubeappsV1alpha1 *kubeappsv1alpha1.KubeappsV1alpha1Client
@@ -45,13 +45,13 @@ func (c *Clientset) KubeappsV1alpha1() kubeappsv1alpha1.KubeappsV1alpha1Interfac
 	return c.kubeappsV1alpha1
 }
 
-// Deprecated: Kubeapps retrieves the default version of KubeappsClient.
-// Please explicitly pick a version.
+//不推荐：Kubeapps检索KubeappsClient的默认版本。
+//请明确选择版本。
 func (c *Clientset) Kubeapps() kubeappsv1alpha1.KubeappsV1alpha1Interface {
 	return c.kubeappsV1alpha1
 }
 
-// Discovery retrieves the DiscoveryClient
+//发现检索发现客户端
 func (c *Clientset) Discovery() discovery.DiscoveryInterface {
 	if c == nil {
 		return nil
@@ -59,7 +59,7 @@ func (c *Clientset) Discovery() discovery.DiscoveryInterface {
 	return c.DiscoveryClient
 }
 
-// NewForConfig creates a new Clientset for the given config.
+// NewForConfig 为给定的配置创建一个新的Clientset.
 func NewForConfig(c *rest.Config) (*Clientset, error) {
 	configShallowCopy := *c
 	if configShallowCopy.RateLimiter == nil && configShallowCopy.QPS > 0 {
@@ -80,8 +80,8 @@ func NewForConfig(c *rest.Config) (*Clientset, error) {
 	return &cs, nil
 }
 
-// NewForConfigOrDie creates a new Clientset for the given config and
-// panics if there is an error in the config.
+// NewForConfigOrDie 为给定的配置创建一个新的客户端集
+// 如果配置中有错误，则会死机.
 func NewForConfigOrDie(c *rest.Config) *Clientset {
 	var cs Clientset
 	cs.kubeappsV1alpha1 = kubeappsv1alpha1.NewForConfigOrDie(c)

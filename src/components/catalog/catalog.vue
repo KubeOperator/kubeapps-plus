@@ -11,9 +11,9 @@
                   v-model="input"
                   clearable>
           </el-input>
-          <el-button size="medium" icon="el-icon-search" class="catalog-search-btn" @click="handleSelect(input)">
-            {{$t('message.search')}}
-          </el-button>
+<!--          <el-button size="medium" icon="el-icon-search" class="catalog-search-btn" @click="handleSelect(input)">-->
+<!--            {{$t('message.search')}}-->
+<!--          </el-button>-->
         </div>
       </el-col>
     </el-row>
@@ -26,7 +26,28 @@
     <!-- foot start -->
     <el-row :gutter="20" class="el-row-body">
       <el-col :xs="24" :sm="12" :md="8" :lg="6" :xl="4" v-for="(catalog, index) in catalogList"
-              :key="index" class="el-col">
+              :key="index" class="el-col" v-show="(catalog.attributes.name.search(input)>=0
+              || catalog.attributes.description.search(input)>=0)
+              &&
+              (catalog.attributes.description.search('apache')>=0
+              || catalog.attributes.description.search('docker')>=0
+              || catalog.attributes.description.search('drupal')>=0
+              || catalog.attributes.description.search('elasticsearch')>=0
+              || catalog.attributes.description.search('etcd')>=0
+              || catalog.attributes.description.search('harbor')>=0
+              || catalog.attributes.description.search('jenkins')>=0
+              || catalog.attributes.description.search('kafka')>=0
+              || catalog.attributes.description.search('mysql ')>=0
+              || catalog.attributes.description.search('mongodb')>=0
+              || catalog.attributes.description.search('nginx')>=0
+              || catalog.attributes.description.search('rabbitmq')>=0
+              || catalog.attributes.description.search('redis')>=0
+              || catalog.attributes.description.search('tomcat')>=0
+              || catalog.attributes.description.search('wordpress')>=0
+              || catalog.attributes.description.search('zookeeper')>=0
+              || catalog.attributes.description.search('gitlab')>=0
+              )
+              ">
         <el-card :body-style="{ padding: '0px' }">
           <div class="catalog-image" @click="goDetails(catalog)">
             <a><img v-show="catalog.attributes.icon" :src="catalog.attributes.icon |
@@ -120,6 +141,7 @@ export default {
 
   .catalog-content{
     padding: 1em;
+    height: calc(100vh - 160px);
   }
 
   .grid-content {

@@ -71,6 +71,7 @@
 <style scoped>
   .app-repositories-content{
     padding: 1em;
+    height: calc(100vh - 160px);
   }
   .grid-content {
     border-radius: 4px;

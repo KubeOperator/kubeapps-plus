@@ -181,6 +181,7 @@ export default {
 
   .catalog-content{
     padding: 1em;
+    height: calc(100vh - 160px);
   }
 
   .grid-content {

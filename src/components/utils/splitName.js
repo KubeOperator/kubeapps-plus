@@ -3,7 +3,7 @@
  * @return example: stable
  * @author: maguohao
  */
-export function splitName (id) {
+export function splitName(id) {
     if (id == null || name == null) {
         return ''
     }

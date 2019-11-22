@@ -15,6 +15,6 @@ export function UTC2GMT (time) {
     let mon = formatFunc(date2.getMonth() + 1);
     let day = formatFunc(date2.getDate());
 
-    var dateStr = year+'年'+mon+'月'+day+'日';
+    var dateStr = year + '年'+mon+'月'+day+'日';
     return dateStr;
 }

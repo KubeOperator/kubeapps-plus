@@ -6,25 +6,27 @@
 </template>
 
 <script>
-export default {
-  name: "basicFooter"
+    export default {
+        name: "basicFooter"
 
-};
+    };
 </script>
 
 <style scoped>
-.footer{
-  height: 100px;
-  background-color: rgb(0,74,113);
-}
-.login_footer{
-    max-width: 200px;
-    max-height: 50px;
-    margin: 1em 0 0 0;
-}
-.login_footer_p{
-    color: #FFF;
-    font-size: 14px;
-    margin: 5px 0 0 0;
-}
+    .footer {
+        height: 100px;
+        background-color: rgb(0, 74, 113);
+    }
+
+    .login_footer {
+        max-width: 200px;
+        max-height: 50px;
+        margin: 1em 0 0 0;
+    }
+
+    .login_footer_p {
+        color: #FFF;
+        font-size: 14px;
+        margin: 5px 0 0 0;
+    }
 </style>

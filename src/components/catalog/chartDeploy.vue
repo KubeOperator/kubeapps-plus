@@ -1,62 +1,66 @@
 <template>
-  <div class="catalog-content">
-    <!-- header start -->
-    <el-row>
-      <el-col :span="24">
-        <div class="grid-content">
-          <h1 style="float: left">{{chartName}}</h1>
-        </div>
-      </el-col>
-    </el-row>
-    <!-- header end -->
+    <div class="catalog-content">
+        <!-- header start -->
+        <el-row>
+            <el-col :span="24">
+                <div class="grid-content">
+                    <h1 style="float: left">{{chartName}}</h1>
+                </div>
+            </el-col>
+        </el-row>
+        <!-- header end -->
 
-    <!-- 间隔线 start -->
-    <el-divider></el-divider>
-    <!-- 间隔线 end -->
+        <!-- 间隔线 start -->
+        <el-divider></el-divider>
+        <!-- 间隔线 end -->
 
-    <!-- foot start -->
-    <el-container>
-      <el-main>
-        <div class="foot-gril margin-t-normal">
+        <!-- foot start -->
+        <el-container>
+            <el-main>
+                <div class="foot-gril margin-t-normal">
 
-          <div>
-            <label>{{$t('message.name')}}</label>
-            <el-input style="width: 100%;" pattern="[a-z0-9]([-a-z0-9]*[a-z0-9])?(\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*" v-model="releaseName" placeholder="请输入内容" required></el-input>
-          </div>
+                    <div>
+                        <label>{{$t('message.name')}}</label>
+                        <el-input style="width: 100%;"
+                                  pattern="[a-z0-9]([-a-z0-9]*[a-z0-9])?(\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*"
+                                  v-model="releaseName" placeholder="请输入内容" required></el-input>
+                    </div>
 
-          <div>
-            <label>{{$t('message.version')}}</label>
-            <el-select style="width: 100%;" v-model="version" @change="onChange(version)" placeholder="请选择">
-              <el-option
-                v-for="item in options"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value"
-                >
-              </el-option>
-            </el-select>
-          </div>
+                    <div>
+                        <label>{{$t('message.version')}}</label>
+                        <el-select style="width: 100%;" v-model="version" @change="onChange(version)" placeholder="请选择">
+                            <el-option
+                                    v-for="item in options"
+                                    :key="item.value"
+                                    :label="item.label"
+                                    :value="item.value"
+                            >
+                            </el-option>
+                        </el-select>
+                    </div>
 
-          <div class="margin-t-normal">
-            <label>{{$t('message.values_yaml')}}</label>
-            <div class="ace-container">
-              <!-- 官方文档中使用 id，这里禁止使用，在后期打包后容易出现问题，使用 ref 或者 DOM 就行 -->
-              <div class="ace-editor" ref="ace">
-            </div>
-          </div>
+                    <div class="margin-t-normal">
+                        <label>{{$t('message.values_yaml')}}</label>
+                        <div class="ace-container">
+                            <!-- 官方文档中使用 id，这里禁止使用，在后期打包后容易出现问题，使用 ref 或者 DOM 就行 -->
+                            <div class="ace-editor" ref="ace">
+                            </div>
+                        </div>
 
-        </div>
+                    </div>
 
-          <div>
-            <el-button class="ace-xcode-btn" type="primary" size="medium" icon="el-icon-success" @click="submit(releaseName, version, chartName)">{{$t('message.submit')}}</el-button>
-          </div>
+                    <div>
+                        <el-button class="ace-xcode-btn" type="primary" size="medium" icon="el-icon-success"
+                                   @click="submit(releaseName, version, chartName)">{{$t('message.submit')}}
+                        </el-button>
+                    </div>
 
-      </div>
-      </el-main>
-      <el-aside></el-aside>
-    </el-container>
-    <!-- foot end -->
-  </div>
+                </div>
+            </el-main>
+            <el-aside></el-aside>
+        </el-container>
+        <!-- foot end -->
+    </div>
 </template>
 
 <script>
@@ -82,9 +86,9 @@
                 modePath: 'ace/mode/yaml' // 同上
             }
         },
-        beforeMount () {
+        beforeMount() {
         },
-        mounted () {
+        mounted() {
             this.aceEditor = ace.edit(this.$refs.ace, {
                 maxLines: 30, // 最大行数，超过会自动出现滚动条
                 minLines: 10, // 最小行数，还未到最大行数时，编辑器会自动伸缩大小
@@ -95,7 +99,7 @@
                 tabSize: 4 // 制表符设置为 4 个空格大小
             })
         },
-        created : async function(){
+        created: async function () {
             let chart = this.$route.params.params ? this.$route.params.params : JSON.parse(sessionStorage.getItem('chartDeploy'))
             this.chartName = chart.name
             this.version = chart.version
@@ -103,8 +107,8 @@
             this.getOptions(chart)
             this.init()
         },
-        methods:{
-            init : async function() {
+        methods: {
+            init: async function () {
                 this.releaseName = this.chartName.split('/')[1] + '-' + this.randomWord(false, 6, 10)
                 await http(getParamApi(apiSetting.kubernetes.getYaml, this.chartName, 'versions', this.version, 'values.yaml')).then(res => {
                     if (res.status == 200) {
@@ -112,74 +116,82 @@
                     } else {
                         noticeMessage(this, res, 'error');
                     }
+                }, msg => {
+                    noticeMessage(this, msg, 'error');
                 })
             },
             /*
             ** randomWord 产生任意长度随机字母数字组合
             ** randomFlag-是否任意长度 min-任意长度最小位[固定位数] max-任意长度最大位
             */
-            randomWord (randomFlag, min, max){
+            randomWord(randomFlag, min, max) {
                 let str = "",
-                range = min,
-                arr = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
+                    range = min,
+                    arr = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
 
                 // 随机产生
-                if(randomFlag){
-                    range = Math.round(Math.random() * (max-min)) + min;
+                if (randomFlag) {
+                    range = Math.round(Math.random() * (max - min)) + min;
                 }
-                for(let i=0; i<range; i++){
-                    let pos = Math.round(Math.random() * (arr.length-1));
+                for (let i = 0; i < range; i++) {
+                    let pos = Math.round(Math.random() * (arr.length - 1));
                     str += arr[pos];
                 }
                 return str.toLowerCase();
             },
-            getOptions (chart) {
-                for (let o of chart.chartVersionList){
+            getOptions(chart) {
+                for (let o of chart.chartVersionList) {
                     let option = {}
                     option.value = o.attributes.version
                     option.label = o.attributes.version
                     this.options.push(option)
                 }
             },
-            onChange () {
+            onChange() {
                 this.init()
 
             },
-            submit : async function(releaseName, version, chartName) {
-                if(!releaseName) {
+            submit(releaseName, version, chartName) {
+                if (!releaseName) {
                     noticeMessage(this, ' 名称不允许为空，请填写名称 ', 'warning')
-                } else if(!version) {
+                } else if (!version) {
                     noticeMessage(this, ' 版本不允许为空，请填写版本 ', 'warning')
                 } else if (!this.aceEditor.getValue()) {
                     noticeMessage(this, ' 值(YAML)不允许为空，请填写值(YAML) ', 'warning')
                 } else {
                     noticeMessage(this, ' 正在部署，请稍等 ', 'success')
+                    // eslint-disable-next-line no-unused-vars
                     let params = {
-                        appRepositoryResourceName : chartName.split('/')[0],
-                        chartName : chartName.split('/')[1],
-                        releaseName : releaseName,
-                        values : this.aceEditor.getValue(),
-                        version : version
+                        appRepositoryResourceName: chartName.split('/')[0],
+                        chartName: chartName.split('/')[1],
+                        releaseName: releaseName,
+                        values: this.aceEditor.getValue(),
+                        version: version
                     }
-                    await http(getParamApi(apiSetting.kubernetes.deployReleases, this.$store.state.namespaces.activeSpace, 'releases'), params).then(res => {
-                        loading(this, 10000)
-                        setTimeout(()=>{
-                            if (!!res && res.status == 200) {
-                                noticeMessage(this, releaseName + ' 部署成功 ', 'success')
-                                console.log('/apps/ns/' + this.$store.state.namespaces.activeSpace + '/' + releaseName)
-                                this.$router.push('/apps/ns/' + this.$store.state.namespaces.activeSpace + '/' + releaseName)
-                            } else {
-                                setTimeout(()=>{
-                                    if (res) {
-                                        noticeMessage(this, res.data, 'error');
-                                    } else {
+                    http(getParamApi(apiSetting.kubernetes.deployReleases, this.$store.state.namespaces.activeSpace, 'releases'), params).then(res => {
+                        setCallBackValue(1)
+
+                        function setCallBackValue(index) {
+                            setTimeout(() => {
+                                loading(this, 10000)
+                                if (!!res && !!res.status) {
+                                    if (res.status == 200) {
                                         noticeMessage(this, releaseName + ' 部署成功 ', 'success')
-                                        console.log('/apps/ns/' + this.$store.state.namespaces.activeSpace + '/' + releaseName)
                                         this.$router.push('/apps/ns/' + this.$store.state.namespaces.activeSpace + '/' + releaseName)
+                                    } else {
+                                        noticeMessage(this, releaseName + ' 部署失败: ' + res, 'error')
                                     }
-                                }, 5000)
-                            }
-                        }, 10000)
+                                } else {
+                                    if (index < 5) {
+                                        setCallBackValue(index++)
+                                    } else {
+                                        noticeMessage(this, releaseName + ' 部署失败: ' + 'TimeOut 请求超时', 'error')
+                                    }
+                                }
+                            }, 14000)
+                        }
+                    }, msg => {
+                        noticeMessage(this, releaseName + ' 部署失败: ' + msg, 'error')
                     })
                 }
 
@@ -190,16 +202,17 @@
 
 <style scoped>
 
-    .catalog-content{
+    .catalog-content {
         padding: 1em;
+        height: calc(100vh - 160px);
     }
 
-    .foot-gril{
+    .foot-gril {
         padding: 1em;
         text-align: left;
     }
 
-    .ace-xcode-btn{
+    .ace-xcode-btn {
         margin: 2em 0 0 0;
         width: 20%;
     }

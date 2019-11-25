@@ -143,6 +143,8 @@
                             } else {
                                 noticeMessage(this, res, 'error');
                             }
+                        }, msg => {
+                            noticeMessage(this, msg, 'error');
                         })
                     } else {
                         noticeMessage(this, res, 'error');

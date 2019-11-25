@@ -4,7 +4,7 @@
  * @author: maguohao
  */
 
-const https = 'http://172.16.10.163/api/chartsvc/'
+const https = 'https://hub.kubeapps.com/api/chartsvc/'
 export function searchImage (value) {
     if (!value) {
         return ''

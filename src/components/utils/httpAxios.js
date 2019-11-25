@@ -103,15 +103,15 @@ const httpServer = (opts, data) => {
       }
     )
   */
-    let promise = new Promise(function (resolve, reject) {
-        axios(httpDefaultOpts).then((res) => {
+    let promise = new Promise(async (resolve, reject)=>  {
+        await axios(httpDefaultOpts).then((res) => {
+            console.log('... ',res)
             successState(res)
             resolve(res)
+        }).catch((response) => {
+            errorState(response)
+            reject(response)
         })
-            .catch((response) => {
-                errorState(response)
-                reject(response)
-            })
     })
 
     return promise

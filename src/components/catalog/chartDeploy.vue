@@ -159,40 +159,38 @@
                 } else if (!this.aceEditor.getValue()) {
                     noticeMessage(this, ' 值(YAML)不允许为空，请填写值(YAML) ', 'warning')
                 } else {
-                    noticeMessage(this, ' 正在部署，请稍等 ', 'success')
-                    // eslint-disable-next-line no-unused-vars
-                    let params = {
-                        appRepositoryResourceName: chartName.split('/')[0],
-                        chartName: chartName.split('/')[1],
-                        releaseName: releaseName,
-                        values: this.aceEditor.getValue(),
-                        version: version
-                    }
-                    http(getParamApi(apiSetting.kubernetes.deployReleases, this.$store.state.namespaces.activeSpace, 'releases'), params).then(res => {
-                        setCallBackValue(1)
-
-                        function setCallBackValue(index) {
-                            setTimeout(() => {
-                                loading(this, 10000)
-                                if (!!res && !!res.status) {
-                                    if (res.status == 200) {
-                                        noticeMessage(this, releaseName + ' 部署成功 ', 'success')
-                                        this.$router.push('/apps/ns/' + this.$store.state.namespaces.activeSpace + '/' + releaseName)
-                                    } else {
-                                        noticeMessage(this, releaseName + ' 部署失败: ' + res, 'error')
-                                    }
-                                } else {
-                                    if (index < 5) {
-                                        setCallBackValue(index++)
-                                    } else {
-                                        noticeMessage(this, releaseName + ' 部署失败: ' + 'TimeOut 请求超时', 'error')
-                                    }
-                                }
-                            }, 14000)
+                    this.$confirm('即将开始部署, 是否继续?', '提示', {
+                        confirmButtonText: '确定',
+                        cancelButtonText: '取消',
+                        type: 'warning'
+                    }).then(() => {
+                        noticeMessage(this, ' 正在部署，请稍等 ', 'success')
+                        // eslint-disable-next-line no-unused-vars
+                        let params = {
+                            appRepositoryResourceName: chartName.split('/')[0],
+                            chartName: chartName.split('/')[1],
+                            releaseName: releaseName,
+                            values: this.aceEditor.getValue(),
+                            version: version
                         }
-                    }, msg => {
-                        noticeMessage(this, releaseName + ' 部署失败: ' + msg, 'error')
-                    })
+                        http(getParamApi(apiSetting.kubernetes.deployReleases, this.$store.state.namespaces.activeSpace, 'releases'), params).then(res => {
+                            loading(this, 10000)
+                            if (res.status == 200) {
+                                noticeMessage(this, releaseName + ' 部署成功 ', 'success')
+                                this.$router.push('/apps/ns/' + this.$store.state.namespaces.activeSpace + '/' + releaseName)
+                            } else {
+                                noticeMessage(this, releaseName + ' 部署失败: ' + res, 'error')
+                            }
+                        }, msg => {
+                            noticeMessage(this, releaseName + ' 部署失败: ' + msg, 'error')
+                        })
+                    }).catch(() => {
+                        this.$message({
+                            type: 'info',
+                            message: '已取消部署'
+                        });
+                    });
+
                 }
 
             }

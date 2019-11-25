@@ -3,7 +3,7 @@ import VueRouter from 'vue-router'
 import mainLogin from "../components/login/mainLogin.vue"
 import applications from "../components/applications/applications.vue"
 import catalog from "../components/catalog/catalog.vue"
-import catalogDetails from "../components/catalog/catalog_details.vue"
+import catalogDetails from "../components/catalog/catalogDetails.vue"
 import chartDeploy from "../components/catalog/chartDeploy.vue"
 import repositories from "../components/configuration/appRepositories.vue"
 import brokers from "../components/configuration/serviceBroker.vue"

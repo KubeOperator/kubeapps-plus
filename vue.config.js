@@ -1,6 +1,7 @@
 //vue.config.js
 module.exports = {
-    publicPath:'',
+    baseUrl: './',
+    assetsDir: './',
     devServer: {
         port: 9090,
 

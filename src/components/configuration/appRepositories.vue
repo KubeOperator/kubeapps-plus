@@ -85,7 +85,7 @@
                         errorMessage(this, res);
                     }
                 }, msg => {
-                    noticeMessage(this, msg, 'error');
+                    noticeMessage(this, msg.data, 'error');
                 })
             },
             refreshAll() {

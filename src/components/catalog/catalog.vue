@@ -113,7 +113,7 @@
                         noticeMessage(this, res, 'error');
                     }
                 }, msg => {
-                    noticeMessage(this, msg, 'error');
+                    noticeMessage(this, msg.data, 'error');
                 })
             },
             handleSelect: async function (key) {

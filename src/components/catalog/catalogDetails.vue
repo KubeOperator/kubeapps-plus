@@ -144,13 +144,13 @@
                                 noticeMessage(this, res, 'error');
                             }
                         }, msg => {
-                            noticeMessage(this, msg, 'error');
+                            noticeMessage(this, msg.data, 'error');
                         })
                     } else {
                         noticeMessage(this, res, 'error');
                     }
                 }, msg => {
-                    noticeMessage(this, msg, 'error');
+                    noticeMessage(this, msg.data, 'error');
                 })
             },
             deploy() {

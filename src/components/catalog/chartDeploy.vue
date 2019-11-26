@@ -117,7 +117,7 @@
                         noticeMessage(this, res, 'error');
                     }
                 }, msg => {
-                    noticeMessage(this, msg, 'error');
+                    noticeMessage(this, msg.data, 'error');
                 })
             },
             /*
@@ -151,7 +151,7 @@
                 this.init()
 
             },
-            submit(releaseName, version, chartName) {
+            submit: async function(releaseName, version, chartName) {
                 if (!releaseName) {
                     noticeMessage(this, ' 名称不允许为空，请填写名称 ', 'warning')
                 } else if (!version) {
@@ -159,40 +159,46 @@
                 } else if (!this.aceEditor.getValue()) {
                     noticeMessage(this, ' 值(YAML)不允许为空，请填写值(YAML) ', 'warning')
                 } else {
-                    this.$confirm('即将开始部署, 是否继续?', '提示', {
+                    await this.$confirm('即将开始部署, 是否继续?', '提示', {
                         confirmButtonText: '确定',
                         cancelButtonText: '取消',
                         type: 'warning'
                     }).then(() => {
                         noticeMessage(this, ' 正在部署，请稍等 ', 'success')
-                        // eslint-disable-next-line no-unused-vars
-                        let params = {
-                            appRepositoryResourceName: chartName.split('/')[0],
-                            chartName: chartName.split('/')[1],
-                            releaseName: releaseName,
-                            values: this.aceEditor.getValue(),
-                            version: version
-                        }
-                        http(getParamApi(apiSetting.kubernetes.deployReleases, this.$store.state.namespaces.activeSpace, 'releases'), params).then(res => {
-                            loading(this, 10000)
-                            if (res.status == 200) {
-                                noticeMessage(this, releaseName + ' 部署成功 ', 'success')
-                                this.$router.push('/apps/ns/' + this.$store.state.namespaces.activeSpace + '/' + releaseName)
-                            } else {
-                                noticeMessage(this, releaseName + ' 部署失败: ' + res, 'error')
-                            }
-                        }, msg => {
-                            noticeMessage(this, releaseName + ' 部署失败: ' + msg, 'error')
-                        })
+                        this.deploy(releaseName, version, chartName)
                     }).catch(() => {
                         this.$message({
                             type: 'info',
                             message: '已取消部署'
                         });
                     });
-
                 }
-
+            },
+            timeout: async function(ms) {
+                await new Promise((resolve) => {
+                    setTimeout(resolve, ms);
+                })
+            },
+            deploy: async function(releaseName, version, chartName){
+                let params = {
+                    appRepositoryResourceName: chartName.split('/')[0],
+                    chartName: chartName.split('/')[1],
+                    releaseName: releaseName,
+                    values: this.aceEditor.getValue(),
+                    version: version
+                }
+                await http(getParamApi(apiSetting.kubernetes.deployReleases, this.$store.state.namespaces.activeSpace, 'releases'), params).then((res) => {
+                    loading(this, 10000)
+                    this.timeout(4000);
+                    if (res.status == 200) {
+                        noticeMessage(this, releaseName + ' 部署成功 ', 'success')
+                        this.$router.push('/apps/ns/' + this.$store.state.namespaces.activeSpace + '/' + releaseName)
+                    } else {
+                        noticeMessage(this, releaseName + ' 部署失败: ' + res, 'error')
+                    }
+                }, msg => {
+                    noticeMessage(this, releaseName + ' 请求失败: ' + msg.data, 'error')
+                })
             }
         }
     }

@@ -51,7 +51,7 @@
                 <el-card :body-style="{ padding: '0px' }">
                     <div class="catalog-image" @click="goDetails(catalog)">
                         <a><img v-show="catalog.attributes.icon" :src="catalog.attributes.icon |
-              searchImage(catalog.attributes.icon)" class="image"></a>
+                            searchImage(catalog.attributes.icon)" class="image" require></a>
                         <a><img v-show="!catalog.attributes.icon" src="../../assets/image/default.png"
                                 class="image"></a>
                     </div>
@@ -88,8 +88,21 @@
     import common from '../common/common.js';
     import loading from '../utils/loading.js';
     import noticeMessage from "../utils/noticeMessage";
+    import enerty from '../entity/entity.js';
+    // import getParamApi from "../utils/getParamApi";
 
     let catalogList = []
+    // let search = async (value) => {
+    //     await http(getParamApi(apiSetting.kubernetes.getImage, value)).then(res => {
+    //         if (res.status == 200) {
+    //             return res.request.responseURL;
+    //         } else {
+    //             noticeMessage(this, res.data, 'error');
+    //         }
+    //     }, msg => {
+    //         noticeMessage(this, msg, 'error');
+    //     })
+    // }
     export default {
         name: "catalog",
         data() {
@@ -110,10 +123,10 @@
                         this.catalogList = res.data.data
                     } else {
                         //Error Message
-                        noticeMessage(this, res, 'error');
+                        noticeMessage(this, res.data, 'error');
                     }
                 }, msg => {
-                    noticeMessage(this, msg.data, 'error');
+                    noticeMessage(this, msg, 'error');
                 })
             },
             handleSelect: async function (key) {
@@ -121,16 +134,8 @@
                 this.catalogList = common.search(key, this.catalogList)
             },
             goDetails(catalog) {
-                let params = {
-                    id: catalog.id,
-                    icon: catalog.attributes.icon,
-                    version: catalog.relationships.latestChartVersion.data.version,
-                    appVersion: catalog.relationships.latestChartVersion.data.app_version,
-                    desc: catalog.attributes.description,
-                    home: catalog.attributes.home,
-                    sources: catalog.attributes.sources,
-                    maintainers: catalog.attributes.maintainers
-                }
+                let params = enerty.CatalogEnerty.getCatalog(catalog)
+                console.log('params',params)
                 sessionStorage.removeItem('catalogDetailsByParams')
                 sessionStorage.removeItem('chartName')
                 sessionStorage.setItem('chartName', catalog.id)

@@ -99,6 +99,7 @@
     import http from "../utils/httpAxios.js";
     import getParamApi from "../utils/getParamApi";
     import noticeMessage from '../utils/noticeMessage.js';
+    import enerty from '../entity/entity.js';
 
     export default {
         name: 'document',
@@ -165,16 +166,7 @@
             },
             selectChart(catalog) {
                 loading(this, 1000)
-                this.catalog = {
-                    id: catalog.id,
-                    version: catalog.attributes.version,
-                    appVersion: catalog.attributes.app_version,
-                    desc: catalog.relationships.chart.data.description,
-                    icon: catalog.relationships.chart.data.icon,
-                    home: catalog.relationships.chart.data.home,
-                    sources: catalog.relationships.chart.data.sources,
-                    maintainers: catalog.relationships.chart.data.maintainers
-                }
+                this.catalog = enerty.CatalogDetailEnerty.getCatalogDetail(catalog)
                 sessionStorage.removeItem('catalogDetailsByParams')
                 sessionStorage.setItem('catalogDetailsByParams', JSON.stringify(this.catalog))
                 this.init()

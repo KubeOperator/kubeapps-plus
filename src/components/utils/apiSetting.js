@@ -20,6 +20,10 @@ const serviceModule = {
             url: '/api/chartsvc/v1/charts',
             method: 'get'
         },
+        getImage: {
+            url: '/api/chartsvc',
+            method: 'get'
+        },
         getAppRepositories: {
             url: 'api/kube/apis/kubeapps.com/v1alpha1/namespaces/kubeapps/apprepositories',
             method: 'get'

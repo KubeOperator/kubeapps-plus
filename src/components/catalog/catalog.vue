@@ -27,31 +27,10 @@
         <el-row :gutter="20" class="el-row-body">
             <el-col :xs="24" :sm="12" :md="8" :lg="6" :xl="4" v-for="(catalog, index) in catalogList"
                     :key="index" class="el-col" v-show="(catalog.attributes.name.search(input)>=0
-              || catalog.attributes.description.search(input)>=0)
-              &&
-              (catalog.attributes.description.search('apache')>=0
-              || catalog.attributes.description.search('docker')>=0
-              || catalog.attributes.description.search('drupal')>=0
-              || catalog.attributes.description.search('elasticsearch')>=0
-              || catalog.attributes.description.search('etcd')>=0
-              || catalog.attributes.description.search('harbor')>=0
-              || catalog.attributes.description.search('jenkins')>=0
-              || catalog.attributes.description.search('kafka')>=0
-              || catalog.attributes.description.search('mysql ')>=0
-              || catalog.attributes.description.search('mongodb')>=0
-              || catalog.attributes.description.search('nginx')>=0
-              || catalog.attributes.description.search('rabbitmq')>=0
-              || catalog.attributes.description.search('redis')>=0
-              || catalog.attributes.description.search('tomcat')>=0
-              || catalog.attributes.description.search('wordpress')>=0
-              || catalog.attributes.description.search('zookeeper')>=0
-              || catalog.attributes.description.search('gitlab')>=0
-              )
-              ">
+              || catalog.attributes.description.search(input)>=0)">
                 <el-card :body-style="{ padding: '0px' }">
                     <div class="catalog-image" @click="goDetails(catalog)">
-                        <a><img v-show="catalog.attributes.icon" :src="catalog.attributes.icon |
-                            searchImage(catalog.attributes.icon)" class="image" require></a>
+                        <a><img v-show="catalog.attributes.icon" :src="catalog.attributes.icon " class="image" require></a>
                         <a><img v-show="!catalog.attributes.icon" src="../../assets/image/default.png"
                                 class="image"></a>
                     </div>
@@ -66,7 +45,7 @@
                                 catalog.relationships.latestChartVersion.data.version}}
                             </el-button>
                             <el-button size="medium" type="primary" class="button-right" v-show="catalog.id.indexOf('stable') > -1
-                  || catalog.id.indexOf('bitnami') > -1 || catalog.id.indexOf('svc-cat') > -1" round>
+                                || catalog.id.indexOf('bitnami') > -1 || catalog.id.indexOf('svc-cat') > -1" round>
                                 {{catalog.id | splitName(catalog.id)}}
                             </el-button>
                             <el-button type="warning" class="button-right" v-show="catalog.id.indexOf('incubator') > -1"
@@ -89,20 +68,9 @@
     import loading from '../utils/loading.js';
     import noticeMessage from "../utils/noticeMessage";
     import enerty from '../entity/entity.js';
-    // import getParamApi from "../utils/getParamApi";
+    import getParamApi from "../utils/getParamApi";
 
     let catalogList = []
-    // let search = async (value) => {
-    //     await http(getParamApi(apiSetting.kubernetes.getImage, value)).then(res => {
-    //         if (res.status == 200) {
-    //             return res.request.responseURL;
-    //         } else {
-    //             noticeMessage(this, res.data, 'error');
-    //         }
-    //     }, msg => {
-    //         noticeMessage(this, msg, 'error');
-    //     })
-    // }
     export default {
         name: "catalog",
         data() {
@@ -120,7 +88,44 @@
             init: async function () {
                 await http(apiSetting.kubernetes.getCharts).then(res => {
                     if (res.status == 200) {
-                        this.catalogList = res.data.data
+                        for (let chart of res.data.data) {
+                            if (
+                                   chart.attributes.name =='apache'
+                                || chart.attributes.name =='docker'
+                                || chart.attributes.name =='drupal'
+                                || chart.attributes.name =='elasticsearch'
+                                || chart.attributes.name =='etcd'
+                                || chart.attributes.name =='harbor'
+                                || chart.attributes.name =='jenkins'
+                                || chart.attributes.name =='kafka'
+                                || chart.attributes.name =='mysql'
+                                || chart.attributes.name =='mongodb'
+                                || chart.attributes.name =='nginx'
+                                || chart.attributes.name =='rabbitmq'
+                                || chart.attributes.name =='redis'
+                                || chart.attributes.name =='tomcat'
+                                || chart.attributes.name =='wordpress'
+                                || chart.attributes.name =='zookeeper'
+                                || chart.attributes.name =='gitlab') {
+                                console.log('688688： ', chart.attributes.icon)
+                                if(chart.attributes.icon){
+                                    http(getParamApi(apiSetting.kubernetes.getImage, chart.attributes.icon)).then(res => {
+                                        if (res.status == 200) {
+                                            chart.attributes.icon =  res.request.responseURL;
+                                            this.catalogList.sort().push(chart)
+                                            console.error('???', this.catalogList)
+                                        } else {
+                                            noticeMessage(this, res.data, 'error');
+                                        }
+                                    }, msg => {
+                                        noticeMessage(this, msg, 'error');
+                                    })
+                                }else {
+                                    this.catalogList.sort().push(chart)
+                                    console.error('666', this.catalogList)
+                                }
+                            }
+                        }
                     } else {
                         //Error Message
                         noticeMessage(this, res.data, 'error');

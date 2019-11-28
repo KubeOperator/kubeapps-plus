@@ -129,6 +129,7 @@ import ace from "ace-builds";
 import "ace-builds/webpack-resolver"; // 在 webpack 环境中使用必须要导入
 import "ace-builds/src-noconflict/theme-monokai"; // 默认设置的主题
 import "ace-builds/src-noconflict/mode-javascript"; // 默认设置的语言模式
+import apiSetting from "../utils/apiSetting.js";
 import http from "../utils/httpAxios.js";
 import jsyaml from "js-yaml";
 // import { Base64 } from "js-base64";
@@ -136,7 +137,7 @@ import jsyaml from "js-yaml";
 export default {
   created: function() {
     this.url.url =
-      "/rpc/api/tiller-deploy/v1/namespaces/" +
+      apiSetting.kubenetes.getdetailone.url +
       this.$route.params.namespace +
       "/releases/" +
       this.$route.params.id;
@@ -195,7 +196,7 @@ export default {
       for (let index = 0; index < this.services.length; index++) {
         var basicurl = {};
         basicurl.url =
-          "/rpc/api/kube/apis/apps/v1/namespaces/" +
+          apiSetting.kubenetes.getdetailtwo.url +
           this.$route.params.namespace +
           "/deployments/" +
           this.services[index].name;
@@ -222,7 +223,7 @@ export default {
       for (let index = 0; index < this.services.length; index++) {
         var _basicurl = {};
         _basicurl.url =
-          "/rpc/api/kube/api/v1/namespaces/" +
+          apiSetting.kubenetes.getdetailtwo +
           this.$route.params.namespace +
           "/services/" +
           this.services[index].name;

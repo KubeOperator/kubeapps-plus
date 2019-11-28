@@ -5,19 +5,19 @@
  * @author: maguohao
  */
 var getParamApi = function (apiSetting, ...params) {
-  let api = {}
-  let str = ''
-  if (apiSetting) {
-    for (let param of params) {
-      str += '/' + param
+    let api = {}
+    let str = ''
+    if (apiSetting) {
+        for (let param of params) {
+            str += '/' + param
+        }
+        let url = apiSetting.url + str
+        api = {
+            url: url,
+            method: apiSetting.method
+        }
     }
-    let url = apiSetting.url + str
-    api = {
-      url: url,
-      method: apiSetting.method
-    }
-  }
-  return api
+    return api
 }
 
 export default getParamApi

@@ -1,11 +1,11 @@
 const serviceModule = {
     kubernetes: {
         getInfo: {
-            url: '/rpc/api/kube/',
+            url: '/api/kube/',
             method: 'get'
         },
         getNamespaces: {
-            url: '/rpc/api/kube/api/v1/namespaces/',
+            url: '/api/kube/api/v1/namespaces/',
             method: 'get'
         },
         checkAuth: {
@@ -13,7 +13,7 @@ const serviceModule = {
             method: 'get'
         },
         getRelease: {
-            url: '/rpc/api/tiller-deploy/v1/namespaces/',
+            url: '/api/tiller-deploy/v1/namespaces/',
             method: 'get'
         },
         getCharts: {
@@ -33,7 +33,7 @@ const serviceModule = {
             method: 'get'
         },
         getAppDetail: {
-            url: '/rpc/api/tiller-deploy/v1/namespaces/kubeapps/releases/kubeapps'
+            url: '/api/tiller-deploy/v1/namespaces/kubeapps/releases/kubeapps'
         },
         getReadme: {
             url: '/api/chartsvc/v1/assets',
@@ -52,10 +52,10 @@ const serviceModule = {
             method: 'get'
         },
         getdetailone:{
-            url: '/rpc/api/tiller-deploy/v1/namespaces/'
+            url: '/api/tiller-deploy/v1/namespaces/'
         },
         getdetailtwo:{
-            url: '/rpc/api/kube/apis/apps/v1/namespaces/'
+            url: '/api/kube/apis/apps/v1/namespaces/'
         },
     }
 }

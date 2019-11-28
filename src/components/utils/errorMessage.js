@@ -15,7 +15,7 @@ var errorMessage = function (obj, res) {
         title: "Error",
         message: h(
             "i",
-            { style: "color: black" },
+            {style: "color: black"},
             message
         ),
         type: "error",

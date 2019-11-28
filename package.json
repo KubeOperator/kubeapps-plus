@@ -3,8 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
+    "serve": "rm -rf src/components/utils/apiSetting.js&& cp src/components/utils/apiSetting.develop.js  src/components/utils/apiSetting.js && vue-cli-service serve",
+    "build": "rm -rf src/components/utils/apiSetting.js&& cp src/components/utils/apiSetting.production.js  src/components/utils/apiSetting.js && vue-cli-service build",
     "lint": "vue-cli-service lint"
   },
   "dependencies": {

@@ -30,7 +30,7 @@
               || catalog.attributes.description.search(input)>=0)">
                 <el-card :body-style="{ padding: '0px' }">
                     <div class="catalog-image" @click="goDetails(catalog)">
-                        <a><img v-show="catalog.attributes.icon" :src="catalog.attributes.icon " class="image" require></a>
+                        <a><img v-show="catalog.attributes.icon" :src="catalog.attributes.icon" class="image" require></a>
                         <a><img v-show="!catalog.attributes.icon" src="../../assets/image/default.png"
                                 class="image"></a>
                     </div>
@@ -81,51 +81,14 @@
             }
         },
         created() {
-            loading(this, 1500)
+            loading(this, 2000)
             this.init()
         },
         methods: {
             init: async function () {
                 await http(apiSetting.kubernetes.getCharts).then(res => {
                     if (res.status == 200) {
-                        for (let chart of res.data.data) {
-                            if (
-                                   chart.attributes.name =='apache'
-                                || chart.attributes.name =='docker'
-                                || chart.attributes.name =='drupal'
-                                || chart.attributes.name =='elasticsearch'
-                                || chart.attributes.name =='etcd'
-                                || chart.attributes.name =='harbor'
-                                || chart.attributes.name =='jenkins'
-                                || chart.attributes.name =='kafka'
-                                || chart.attributes.name =='mysql'
-                                || chart.attributes.name =='mongodb'
-                                || chart.attributes.name =='nginx'
-                                || chart.attributes.name =='rabbitmq'
-                                || chart.attributes.name =='redis'
-                                || chart.attributes.name =='tomcat'
-                                || chart.attributes.name =='wordpress'
-                                || chart.attributes.name =='zookeeper'
-                                || chart.attributes.name =='gitlab') {
-                                console.log('688688： ', chart.attributes.icon)
-                                if(chart.attributes.icon){
-                                    http(getParamApi(apiSetting.kubernetes.getImage, chart.attributes.icon)).then(res => {
-                                        if (res.status == 200) {
-                                            chart.attributes.icon =  res.request.responseURL;
-                                            this.catalogList.sort().push(chart)
-                                            console.error('???', this.catalogList)
-                                        } else {
-                                            noticeMessage(this, res.data, 'error');
-                                        }
-                                    }, msg => {
-                                        noticeMessage(this, msg, 'error');
-                                    })
-                                }else {
-                                    this.catalogList.sort().push(chart)
-                                    console.error('666', this.catalogList)
-                                }
-                            }
-                        }
+                        this.getList(res.data.data)
                     } else {
                         //Error Message
                         noticeMessage(this, res.data, 'error');
@@ -134,13 +97,50 @@
                     noticeMessage(this, msg, 'error');
                 })
             },
-            handleSelect: async function (key) {
-                await this.init()
-                this.catalogList = common.search(key, this.catalogList)
+            getList: async function(data){
+                /* eslint-disable */
+                for (let [index, chart] of data.entries()) {
+                    if (
+                        chart.attributes.name =='apache'
+                        || chart.attributes.name =='docker'
+                        || chart.attributes.name =='drupal'
+                        || chart.attributes.name =='elasticsearch'
+                        || chart.attributes.name =='etcd'
+                        || chart.attributes.name =='harbor'
+                        || chart.attributes.name =='jenkins'
+                        || chart.attributes.name =='kafka'
+                        || chart.attributes.name =='mysql'
+                        || chart.attributes.name =='mongodb'
+                        || chart.attributes.name =='nginx'
+                        || chart.attributes.name =='rabbitmq'
+                        || chart.attributes.name =='redis'
+                        || chart.attributes.name =='tomcat'
+                        || chart.attributes.name =='wordpress'
+                        || chart.attributes.name =='zookeeper'
+                        || chart.attributes.name =='gitlab') {
+                        if(chart.attributes.icon){
+                            await http(getParamApi(apiSetting.kubernetes.getImage, chart.attributes.icon)).then(res => {
+                                if (res.status == 200) {
+                                    chart.attributes.icon = res.request.responseURL;
+                                    if(!chart.attributes.icon){
+                                        chart.attributes.icon = common.searchIcon(chart.attributes.name)
+                                    }
+                                    this.catalogList.sort().push(chart)
+                                } else {
+                                    noticeMessage(this, res.data, 'error');
+                                }
+                            }, msg => {
+                                noticeMessage(this, msg, 'error');
+                            })
+                        }else {
+                            chart.attributes.icon = common.searchIcon(chart.attributes.name)
+                            this.catalogList.sort().push(chart)
+                        }
+                    }
+                }
             },
             goDetails(catalog) {
                 let params = enerty.CatalogEnerty.getCatalog(catalog)
-                console.log('params',params)
                 sessionStorage.removeItem('catalogDetailsByParams')
                 sessionStorage.removeItem('chartName')
                 sessionStorage.setItem('chartName', catalog.id)

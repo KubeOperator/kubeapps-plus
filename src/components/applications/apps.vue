@@ -137,7 +137,7 @@ import jsyaml from "js-yaml";
 export default {
   created: function() {
     this.url.url =
-      apiSetting.kubenetes.getdetailone.url +
+      apiSetting.kubernetes.getdetailone.url +
       this.$route.params.namespace +
       "/releases/" +
       this.$route.params.id;
@@ -196,7 +196,7 @@ export default {
       for (let index = 0; index < this.services.length; index++) {
         var basicurl = {};
         basicurl.url =
-          apiSetting.kubenetes.getdetailtwo.url +
+          apiSetting.kubernetes.getdetailtwo.url +
           this.$route.params.namespace +
           "/deployments/" +
           this.services[index].name;
@@ -223,7 +223,7 @@ export default {
       for (let index = 0; index < this.services.length; index++) {
         var _basicurl = {};
         _basicurl.url =
-          apiSetting.kubenetes.getdetailtwo +
+          apiSetting.kubernetes.getdetailtwo +
           this.$route.params.namespace +
           "/services/" +
           this.services[index].name;

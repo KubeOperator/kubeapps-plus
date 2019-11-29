@@ -73,7 +73,7 @@
     import getParamApi from "../utils/getParamApi";
     import loading from '../utils/loading.js';
     import noticeMessage from "../utils/noticeMessage";
-
+    /* eslint-disable */
     export default {
         data() {
             return {
@@ -189,7 +189,7 @@
                 }
                 await http(getParamApi(apiSetting.kubernetes.deployReleases, this.$store.state.namespaces.activeSpace, 'releases'), params).then((res) => {
                     loading(this, 10000)
-                    this.timeout(4000);
+                    this.timeout(14000);
                     if (res.status == 200) {
                         noticeMessage(this, releaseName + ' 部署成功 ', 'success')
                         this.$router.push('/apps/ns/' + this.$store.state.namespaces.activeSpace + '/' + releaseName)

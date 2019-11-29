@@ -98,6 +98,7 @@
                 })
             },
             getList: async function(data){
+                this.catalogList = []
                 /* eslint-disable */
                 for (let [index, chart] of data.entries()) {
                     if (

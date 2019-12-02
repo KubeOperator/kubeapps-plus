@@ -101,7 +101,7 @@
     import noticeMessage from '../utils/noticeMessage.js';
     import enerty from '../entity/entity.js';
     import common from '../common/common.js';
-
+    /* eslint-disable */
     export default {
         name: 'document',
         components: {
@@ -146,13 +146,13 @@
                             } else {
                                 noticeMessage(this, res, 'error');
                             }
-                        }, msg => {
+                        }).catch(msg => {
                             noticeMessage(this, msg.data, 'error');
                         })
                     } else {
                         noticeMessage(this, res, 'error');
                     }
-                }, msg => {
+                }).catch(msg => {
                     noticeMessage(this, msg.data, 'error');
                 })
             },
@@ -166,10 +166,10 @@
                             }
                             this.catalog.icon = icon
                         } else {
-                            noticeMessage(this, res.data, 'error');
+                            // noticeMessage(this, res.data, 'error');
                         }
-                    }, msg => {
-                        noticeMessage(this, msg, 'error');
+                    }).catch(msg => {
+                        // noticeMessage(this, msg, 'error');
                     })
                 }else {
                     icon = common.searchIcon(this.catalog.name)

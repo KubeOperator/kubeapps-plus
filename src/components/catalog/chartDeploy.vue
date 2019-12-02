@@ -116,7 +116,7 @@
                     } else {
                         noticeMessage(this, res, 'error');
                     }
-                }, msg => {
+                }).catch(msg => {
                     noticeMessage(this, msg.data, 'error');
                 })
             },
@@ -187,16 +187,16 @@
                     values: this.aceEditor.getValue(),
                     version: version
                 }
+                loading(this, 10000)
                 await http(getParamApi(apiSetting.kubernetes.deployReleases, this.$store.state.namespaces.activeSpace, 'releases'), params).then((res) => {
-                    loading(this, 10000)
                     this.timeout(14000);
                     if (res.status == 200) {
-                        noticeMessage(this, releaseName + ' 部署成功 ', 'success')
+                        noticeMessage(this, releaseName + ' 部署成功! ', 'success')
                         this.$router.push('/apps/ns/' + this.$store.state.namespaces.activeSpace + '/' + releaseName)
                     } else {
                         noticeMessage(this, releaseName + ' 部署失败: ' + res, 'error')
                     }
-                }, msg => {
+                }).catch(msg => {
                     noticeMessage(this, releaseName + ' 请求失败: ' + msg.data, 'error')
                 })
             }

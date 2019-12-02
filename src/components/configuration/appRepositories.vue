@@ -84,7 +84,7 @@
                         this.loading = false;
                         errorMessage(this, res);
                     }
-                }, msg => {
+                }).catch(msg => {
                     noticeMessage(this, msg.data, 'error');
                 })
             },

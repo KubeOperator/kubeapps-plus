@@ -93,7 +93,7 @@
                         //Error Message
                         noticeMessage(this, res.data, 'error');
                     }
-                }, msg => {
+                }).catch(msg => {
                     noticeMessage(this, msg, 'error');
                 })
             },
@@ -130,7 +130,7 @@
                                 } else {
                                     noticeMessage(this, res.data, 'error');
                                 }
-                            }, msg => {
+                            }).catch(msg => {
                                 noticeMessage(this, msg, 'error');
                             })
                         }else {

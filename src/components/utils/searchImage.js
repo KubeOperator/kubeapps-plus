@@ -36,7 +36,7 @@ var httpI =  function (value) {
     //     } else {
     //         noticeMessage(this, res, 'error');
     //     }
-    // }, msg => {
+    // }).catch(msg => {
     //     noticeMessage(this, msg.data, 'error');
     // })
     // return src.toString()

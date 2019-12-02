@@ -64,7 +64,6 @@ const imageIcon = {
 }
 
 var searchIcon = function (val){
-    console.log('common val: ', imageIcon[val])
     return imageIcon[val]
 }
 

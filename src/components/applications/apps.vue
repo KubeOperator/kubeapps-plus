@@ -223,7 +223,7 @@ export default {
       for (let index = 0; index < this.services.length; index++) {
         var _basicurl = {};
         _basicurl.url =
-          apiSetting.kubernetes.getdetailtwo +
+          apiSetting.kubernetes.getdetailtwo.url +
           this.$route.params.namespace +
           "/services/" +
           this.services[index].name;

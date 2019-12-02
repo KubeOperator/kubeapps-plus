@@ -102,6 +102,7 @@
     import enerty from '../entity/entity.js';
     import common from '../common/common.js';
     /* eslint-disable */
+    const httpFlag = 'http'
     export default {
         name: 'document',
         components: {
@@ -158,19 +159,23 @@
             },
             searchImg: async function(icon){
                 if(icon){
-                    await http(getParamApi(apiSetting.kubernetes.getImage, icon)).then(res => {
-                        if (res.status == 200) {
-                            icon = res.request.responseURL;
-                            if(!icon){
-                                icon = common.searchIcon(this.catalog.name)
+                    if(icon.indexOf(httpFlag) == -1){
+                        await http(getParamApi(apiSetting.kubernetes.getImage, icon)).then(res => {
+                            if (res.status == 200) {
+                                icon = res.request.responseURL;
+                                if(!icon){
+                                    icon = common.searchIcon(this.catalog.name)
+                                }
+                                this.catalog.icon = icon
+                            } else {
+                                // noticeMessage(this, res.data, 'error');
                             }
-                            this.catalog.icon = icon
-                        } else {
-                            // noticeMessage(this, res.data, 'error');
-                        }
-                    }).catch(msg => {
-                        // noticeMessage(this, msg, 'error');
-                    })
+                        }).catch(msg => {
+                            // noticeMessage(this, msg, 'error');
+                        })
+                    }else{
+                        this.catalog.icon = icon
+                    }
                 }else {
                     icon = common.searchIcon(this.catalog.name)
                     this.catalog.icon = icon

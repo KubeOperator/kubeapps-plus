@@ -45,7 +45,7 @@ function errorState(response) {
 
 function successState(res) {
     //  ..隐藏loading
-    console.log(res)
+    // console.log(res)
     // console.log('成功，统一判断后端返回的错误码')
     // 统一判断后端返回的错误码
     // if (res.data.errCode == '000002') {

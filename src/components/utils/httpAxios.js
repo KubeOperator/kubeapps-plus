@@ -65,7 +65,7 @@ const httpServer = (opts, data) => {
         // baseURL,  // 基础 url 前缀
         url: opts.url,
         // 请求的地址
-        timeout: 10000,
+        timeout: 600000,
         // 超时时间, 单位毫秒
         params: Object.assign(Public, data),
         // get 请求时带的参数

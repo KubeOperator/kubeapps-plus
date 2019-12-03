@@ -1,7 +1,7 @@
 import axios from 'axios'
 import store from '../store/store.js'
 
-
+/* eslint-disable */
 // 请求时的拦截器
 axios.interceptors.request.use(config => {
         // 发送请求之前做一些处理,loading...

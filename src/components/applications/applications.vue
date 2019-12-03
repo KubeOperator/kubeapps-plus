@@ -26,38 +26,42 @@
         </div>
       </el-col>
     </el-row>
-    <!-- <div class="alert margin-c margin-t-bigger">
-      <header>
-        <div class="margin-b-big">
-          <h5 class="type-regular">
-            <span class="error__icon margin-r-small">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              >
-                <circle cx="12" cy="12" r="10" />
-                <line x1="12" y1="16" x2="12" y2="12" />
-                <line x1="12" y1="8" x2="12" y2="8" />
-              </svg>
-            </span>Supercharge your Kubernetes cluster
-          </h5>
+    <el-row :gutter="24" v-show="this.releases.length==0">
+      <el-col :span="20" :offset="2">
+        <div class="alert margin-c margin-t-bigger">
+          <header>
+            <div class="margin-b-big">
+              <h5 class="type-regular">
+                <span class="error__icon margin-r-small">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <circle cx="12" cy="12" r="10" />
+                    <line x1="12" y1="16" x2="12" y2="12" />
+                    <line x1="12" y1="8" x2="12" y2="8" />
+                  </svg>
+                </span>Supercharge your Kubernetes cluster
+              </h5>
+            </div>
+          </header>
+          <div class="message__content margin-l-enormous">
+            <div>
+              <p
+                class="margin-v-normal"
+              >Deploy applications on your Kubernetes cluster with a single click.</p>
+            </div>
+          </div>
         </div>
-      </header>
-      <div class="message__content margin-l-enormous">
-        <div>
-          <p
-            class="margin-v-normal"
-          >Deploy applications on your Kubernetes cluster with a single click.</p>
-        </div>
-      </div>
-    </div>-->
+      </el-col>
+    </el-row>
     <el-row :gutter="20">
       <el-col
         :xs="24"
@@ -74,7 +78,7 @@
           :body-style="{ padding: '0px' }"
           @click.native="$router.push('/apps/ns/'+ catalog.namespace + '/' + catalog.releaseName)"
         >
-          <div class="catalog-image" >
+          <div class="catalog-image">
             <img v-show="catalog.icon" :src="catalog.icon" class="image" />
             <img v-show="!catalog.icon" src="../../assets/image/default.png" class="image" />
           </div>
@@ -117,7 +121,7 @@ export default {
       radio: "",
       loading: false,
       releases: [],
-      search:'',
+      search: ""
     };
   },
   created: function() {},
@@ -126,15 +130,15 @@ export default {
   },
   methods: {
     getReleaseApp() {
-      this.$router.push('/catalog')
+      this.$router.push("/catalog");
     },
-    checkType(type){
-      if(type=='DELETE'){
-        return 'warning'
-      }else if(type=='FAILED'){
-        return 'danger'
-      }else{
-        return 'success'
+    checkType(type) {
+      if (type == "DELETE") {
+        return "warning";
+      } else if (type == "FAILED") {
+        return "danger";
+      } else {
+        return "success";
       }
     }
   },
@@ -163,7 +167,7 @@ export default {
 .app_title {
 }
 .el-row {
-  margin:0px !important;
+  margin: 0px !important;
 }
 .alert {
   background-color: #ffffff;

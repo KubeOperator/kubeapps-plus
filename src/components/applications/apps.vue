@@ -23,10 +23,10 @@
               :type="(this.status)?'success':'warning'"
             >{{(this.status)?'Ready':'Not Ready'}}</el-button>
           </el-col>
-          <el-col :offset="14" :span="3">
-            <el-button @click="getdebug">Upgrade</el-button>
-          </el-col>
-          <el-col :offset="1" :span="3">
+          <!-- <el-col :offset="14" :span="3">
+          <el-button @click="getdebug">Upgrade</el-button>-->
+          <!-- </el-col> -->
+          <el-col :offset="17" :span="3">
             <el-button type="danger" @click="dialogVisible = true">Delete</el-button>
           </el-col>
         </el-row>
@@ -118,7 +118,7 @@
       <el-switch v-model="purge" active-text="Purge release"></el-switch>
       <span slot="footer" class="dialog-footer">
         <el-button @click="dialogVisible = false">取 消</el-button>
-        <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
+        <el-button type="primary" @click="deleteapp">确 定</el-button>
       </span>
     </el-dialog>
   </div>
@@ -146,6 +146,17 @@ export default {
     this.getResources();
   },
   methods: {
+    deleteapp(){
+      let baseurl =  apiSetting.kubernetes.deleteapp
+      baseurl.url = baseurl.url + this.$route.params.namespace +
+      "/releases/" + this.$route.params.id;
+      if(this.purge){
+        baseurl.url = baseurl.url + '?purge=true'
+      }
+      http(baseurl).then( 
+        this.$router.push('/applications')
+      )
+    },
     getdebug() {
       console.log(this.deployments);
     },

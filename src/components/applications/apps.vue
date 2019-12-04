@@ -146,16 +146,17 @@ export default {
     this.getResources();
   },
   methods: {
-    deleteapp(){
-      let baseurl =  apiSetting.kubernetes.deleteapp
-      baseurl.url = baseurl.url + this.$route.params.namespace +
-      "/releases/" + this.$route.params.id;
-      if(this.purge){
-        baseurl.url = baseurl.url + '?purge=true'
+    deleteapp() {
+      let baseurl = apiSetting.kubernetes.deleteapp;
+      baseurl.url =
+        baseurl.url +
+        this.$route.params.namespace +
+        "/releases/" +
+        this.$route.params.id;
+      if (this.purge) {
+        baseurl.url = baseurl.url + "?purge=true";
       }
-      http(baseurl).then( 
-        this.$router.push('/applications')
-      )
+      http(baseurl).then(this.$router.push("/applications"));
     },
     getdebug() {
       console.log(this.deployments);
@@ -188,22 +189,26 @@ export default {
           tabSize: 4 // 制表符设置为 4 个空格大小
         });
         jsyaml.loadAll(res.data.data.manifest, function(doc) {
-          console.log(doc);
-          if (doc.kind == "Secret") {
-            _this.secrets.push({
-              name: doc.metadata.name,
-              type: doc.type
-              // key: Base64.decode(doc.data["tls.crt"]),
-              // crt: Base64.decode(doc.data["tls.key"])
-            });
-          } else if (doc.kind != "Deployment") {
-            _this.resources.push({ name: doc.metadata.name, kind: doc.kind });
-          } else if (doc.kind == "Deployment") {
-            _this.services.push({ name: doc.metadata.name, kind: doc.kind });
+          try {
+            if (doc.kind == "Secret") {
+              _this.secrets.push({
+                name: doc.metadata.name,
+                type: doc.type
+                // key: Base64.decode(doc.data["tls.crt"]),
+                // crt: Base64.decode(doc.data["tls.key"])
+              });
+            } else if (doc.kind != "Deployment") {
+              _this.resources.push({ name: doc.metadata.name, kind: doc.kind });
+            } else if (doc.kind == "Deployment") {
+              _this.services.push({ name: doc.metadata.name, kind: doc.kind });
+            }
+          } catch (error) {
+            console.log(error)
           }
         });
       });
       //Deployments
+      console.log(this.services);
       for (let index = 0; index < this.services.length; index++) {
         var basicurl = {};
         basicurl.url =
@@ -214,6 +219,7 @@ export default {
         basicurl.method = "get";
         http(basicurl).then(res => {
           if (res.status == 200) {
+            console.log(res);
             res.data.status.availableReplicas > 0 && this.status
               ? (this.status = true)
               : (this.status = false);
@@ -234,7 +240,7 @@ export default {
       for (let index = 0; index < this.services.length; index++) {
         var _basicurl = {};
         _basicurl.url =
-          apiSetting.kubernetes.getdetailtwo.url +
+          apiSetting.kubernetes.getdetailthree.url +
           this.$route.params.namespace +
           "/services/" +
           this.services[index].name;

@@ -1,5 +1,5 @@
 <template>
-  <div style="height: calc(100vh - 160px);" class="main_page">
+  <div style="height: calc(100vh - 160px);" class="main_page" v-loading.fullscreen.lock="loading" element-loading-text="Loading">
     <el-row>
       <el-col :span="4" :offset="2">
         <el-card :body-style="{ padding: '0px'}" style="text-align:left">
@@ -259,6 +259,7 @@ export default {
           });
         });
       }
+      this.loading = false;
     },
     open(data) {
       this.$alert(data, "密钥", {
@@ -292,6 +293,7 @@ export default {
       status: "",
       catalog: {},
       purge: false,
+      loading: true,
       themePath: "ace/theme/monokai", // 不导入 webpack-resolver，该模块路径会报错
       modePath: "ace/mode/yaml" // 同上
     };

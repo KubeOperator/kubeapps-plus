@@ -220,7 +220,7 @@ export default {
         http(basicurl).then(res => {
           if (res.status == 200) {
             console.log(res);
-            res.data.status.availableReplicas > 0 && this.status
+            res.data.status.availableReplicas > 0 || this.status
               ? (this.status = true)
               : (this.status = false);
             this.deployments.push({

@@ -1,5 +1,5 @@
 <template>
-    <div class="catalog-content">
+    <div class="catalog-content" v-loading.fullscreen.lock="loading" element-loading-text="Loading" element-loading-background="rgba(0, 0, 0, 0.1)">
         <!-- header start -->
         <el-row>
             <el-row :gutter="20">
@@ -114,6 +114,7 @@
                 README: '',
                 chartVersionList: [],
                 activeNames: ['1', '2', '3', '4', '5'],
+                loading: true,
                 chartName: ''
             }
         },
@@ -133,7 +134,6 @@
                 maintainers: chart.maintainers
             }
             this.searchImg(this.catalog.icon)
-            loading(this, 1000)
             this.init()
         },
         methods: {
@@ -156,6 +156,7 @@
                 }).catch(msg => {
                     noticeMessage(this, msg.data, 'error');
                 })
+                this.loading = false
             },
             searchImg: async function(icon){
                 if(icon){

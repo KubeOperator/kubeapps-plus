@@ -1,5 +1,5 @@
 <template>
-    <div class="app-repositories-content">
+    <div class="app-repositories-content" v-loading.fullscreen.lock="loading" element-loading-text="Loading" element-loading-background="rgba(0, 0, 0, 0.1)">
         <el-row>
             <el-col :span="24">
                 <div class="grid-content">
@@ -53,6 +53,7 @@
     export default {
         data() {
             return {
+                loading: true,
                 tableData: []
             }
         },
@@ -72,9 +73,11 @@
                         errorMessage(this, res);
                     }
                 })
+                this.loading = false
             },
-            refresh(index, name) {
-                http(getParamApi(apiSetting.kubernetes.getAppRepositories, name)).then(res => {
+            refresh: async function(index, name) {
+                this.loading = true
+                await http(getParamApi(apiSetting.kubernetes.getAppRepositories, name)).then(res => {
                     if (res.status == 200) {
                         delete this.tableData[index]
                         let repo = res.data
@@ -87,6 +90,7 @@
                 }).catch(msg => {
                     noticeMessage(this, msg.data, 'error');
                 })
+                this.loading = false
             },
             refreshAll() {
                 for (let [i, v] of this.tableData) {

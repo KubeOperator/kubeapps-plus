@@ -1,5 +1,5 @@
 <template>
-    <div class="catalog-content">
+    <div class="catalog-content" v-loading.fullscreen.lock="loading" element-loading-text="Loading" element-loading-background="rgba(0, 0, 0, 0.1)">
         <!-- header start -->
         <el-row>
             <el-col :span="24">
@@ -71,7 +71,7 @@
     import apiSetting from "../utils/apiSetting.js";
     import http from "../utils/httpAxios.js";
     import getParamApi from "../utils/getParamApi";
-    import loading from '../utils/loading.js';
+    // import loading from '../utils/loading.js';
     import noticeMessage from "../utils/noticeMessage";
     /* eslint-disable */
     export default {
@@ -81,6 +81,7 @@
                 version: '',
                 chartName: '',
                 releaseName: '',
+                loading: true,
                 aceEditor: null,
                 themePath: 'ace/theme/monokai', // 不导入 webpack-resolver，该模块路径会报错
                 modePath: 'ace/mode/yaml' // 同上
@@ -103,7 +104,6 @@
             let chart = this.$route.params.params ? this.$route.params.params : JSON.parse(sessionStorage.getItem('chartDeploy'))
             this.chartName = chart.name
             this.version = chart.version
-            loading(this, 1000)
             this.getOptions(chart)
             this.init()
         },
@@ -119,6 +119,7 @@
                 }).catch(msg => {
                     noticeMessage(this, msg.data, 'error');
                 })
+                this.loading = false
             },
             /*
             ** randomWord 产生任意长度随机字母数字组合
@@ -165,6 +166,7 @@
                         type: 'warning'
                     }).then(() => {
                         noticeMessage(this, ' 正在部署，请稍等 ', 'success')
+                        this.loading = true
                         this.deploy(releaseName, version, chartName)
                     }).catch(() => {
                         this.$message({
@@ -187,7 +189,6 @@
                     values: this.aceEditor.getValue(),
                     version: version
                 }
-                loading(this, 10000)
                 await http(getParamApi(apiSetting.kubernetes.deployReleases, this.$store.state.namespaces.activeSpace, 'releases'), params).then((res) => {
                     this.timeout(14000);
                     if (res.status == 200) {
@@ -199,6 +200,7 @@
                 }).catch(msg => {
                     noticeMessage(this, releaseName + ' 请求失败: ' + msg.data, 'error')
                 })
+                this.loading = false
             }
         }
     }

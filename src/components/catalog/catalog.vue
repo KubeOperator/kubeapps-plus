@@ -1,5 +1,5 @@
 <template>
-    <div class="catalog-content">
+    <div class="catalog-content" v-loading.fullscreen.lock="loading" element-loading-text="Loading" element-loading-background="rgba(0, 0, 0, 0.1)">
         <!-- header start -->
         <el-row>
             <el-col :span="24">
@@ -65,7 +65,7 @@
     import apiSetting from "../utils/apiSetting.js";
     import http from "../utils/httpAxios.js";
     import common from '../common/common.js';
-    import loading from '../utils/loading.js';
+    // import loading from '../utils/loading.js';
     import noticeMessage from "../utils/noticeMessage";
     import enerty from '../entity/entity.js';
     import getParamApi from "../utils/getParamApi";
@@ -77,11 +77,11 @@
             return {
                 input: '',
                 currentDate: new Date(),
+                loading: true,
                 catalogList: catalogList
             }
         },
         created() {
-            loading(this, 2000)
             this.init()
         },
         methods: {
@@ -96,6 +96,7 @@
                 }).catch(msg => {
                     noticeMessage(this, msg, 'error');
                 })
+                this.loading = false
             },
             getList: async function(data){
                 this.catalogList = []
@@ -233,7 +234,7 @@
     }
 
     .catalog-desc {
-        height: 2.4em;
+        height: 2.2em;
         overflow: hidden;
         text-overflow: ellipsis;
         display: -webkit-box;

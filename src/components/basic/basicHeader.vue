@@ -42,7 +42,7 @@
                     {{$t('message.configuration')}}
                 </template>
                 <el-menu-item index="6-1" @click="appRepositories">{{$t('message.app_repositories')}}</el-menu-item>
-                <el-menu-item index="6-2" @click="serviceBroker">{{$t('message.service_broker')}}</el-menu-item>
+<!--                <el-menu-item index="6-2" @click="serviceBroker">{{$t('message.service_broker')}}</el-menu-item>-->
             </el-submenu>
             <el-submenu index="7" class="header-right" v-if="this.$route.path != '/'">
                 <template slot="title">

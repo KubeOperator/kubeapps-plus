@@ -46,10 +46,11 @@
     import apiSetting from "../utils/apiSetting.js";
     import http from "../utils/httpAxios.js";
     import errorMessage from '../utils/errorMessage.js';
-    import getParamApi from "../utils/getParamApi";
+    // import getParamApi from "../utils/getParamApi";
     import loading from '../utils/loading.js';
-    import noticeMessage from '../utils/noticeMessage.js';
+    // import noticeMessage from '../utils/noticeMessage.js';
 
+    /* eslint-disable */
     export default {
         data() {
             return {
@@ -65,7 +66,6 @@
             init: async function () {
                 await http(apiSetting.kubernetes.getAppRepositories).then(res => {
                     if (res.status == 200) {
-                        console.log(res)
                         this.tableData = res.data.items
                     } else {
                         //Error Message
@@ -75,27 +75,13 @@
                 })
                 this.loading = false
             },
-            refresh: async function(index, name) {
+            refresh: async function() {
                 this.loading = true
-                await http(getParamApi(apiSetting.kubernetes.getAppRepositories, name)).then(res => {
-                    if (res.status == 200) {
-                        delete this.tableData[index]
-                        let repo = res.data
-                        this.tableData.push(repo)
-                    } else {
-                        //Error Message
-                        this.loading = false;
-                        errorMessage(this, res);
-                    }
-                }).catch(msg => {
-                    noticeMessage(this, msg.data, 'error');
-                })
-                this.loading = false
+                await this.init()
             },
-            refreshAll() {
-                for (let [i, v] of this.tableData) {
-                    this.refresh(i, v.metadata.name)
-                }
+            refreshAll: async function() {
+                this.loading = true
+                await this.init()
             }
         }
     }

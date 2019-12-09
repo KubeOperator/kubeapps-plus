@@ -34,7 +34,17 @@ const en = {
         'submit': 'Submit',
         'name': 'Name',
         'version': 'Version',
-        'values_yaml': 'Values(YAML)'
+        'values_yaml': 'Values(YAML)',
+        'delete': 'Delete',
+        'ready': 'Ready',
+        'not_ready': 'Not Ready',
+        'access_urls': 'Access URLs',
+        'notes': 'Notes',
+        'secrets': 'Secrets',
+        'deployments': 'Deployments',
+        'services': 'Services',
+        'other_resources': 'Other Resources',
+        'installation_values': 'Installation Values'
     },
     ...enLocale
 }

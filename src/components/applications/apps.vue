@@ -1,5 +1,5 @@
 <template>
-  <div style="height: calc(100vh - 160px);" class="main_page" v-loading.fullscreen.lock="loading" element-loading-text="Loading">
+  <div style="height: calc(100vh - 160px);" class="main_page" v-loading.fullscreen.lock="loading" element-loading-text="Loading" element-loading-background="rgba(0, 0, 0, 0.1)">
     <el-row>
       <el-col :span="4" :offset="2">
         <el-card :body-style="{ padding: '0px'}" style="text-align:left">
@@ -21,22 +21,22 @@
           <el-col :span="3">
             <el-button
               :type="(this.status)?'success':'warning'"
-            >{{(this.status)?'Ready':'Not Ready'}}</el-button>
+            >{{(this.status) ? $t('message.ready'): $t('message.not_ready')}}</el-button>
           </el-col>
           <!-- <el-col :offset="14" :span="3">
           <el-button @click="getdebug">Upgrade</el-button>-->
           <!-- </el-col> -->
           <el-col :offset="17" :span="3">
-            <el-button type="danger" @click="dialogVisible = true">Delete</el-button>
+            <el-button type="danger" @click="dialogVisible = true" icon="el-icon-delete">&nbsp;{{$t('message.delete')}}</el-button>
           </el-col>
         </el-row>
         <div v-show="this.AccessURLs!=''"></div>
         <div v-show="this.AccessURLs==''">
-          <h6>Access URLs</h6>
+          <h6>{{$t('message.access_urls')}}</h6>
           <p>The current application does not expose a public URL.</p>
         </div>
         <div v-show="this.note != undefined">
-          <h6>Notes</h6>
+          <h6>{{$t('message.notes')}}</h6>
           <section class="AppNotes Terminal elevation-1">
             <div class="Terminal__Top type-small">
               <div class="Terminal__Top__Buttons">
@@ -54,7 +54,7 @@
           </section>
         </div>
         <div v-show="this.secrets.length != 0">
-          <h6>Secrets</h6>
+          <h6>{{$t('message.secrets')}}</h6>
           <el-table :data="secrets" stripe style="width: 100%">
             <el-table-column prop="name" label="NAME"></el-table-column>
             <el-table-column prop="type" label="TYPE"></el-table-column>
@@ -79,7 +79,7 @@
           </el-table>
         </div>
         <div v-show="this.deployments.length != 0">
-          <h6>Deployments</h6>
+          <h6>{{$t('message.deployments')}}</h6>
           <el-table :data="deployments" style="width: 100%">
             <el-table-column prop="name" label="NAME"></el-table-column>
             <el-table-column prop="desired" label="DESIRED"></el-table-column>
@@ -88,7 +88,7 @@
           </el-table>
         </div>
         <div v-show="this.serviceDetail.length != 0">
-          <h6>Services</h6>
+          <h6>{{$t('message.services')}}</h6>
           <el-table :data="serviceDetail" style="width: 100%">
             <el-table-column prop="name" label="NAME"></el-table-column>
             <el-table-column prop="type" label="TYPE"></el-table-column>
@@ -98,14 +98,14 @@
           </el-table>
         </div>
         <div v-show="this.resources.length!=0">
-          <h6>Other Resources</h6>
+          <h6>{{$t('message.other_resources')}}</h6>
           <el-table :data="resources" style="width: 100%">
             <el-table-column prop="name" label="NAME"></el-table-column>
             <el-table-column prop="kind" label="KIND"></el-table-column>
           </el-table>
         </div>
         <div class="margin-t-normal">
-          <h6>{{'Installation Values'}}</h6>
+          <h6>{{$t('message.installation_values')}}</h6>
           <div class="ace-container">
             <!-- 官方文档中使用 id，这里禁止使用，在后期打包后容易出现问题，使用 ref 或者 DOM 就行 -->
             <div class="ace-editor" ref="ace"></div>

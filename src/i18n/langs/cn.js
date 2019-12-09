@@ -34,7 +34,17 @@ const cn = {
         'submit': '提交',
         'name': '名称',
         'version': '版本',
-        'values_yaml': '值(YAML)'
+        'values_yaml': '值(YAML)',
+        'delete': '删除',
+        'ready': '准备',
+        'not_ready': '未准备',
+        'access_urls': '访问网址',
+        'notes': '描述',
+        'Secrets': '机密',
+        'deployments': '部署',
+        'services': '服务',
+        'other_resources': '其他资源',
+        'installation_values': '值(YAML)'
     },
     ...zhLocale
 }

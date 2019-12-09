@@ -6,6 +6,7 @@ import catalog from "../components/catalog/catalog.vue"
 import catalogDetails from "../components/catalog/catalogDetails.vue"
 import chartDeploy from "../components/catalog/chartDeploy.vue"
 import repositories from "../components/configuration/appRepositories.vue"
+import addRepositories from "../components/configuration/addAppRepositories.vue"
 import brokers from "../components/configuration/serviceBroker.vue"
 import apps from "../components/applications/apps.vue"
 
@@ -21,6 +22,7 @@ const routes = [
   { name: 'catalogDetails', path: '/catalogDetails', component: catalogDetails, props: { catalog: {}}},
   { name: 'chartDeploy', path: '/chartDeploy', component: chartDeploy, props: { chart: {}}},
   { name: 'repositories', path: '/repositories', component: repositories },
+  { name: 'addRepositories', path: '/addRepositories', component: addRepositories },
   { name: 'brokers', path: '/brokers', component: brokers },
   { name: 'apps', path: '/apps/ns/:namespace/:id',component: apps }
 ]

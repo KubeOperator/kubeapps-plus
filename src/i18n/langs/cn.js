@@ -44,7 +44,9 @@ const cn = {
         'deployments': '部署',
         'services': '服务',
         'other_resources': '其他资源',
-        'installation_values': '值(YAML)'
+        'installation_values': '值(YAML)',
+        'add_app_repository': '添加应用仓库',
+        'add_an_app_repository': '添加一个应用仓库',
     },
     ...zhLocale
 }

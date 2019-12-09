@@ -44,7 +44,9 @@ const en = {
         'deployments': 'Deployments',
         'services': 'Services',
         'other_resources': 'Other Resources',
-        'installation_values': 'Installation Values'
+        'installation_values': 'Installation Values',
+        'add_app_repository': 'Add App Repository',
+        'add_an_app_repository': 'Add An App Repository',
     },
     ...enLocale
 }

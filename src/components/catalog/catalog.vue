@@ -199,6 +199,7 @@
     .button-right {
         padding: 0 5px;
         float: right;
+        min-height: 2em;
     }
 
     .image {

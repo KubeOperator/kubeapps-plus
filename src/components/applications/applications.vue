@@ -22,7 +22,7 @@
       </el-col>
       <el-col :md="{span:4,offest:2}" :lg="{span:6,offset:7}">
         <div style="margin: 1.2em 0;">
-          <el-button type="primary" @click="getReleaseApp">{{$t('message.deploy_app')}}</el-button>
+          <el-button type="primary" @click="getReleaseApp">{{$t('message.deploy_app')}} &nbsp;<i class="el-icon-d-arrow-right"/></el-button>
         </div>
       </el-col>
     </el-row>

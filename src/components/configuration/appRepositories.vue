@@ -30,12 +30,19 @@
             <el-table-column :label="$t('message.actions')">
                 <template slot-scope="scope">
                     <el-button
+                            size="medium" icon="el-icon-remove-outline"
+                            @click="refresh(scope.$index, scope.row.metadata.name)">{{$t('message.delete')}}
+                    </el-button>
+                    <el-button
                             size="medium" icon="el-icon-refresh"
                             @click="refresh(scope.$index, scope.row.metadata.name)">{{$t('message.refresh')}}
                     </el-button>
                 </template>
             </el-table-column>
         </el-table>
+        <el-button class="gred-btn" type="success" icon="el-icon-circle-plus-outline" @click="addAppRepository()">
+            {{$t('message.add_app_repository')}}
+        </el-button>
         <el-button class="gred-btn" type="primary" icon="el-icon-refresh" @click="refreshAll()">
             {{$t('message.refresh_all')}}
         </el-button>
@@ -82,6 +89,9 @@
             refreshAll: async function() {
                 this.loading = true
                 await this.init()
+            },
+            addAppRepository (){
+
             }
         }
     }

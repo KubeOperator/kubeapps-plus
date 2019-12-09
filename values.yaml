@@ -209,7 +209,7 @@ apprepository:
     #   url: https://charts.bitnami.com/bitnami
     # Additional repositories
     - name: chartmuseum
-      url: https://chartmuseum.default
+      url: http://chartmuseum
   #   nodeSelector:
   #     somelabel: somevalue
   #   # Specify an Authorization Header if you are using an authentication method.

@@ -36,6 +36,10 @@ const serviceModule = {
             url: 'api/kube/apis/kubeapps.com/v1alpha1/namespaces/',
             method: 'post'
         },
+        setSecrets: {
+            url: 'api/kube/apis/kubeapps.com/v1alpha1/namespaces/',
+            method: 'post'
+        },
         getServiceBrokers: {
             url: 'api/kube/apis/servicecatalog.k8s.io/v1beta1',
             method: 'get'

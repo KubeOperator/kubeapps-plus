@@ -95,7 +95,6 @@
                 this.$router.push({name: 'addRepositories', params: params})
             },
             deleteSubmit: async function(row){
-                alert(row)
                 await this.$confirm('是否确定删除?', '提示', {
                     confirmButtonText: '确定',
                     cancelButtonText: '取消',

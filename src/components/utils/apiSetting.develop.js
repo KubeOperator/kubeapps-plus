@@ -28,7 +28,15 @@ const serviceModule = {
             url: 'api/kube/apis/kubeapps.com/v1alpha1/namespaces',
             method: 'get'
         },
+        delAppRepositorie: {
+            url: 'api/kube/apis/kubeapps.com/v1alpha1/namespaces',
+            method: 'delete'
+        },
         addAppRepositorie: {
+            url: 'api/kube/apis/kubeapps.com/v1alpha1/namespaces/',
+            method: 'post'
+        },
+        setSecrets: {
             url: 'api/kube/apis/kubeapps.com/v1alpha1/namespaces/',
             method: 'post'
         },

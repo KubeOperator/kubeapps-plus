@@ -19,7 +19,7 @@ useHelm3: false # DOES NOT WORK YET; will act as a feature flag later on when we
 ingress:
   ## Set to true to enable ingress record generation
   ##
-  enabled: false
+  enabled: true
 
   ## Set this to true in order to add the corresponding annotations for cert-manager
   ##

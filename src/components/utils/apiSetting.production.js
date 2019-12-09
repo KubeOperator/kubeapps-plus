@@ -25,7 +25,7 @@ const serviceModule = {
             method: 'get'
         },
         getAppRepositories: {
-            url: 'api/kube/apis/kubeapps.com/v1alpha1/namespaces/kubeapps/apprepositories',
+            url: 'api/kube/apis/kubeapps.com/v1alpha1/namespaces',
             method: 'get'
         },
         addAppRepositorie: {

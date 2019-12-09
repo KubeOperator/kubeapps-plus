@@ -22,7 +22,7 @@ const routes = [
   { name: 'catalogDetails', path: '/catalogDetails', component: catalogDetails, props: { catalog: {}}},
   { name: 'chartDeploy', path: '/chartDeploy', component: chartDeploy, props: { chart: {}}},
   { name: 'repositories', path: '/repositories', component: repositories },
-  { name: 'addRepositories', path: '/addRepositories', component: addRepositories },
+  { name: 'addRepositories', path: '/addRepositories', component: addRepositories, props: { repository: {}}},
   { name: 'brokers', path: '/brokers', component: brokers },
   { name: 'apps', path: '/apps/ns/:namespace/:id',component: apps }
 ]

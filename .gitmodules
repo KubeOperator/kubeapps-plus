@@ -1,3 +1,6 @@
 [submodule "dashboard"]
 	path = dashboard
 	url = git@github.com:f2c-innovation/kubeapps_plus_dashborad.git
+[submodule "kubeapps_plus_chart"]
+	path = kubeapps_plus_chart
+	url = git@github.com:f2c-innovation/kubeapps_plus_chart.git

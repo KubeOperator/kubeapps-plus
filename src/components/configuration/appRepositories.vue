@@ -71,7 +71,7 @@
         },
         methods: {
             init: async function () {
-                await http(getParamApi(apiSetting.kubernetes.getAppRepositories, 'kubeapps-plus', 'apprepositories')).then(res => {
+                await http(getParamApi(apiSetting.kubernetes.getAppRepositories, sessionStorage.getItem('nameSpace'), 'apprepositories')).then(res => {
                     if (res.status == 200) {
                         this.tableData = res.data.items
                     } else {

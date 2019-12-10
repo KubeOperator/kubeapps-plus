@@ -75,7 +75,11 @@ const serviceModule = {
         deleteapp:{
             url:'/api/tiller-deploy/v1/namespaces/',
             method:'DELETE'
-        }
+        },
+        getConfigJson:{
+            url:'config.json',
+            method:'get'
+        },
     }
 }
 const apiSetting = {...serviceModule}

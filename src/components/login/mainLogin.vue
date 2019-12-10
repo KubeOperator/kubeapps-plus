@@ -51,6 +51,8 @@
     import apiSetting from "../utils/apiSetting.js";
     import http from "../utils/httpAxios.js";
     import errorMessage from '../utils/errorMessage.js';
+    // import getParamApi from "../utils/getParamApi";
+    import noticeMessage from "../utils/noticeMessage";
 
     export default {
         name: "mainLogin",
@@ -61,6 +63,7 @@
         },
         methods: {
             handleToken() {
+                this.getConfigJson()
                 Store.save("accessToken", this.input);
                 http(apiSetting.kubernetes.getInfo).then(res => {
                     if (res.status == 200) {
@@ -83,6 +86,18 @@
                     errorMessage(this, msg);
                 });
             },
+            getConfigJson: async function(){
+                await http(apiSetting.kubernetes.getConfigJson, {}).then((res) => {
+                    if (res.status == 200) {
+                        console.log('、efwesafadsf: ', res)
+                        sessionStorage.setItem('nameSpace', res.data.namespace)
+                    } else {
+                        noticeMessage(this, ' 请求获取namespace失败: ' + res, 'error')
+                    }
+                }).catch(msg => {
+                    noticeMessage(this, ' 请求失败: ' + msg.data, 'error')
+                })
+            }
         }
     };
 </script>

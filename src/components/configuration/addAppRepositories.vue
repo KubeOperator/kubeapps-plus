@@ -238,7 +238,7 @@
                         url: this.url
                     },
                 }
-                await http(getParamApi(apiSetting.kubernetes.addAppRepositorie, 'kubeapps-plus', 'apprepositories'), params).then((res) => {
+                await http(getParamApi(apiSetting.kubernetes.addAppRepositorie, sessionStorage.getItem('nameSpace'), 'apprepositories'), params).then((res) => {
                     if (res.status == 200 || res.status == 201) {
                         if(this.radio === 'none'){
                             noticeMessage(this, this.name + ' 保存成功! ', 'success')
@@ -321,7 +321,7 @@
                         }]
                     }
                 }
-                await http(getParamApi(apiSetting.kubernetes.setSecrets, 'kubeapps-plus', 'secrets'), params).then((res) => {
+                await http(getParamApi(apiSetting.kubernetes.setSecrets, sessionStorage.getItem('nameSpace'), 'secrets'), params).then((res) => {
                     if (res.status == 200 || res.status == 201) {
                         this.$router.push("/repositories");
                     } else {

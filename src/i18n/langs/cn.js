@@ -61,6 +61,7 @@ const cn = {
         'install_repo': '安装仓库',
         'back_to_previous': '返回上一级',
         'default_sync_job': '可以修改默认的同步作业。',
+        'restore_chart_defaults': '恢复图表默认值',
     },
     ...zhLocale
 }

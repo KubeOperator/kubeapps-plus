@@ -50,8 +50,11 @@
                     </div>
 
                     <div>
-                        <el-button class="ace-xcode-btn" type="primary" size="medium" icon="el-icon-success"
+                        <el-button class="ace-xcode-btn" type="success" size="medium" icon="el-icon-success"
                                    @click="submit(releaseName, version, chartName)">{{$t('message.submit')}}
+                        </el-button>
+                        <el-button class="ace-xcode-btn" type="primary" size="medium" icon="el-icon-upload2"
+                                   @click="restoreChartDefaults()">{{$t('message.restore_chart_defaults')}}
                         </el-button>
                     </div>
 
@@ -105,11 +108,11 @@
             this.chartName = chart.name
             this.version = chart.version
             this.getOptions(chart)
+            this.releaseName = this.chartName.split('/')[1] + '-' + this.randomWord(false, 6, 10)
             this.init()
         },
         methods: {
             init: async function () {
-                this.releaseName = this.chartName.split('/')[1] + '-' + this.randomWord(false, 6, 10)
                 await http(getParamApi(apiSetting.kubernetes.getYaml, this.chartName, 'versions', this.version, 'values.yaml')).then(res => {
                     if (res.status == 200) {
                         this.aceEditor.setValue(res.data)
@@ -201,6 +204,9 @@
                     noticeMessage(this, releaseName + ' 请求失败: ' + msg.data, 'error')
                 })
                 this.loading = false
+            },
+            restoreChartDefaults(){
+                this.init()
             }
         }
     }
@@ -219,7 +225,7 @@
     }
 
     .ace-xcode-btn {
-        margin: 2em 0 0 0;
+        margin: 2em 2em 0 0;
         width: 20%;
     }
 

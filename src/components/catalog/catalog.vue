@@ -44,11 +44,15 @@
                                 catalog.relationships.latestChartVersion.data.app_version :
                                 catalog.relationships.latestChartVersion.data.version}}
                             </el-button>
-                            <el-button size="medium" type="primary" class="button-right" v-show="catalog.id.indexOf('stable') > -1
+                            <el-button size="medium" type="primary" class="button-right" v-if="catalog.id.indexOf('stable') > -1
                                 || catalog.id.indexOf('bitnami') > -1 || catalog.id.indexOf('svc-cat') > -1" round>
                                 {{catalog.id | splitName(catalog.id)}}
                             </el-button>
-                            <el-button type="warning" class="button-right" v-show="catalog.id.indexOf('incubator') > -1"
+                            <el-button type="warning" class="button-right" v-else-if="catalog.id.indexOf('incubator') > -1"
+                                       round>
+                                {{catalog.id | splitName(catalog.id)}}
+                            </el-button>
+                            <el-button type="success" class="button-right" v-else
                                        round>
                                 {{catalog.id | splitName(catalog.id)}}
                             </el-button>
@@ -102,42 +106,23 @@
                 this.catalogList = []
                 /* eslint-disable */
                 for (let [index, chart] of data.entries()) {
-                    if (
-                        chart.attributes.name =='apache'
-                        || chart.attributes.name =='docker'
-                        || chart.attributes.name =='drupal'
-                        || chart.attributes.name =='elasticsearch'
-                        || chart.attributes.name =='etcd'
-                        || chart.attributes.name =='harbor'
-                        || chart.attributes.name =='jenkins'
-                        || chart.attributes.name =='kafka'
-                        || chart.attributes.name =='mysql'
-                        || chart.attributes.name =='mongodb'
-                        || chart.attributes.name =='nginx'
-                        || chart.attributes.name =='rabbitmq'
-                        || chart.attributes.name =='redis'
-                        || chart.attributes.name =='tomcat'
-                        || chart.attributes.name =='wordpress'
-                        || chart.attributes.name =='zookeeper'
-                        || chart.attributes.name =='gitlab') {
-                        if(chart.attributes.icon){
-                            await http(getParamApi(apiSetting.kubernetes.getImage, chart.attributes.icon)).then(res => {
-                                if (res.status == 200) {
-                                    chart.attributes.icon = res.request.responseURL;
-                                    if(!chart.attributes.icon){
-                                        chart.attributes.icon = common.searchIcon(chart.attributes.name)
-                                    }
-                                    this.catalogList.sort().push(chart)
-                                } else {
-                                    noticeMessage(this, res.data, 'error');
+                    if(chart.attributes.icon){
+                        await http(getParamApi(apiSetting.kubernetes.getImage, chart.attributes.icon)).then(res => {
+                            if (res.status == 200) {
+                                chart.attributes.icon = res.request.responseURL;
+                                if(!chart.attributes.icon){
+                                    chart.attributes.icon = common.searchIcon(chart.attributes.name)
                                 }
-                            }).catch(msg => {
-                                noticeMessage(this, msg, 'error');
-                            })
-                        }else {
-                            chart.attributes.icon = common.searchIcon(chart.attributes.name)
-                            this.catalogList.sort().push(chart)
-                        }
+                                this.catalogList.sort().push(chart)
+                            } else {
+                                noticeMessage(this, res.data, 'error');
+                            }
+                        }).catch(msg => {
+                            noticeMessage(this, msg, 'error');
+                        })
+                    }else {
+                        chart.attributes.icon = common.searchIcon(chart.attributes.name)
+                        this.catalogList.sort().push(chart)
                     }
                 }
             },

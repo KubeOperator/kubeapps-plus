@@ -132,7 +132,6 @@
         },
         created() {
             this.params = this.$route.params.params ? this.$route.params.params : JSON.parse(sessionStorage.getItem('repositories'))
-            console.log(this.params)
             this.init()
         },
         methods: {

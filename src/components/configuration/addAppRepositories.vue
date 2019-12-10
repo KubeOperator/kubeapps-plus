@@ -126,10 +126,13 @@
                 token: '',
                 completeAuthorizationHeader: '',
                 customCaCertificate: '',
-                customSyncJobTemplate: ''
+                customSyncJobTemplate: '',
+                params: []
             }
         },
         created() {
+            this.params = this.$route.params.params ? this.$route.params.params : JSON.parse(sessionStorage.getItem('repositories'))
+            console.log(this.params)
             this.init()
         },
         methods: {
@@ -155,6 +158,12 @@
                         cancelButtonText: '取消',
                         type: 'warning'
                     }).then(() => {
+                        for(let param of this.params){
+                            if(this.name == param.metadata.name){
+                                noticeMessage(this, '名称不允许重复，请重新填写', 'warning')
+                                return;
+                            }
+                        }
                         noticeMessage(this, ' 正在保存，请稍等 ', 'success')
                         this.loading = true
                         this.installRepoSubmit()

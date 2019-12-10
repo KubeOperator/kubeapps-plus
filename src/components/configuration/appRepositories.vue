@@ -91,7 +91,8 @@
                 await this.init()
             },
             addAppRepository (){
-                let params = {}
+                let params = this.tableData
+                sessionStorage.setItem('repositories', JSON.stringify(params))
                 this.$router.push({name: 'addRepositories', params: params})
             },
             deleteSubmit: async function(row){

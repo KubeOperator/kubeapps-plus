@@ -33,11 +33,11 @@ const serviceModule = {
             method: 'delete'
         },
         addAppRepositorie: {
-            url: 'api/kube/apis/kubeapps.com/v1alpha1/namespaces/',
+            url: 'api/kube/apis/kubeapps.com/v1alpha1/namespaces',
             method: 'post'
         },
         setSecrets: {
-            url: 'api/kube/apis/kubeapps.com/v1alpha1/namespaces/',
+            url: 'api/kube/api/v1/namespaces',
             method: 'post'
         },
         getServiceBrokers: {

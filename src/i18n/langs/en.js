@@ -60,6 +60,7 @@ const en = {
         'complete_authorization_header': 'Complete Authorization Header',
         'install_repo': 'Install Repo',
         'back_to_previous': 'Back to previous',
+        'default_sync_job': 'It\'s possible to modify the default sync job.',
     },
     ...enLocale
 }

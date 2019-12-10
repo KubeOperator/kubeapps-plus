@@ -27,10 +27,12 @@
 
             <div class="basic-lay">
                 <label>{{$t('message.authorization')}}</label>
-                <el-radio v-model="radio" label="none" border>{{$t('message.none')}}</el-radio>
-                <el-radio v-model="radio" label="basic" border>{{$t('message.basic_auth')}}</el-radio>
-                <el-radio v-model="radio" label="bearer" border>{{$t('message.bearer_token')}}</el-radio>
-                <el-radio v-model="radio" label="custom" border>{{$t('message.custom')}}</el-radio>
+                <div class="basic-lay">
+                    <el-radio v-model="radio" label="none" border>{{$t('message.none')}}</el-radio>
+                    <el-radio v-model="radio" label="basic" border>{{$t('message.basic_auth')}}</el-radio>
+                    <el-radio v-model="radio" label="bearer" border>{{$t('message.bearer_token')}}</el-radio>
+                    <el-radio v-model="radio" label="custom" border>{{$t('message.custom')}}</el-radio>
+                </div>
             </div>
 
             <div v-show="radio == 'basic'" class="basic-lay">
@@ -51,13 +53,13 @@
                 <label>{{$t('message.bearer_token')}} : {{$t('message.token')}}</label>
                 <el-input style="width: 100%;"
                           pattern="[a-z0-9]([-a-z0-9]*[a-z0-9])?(\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*"
-                          v-model="token" placeholder="token" type="password" required></el-input>
+                          v-model="token" placeholder="xrxNcWghpRLdcPHFgVRM73rr4N7qjvjm" type="" required></el-input>
             </div>
 
             <div v-show="radio == 'custom'">
                 <label>{{$t('message.custom')}} : {{$t('message.complete_authorization_header')}}</label>
                 <el-input style="width: 100%;"
-                          v-model="completeAuthorizationHeader" placeholder="Bearer xrxNcWghpRLdcPHFgVRM73rr4N7qjvjm" type="password" required></el-input>
+                          v-model="completeAuthorizationHeader" placeholder="Bearer xrxNcWghpRLdcPHFgVRM73rr4N7qjvjm" type="" required></el-input>
             </div>
 
             <div class="basic-lay">
@@ -73,7 +75,11 @@
             </div>
 
             <div class="basic-lay">
-                <label>{{$t('message.custom_sync_job_template')}}</label>
+                <label>{{$t('message.custom_sync_job_template')}}
+                    <el-tooltip class="item" effect="dark" :content=" $t('message.default_sync_job') " placement="top">
+                        <i class="el-icon-warning"></i>
+                    </el-tooltip>
+                </label>
                 <el-input
                         type="textarea"
                         :rows="2"
@@ -227,7 +233,7 @@
                     if (res.status == 200 || res.status == 201) {
                         if(this.radio === 'none'){
                             noticeMessage(this, this.name + ' 保存成功! ', 'success')
-                            this.$router.push("/repositories");
+                            this.setScrets()
                         }else if (this.radio === 'basic') {
                             noticeMessage(this, this.name + ' 保存成功! ', 'success')
                             this.setScrets()
@@ -256,7 +262,7 @@
             randomWord(randomFlag, min, max) {
                 let str = "",
                     range = min,
-                    arr = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
+                    arr = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
 
                 // 随机产生
                 if (randomFlag) {
@@ -269,14 +275,32 @@
                 return str.toLowerCase();
             },
             setScrets: async function(){
+                let data = {}
+                if(this.radio === 'none'){
+                    data = {
+                        "ca.crt": btoa(this.customCaCertificate)
+                    }
+                }else if (this.radio === 'basic') {
+                    data = {
+                        authorizationHeader: btoa('Basic ' + btoa(this.username + ':' + this.password)),
+                        "ca.crt": btoa(this.customCaCertificate)
+                    }
+                }else if(this.radio === 'bearer'){
+                    data = {
+                        authorizationHeader: btoa('Bearer ' + this.token),
+                        "ca.crt": btoa(this.customCaCertificate)
+                    }
+                }else if(this.radio === 'custom'){
+                    data = {
+                        authorizationHeader: btoa( this.completeAuthorizationHeader),
+                        "ca.crt": btoa(this.customCaCertificate)
+                    }
+                }
                 let params = {
                     apiVersion: "v1",
                     kind: "Secret",
-                    kind: "Opaque",
-                    data: {
-                        authorizationHeader: "QmFzaWMgYldGbmRXOW9ZVzg2TVRJek5EVTI=",
-                        "ca.crt": "bWFndW9oYW82NjY="
-                    },
+                    type: "Opaque",
+                    data: data,
                     metadata:{
                         name: "apprepo-" + this.name + "-secrets",
                         ownerReferences: [{
@@ -284,11 +308,11 @@
                             blockOwnerDeletion: true,
                             kind: "AppRepository",
                             name: this.name,
-                            uid: this.randomWord(false, 36, 36)
+                            uid: this.randomWord(false, 8, 8) + '-' + this.randomWord(false, 4, 4) + '-' +  this.randomWord(false, 4, 4) + '-' + this.randomWord(false, 4, 4) + '-' +  this.randomWord(false, 12, 12)
                         }]
                     }
                 }
-                await http(getParamApi(apiSetting.kubernetes.setSecrets, 'kubeapps-plus', 'screts'), params).then((res) => {
+                await http(getParamApi(apiSetting.kubernetes.setSecrets, 'kubeapps-plus', 'secrets'), params).then((res) => {
                     if (res.status == 200 || res.status == 201) {
                         this.$router.push("/repositories");
                     } else {
@@ -326,5 +350,9 @@
 
     .basic-lay{
         margin: 1em 0
+    }
+
+    .item {
+        margin: 4px;
     }
 </style>

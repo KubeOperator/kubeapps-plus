@@ -60,6 +60,7 @@ const cn = {
         'complete_authorization_header': '完整的授权标头',
         'install_repo': '安装仓库',
         'back_to_previous': '返回上一级',
+        'default_sync_job': '可以修改默认的同步作业。',
     },
     ...zhLocale
 }

@@ -77,7 +77,7 @@ const serviceModule = {
             method:'DELETE'
         },
         getConfigJson:{
-            url:'config.json',
+            url:'api/config.json',
             method:'get'
         },
     }

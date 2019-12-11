@@ -104,16 +104,12 @@
 </template>
 
 <script>
-    // import apiSetting from "../utils/apiSetting.js";
-    // import http from "../utils/httpAxios.js";
-    // import errorMessage from '../utils/errorMessage.js';
-    // import loading from '../utils/loading.js';
-
     /* eslint-disable */
     import noticeMessage from "../utils/noticeMessage";
     import http from "../utils/httpAxios";
     import getParamApi from "../utils/getParamApi";
     import apiSetting from "../utils/apiSetting";
+    import jsyaml from "js-yaml";
 
     export default {
         data() {
@@ -232,7 +228,7 @@
                     },
                     spec: {
                         auth: auth,
-                        syncJobPodTemplate: this.customSyncJobTemplate,
+                        syncJobPodTemplate: jsyaml.loadAll(this.customSyncJobTemplate),
                         type: 'helm',
                         url: this.url
                     },

@@ -88,7 +88,7 @@
             getConfigJson: async function(){
                 await http(apiSetting.kubernetes.getConfigJson, {}).then((res) => {
                     if (res.status == 200) {
-                        sessionStorage.setItem('nameSpace', res.data.namespace)
+                        sessionStorage.setItem('nameSpace', res.data.namespace ? res.data.namespace : 'kubeapps')
                     } else {
                         noticeMessage(this, ' 请求获取namespace失败: ' + res, 'error')
                     }

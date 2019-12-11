@@ -226,7 +226,7 @@
 
     .ace-xcode-btn {
         margin: 2em 2em 0 0;
-        width: 20%;
+        width: 31%;
     }
 
 </style>

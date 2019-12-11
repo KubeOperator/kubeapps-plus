@@ -63,15 +63,14 @@
         },
         methods: {
             handleToken() {
-                this.getConfigJson()
                 Store.save("accessToken", this.input);
                 http(apiSetting.kubernetes.getInfo).then(res => {
                     if (res.status == 200) {
                         http(apiSetting.kubernetes.getNamespaces).then(res => {
                             if (res.status == 200) {
-                                console.log(res.data)
                                 this.$store.commit('initNamespace', res.data)
                                 // this.$store.dispatch('getRelease')
+                                this.getConfigJson()
                                 this.$router.push("applications");
                             } else {
                                 //Error Message

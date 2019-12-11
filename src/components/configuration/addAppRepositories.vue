@@ -228,7 +228,7 @@
                     },
                     spec: {
                         auth: auth,
-                        syncJobPodTemplate: jsyaml.loadAll(this.customSyncJobTemplate),
+                        syncJobPodTemplate: jsyaml.safeLoad(this.customSyncJobTemplate),
                         type: 'helm',
                         url: this.url
                     },

@@ -11,5 +11,4 @@ spec:
       containers:
       - name: uploadchart
         image: kubeapps.registry.fit2cloud.com/kubeapps/uploadchart:latest
-        imagePullSecret: kubeapps-registry-fit2cloud-com-key
         command: ["bin/curl","--data-binary", "@kubeapps-3.2.0.tgz", "http://chartmuseum/api/charts"]

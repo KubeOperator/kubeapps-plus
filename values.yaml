@@ -98,8 +98,8 @@ frontend:
   ## ref: https://hub.docker.com/r/bitnami/nginx/tags/
   ##
   image:
-    registry: docker.io
-    repository: bitnami/nginx
+    registry: kubeapps.registry.fit2cloud.com
+    repository: kubeapps/nginx
     tag: 1.16.1-debian-9-r52
   ## Frontend service parameters
   ##
@@ -178,7 +178,7 @@ apprepository:
   ## ref: https://hub.docker.com/r/bitnami/kubeapps-apprepository-controller/tags/
   ##
   image:
-    registry: docker.io
+    registry: kubeapps.registry.fit2cloud.com
     repository: kubeapps/apprepository-controller
     tag: latest
   ## Bitnami Kubeapps Charts Repo image
@@ -186,8 +186,8 @@ apprepository:
   ## ref: https://hub.docker.com/r/bitnami/kubeapps-chart-repo/tags/
   ##
   syncImage:
-    registry: docker.io
-    repository: bitnami/kubeapps-chart-repo
+    registry: kubeapps.registry.fit2cloud.com
+    repository: kubeapps/kubeapps-chart-repo
     tag: 1.9.0-r2
   ## Initial charts repo proxies to configure
   ##
@@ -253,8 +253,8 @@ hooks:
   ## ref: https://hub.docker.com/r/bitnami/kubectl/tags/
   ##
   image:
-    registry: docker.io
-    repository: bitnami/kubectl
+    registry: kubeapps.registry.fit2cloud.com
+    repository: kubeapps/kubectl
     tag: 1.16.3-r17
   ## Affinity for hooks' pods assignment
   ## Ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity
@@ -280,7 +280,7 @@ tillerProxy:
   ## ref: https://hub.docker.com/r/bitnami/kubeapps-tiller-proxy/tags/
   ##
   image:
-    registry: docker.io
+    registry: kubeapps.registry.fit2cloud.com
     repository: kubeapps/tiller-proxy
     tag: latest
 
@@ -354,8 +354,8 @@ chartsvc:
   ## ref: https://hub.docker.com/r/bitnami/kubeapps-chartsvc/tags/
   ##
   image:
-    registry: docker.io
-    repository: bitnami/kubeapps-chartsvc
+    registry: kubeapps.registry.fit2cloud.com
+    repository: kubeapps/kubeapps-chartsvc
     tag: 1.9.0-r0
   ## Chartsvc service parameters
   ##
@@ -414,8 +414,8 @@ dashboard:
   ## ref: https://hub.docker.com/r/bitnami/kubeapps-dashboard/tags/
   ##
   image:
-    registry: docker.io
-    repository: orangem21/kubeappsplus_dashboard
+    registry: kubeapps.registry.fit2cloud.com
+    repository: kubeapps/kubeappsplus_dashboard
     tag: latest
   ## Dashboard service parameters
   ##
@@ -513,8 +513,8 @@ securityContext:
 ## Image used for the tests. The only requirement is to include curl
 ##
 testImage:
-  registry: docker.io
-  repository: bitnami/nginx
+  registry: kubeapps.registry.fit2cloud.com
+  repository: kubeapps/nginx
   tag: 1.16.1-debian-9-r52
 
 # Auth Proxy for OIDC support
@@ -526,8 +526,8 @@ authProxy:
   ## ref: https://hub.docker.com/r/bitnami/oauth2-proxy/tags/
   ##
   image:
-    registry: docker.io
-    repository: bitnami/oauth2-proxy
+    registry: kubeapps.registry.fit2cloud.com
+    repository: kubeapps/oauth2-proxy
     tag: 4.0.0-r92
   ## Mandatory parameters
   ##

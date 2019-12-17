@@ -70,3 +70,5 @@ spec:
             items:
               - key: config.json
                 path: config.json
+      imagePullSecrets:
+        - name: kubeapps-registry-fit2cloud-com-key

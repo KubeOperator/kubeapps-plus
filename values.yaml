@@ -27,7 +27,7 @@ ingress:
 
   ## When the ingress is enabled, a host pointing to this will be created
   ##
-  hostname: kubeapps.local
+  hostname: kubeapps.fit2cloud.com
 
   ## Enable TLS configuration for the hostname defined at ingress.hostname parameter
   ## TLS certificates will be retrieved from a TLS secret with name: {{- printf "%s-tls" .Values.ingress.hostname }}
@@ -81,7 +81,7 @@ ingress:
   ## Most likely this will be just one host, but in the event more hosts are needed, this is an array
   ##
   hosts:
-    - name: kubeapps.local
+    - name: kubeapps.fit2cloud.com
       path: /
       ## Set this to true in order to enable TLS on the ingress record
       ##
@@ -769,8 +769,11 @@ chartmuseum:
           path:
 
     ## Ingress for load balancer
-    ingress:
-      enabled: false
+  ingress:
+    enabled: true
+    hosts:
+      - name: kubeapps.chartmuseum.fit2cloud.com
+        path: /
     ## Chartmuseum Ingress labels
     ##
     #   labels:
@@ -785,12 +788,10 @@ chartmuseum:
     ## Chartmuseum Ingress hostnames
     ## Must be provided if Ingress is enabled
     ##
-    #  hosts:
-    #    - name: chartmuseum.domain1.com
-    #      path: /
-    #      tls: false
-    #    - name: chartmuseum.domain2.com
-    #      path: /
+
+      #    tls: false
+      #  - name: chartmuseum.domain2.com
+      #    path: /
     #
     #      ## Set this to true in order to enable TLS on the ingress record
     #      tls: true

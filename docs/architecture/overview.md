@@ -1,31 +1,31 @@
-# The Kubeapps Overview
+# Kubeapps Plus概述
 
-This document describes the Kubeapps architecture at a high level.
+本文档从高层次描述了Kubeapps Plus架构。
 
-## Components
+## 组件
 
-### Kubeapps dashboard
+### Kubeapps Plus dashboard
 
-At the heart of Kubeapps is a in-cluster Kubernetes dashboard that provides you a simple browse and click experience for installing and manage Kubernetes applications packaged as Helm charts.
+Kubeapps Plus的核心是集群内Kubernetes仪表板，可为您提供简单的浏览和单击体验，以安装和管理打包为Helm图表的Kubernetes应用程序。
 
-Additionally, the dashboard integrates with the [Kubernetes service catalog](https://github.com/kubernetes-incubator/service-catalog) and enables you to browse and provision cloud services via the [Open Service Broker API](https://github.com/openservicebrokerapi/servicebroker).
+此外，仪表板还与[Kubernetes服务目录](https://github.com/kubernetes-incubator/service-catalog)集成在一起，使您可以通过[Open Service Broker API](https：/ /github.com/openservicebrokerapi/servicebroker)。
 
-The dashboard is written in the Javascript programming language and is developed using the React Javascript library.
+仪表板使用Javascript编程语言编写，并使用React Javascript库进行开发。
 
 ### Tiller proxy
 
-In order to secure the access to Tiller and allow the dashboard to contact the Helm Tiller server we deploy a proxy that handles the communication with Tiller. The goal of this proxy is to validate that the user doing the request has sufficent permissions to create or delete all the resources that are part of the specific chart being deployed or deleted.
+为了保护对Tiller的访问并允许仪表板联系Helm Tiller服务器，我们部署了代理来处理与Tiller的通信。 该代理的目标是验证发出请求的用户是否具有足够的权限来创建或删除作为正在部署或删除的特定图表一部分的所有资源。
 
-This proxy is written in Go. Check more details about the implementation in this [document](/cmd/tiller-proxy/README.md).
+该代理是用Go编写的。 在此[document](/ cmd / tiller-proxy / README.md)中检查有关实现的更多详细信息。
 
 ### Apprepository CRD and Controller
 
-Chart repositories in Kubeapps are managed with a `CustomResourceDefinition` called `apprepositories.kubeapps.com`. Each repository added to Kubeapps is an object of type `AppRepository` and the `apprepository-controller` will watch for changes on those type of objects to update the list of available charts to deploy.
+Kubeapps Plus中的图表存储库通过名为“ apprepositories.kubeapps.com”的“ CustomResourceDefinition”进行管理。 添加到Kubeapps Plus的每个存储库都是一个类型为AppRepository的对象，而apprepository-controller将监视这些对象类型的更改以更新要部署的可用图表的列表。
 
 ### `chart-repo`
 
-The `chart-repo` component is tool that scans a Helm chart repository and populates chart metadata in a MongoDB database. This metadata is then served by the chartsvc component. It is maintained as part of the [Helm Monocular project](https://github.com/helm/monocular/tree/master/cmd/chart-repo).
+“ chart-repo”组件是一种工具，可扫描Helm图表存储库并在MongoDB数据库中填充图表元数据。 然后，由Chartsvc组件提供此元数据。 它是[Helm Monocular project](https://github.com/helm/monocular/tree/master/cmd/chart-repo)的一部分进行维护。
 
 ### `chartsvc`
 
-The `chartsvc` component is a micro-service that creates an API endpoint for accessing the metadata for charts in Helm chart repositories that's populated in a MongoDB database. It is maintained as part of the [Helm Monocular project](https://github.com/helm/monocular/tree/master/cmd/chartsvc).
+“ chartsvc”组件是一个微服务，可创建API端点来访问在MongoDB数据库中填充的Helm图表存储库中图表的元数据。 它是[Helm Monocular project](https://github.com/helm/monocular/tree/master/cmd/chartsvc)的一部分进行维护。

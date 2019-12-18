@@ -1,21 +1,21 @@
-# Kubeapps Helm 3 support
+# Kubeapps Helm 3支持
 
-We believe that the transition to Helm 3 can be done in such a fashion that both the old tiller-proxy and the new Helm 3 components can coexist, and that the Dashboard does not need to be modified.
-The choice between Helm 2 support and Helm 3 support should be made at deploy time in Helm (e.g. by setting `helm3=true` in Values).
+我们认为，可以通过以下方式完成向Helm 3的过渡：旧的分er代理和新的Helm 3组件可以共存，并且无需修改仪表板。
+应在部署时在Helm中进行Helm 2支持和Helm 3支持之间的选择（例如，通过在Values中设置`helm3 = true`）。
 
-Since Helm 3 has gotten rid of Tiller, it instead provides a client library that can be used to access all required commands.
-We see no reason to implement a proxy for Helm 3, but rather what we call an agent – afterall, its purpose is to perform _actions_ from the so called _Helm 3 "actions" library_.
+由于Helm 3摆脱了Tiller，因此它提供了一个客户端库，可用于访问所有必需的命令。
+我们没有理由为Helm 3实现代理，而是我们所谓的代理-毕竟，其目的是从所谓的_Helm 3“ actions”库中执行_actions_。
 
-**Current situation:**
-![Current situation](https://user-images.githubusercontent.com/7773090/67413010-ac044e00-f5c0-11e9-93e9-f3cdd1eeaca8.PNG)
+**现在的情况:**
+![现在的情况](https://user-images.githubusercontent.com/7773090/67413010-ac044e00-f5c0-11e9-93e9-f3cdd1eeaca8.PNG)
 
-**With the new additions:**
-![With the new additions](https://user-images.githubusercontent.com/7773090/67413025-b45c8900-f5c0-11e9-8961-67377bc8faad.PNG)
+**随着新增加:**
+![随着新增加](https://user-images.githubusercontent.com/7773090/67413025-b45c8900-f5c0-11e9-8961-67377bc8faad.PNG)
 
-## Authentication
+## 认证方式
 
-Since Helm 2 is built on the assumption that the Tiller service runs in-cluster with its own service account (and ["does not provide a way to map user credentials to specific permissions within Kubernetes"](https://helm.sh/docs/securing_installation/#tiller-and-user-permissions)), the only thing Kubeapps was required to provide for authentication with Tiller (when using TLS) was the `ca.crt` file.
-For this reason, Kubeapps currently (with Helm 2) authenticates with the Kubernetes API server using the user's bearer token not only when talking directly to the API server, but also to verify permissions before making any request to Tiller.
+由于Helm 2是基于Tiller服务使用其自己的服务帐户在群集中运行（并且[[没有提供将用户凭据映射到Kubernetes中的特定权限的方式“]]（https://helm.sh/ docs / securing_installation /＃tiller-and-user-permissions）），则Kubeapps唯一需要提供的Tiller身份验证（使用TLS时）是`ca.crt`文件。
+因此，Kubeapps当前（使用Helm 2）不仅使用直接与API服务器通信时，还使用用户的承载令牌向Kubernetes API服务器进行身份验证，而且还要在向Tiller提出任何请求之前验证权限。
 
-With Helm 3, all authentication will be handled by the Kubernetes API Server, so none of the above should be an issue.
-Our plan is that whenever the Dashboard makes a request, we will use `InClusterConfig` to create a configuration, whose `BearerToken` we will replace with the user-specific token included in the request from the Dashboard.
+使用Helm 3，所有身份验证将由Kubernetes API服务器处理，因此以上都不是问题。
+我们的计划是，每当仪表板发出请求时，我们都将使用InClusterConfig创建一个配置，我们将其配置文件BearerToken替换为仪表板请求中包含的用户特定令牌。

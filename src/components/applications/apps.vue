@@ -159,10 +159,8 @@ export default {
       http(baseurl).then(this.$router.push("/applications"));
     },
     getdebug() {
-      // console.log(this.deployments);
     },
     printdebug(data, log) {
-      // console.log(data, log);
     },
     handleClose(done) {
       this.$confirm("确认关闭？").then(_ => {
@@ -203,12 +201,10 @@ export default {
               _this.services.push({ name: doc.metadata.name, kind: doc.kind });
             }
           } catch (error) {
-            // console.log(error)
           }
         });
       });
       //Deployments
-      // console.log(this.services);
       for (let index = 0; index < this.services.length; index++) {
         var basicurl = {};
         basicurl.url =
@@ -219,7 +215,6 @@ export default {
         basicurl.method = "get";
         http(basicurl).then(res => {
           if (res.status == 200) {
-            // console.log(res);
             res.data.status.availableReplicas > 0 || this.status
               ? (this.status = true)
               : (this.status = false);

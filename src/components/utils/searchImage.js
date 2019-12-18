@@ -16,7 +16,6 @@ export function searchImage (value) {
     let src = https + value
     return src
     // return promise(value).then((res)=>{
-    //     console.log(res)
     //     return res;
     // })
 }

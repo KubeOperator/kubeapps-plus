@@ -46,10 +46,8 @@
                             title: 'No Service Brokers installed.',
                             description: `Ask an administrator to install a compatible Service Broker to browse, provision and manage external services within Kubeapps.`
                         }
-                        // console.log(res.data)
                         this.queryClusterServiceBrokers()
                     } else {
-                        //Error Message
                         errorMessage(this, res);
                     }
                 })
@@ -57,9 +55,7 @@
             queryClusterServiceBrokers: async function () {
                 await http(getParamApi(apiSetting.kubernetes.getServiceBrokers, 'clusterservicebrokers')).then(res => {
                     if (res.status == 200) {
-                        // console.log(res.data)
                     } else {
-                        //Error Message
                         errorMessage(this, res);
                     }
                 })

@@ -39,7 +39,7 @@ function errorState(response) {
     if (response && (response.status === 200 || response.status === 304 || response.status === 400)) {
         return response
     } else {
-        console.log('网络异常')
+        // console.log('网络异常')
     }
 }
 

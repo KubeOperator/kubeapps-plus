@@ -1,0 +1,5 @@
+{
+  "namespace": "kubeapps",
+  "appVersion": "DEVEL",
+  "logoutURI": "/oauth2/sign_out"
+}

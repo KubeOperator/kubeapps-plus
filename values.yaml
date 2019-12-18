@@ -3,9 +3,8 @@
 ## Current available global Docker image parameters: imageRegistry and imagePullSecrets
 ##
 global:
-#   imageRegistry: myRegistryName
-imagePullSecrets:
-  - kubeapps-registry-fit2cloud-com-key
+  imagePullSecrets:
+    - name: kubeapps-registry-fit2cloud-com-key
 #   storageClass: myStorageClass
 
 # true for Helm 3; false for Helm 2:

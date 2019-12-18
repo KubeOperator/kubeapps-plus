@@ -2,14 +2,14 @@
 
 [![CircleCI](https://circleci.com/gh/kubeapps/kubeapps/tree/master.svg?style=svg)](https://circleci.com/gh/kubeapps/kubeapps/tree/master)
 
-Kubeapps Plus是基于Web的UI，用于在Kubernetes集群中部署和管理应用程序。 Kubeapps Plus使您能够：
+Kubeapps Plus是借鉴kubeapps的一个国产项目。基于Web的UI，用于在Kubernetes集群中部署和管理应用程序。 Kubeapps Plus使您能够：
 
 - 从图表存储库浏览和部署图表 [Helm](https://github.com/helm/helm)
 - 检查，升级和删除群集中安装的基于Helm的应用程序
-- 添加自定义和 [private chart repositories](docs/user/private-app-repository.md) (支持 [ChartMuseum](https://github.com/helm/chartmuseum) 和 [JFrog Artifactory](https://www.jfrog.com/confluence/display/RTF/Helm+Chart+Repositories))
-- 从以下位置浏览并提供外部服务 [Service Catalog](https://github.com/kubernetes-incubator/service-catalog) and available Service Brokers
+- 添加自定义和 [私人图表存储库](docs/user/private-app-repository.md) (支持 [ChartMuseum](https://github.com/helm/chartmuseum) 和 [JFrog Artifactory](https://www.jfrog.com/confluence/display/RTF/Helm+Chart+Repositories))
+- 从以下位置浏览并提供外部服务 [服务目录](https://github.com/kubernetes-incubator/service-catalog)
 - 使用服务目录绑定将基于Helm的应用程序连接到外部服务
-- 基于Kubernetes的安全身份验证和授权 [Role-Based Access Control](docs/user/access-control.md)
+- 基于Kubernetes的安全身份验证和授权 [基于角色的访问控制](docs/user/access-control.md)
 
 ## 快速开始
 
@@ -17,10 +17,10 @@ Kubeapps Plus是基于Web的UI，用于在Kubernetes集群中部署和管理应�
 
 ```bash
 helm repo add bitnami https://charts.bitnami.com/bitnami
-helm install --name kubeapps --namespace kubeapps bitnami/kubeapps
+helm install --name kubeapps-plus --namespace kubeapps-plus bitnami/kubeapps
 ```
 
-有关如何安装和使用Kubeapps Plus的详细说明，请遵循 [Getting Started Guide](docs/user/getting-started.md).
+有关如何安装和使用Kubeapps Plus的详细说明，请遵循 [入门指南](docs/user/getting-started.md).
 
 ## 开发人员文件
 

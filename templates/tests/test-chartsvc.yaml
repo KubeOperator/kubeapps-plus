@@ -18,5 +18,3 @@ spec:
         - -c
         - curl -o /tmp/output $CHARTSVC_HOST:$CHARTSVC_PORT/v1/charts && cat /tmp/output && cat /tmp/output | grep wordpress
   restartPolicy: Never
-  imagePullSecrets:
-    - name: kubeapps-registry-fit2cloud-com-key

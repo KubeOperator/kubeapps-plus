@@ -16,5 +16,3 @@ spec:
         - -c
         - curl -o /tmp/output $DASHBOARD_HOST && cat /tmp/output && cat /tmp/output | grep 'You need to enable JavaScript to run this app'
   restartPolicy: Never
-  imagePullSecrets:
-    - name: kubeapps-registry-fit2cloud-com-key

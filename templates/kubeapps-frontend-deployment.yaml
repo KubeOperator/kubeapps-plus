@@ -86,5 +86,3 @@ spec:
         - name: vhost
           configMap:
             name: {{ template "kubeapps.frontend-config.fullname" . }}
-      imagePullSecrets:
-        - name: kubeapps-registry-fit2cloud-com-key

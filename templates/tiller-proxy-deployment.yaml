@@ -87,6 +87,4 @@ spec:
           secret:
             secretName: {{ template "kubeapps.tiller-proxy.fullname" . }}
       {{- end }}
-      imagePullSecrets:
-        - name: kubeapps-registry-fit2cloud-com-key
 {{- end }}{{/* matches useHelm3 */}}

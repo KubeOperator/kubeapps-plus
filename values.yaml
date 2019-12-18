@@ -2,10 +2,10 @@
 ## Please, note that this will override the image parameters, including dependencies, configured to use the global value
 ## Current available global Docker image parameters: imageRegistry and imagePullSecrets
 ##
-# global:
+global:
 #   imageRegistry: myRegistryName
-#   imagePullSecrets:
-#     - myRegistryKeySecretName
+imagePullSecrets:
+  - kubeapps-registry-fit2cloud-com-key
 #   storageClass: myStorageClass
 
 # true for Helm 3; false for Helm 2:

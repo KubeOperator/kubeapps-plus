@@ -1,252 +1,250 @@
-# Kubeapps
+# Kubeapps plus
 
 [![CircleCI](https://circleci.com/gh/kubeapps/kubeapps/tree/master.svg?style=svg)](https://circleci.com/gh/kubeapps/kubeapps/tree/master)
 
-[Kubeapps](https://kubeapps.com) is a web-based UI for deploying and managing applications in Kubernetes clusters. Kubeapps allows you to:
+[Kubeapps Plus](https://kubeapps.com)是基于Web的UI，用于在Kubernetes集群中部署和管理应用程序。 Kubeapps Plus使您能够：
 
-- Browse and deploy [Helm](https://github.com/helm/helm) charts from chart repositories
-- Inspect, upgrade and delete Helm-based applications installed in the cluster
-- Add custom and private chart repositories (supports [ChartMuseum](https://github.com/helm/chartmuseum) and [JFrog Artifactory](https://www.jfrog.com/confluence/display/RTF/Helm+Chart+Repositories))
-- Browse and provision external services from the [Service Catalog](https://github.com/kubernetes-incubator/service-catalog) and available Service Brokers
-- Connect Helm-based applications to external services with Service Catalog Bindings
-- Secure authentication and authorization based on Kubernetes [Role-Based Access Control](https://github.com/kubeapps/kubeapps/blob/master/docs/user/access-control.md)
+- 从图表存储库浏览并部署[Helm](https://github.com/helm/helm)图表
+- 检查，升级和删除群集中安装的基于Helm的应用程序
+- 添加自定义和私有图表存储库(支持[ChartMuseum](https://github.com/helm/chartmuseum)和[JFrog Artifactory](https://www.jfrog.com/confluence/display/RTF/Helm+Chart+ 存储库））
+- 从[服务目录](https://github.com/kubernetes-incubator/service-catalog)和可用的服务代理中浏览和设置外部服务
+- 使用服务目录绑定将基于Helm的应用程序连接到外部服务
+- 基于Kubernetes的安全身份验证和授权[基于角色的访问控制](https://github.com/kubeapps/kubeapps/blob/master/docs/user/access-control.md)
 
 ## TL;DR;
 
 ```bash
 helm repo add bitnami https://charts.bitnami.com/bitnami
-helm install --name kubeapps --namespace kubeapps bitnami/kubeapps
+helm install --name kubeapps-plus --namespace kubeapps-plus bitnami/kubeapps
 ```
 
-## Introduction
+## 介绍
 
-This chart bootstraps a [Kubeapps](https://kubeapps.com) deployment on a [Kubernetes](http://kubernetes.io) cluster using the [Helm](https://helm.sh) package manager.
+此图表使用[Helm](https://helm.sh)程序包管理器在[Kubernetes](http://kubernetes.io)群集上引导了[Kubeapps Plus](https://kubeapps.com)部署。
 
-It also packages the [Bitnami MongoDB chart](https://github.com/helm/charts/tree/master/stable/mongodb) which is required for bootstrapping a MongoDB deployment for the database requirements of the Kubeapps application.
+它还打包了[Bitnami MongoDB图表](https://github.com/helm/charts/tree/master/stable/mongodb)，这对于自举MongoDB部署来满足Kubeapps Plus应用程序的数据库要求是必需的。
 
-## Prerequisites
+## 先决条件
 
-- Kubernetes 1.8+ (tested with Azure Kubernetes Service, Google Kubernetes Engine, minikube and Docker for Desktop Kubernetes)
+- Kubernetes 1.8+(已针对Azure Kubernetes服务，Google Kubernetes引擎，minikube和Docker进行了桌面Kubernetes测试)
 - Helm 2.10.0+
-- Administrative access to the cluster to create Custom Resource Definitions (CRDs)
+- 对集群的管理访问以创建自定义资源定义(CRD)
 
-## Installing the Chart
+## 安装图表
 
-To install the chart with the release name `kubeapps`:
+要以发布名称`kubeapps`安装图表：
 
 ```console
 $ helm repo add bitnami https://charts.bitnami.com/bitnami
-$ helm install --name kubeapps --namespace kubeapps bitnami/kubeapps
+$ helm install --name kubeapps-plus --namespace kubeapps-plus bitnami/kubeapps
 ```
 
-> **IMPORTANT** This assumes an insecure Helm installation, which is not recommended in production. See [the documentation to learn how to secure Helm and Kubeapps in production](https://github.com/kubeapps/kubeapps/blob/master/docs/user/securing-kubeapps.md).
+> **IMPORTANT** 这假设头盔安装不安全，在生产中不建议使用。 请参阅[文档以了解如何在生产中保护Helm和Kubeapps Plus的安全](https://github.com/kubeapps/kubeapps/blob/master/docs/user/securing-kubeapps.md)。
 
-The command deploys Kubeapps on the Kubernetes cluster in the `kubeapps` namespace. The [Parameters](#parameters) section lists the parameters that can be configured during installation.
+该命令在Kubeapps名称空间的Kubernetes集群上部署Kubeapps Plus。 [Parameters](＃parameters)部分列出了可以在安装过程中配置的参数。
 
-> **Caveat**: Only one Kubeapps installation is supported per namespace
+> **Caveat**: 每个命名空间仅支持一个Kubeapps Plus安装
 
-> **Tip**: List all releases using `helm list`
+> **Tip**: 使用“ helm list”列出所有发行版本
 
-Once you have installed Kubeapps follow the [Getting Started Guide](https://github.com/kubeapps/kubeapps/blob/master/docs/user/getting-started.md) for additional information on how to access and use Kubeapps.
+一旦安装了Kubeapps Plus，请按照[入门指南](https://github.com/kubeapps/kubeapps/blob/master/docs/user/getting-started.md)了解有关如何访问和使用Kubeapps的更多信息。 加。
 
-## Parameters
+## 参量
 
-For a full list of configuration parameters of the Kubeapps chart, see the [values.yaml](values.yaml) file.
+有关Kubeapps Plus图表的配置参数的完整列表，请参见[values.yaml](values.yaml)文件。
 
-Specify each parameter using the `--set key=value[,key=value]` argument to `helm install`. For example,
+使用--helm install的参数--set key = value [，key = value]指定每个参数。 例如，
 
 ```console
-$ helm install --name kubeapps --namespace kubeapps \
+$ helm install --name kubeapps-plus --namespace kubeapps-plus \
   --set chartsvc.service.port=9090 \
     bitnami/kubeapps
 ```
 
-The above command sets the port for the chartsvc Service to 9090.
+上面的命令将Chartsvc Service的端口设置为9090。
 
-Alternatively, a YAML file that specifies the values for parameters can be provided while installing the chart. For example,
-
-```console
-$ helm install --name kubeapps --namespace kubeapps -f custom-values.yaml bitnami/kubeapps
-```
-
-## Configuration and installation details
-
-### Configuring Initial Repositories
-
-By default, Kubeapps will track the [community Helm charts](https://github.com/helm/charts) and the [Kubernetes Service Catalog charts](https://github.com/kubernetes-incubator/service-catalog). To change these defaults, override with your desired parameters the `apprepository.initialRepos` object present in the [values.yaml](values.yaml) file.
-
-### Configuring connection to a custom namespace Tiller instance
-
-By default, Kubeapps connects to the Tiller Service in the `kube-system` namespace, the default install location for Helm.
-
-If your instance of Tiller is running in a different namespace or you want to have different instances of Kubeapps connected to different Tiller instances, you can achieve it by setting the `tillerProxy.host` parameter. For example, you can set `tillerProxy.host=tiller-deploy.my-custom-namespace:44134`
-
-### Configuring connection to a secure Tiller instance
-
-In production, we strongly recommend setting up a [secure installation of Tiller](https://docs.helm.sh/using_helm/#using-ssl-between-helm-and-tiller), the Helm server side component.
-
-Learn more about how to secure your Kubeapps installation [here](https://github.com/kubeapps/kubeapps/blob/master/docs/user/securing-kubeapps.md).
-
-### Exposing Externally
-
-> **Note**: The Kubeapps frontend sets up a proxy to the Kubernetes API service, so when when exposing the Kubeapps service to a network external to the Kubernetes cluster (perhaps on an internal or public network), the Kubernetes API will also be exposed on that network. See [#1111](https://github.com/kubeapps/kubeapps/issues/1111) for more details.
-
-#### LoadBalancer Service
-
-The simplest way to expose the Kubeapps Dashboard is to assign a LoadBalancer type to the Kubeapps frontend Service. For example, you can use the following parameter: `frontend.service.type=LoadBalancer`
-
-Wait for your cluster to assign a LoadBalancer IP or Hostname to the `kubeapps` Service and access it on that address:
+或者，可以在安装图表时提供指定参数值的YAML文件。 例如，
 
 ```console
-$ kubectl get services --namespace kubeapps --watch
+$ helm install --name kubeapps-plus --namespace kubeapps-plus -f custom-values.yaml bitnami/kubeapps
 ```
 
-#### Ingress
+## 配置和安装详细信息
 
-This chart provides support for ingress resources. If you have an ingress controller installed on your cluster, such as [nginx-ingress](https://hub.kubeapps.com/charts/stable/nginx-ingress) or [traefik](https://hub.kubeapps.com/charts/stable/traefik) you can utilize the ingress controller to expose Kubeapps.
+### 配置初始存储库
 
-To enable ingress integration, please set `ingress.enabled` to `true`
+默认情况下，Kubeapps Plus将跟踪[社区头盔图表](https://github.com/helm/charts)和[Kubernetes服务目录图表](https://github.com/kubernetes-incubator/service-catalog )。 要更改这些默认值，请使用所需的参数覆盖[values.yaml](values.yaml)文件中存在的`apprepository.initialRepos`对象。
+
+### 配置与自定义名称空间Tiller实例的连接
+
+默认情况下，Kubeapps Plus连接到“ kube-system”名称空间(Helm的默认安装位置)中的耕种机服务。
+
+如果您的Tiller实例在不同的命名空间中运行，或者您希望将Kubeapps Plus的不同实例连接到不同的Tiller实例，则可以通过设置`tillerProxy.host`参数来实现。 例如，您可以设置`tillerProxy.host = tiller-deploy.my-custom-namespace：44134`
+
+### 配置与安全的Tiller实例的连接
+
+在生产中，我们强烈建议您设置Helm服务器端组件[安全安装Tiller](https://docs.helm.sh/using_helm/#using-ssl-between-helm-and-tiller)。
+
+在[此处](https://github.com/kubeapps/kubeapps/blob/master/docs/user/securing-kubeapps.md)了解更多有关如何保护Kubeapps Plus安装的信息。
+
+### 外部暴露
+
+> **Note**: Kubeapps Plus前端设置了Kubernetes API服务的代理，因此，当将Kubeapps Plus服务暴露给Kubernetes集群外部的网络(可能是内部或公共网络)时，Kubernetes API也将在该网络上公开。 。 有关更多详细信息，请参见[＃1111](https://github.com/kubeapps/kubeapps/issues/1111)。
+
+#### 负载均衡服务
+
+公开Kubeapps Plus仪表板的最简单方法是将LoadBalancer类型分配给Kubeapps Plus前端服务。 例如，您可以使用以下参数：`frontend.service.type = LoadBalancer`
+
+等待您的集群将LoadBalancer IP或主机名分配给`kubeapps`服务并在该地址上访问它：
+
+```console
+$ kubectl get services --namespace kubeapps-plus --watch
+```
+
+#### 入口
+
+此图表为入口资源提供支持。 如果您的集群上安装了入口控制器，例如[nginx-ingress](https://hub.kubeapps.com/charts/stable/nginx-ingress)或[traefik](https：//hub.kubeapps。 com / charts / stable / traefik)，则可以利用Ingress控制器公开Kubeapps Plus。
+
+要启用入口集成，请将“ ingress.enabled”设置为“true”。
 
 ##### Hosts
 
-Most likely you will only want to have one hostname that maps to this Kubeapps installation (use the `ingress.hostname` parameter to set the hostname), however, it is possible to have more than one host. To facilitate this, the `ingress.extraHosts` object is an array.
+您很可能只想拥有一个映射到此Kubeapps Plus安装的主机名(使用`ingress.hostname`参数设置主机名)，但是，可能有多个主机。 为方便起见，`ingress.extraHosts`对象是一个数组。
 
-##### Annotations
+##### 注解
 
-For annotations, please see [this document](https://github.com/kubernetes/ingress-nginx/blob/master/docs/user-guide/nginx-configuration/annotations.md). Not all annotations are supported by all ingress controllers, but this document does a good job of indicating which annotation is supported by many popular ingress controllers. Annotations can be set using `ingress.annotations`.
+有关注释，请参阅[本文档](https://github.com/kubernetes/ingress-nginx/blob/master/docs/user-guide/nginx-configuration/annotations.md)。 并非所有的入口控制器都支持所有注释，但是本文档很好地指出了许多流行的入口控制器支持哪些注释。 可以使用“ ingress.annotations”设置注释。
 
 ##### TLS
 
-To enable TLS, please set `ingress.tls` to `true`. When enabling this parameter, the TLS certificates will be retrieved from a TLS secret with name *INGRESS_HOSTNAME-tls* (where *INGRESS_HOSTNAME* is a placeholder to be replaced with the hostname you set using the `ingress.hostname` parameter).
+要启用TLS，请将“ ingress.tls”设置为“ true”。 启用此参数时，将从名称为* INGRESS_HOSTNAME-tls *的TLS秘密中检索TLS证书(其中* INGRESS_HOSTNAME *是占位符，将替换为使用ingress.hostname参数设置的主机名)。
 
-You can use the `ingress.extraTls` to provide the TLS configuration for the extra hosts you set using the `ingress.extraHosts` array. Please see [this example](https://kubernetes.github.io/ingress-nginx/examples/tls-termination/) for more information.
+您可以使用`ingress.extraTls`为使用`ingress.extraHosts`数组设置的额外主机提供TLS配置。 请参阅[此示例](https://kubernetes.github.io/ingress-nginx/examples/tls-termination/)了解更多信息。
 
-You can provide your own certificates using the `ingress.secrets` object. If your cluster has a [cert-manager](https://github.com/jetstack/cert-manager) add-on to automate the management and issuance of TLS certificates, set `ingress.certManager` boolean to true to enable the corresponding annotations for cert-manager. For a full list of configuration parameters related to configuring TLS can see the [values.yaml](values.yaml) file.
+您可以使用`ingress.secrets`对象提供自己的证书。 如果您的集群具有[cert-manager](https://github.com/jetstack/cert-manager)附件来自动管理和颁发TLS证书，则将ingress.certManager` boolean设置为true即可启用 cert-manager的相应注释。 有关与配置TLS相关的配置参数的完整列表，请参见[values.yaml](values.yaml)文件。
 
-## Upgrading Kubeapps
+## 升级Kubeapps Plus
 
-You can upgrade Kubeapps from the Kubeapps web interface. Select the namespace in which Kubeapps is installed (`kubeapps` if you followed the instructions in this guide) and click on the "Upgrade" button. Select the new version and confirm.
+您可以从Kubeapps Plus Web界面升级Kubeapps Plus。 选择安装Kubeapps Plus的名称空间(如果遵循本指南中的说明，则为“ kubeapps”)，然后单击“升级”按钮。 选择新版本并确认。
 
-> NOTE: If the chart values were modified when deploying Kubeapps the first time, those values need to be set again when upgrading.
+> 注意：如果在首次部署Kubeapps Plus时修改了图表值，则在升级时需要再次设置这些值。
 
-You can also use the Helm CLI to upgrade Kubeapps, first ensure you have updated your local chart repository cache:
+您还可以使用Helm CLI升级Kubeapps Plus，首先确保已更新本地图表存储库缓存：
 
 ```console
 $ helm repo update
 ```
 
-Now upgrade Kubeapps:
+现在升级Kubeapps Plus：
 
 ```console
 $ export RELEASE_NAME=kubeapps
 $ helm upgrade $RELEASE_NAME bitnami/kubeapps
 ```
 
-If you find issues upgrading Kubeapps, check the [troubleshooting](#error-while-upgrading-the-chart) section.
+如果在升级Kubeapps Plus时发现问题，请检查[故障排除](＃error-while-upgradeing-the-chart)部分。
 
-## Uninstalling the Chart
+## 卸载图表
 
-To uninstall/delete the `kubeapps` deployment:
+要卸载/删除`kubeapps`部署：
 
 ```console
-$ helm delete --purge kubeapps
-$ # Optional: Only if there are no more instances of Kubeapps
+$ helm delete --purge kubeapps-plus
+$ # Optional: Only if there are no more instances of Kubeapps Plus
 $ kubectl delete crd apprepositories.kubeapps.com
 ```
 
-The first command removes most of the Kubernetes components associated with the chart and deletes the release. After that, if there are no more instances of Kubeapps in the cluster you can manually delete the `apprepositories.kubeapps.com` CRD used by Kubeapps that is shared for the entire cluster.
+第一个命令删除与图表关联的大多数Kubernetes组件并删除发行版。 之后，如果群集中没有更多的Kubeapps Plus实例，则可以手动删除Kubeapps Plus使用的，整个群集共享的`apprepositories.kubeapps.com` CRD。
 
-> **NOTE**: If you delete the CRD for `apprepositories.kubeapps.com` it will delete the repositories for **all** the installed instances of `kubeapps`. This will break existing installations of `kubeapps` if they exist.
+> **NOTE**: 如果您删除“ apprepositories.kubeapps.com”的CRD，则会删除所有“ kubeapps”已安装实例的存储库。 如果存在，这将破坏现有的kubeapps安装。
 
-If you have dedicated a namespace only for Kubeapps you can completely clean remaining completed/failed jobs or any stale resources by deleting the namespace
+如果您仅为Kubeapps Plus分配了名称空间，则可以通过删除名称空间来完全清除剩余的已完成/失败的作业或任何过时的资源
 
 ```console
-$ kubectl delete namespace kubeapps
+$ kubectl delete namespace kubeapps-plus
 ```
 
-## Troubleshooting
+## 故障排除
 
-### Forbidden error while installing the Chart
+### 安装图表时出现禁止错误
 
-If during installation you run into an error similar to:
-
-```
-Error: release kubeapps failed: clusterroles.rbac.authorization.k8s.io "kubeapps-apprepository-controller" is forbidden: attempt to grant extra privileges: [{[get] [batch] [cronjobs] [] []...
-```
-
-Or:
+如果在安装过程中遇到以下错误：
 
 ```
-Error: namespaces "kubeapps" is forbidden: User "system:serviceaccount:kube-system:default" cannot get namespaces in the namespace "kubeapps"
+错误：发布kubeapps失败：clusterroles.rbac.authorization.k8s.io“ kubeapps-apprepository-controller”被禁止：尝试授予额外的特权：[{[get] [batch] [cronjobs] [] [] ...
 ```
 
-This usually is an indication that Tiller was not installed with enough permissions to create the resources required by Kubeapps. In order to install Kubeapps, tiller will need to be able to install Custom Resource Definitions cluster-wide, as well as manage app repositories in your kubeapps namespace. The easiest way to enable this in a development environment is install Tiller with elevated permissions (e.g. as a cluster-admin). For example:
+或者:
 
+```
+错误：命名空间“ kubeapps”被禁止：用户“ system：serviceaccount：kube-system：default”无法在命名空间“ kubeapps”中获取命名空间```
+
+这通常表明Tiller没有安装足够的权限来创建Kubeapps Plus所需的资源。 为了安装Kubeapps Plus，耕种机将需要能够在整个群集范围内安装“自定义资源定义”，以及管理kubeapps命名空间中的应用程序存储库。 在开发环境中启用此功能的最简单方法是使用提升的权限(例如，以集群管理员身份)安装Tiller。 例如：
 ```
 kubectl -n kube-system create sa tiller
 kubectl create clusterrolebinding tiller --clusterrole cluster-admin --serviceaccount=kube-system:tiller
 helm init --service-account tiller
 ```
 
-but for a production environment you can assign the specific permissions so that tiller can [manage CRDs on the cluster](https://github.com/kubeapps/kubeapps/blob/master/docs/user/manifests/openshift-tiller-with-crd-rbac.yaml) as well as [create app repositories in your Kubeapps namespace](https://github.com/kubeapps/kubeapps/blob/master/docs/user/manifests/openshift-tiller-with-apprepository-rbac.yaml) (examples are from our in development support for OpenShift).
+但是对于生产环境，您可以分配特定的权限，以便分till可以[管理群集上的CRD](https://github.com/kubeapps/kubeapps/blob/master/docs/user/manifests/openshift-tiller-with -crd-rbac.yaml)以及[在Kubeapps Plus命名空间中创建应用程序存储库](https://github.com/kubeapps/kubeapps/blob/master/docs/user/manifests/openshift-tiller-with-apprepository -rbac.yaml)(示例来自我们对OpenShift的开发支持)。
 
-It is also possible, though less common, that your cluster does not have Role Based Access Control (RBAC) enabled. To check if your cluster has RBAC you can execute:
+尽管不太常见，但群集中也可能未启用基于角色的访问控制(RBAC)。 要检查您的集群是否具有RBAC，可以执行：
 
 ```console
 $ kubectl api-versions
 ```
 
-If the above command does not include entries for `rbac.authorization.k8s.io` you should perform the chart installation by setting `rbac.create=false`:
+如果以上命令不包含`rbac.authorization.k8s.io`的条目，则应通过设置`rbac.create = false`来执行图表安装：
 
 ```console
-$ helm install --name kubeapps --namespace kubeapps bitnami/kubeapps --set rbac.create=false
+$ helm install --name kubeapps-plus --namespace kubeapps-plus bitnami/kubeapps --set rbac.create=false
 ```
 
-### Error while upgrading the Chart
+### 升级图表时出错
 
-It is possible that when upgrading Kubeapps an error appears. That can be caused by a breaking change in the new chart or because the current chart installation is in an inconsistent state. If you find issues upgrading Kubeapps you can follow these steps:
+升级Kubeapps Plus时，可能会出现错误。 这可能是由于新图表的重大更改或当前图表安装处于不一致状态引起的。 如果发现升级Kubeapps Plus的问题，可以按照以下步骤操作：
 
-> Note: This steps assume that you have installed Kubeapps in the namespace `kubeapps` using the name `kubeapps`. If that is not the case replace the command with your namespace and/or name.
+> 注意：此步骤假定您已使用名称“ kubeapps”在名称空间“ kubeapps”中安装了Kubeapps Plus。 如果不是这种情况，请使用您的名称空间和/或名称替换命令。
 
-1.  (Optional) Backup your personal repositories (if you have any):
+1.  (可选)备份您的个人存储库(如果有)：
 
 ```console
-kubectl get apprepository --namespace kubeapps -o yaml <repo name> > <repo name>.yaml
+kubectl get apprepository --namespace kubeapps-plus -o yaml <repo name> > <repo name>.yaml
 ```
 
-2.  Delete Kubeapps:
+2.  删除Kubeapps Plus：
 
 ```console
-helm del --purge kubeapps
+helm del --purge kubeapps-plus
 ```
 
-3.  (Optional) Delete the App Repositories CRD:
+3.  (可选)删除应用程序存储库CRD：
 
-> **Warning**: Don't execute this step if you have more than one Kubeapps installation in your cluster.
+> **Warning**: Don't execute this step if you have more than one Kubeapps Plus installation in your cluster.
 
 ```console
 kubectl delete crd apprepositories.kubeapps.com
 ```
 
-4.  (Optional) Clean the Kubeapps namespace:
+4.  (可选)清理Kubeapps Plus命名空间：
 
-> **Warning**: Don't execute this step if you have workloads other than Kubeapps in the `kubeapps` namespace.
+> **Warning**: 如果kubeapps名称空间中的Kubeapps Plus以外的工作负载，则不要执行此步骤。
 
 ```console
-kubectl delete namespace kubeapps
+kubectl delete namespace kubeapps-plus
 ```
 
-5.  Install the latest version of Kubeapps (using any custom modifications you need):
+5.  安装最新版本的Kubeapps Plus(使用您需要的任何自定义修改)：
 
 ```console
 helm repo update
-helm install --name kubeapps --namespace kubeapps bitnami/kubeapps
+helm install --name kubeapps-plus --namespace kubeapps-plus bitnami/kubeapps
 ```
 
-6.  (Optional) Restore any repositories you backed up in the first step:
+6.  (可选)还原第一步中备份的所有存储库：
 
 ```console
 kubectl apply -f <repo name>.yaml
 ```
 
-After that you should be able to access the new version of Kubeapps. If the above doesn't work for you or you run into any other issues please open an [issue](https://github.com/kubeapps/kubeapps/issues/new).
+之后，您应该可以访问新版本的Kubeapps Plus。 如果上述方法对您不起作用，或者您遇到其他任何问题，请打开一个[issue](https://github.com/kubeapps/kubeapps/issues/new)。

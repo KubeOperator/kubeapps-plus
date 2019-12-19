@@ -55,6 +55,7 @@
             queryClusterServiceBrokers: async function () {
                 await http(getParamApi(apiSetting.kubernetes.getServiceBrokers, 'clusterservicebrokers')).then(res => {
                     if (res.status == 200) {
+                        console.log('...')
                     } else {
                         errorMessage(this, res);
                     }

@@ -27,6 +27,6 @@ git push origin ${VERSION_NAME}
 
 ## 4 - 发布GitHub版本
 
-一旦发布了图表并由同行评审了发行说明，就发布发行内容，我们就完成了！
+一旦发布了图表并由同行评审了发行说明，就发布发行内容，我们就完成了!
 
-不要忘记在#kubeapps plus中促进发行！
+不要忘记在#kubeapps plus中促进发行!

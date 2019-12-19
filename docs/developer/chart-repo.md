@@ -26,11 +26,11 @@ export MONOCULAR_DIR=$GOPATH
 git clone https://github.com/helm/monocular $MONOCULAR_DIR
 ```
 
-“ chart-repo”源位于“ cmd / chart-repo /”目录下。
+“ chart-repo”源位于“ cmd/chart-repo/”目录下。
 
 ### 在您的集群中安装Kubeapps Plus
 
-Kubeapps Plus是Kubernetes本地应用程序。 要开发和测试Kubeapps Plus组件，我们需要一个已安装Kubeapps Plus的Kubernetes集群。 遵循[Kubeapps Plus安装指南](../../ chart / kubeapps / README.md)在您的群集中安装Kubeapps Plus。
+Kubeapps Plus是Kubernetes本地应用程序。 要开发和测试Kubeapps Plus组件，我们需要一个已安装Kubeapps Plus的Kubernetes集群。 遵循[Kubeapps Plus安装指南](../../chart/kubeapps/README.md)在您的群集中安装Kubeapps Plus。
 
 ### 构建 `chart-repo` 镜像
 
@@ -46,7 +46,7 @@ make -C cmd/chart-repo docker-build
 
 ```bash
 export MONGO_PASSWORD=$(kubectl get secret --namespace kubeapps kubeapps-mongodb -o go-template='{{index .data "mongodb-root-password" | base64decode}}')
-telepresence --namespace kubeapps --docker-run -e MONGO_PASSWORD=$MONGO_PASSWORD --rm -ti quay.io/helmpack/chart-repo /chart-repo sync --mongo-user=root --mongo-url=kubeapps-mongodb stable https://kubernetes-charts.storage.googleapis.com
+telepresence --namespace kubeapps --docker-run -e MONGO_PASSWORD=$MONGO_PASSWORD --rm -ti quay.io/helmpack/chart-repo/chart-repo sync --mongo-user=root --mongo-url=kubeapps-mongodb stable https://kubernetes-charts.storage.googleapis.com
 ```
 
 请注意，应重新构建图表仓库，以使新更改生效。

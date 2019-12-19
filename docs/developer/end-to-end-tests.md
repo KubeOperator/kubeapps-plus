@@ -5,7 +5,7 @@
  - 图表测试
  - 浏览器测试
 
-这些测试由脚本[scripts / e2e-test.sh](../../ script / e2e-test.sh)执行。 该脚本：
+这些测试由脚本[scripts/e2e-test.sh](../../script/e2e-test.sh)执行。 该脚本：
 
  1. 使用证书安装Tiller
  2. 使用CI流程中生成的映像安装Kubeapps Plus
@@ -19,11 +19,11 @@
 
 项目中的图表测试是使用[Helm提供的]测试功能定义的(https://helm.sh/docs/developing_charts/#chart-tests)。 这些测试的目标是图表已成功部署，并且所部署的每个微服务的基本功能均按预期工作。 如果需要，特定的功能测试应包含在单元测试或浏览器测试中。
 
-您可以在[图表文件夹](../../ chart / kubeapps / templates / tests)中找到当前的图表测试。
+您可以在[图表文件夹](../../chart/kubeapps/templates/tests)中找到当前的图表测试。
 
 ## Web浏览器测试
 
-除了图表测试运行的基本功能测试之外，该项目还包含Web浏览器测试，您可以在[integration](../../ integration)文件夹中找到该测试。
+除了图表测试运行的基本功能测试之外，该项目还包含Web浏览器测试，您可以在[integration](../../integration)文件夹中找到该测试。
 
 这些测试基于[Puppeteer](https://github.com/GoogleChrome/puppeteer)。 Puppeteer是一个NodeJS库，它提供了高级API来控制Chrome或Chromium(默认情况下为无头模式)。
 
@@ -47,7 +47,7 @@ INTEGRATION_ENTRYPOINT=http://kubeapps.local LOGIN_TOKEN=foo yarn start
 
 ### 在Pod中运行浏览器测试
 
-由于CI环境没有必需的依赖关系并提供了可重现的环境，因此可以在Kubernetes窗格中运行浏览器测试。 为此，您可以启动一个实例，该实例运行映像“ kubeapps / integration-tests”。 该映像包含所有必需的依赖关系，并且它将一直等待，因此您可以在其中执行命令。 此设置的目的是，您可以将最新测试复制到映像中，运行测试并在出现故障的情况下提取屏幕截图：
+由于CI环境没有必需的依赖关系并提供了可重现的环境，因此可以在Kubernetes窗格中运行浏览器测试。 为此，您可以启动一个实例，该实例运行映像“ kubeapps/integration-tests”。 该映像包含所有必需的依赖关系，并且它将一直等待，因此您可以在其中执行命令。 此设置的目的是，您可以将最新测试复制到映像中，运行测试并在出现故障的情况下提取屏幕截图：
 
 ```bash
 cd integration
@@ -57,7 +57,7 @@ pod=$(kubectl get po -l run=integration -o jsonpath="{.items[0].metadata.name}")
 # Copy latest tests
 kubectl cp ./use-cases ${pod}:/app/
 # Run tests
-kubectl exec -it ${pod} -- /bin/sh -c 'INTEGRATION_ENTRYPOINT=http://kubeapps.kubeapps LOGIN_TOKEN=foo yarn start'
+kubectl exec -it ${pod} --/bin/sh -c 'INTEGRATION_ENTRYPOINT=http://kubeapps.kubeapps LOGIN_TOKEN=foo yarn start'
 # If the tests fail, get report screenshot
 kubectl cp ${pod}:/app/reports ./reports
 ```

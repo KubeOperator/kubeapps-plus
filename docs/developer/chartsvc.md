@@ -26,11 +26,11 @@ export MONOCULAR_DIR=$GOPATH
 git clone https://github.com/helm/monocular $MONOCULAR_DIR
 ```
 
-“ chartsvc”源位于“ cmd / chartsvc /”目录下。
+“ chartsvc”源位于“ cmd/chartsvc/”目录下。
 
 ### 在您的集群中安装Kubeapps Plus
 
-Kubeapps Plus是Kubernetes本地应用程序。 要开发和测试Kubeapps Plus组件，我们需要一个已安装Kubeapps Plus的Kubernetes集群。 遵循[Kubeapps Plus安装指南](../../ chart / kubeapps / README.md)在您的群集中安装Kubeapps Plus。
+Kubeapps Plus是Kubernetes本地应用程序。 要开发和测试Kubeapps Plus组件，我们需要一个已安装Kubeapps Plus的Kubernetes集群。 遵循[Kubeapps Plus安装指南](../../chart/kubeapps/README.md)在您的群集中安装Kubeapps Plus。
 
 ### 建立`chartsvc`图像
 
@@ -47,7 +47,7 @@ make -C cmd/chartsvc docker-build
 #### 选项1：使用网真(推荐)
 
 ```bash
-telepresence --swap-deployment kubeapps-internal-chartsvc --namespace kubeapps --expose 8080:8080 --docker-run --rm -ti quay.io/helmpack/chartsvc /chartsvc --mongo-user=root --mongo-url=kubeapps-mongodb
+telepresence --swap-deployment kubeapps-internal-chartsvc --namespace kubeapps --expose 8080:8080 --docker-run --rm -ti quay.io/helmpack/chartsvc/chartsvc --mongo-user=root --mongo-url=kubeapps-mongodb
 ```
 
 请注意，应重新构建Chartsvc，以使新更改生效。

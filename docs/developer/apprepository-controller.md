@@ -28,7 +28,7 @@ export KUBEAPPS_DIR=$GOPATH/src/github.com/kubeapps/kubeapps
 git clone --recurse-submodules https://github.com/kubeapps/kubeapps $KUBEAPPS_DIR
 ```
 
-“ apprepository-controller”源位于存储库的“ cmd / apprepository-controller /”目录下。
+“ apprepository-controller”源位于存储库的“ cmd/apprepository-controller/”目录下。
 
 ```bash
 cd $KUBEAPPS_DIR/cmd/apprepository-controller
@@ -36,7 +36,7 @@ cd $KUBEAPPS_DIR/cmd/apprepository-controller
 
 ### 在您的集群中安装Kubeapps Plus
 
-Kubeapps Plus是Kubernetes本地应用程序。 要开发和测试Kubeapps Plus组件，我们需要一个已安装Kubeapps Plus的Kubernetes集群。 遵循[Kubeapps Plus安装指南](../../ chart / kubeapps / README.md)在您的群集中安装Kubeapps Plus。
+Kubeapps Plus是Kubernetes本地应用程序。 要开发和测试Kubeapps Plus组件，我们需要一个已安装Kubeapps Plus的Kubernetes集群。 遵循[Kubeapps Plus安装指南](../../chart/kubeapps/README.md)在您的群集中安装Kubeapps Plus。
 
 ### 构建`apprepository-controller`二进制文件
 
@@ -72,9 +72,9 @@ kubectl -n kubeapps scale deployment apprepository-controller --replicas=0
 go test
 ```
 
-## 构建Kubeapps /存储库控制器Docker映像
+## 构建Kubeapps/存储库控制器Docker映像
 
-要使用docker image标签myver构建`kubeapps / apprepository-controller` docker镜像：
+要使用docker image标签myver构建`kubeapps/apprepository-controller` docker镜像：
 
 ```bash
 cd $KUBEAPPS_DIR

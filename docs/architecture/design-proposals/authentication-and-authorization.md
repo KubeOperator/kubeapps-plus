@@ -42,7 +42,7 @@
 
 ### 使用客户端证书/密钥验证登录
 
-客户端证书和密钥对是针对群集进行身份验证的常用方法。 Kubeconfig可以指向文件系统中的证书或密钥，也可以将它们作为base64编码的字符串嵌入到文件中。 不幸的是，对于Kubeapps Plus，无法在XMLHttpRequest(浏览器AJAX请求)中包含客户端证书和密钥对，因此我们将无法在Kubeapps Plus中利用客户端证书/密钥身份验证(请参阅[＃200](https ：//github.com/Kubeapps Plus / Kubeapps Plus / issues / 200＃issuecomment-376617420））。
+客户端证书和密钥对是针对群集进行身份验证的常用方法。 Kubeconfig可以指向文件系统中的证书或密钥，也可以将它们作为base64编码的字符串嵌入到文件中。 不幸的是，对于Kubeapps Plus，无法在XMLHttpRequest(浏览器AJAX请求)中包含客户端证书和密钥对，因此我们将无法在Kubeapps Plus中利用客户端证书/密钥身份验证(请参阅[＃200](https ：//github.com/Kubeapps Plus/Kubeapps Plus/issues/200＃issuecomment-376617420））。
 
 ### 使用令牌验证登录
 
@@ -132,7 +132,7 @@ token: eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9...
 
 #### 注销
 
-顶部导航栏中将需要有一个“注销” /“注销”选项，以便已登录的用户可以返回登录提示以结束其会话或使用其他令牌登录。
+顶部导航栏中将需要有一个“注销”/“注销”选项，以便已登录的用户可以返回登录提示以结束其会话或使用其他令牌登录。
 
 #### Namespaces 命名空间
 
@@ -162,13 +162,13 @@ Kubeapps Plus将尝试从API提取名称空间列表，但是如果不允许此�
 
 #### 错误处理
 
-当前，在所有情况下，仪表板都无法很好地处理API错误。 通过此更改，当某些RBAC角色丢失时，可能会出现更多API错误(未经授权的错误)。 使用_await / async_时，通常会导致承诺拒绝的API错误会作为JavaScript异常抛出。 可能可以利用[React Error Boundaries](https://reactjs.org/blog/2017/07/26/error-handling-in-react-16.html)捕获组件内的错误并显示 错误信息。
+当前，在所有情况下，仪表板都无法很好地处理API错误。 通过此更改，当某些RBAC角色丢失时，可能会出现更多API错误(未经授权的错误)。 使用_await/async_时，通常会导致承诺拒绝的API错误会作为JavaScript异常抛出。 可能可以利用[React Error Boundaries](https://reactjs.org/blog/2017/07/26/error-handling-in-react-16.html)捕获组件内的错误并显示 错误信息。
 
 ### Kubernetes API Proxy
 
 #### 启用外部访问
 
-出于安全原因，默认情况下，kubectl代理不接受来自非本地主机名的请求。 要启用从LoadBalancer IP /主机名或Ingress主机名的访问，我们将在运行代理时设置`--accept-hosts =。*`选项。
+出于安全原因，默认情况下，kubectl代理不接受来自非本地主机名的请求。 要启用从LoadBalancer IP/主机名或Ingress主机名的访问，我们将在运行代理时设置`--accept-hosts =。*`选项。
 
 由于Kubeapps Plus现在将很高兴将整个Kubernetes API暴露给已配置的Ingress，因此这显然引起了安全方面的担忧。 为了减轻这种攻击面：
 

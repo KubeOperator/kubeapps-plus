@@ -1,19 +1,19 @@
-# Securing Kubeapps installation
+# 保护Kubeapps Plus安装
 
-In this guide we will explain how to secure the installation of Kubeapps in a multi-tenant cluster. Following these steps are only necessary if different people with different permissions have access to the same cluster. Generic instructions to secure Helm can be found [here](https://github.com/kubernetes/helm/blob/master/docs/securing_installation.md).
+在本指南中，我们将说明如何保护多租户群集中Kubeapps Plus的安装。 仅当具有不同权限的不同人员可以访问同一群集时，才需要执行以下步骤。 可以在[here](https://github.com/kubernetes/helm/blob/master/docs/securing_installation.md)中找到保护头盔的通用说明。
 
-The main goal is to secure the access to [Tiller](https://github.com/kubernetes/helm/blob/master/docs/securing_installation.md) (Helm server-side component). Tiller has access to create or delete any resource in the cluster so we should be careful on how we expose the functionality it provides.
+主要目标是确保对[Tiller](https://github.com/kubernetes/helm/blob/master/docs/securing_installation.md)的访问(头盔服务器端组件)。 Tiller有权创建或删除集群中的任何资源，因此我们在公开其提供的功能时应格外小心。
 
-In order to take advantage of Kubeapps security features you will need to configure two things: a **TLS certificate** to control the access to Tiller and [**RBAC roles**](https://kubernetes.io/docs/reference/access-authn-authz/rbac/) to authorize requests.
+为了利用Kubeapps Plus安全功能，您需要配置两件事：** TLS证书**，用于控制对Tiller和[** RBAC角色**]的访问(https://kubernetes.io/docs/reference/access-authn-authz/rbac/)授权请求。
 
-## Install Tiller Securely
+## 安全安装 Tiller
 
-You can follow the Helm documentation for deploying Tiller in a secure way. In particular we are interested in:
+您可以遵循Helm文档以安全方式部署Tiller。 我们尤其对以下方面感兴趣：
 
-- Using a TLS certificate to control the access to the Tiller deployment: https://docs.helm.sh/using_helm/#using-ssl-between-helm-and-tiller
-- Storing release info as secrets: https://docs.helm.sh/using_helm/#tiller-s-release-information
+- 使用TLS证书控制对Tiller部署的访问：https://docs.helm.sh/using_helm/#using-ssl-between-helm-and-tiller
+- 将发布信息存储为秘密：https：//docs.helm.sh/using_helm/#tiller-s-release-information
 
-From these guides you can find out how to create the TLS certificate and the necessary flags to install Tiller securely:
+从这些指南中，您可以找到如何创建TLS证书以及安全安装Tiller的必要标志：
 
 ```
 helm init --tiller-tls --tiller-tls-verify \
@@ -23,9 +23,9 @@ helm init --tiller-tls --tiller-tls-verify \
   --tls-ca-cert ca.cert.pem
 ```
 
-## Deploy Kubeapps with a TLS certificate
+## 使用TLS证书部署Kubeapps Plus
 
-This is the command to install Kubeapps with our certificate:
+这是使用我们的证书安装Kubeapps Plus的命令：
 
 ```
 helm repo add bitnami https://charts.bitnami.com/bitnami
@@ -38,22 +38,22 @@ helm install \
   bitnami/kubeapps
 ```
 
-> Note: To use the `tls-verify` flag (and validate Tiller hostname), the certificate should have configured the host of Tiller within the cluster: `tiller-deploy.kube-system` by default.
+> Note: 要使用“ tls-verify”标志(并验证Tiller主机名)，证书应已在群集内配置了Tiller的主机：默认情况下为“ tiller-deploy.kube-system”。
 
-## Enable RBAC
+## 启用 RBAC
 
-In order to be able to authorize requests from users it is necessary to enable [RBAC](https://kubernetes.io/docs/reference/access-authn-authz/rbac/) in the Kubernetes cluster. Some providers have it enabled by default but in some cases you need to set it up explicitly. Check out your provider documentation to know how to enable it. To verify if your cluster has RBAC available you can check if the API group exists:
+为了能够授权来自用户的请求，必须在Kubernetes集群中启用[RBAC](https://kubernetes.io/docs/reference/access-authn-authz/rbac/)。 某些提供程序默认情况下启用了它，但是在某些情况下，您需要显式设置它。 查看您的提供商文档以了解如何启用它。 要验证您的集群是否具有可用的RBAC，您可以检查API组是否存在：
 
 ```
 $ kubectl api-versions | grep rbac.authorization
 rbac.authorization.k8s.io/v1
 ```
 
-Once your cluster has RBAC enabled read [this document](/docs/user/access-control.md) to know how to login in Kubeapps using a token that identifies a user account and how you can create users with different permissions.
+一旦您的群集启用了RBAC，请阅读[本文档](/docs/user/access-control.md)，以了解如何使用标识用户帐户的令牌登录Kubeapps Plus，以及如何创建具有不同权限的用户。
 
-In a nutshell, Kubeapps authorization validates:
+简而言之，Kubeapps Plus授权将验证：
 
-- When getting a release details, it checks that the user have "read" access to all the components of the release.
-- When creating, upgrading or deleting a release it checks that the user is allowed to create, update or delete all the components contained in the release chart.
+- 获取版本详细信息时，它将检查用户是否对版本的所有组件都具有“读取”访问权限。
+- 在创建，升级或删除发行版时，它会检查是否允许用户创建，更新或删除发行表中包含的所有组件。
 
-For example, if the user account `foo` wants to deploy a chart `bar` that is composed of a `Deployment` and a `Service` it should have enough permissions to create each one of those. In other case it will receive an error message with the missing permissions required to deploy the chart.
+例如，如果用户帐户“ foo”要部署由“部署”和“服务”组成的图表“ bar”，则应具有足够的权限来创建其中的每一个。 在其他情况下，它将收到一条错误消息，提示缺少部署图表所需的权限。

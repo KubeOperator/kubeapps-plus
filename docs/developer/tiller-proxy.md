@@ -24,11 +24,11 @@ export KUBEAPPS_DIR=$GOPATH/src/github.com/kubeapps/kubeapps
 git clone --recurse-submodules https://github.com/kubeapps/kubeapps $KUBEAPPS_DIR
 ```
 
-tiller-proxy源位于cmd / tiller-proxy /目录下，并使用pkg目录中的软件包。
+tiller-proxy源位于cmd/tiller-proxy/目录下，并使用pkg目录中的软件包。
 
 ### 在您的集群中安装Kubeapps Plus
 
-Kubeapps Plus是Kubernetes本地应用程序。 要开发和测试Kubeapps Plus组件，我们需要一个已安装Kubeapps Plus的Kubernetes集群。 遵循[Kubeapps Plus安装指南](../../ chart / kubeapps / README.md)在您的群集中安装Kubeapps Plus。
+Kubeapps Plus是Kubernetes本地应用程序。 要开发和测试Kubeapps Plus组件，我们需要一个已安装Kubeapps Plus的Kubernetes集群。 遵循[Kubeapps Plus安装指南](../../chart/kubeapps/README.md)在您的群集中安装Kubeapps Plus。
 
 ### 构建`tiller-proxy`二进制文件
 
@@ -60,7 +60,7 @@ kubectl patch deployment kubeapps-internal-tiller-proxy -n kubeapps --type=json 
 IMAGE_TAG=dev make kubeapps/tiller-proxy
 ```
 
-这将生成一个映像kubeapps / tiller-proxy：dev，可以在当前部署中使用：
+这将生成一个映像kubeapps/tiller-proxy：dev，可以在当前部署中使用：
 
 ```
 kubectl set image -n kubeapps deployment kubeapps-internal-tiller-proxy proxy=kubeapps/tiller-proxy:dev

@@ -4,9 +4,9 @@
 
 # 链接
 
-- 身份验证（AuthN）和授权（AuthZ）
+- 身份验证(AuthN)和授权(AuthZ)
     - [介绍](./authentication-and-authorization.md)
-    - [OAuth 2-OpenID Connect（OIDC）支持](https://docs.google.com/document/d/1YZzLtIbS2copQJgspFiMd0eAhpyt8u19MUSDEvH2X4g)
+    - [OAuth 2-OpenID Connect(OIDC)支持](https://docs.google.com/document/d/1YZzLtIbS2copQJgspFiMd0eAhpyt8u19MUSDEvH2X4g)
 - [仪表板错误处理](./dashboard/error-handling/error-handling.md)
 - [通知可用的图表更新](https://docs.google.com/document/d/1oG9nerd5CurWSIwH33kKCsOCtkSFMgcm8SuTJyuSnxs/)
 - [更简单的部署](./dashboard/deployment-improvements.md)

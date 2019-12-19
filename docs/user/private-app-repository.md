@@ -1,6 +1,6 @@
-# Using a Private Repository with Kubeapps
+# 在Kubeapps Plus中使用私有存储库
 
-It is possible to use a private Helm repository to store your own Helm charts and deploy them using Kubeapps. In this guide we will show how you can do that with some of the solutions available right now:
+可以使用私有的Helm存储库来存储您自己的Helm图表，并使用Kubeapps Plus进行部署。 在本指南中，我们将展示如何使用当前可用的一些解决方案来做到这一点：
 
 - [ChartMuseum](#chartmuseum)
 - [Harbor](#harbor)
@@ -8,22 +8,22 @@ It is possible to use a private Helm repository to store your own Helm charts an
 
 ## ChartMuseum
 
-[ChartMuseum](https://chartmuseum.com) is an open-source Helm Chart Repository written in Go (Golang), with support for cloud storage backends, including Google Cloud Storage, Amazon S3, Microsoft Azure Blob Storage, Alibaba Cloud OSS Storage and OpenStack Object Storage.
+[ChartMuseum](https://chartmuseum.com)是用Go(Golang)编写的开源Helm Chart存储库，并支持云存储后端，包括Google Cloud Storage，Amazon S3，Microsoft Azure Blob存储，阿里云OSS 存储和OpenStack对象存储。
 
-To use ChartMuseum with Kubeapps, first deploy its Helm chart from the `stable` repository:
+要将ChartMuseum与Kubeapps Plus一起使用，请首先从stable存储库中部署其Helm图表：
 
 <img src="../img/chartmuseum-chart.png" alt="ChartMuseum Chart" width="300px">
 
-In the deployment form we should change at least two things:
+在部署表单中，我们应该至少更改两件事：
 
-- `env.open.DISABLE_API`: We should set this value to `false` so we can use the ChartMuseum API to push new charts.
-- `persistence.enabled`: We will set this value to `true` to enable persistence for the charts we store. Note that this will create a [Kubernetes Persistent Volume Claim](https://kubernetes.io/docs/concepts/storage/persistent-volumes/#lifecycle-of-a-volume-and-claim) so depending on your Kubernetes provider you may need to manually allocate the required Persistent Volume to satisfy the claim. Some Kubernetes providers will automatically create PVs for you so setting this value to `true` will be enough.
+- `env.open.DISABLE_API`: 我们应该将此值设置为“ false”，以便可以使用ChartMuseum API推送新图表。
+- `persistence.enabled`: 我们将这个值设置为“ true”以对我们存储的图表启用持久性。 请注意，这将创建一个[Kubernetes持久卷声明](https://kubernetes.io/docs/concepts/storage/persistent-volumes/#lifecycle-of-a-volume-and-claim)，因此取决于您的Kubernetes提供者 您可能需要手动分配所需的“永久数量”才能满足要求。 一些Kubernetes提供商会自动为您创建PV，因此将此值设置为`true`就足够了。
 
 <img src="../img/chartmuseum-deploy-form.png" alt="ChartMuseum Deploy Form" width="600px">
 
-### ChartMuseum: Upload a Chart
+### ChartMuseum: 上传图表
 
-Once ChartMuseum is deployed you will be able to upload a chart. In one terminal open a port-forward tunnel to the application:
+部署ChartMuseum后，您将可以上传图表。 在一个终端中，打开到应用程序的端口转发隧道：
 
 ```console
 $ export POD_NAME=$(kubectl get pods --namespace default -l "app=chartmuseum" -l "release=my-chartrepo" -o jsonpath="{.items[0].metadata.name}")
@@ -32,37 +32,37 @@ Forwarding from 127.0.0.1:8080 -> 8080
 Forwarding from [::1]:8080 -> 8080
 ```
 
-And in a different terminal you can push your chart:
+在另一个终端中，您可以推送图表：
 
 ```console
-$ helm package /path/to/my/chart
-Successfully packaged chart and saved it to: /path/to/my/chart/my-chart-1.0.0.tgz
+$ helm package/path/to/my/chart
+Successfully packaged chart and saved it to:/path/to/my/chart/my-chart-1.0.0.tgz
 $ curl --data-binary "@my-chart-1.0.0.tgz" http://localhost:8080/api/charts
 {"saved":true}
 ```
 
-### ChartMuseum: Configure the repository in Kubeapps
+### ChartMuseum: 在Kubeapps Plus中配置存储库
 
-To add your private repository go to `Configuration > App Repositories` in Kubeapps and click on "Add App Repository". You will need to add your repository using the Kubernetes DNS name for the ChartMuseum service. This will be `<release_name>-chartmuseum.<namespace>:8080`:
+要添加私有存储库，请在Kubeapps Plus中转到“配置>应用存储库”，然后单击“添加应用存储库”。 您将需要使用ChartMuseum服务的Kubernetes DNS名称添加存储库。 这将是`<release_name> -chartmuseum。<namespace>：8080`：
 
 <img src="../img/chartmuseum-repository.png" alt="ChartMuseum App Repository" width="300px">
 
-Once you create the repository you can click on the link for the specific repository and you will be able to deploy your own applications using Kubeapps.
+创建存储库后，您可以单击特定存储库的链接，并且可以使用Kubeapps Plus部署自己的应用程序。
 
-### ChartMuseum: Authentication/Authorization
+### ChartMuseum: 认证/授权
 
-It is possible to configure ChartMuseum to use authentication with two different mechanism:
+可以将ChartMuseum配置为通过两种不同的机制使用身份验证：
 
-- Using HTTP [basic authentication](https://chartmuseum.com/docs/#basic-auth) (user/password). To use this feature, it's needed to:
-  - Specify the parameters `secret.AUTH_USER` and `secret.AUTH_PASS` when deploying the ChartMuseum.
-  - Select `Basic Auth` when adding the repository to Kubeapps specifying that user and password.
-- Using a [JWT token](https://github.com/chartmuseum/auth-server-example). Once you obtain a valid token you can select `Bearer Token` in the form and add the token in the dedicated field.
+-使用HTTP [基本身份验证](https://chartmuseum.com/docs/#basic-auth)(用户/密码)。 要使用此功能，需要：
+   -部署ChartMuseum时，请指定参数`secret.AUTH_USER`和`secret.AUTH_PASS`。
+   -在将存储库添加到Kubeapps Plus时指定用户和密码，然后选择“基本身份验证”。
+-使用[JWT令牌](https://github.com/chartmuseum/auth-server-example)。 获得有效令牌后，您可以在表单中选择“承载者令牌”，并将令牌添加到专用字段中。
 
 ## Harbor
 
-[Harbor](https://github.com/goharbor/harbor) is an open source trusted cloud native registry project that stores, signs, and scans content, e.g. Docker images. Harbor is hosted by the [Cloud Native Computing Foundation](https://cncf.io/). Since version 1.6.0, Harbor is a composite cloud native registry which supports both container image management and Helm chart management. Harbor integrates [ChartMuseum](https://chartmuseum.com) to provide the Helm chart repository functionality. The access to Helm Charts in a Harbor Chart Repository can be controlled via Role-Based Access Control.
+[Harbor](https://github.com/goharbor/harbor)是一个开源的受信任云本机注册表项目，用于存储，签名和扫描内容，例如 Docker映像。 Harbor由[Cloud Native Computing Foundation](https://cncf.io/)托管。 从1.6.0版开始，Harbour是一个复合云本机注册表，它支持容器映像管理和Helm图表管理。 Harbor集成了[ChartMuseum](https://chartmuseum.com)以提供Helm图表存储库功能。 可以通过基于角色的访问控制来控制对Harbour Chart存储库中的Helm Charts的访问。
 
-To use Harbor with Kubeapps, first deploy Harbor using [Harbor offline installer](https://github.com/goharbor/harbor/blob/master/docs/installation_guide.md#downloading-the-installer) or the official [Harbor Helm Chart](https://github.com/goharbor/harbor-helm). Here are the minimum steps required for using the Harbor offline installer to deploy Harbor for serving as Helm Chart Repository on a Linux machine.
+要将Harbor与Kubeapps Plus一起使用，请首先使用[Harbor离线安装程序](https://github.com/goharbor/harbor/blob/master/docs/installation_guide.md#downloading-the-installer)或官方[Harbor]部署Harbor 舵图](https://github.com/goharbor/harbor-helm)。 这是使用Harbor脱机安装程序将Harbor部署为在Linux机器上用作Helm Chart信息库的最低步骤。
 
 ```
 $ wget https://storage.googleapis.com/harbor-releases/release-1.8.0/harbor-offline-installer-v1.8.1.tgz
@@ -72,7 +72,7 @@ $ sed -i 's/hostname: reg.mydomain.com/hostname: <Current-Machine-IP>/' harbor.y
 $ sudo ./install.sh --with-chartmuseum
 ```
 
-You will see the following message if Harbor is installed successfully.
+如果成功安装Harbor，您将看到以下消息。
 
 ```console
 ----Harbor has been installed and started successfully.----
@@ -81,64 +81,64 @@ Now you should be able to visit the admin portal at http://<IP>.
 For more details, please visit https://github.com/goharbor/harbor .
 ```
 
-### Harbor: Upload a Chart
+### Harbor: 上传图表
 
-- First login Harbor admin portal at `http://<IP>` as the default admin user configured in harbor.yml.
-- Create a new Project named 'my-helm-repo' with public access. Each project will serve as a Helm chart repository.
+- 首先在Harbor.yml中以默认管理员用户身份登录“ http：// <IP>”处的Harbor管理门户。
+- 创建一个具有公共访问权限的名为“ my-helm-repo”的新项目。 每个项目都将用作Helm图表存储库。
   <img src="../img/harbor-new-project.png" width="300px">
-- Click the project name to view the project details page, then click 'Helm Charts' tab to list all helm charts.
+- 单击项目名称以查看项目详细信息页面，然后单击“头盔图”选项卡以列出所有头盔图。
   <img src="../img/harbor-list-charts.png" width="600px">
-- Click 'UPLOAD' button to upload a Helm chart. You can also use helm command to upload charts.
+- 点击“上传”按钮上传头盔图表。 您也可以使用helm命令上传图表。
   <img src="../img/harbor-upload-chart.png" width="500px">
 
-Please refer to ['Manage Helm Charts in Harbor'](https://github.com/goharbor/harbor/blob/master/docs/user_guide.md#manage-helm-charts) for more details.
+有关更多详细信息，请参考['在港口管理头盔图表'](https://github.com/goharbor/harbor/blob/master/docs/user_guide.md#manage-helm-charts)。
 
-### Harbor: Configure the repository in Kubeapps
+### Harbor: 在Kubeapps Plus中配置存储库
 
-To add Harbor as the private chart repository, go to `Configuration > App Repositories` in Kubeapps and click on "Add App Repository" and use the Harbor helm repository URL `http://<IP>/chartrepo/my-helm-repo`.
+要将Harbor添加为私有图表存储库，请在Kubeapps Plus中转到“配置>应用程序存储库”，然后单击“添加应用程序存储库”，并使用Harbor Helm存储库URL`http：// <IP>/chartrepo/my-helm- 回购`。
 
 <img src="../img/harbor-add-repo.png" width="300px">
 
-Once you create the repository you can click on the link for the specific repository and you will be able to deploy your own applications using Kubeapps.
+创建存储库后，您可以单击特定存储库的链接，并且可以使用Kubeapps Plus部署自己的应用程序。
 
-### Harbor: Authentication/Authorization
+### Harbor: 认证/授权
 
-It is possible to configure Harbor to use HTTP basic authentication:
+可以将Harbor配置为使用HTTP基本身份验证：
 
-  - When creating a new project for serving as the helm chart repository in Harbor, set the `Access Level` of the project to non public. This enforces authentication to access the charts in the chart repository via Helm CLI or other clients.
-  - When `Adding App Repository` in Kubeapps, select `Basic Auth` for `Authorization` and specifiy the username and password for Harbor.
+   - 在港口中创建新项目以用作掌舵图存储库时，请将项目的“访问权限”设置为非公开。 这将强制进行身份验证，以通过Helm CLI或其他客户端访问图表存储库中的图表。
+   - 在Kubeapps Plus中的“添加应用程序存储库”时，为“授权”选择“基本身份验证”，然后为Harbor指定用户名和密码。
 
 ## Artifactory
 
-JFrog Artifactory is a Repository Manager supporting all major packaging formats, build tools and CI servers.
+JFrog Artifactory是一个存储库管理器，支持所有主要的包装格式，构建工具和CI服务器。
 
-> **Note**: In order to use the Helm repository feature, it's necessary to use an Artifactory Pro account.
+> **Note**: 为了使用Helm存储库功能，必须使用Artifactory Pro帐户。
 
-To install Artifactory with Kubeapps first add the JFrog repository to Kubeapps. Go to `Configuration > App Repositories` and add their repository:
+要在Kubeapps Plus中安装Artifactory，请首先将JFrog存储库添加到Kubeapps Plus。 转到“配置>应用存储库”并添加其存储库：
 
 <img src="../img/jfrog-repository.png" alt="JFrog repository" width="300px">
 
-Then click on the JFrog repository and deploy Artifactory. For detailed installation instructions, check its [README](https://github.com/jfrog/charts/tree/master/stable/artifactory). If you don't have any further requirement, the default values will work.
+然后单击JFrog存储库并部署Artifactory。 有关详细的安装说明，请查看其[自述文件](https://github.com/jfrog/charts/tree/master/stable/artifactory)。 如果您没有其他要求，则可以使用默认值。
 
-When deployed, in the setup wizard, select "Helm" to initialize a repository:
+部署后，在安装向导中，选择“ Helm”以初始化存储库：
 
 <img src="../img/jfrog-wizard.png" alt="JFrog repository" width="600px">
 
-By default, Artifactory creates a chart repository called `helm`. That is the one you can use to store your applications.
+默认情况下，Artifactory创建一个名为`helm`的图表存储库。 那就是您可以用来存储应用程序的那个。
 
-### Artifactory: Upload a chart
+### Artifactory: 上传图表
 
-First, you will need to obtain the user and password of the Helm repository. To do so, click on the `helm` repository and in the `Set Me Up` menu enter your password. After that you will be able to see the repository user and password.
+首先，您将需要获取Helm存储库的用户和密码。 为此，请单击“ helm”存储库，然后在“ Set Me Up”菜单中输入密码。 之后，您将能够看到存储库用户和密码。
 
-Once you have done that, you will be able to upload a chart:
+完成此操作后，您将可以上传图表：
 
 ```
-$ curl -u{USER}:{PASSWORD} -T /path/to/chart.tgz "http://{REPO_URL}/artifactory/helm/"
+$ curl -u{USER}:{PASSWORD} -T/path/to/chart.tgz "http://{REPO_URL}/artifactory/helm/"
 ```
 
-### Artifactory: Configure the repository in Kubeapps
+### Artifactory: 在Kubeapps Plus中配置存储库
 
-To be able able to access private charts with Kubeapps first you need to generate a token. You can do that with the Artifactory API:
+为了能够首先使用Kubeapps Plus访问私有图表，您需要生成一个令牌。 您可以使用Artifactory API来做到这一点：
 
 ```
 curl -u{USER}:{PASSWORD} -XPOST "http://{REPO_URL}/artifactory/api/security/token?expires_in=0" -d "username=kubeapps" -d "scope=member-of-groups:readers"
@@ -149,15 +149,15 @@ curl -u{USER}:{PASSWORD} -XPOST "http://{REPO_URL}/artifactory/api/security/toke
 }
 ```
 
-The above command creates a token with read-only permissions. Now you can go to the `Configuration > App Repositories` menu and add your personal repository:
+上面的命令创建一个具有只读权限的令牌。 现在，您可以转到“配置>应用程序存储库”菜单并添加您的个人存储库：
 
 <img src="../img/jfrog-custom-repo.png" alt="JFrog custom repository" width="400px">
 
-After submitting the repository, you will be able to click on the new repository and see the chart you uploaded in the previous step.
+提交存储库后，您将可以单击新的存储库，并查看上一步中上传的图表。
 
-## Modifying the synchronization job
+## 修改同步作业
 
-Kubeapps runs a periodic job (CronJob) to populate and synchronize the charts existing in each repository. Since Kubeapps v1.4.0, it's possible to modify the spec of this job. This is useful if you need to run the Pod in a certain Kubernetes node, or set some environment variables. To do so you can edit (or create) an AppRepository and specify the `syncJobPodTemplate` field. For example:
+Kubeapps Plus运行定期作业(CronJob)，以填充和同步每个存储库中现有的图表。 从Kubeapps Plus v1.4.0开始，可以修改此作业的规范。 如果您需要在某个Kubernetes节点中运行Pod或设置一些环境变量，这将很有用。 为此，您可以编辑(或创建)AppRepository并指定`syncJobPodTemplate`字段。 例如：
 
 ```yaml
 apiVersion: kubeapps.com/v1alpha1
@@ -178,4 +178,4 @@ spec:
   url: https://my.charts.com/
 ```
 
-The above will generate a Pod with the label `my-repo: isPrivate` and the environment variable `FOO=BAR`.
+上面的代码将生成一个带有标签“ my-repo：isPrivate”和环境变量“ FOO = BAR”的Pod。

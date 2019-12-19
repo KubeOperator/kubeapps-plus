@@ -1,31 +1,31 @@
 # Migration to v1.0.0-alpha.5
 
-The release includes several breaking changes that should be handled carefully if you are updating Kubeapps from a version prior to v1.0.0-alpha.5. As a summary this release includes the following breaking changes:
+如果从v1.0.0-alpha.5之前的版本更新Kubeapps Plus，则该发行版包含一些重大更改，应谨慎处理。 作为总结，此版本包括以下重大更改：
 
-- The recommended way of installing Kubeapps is through its Helm chart.
-- The `kubeapps` CLI is now deprecated. **It won't be included in future releases**.
-- Kubeapps no longer installs Tiller, Kubeless and SealedSecrets by default.
-- The [experimental Helm CRD controller](https://github.com/bitnami-labs/helm-crd) has been replaced with a secure REST proxy to the Tiller server. More info about this proxy [here](../../cmd/tiller-proxy/README.md).
+- 推荐的安装Kubeapps Plus的方法是通过其Helm图表。
+- “ kubeapps plus” CLI现在已弃用。 **它不会包含在将来的版本中**.
+- 默认情况下，Kubeapps Plus不再安装Tiller，Kubeless和SealedSecrets。
+- [实验性Helm CRD控制器](https://github.com/bitnami-labs/helm-crd)已替换为Tiller服务器的安全REST代理。 有关此代理的详细信息[here](../../cmd/tiller-proxy/README.md)。
 
-These are the steps you need to follow to upgrade Kubeapps to this version.
+这些是您需要按照以下步骤将Kubeapps Plus升级到此版本的步骤。
 
-## Install Tiller
+## 安装 Tiller
 
-Please follow the steps in [this guide](./securing-kubeapps.md) to install Tiller securely. Don't install the Kubeapps chart yet since it will fail because it will find resources that already exist. Once the new Tiller instance is ready you can migrate the existing releases using the utility command included in `kubeapps` 1.0.0-alpha.5:
+请按照[本指南](./securing-kubeapps.md)中的步骤安全地安装Tiller。 请勿安装Kubeapps Plus图表，因为它将失败，因为它将查找已存在的资源。 新的Tiller实例准备就绪后，您可以使用`kubeapps'1.0.0-alpha.5中包含的实用程序命令迁移现有发行版：
 
 ```
 $ kubeapps migrate-configmaps-to-secrets --target-tiller-namespace kube-system
-2018/08/06 12:24:23 Migrated foo.v1 as a secret
-2018/08/06 12:24:23 Done. ConfigMaps are left in the namespace kubeapps to debug possible errors. Please delete them manually
+2019/12/06 12:24:23 Migrated foo.v1 as a secret
+2019/12/06 12:24:23 Done. ConfigMaps are left in the namespace kubeapps-plus to debug possible errors. Please delete them manually
 ```
 
-**NOTE**: The tool asumes that you have deployed Helm storing releases as secrets. If that is not the case you can still migrate the releases executing:
+**NOTE**: 该工具假定您已将Helm存储发行版作为机密部署。 如果不是这种情况，您仍然可以迁移正在执行的发行版：
 
 ```
-kubectl get configmaps -n kubeapps -o yaml -l OWNER=TILLER | sed 's/namespace: kubeapps/namespace: kube-system/g'  | kubectl create -f -
+kubectl get configmaps -n kubeapps-plus -o yaml -l OWNER=TILLER | sed 's/namespace: kubeapps-plus/namespace: kube-system/g'  | kubectl create -f -
 ```
 
-If you list the releases you should be able to see all of them:
+如果列出发行版，则应该可以看到所有发行版：
 
 ```
 $ helm ls --tls --tls-ca-cert ca.cert.pem --tls-cert helm.cert.pem --tls-key helm.key.pem
@@ -33,11 +33,11 @@ NAME	REVISION	UPDATED                 	STATUS  	CHART          	NAMESPACE
 foo 	1       	Mon Aug  6 12:10:07 2018	DEPLOYED	aerospike-0.1.7	default
 ```
 
-**NOTE**: You can skip the TLS flags if you have not installed Helm with a TLS certificate.
+**NOTE**: 如果尚未使用TLS证书安装Helm，则可以跳过TLS标志。
 
-## Delete the previous Kubeapps installation
+## 删除以前的Kubeapps Plus安装
 
-Now that we have backed up the releases we should delete existing Kubeapps resources. To do so execute:
+现在，我们已经备份了发行版，我们应该删除现有的Kubeapps Plus资源。 为此，请执行：
 
 ```
 kubeapps down
@@ -46,24 +46,24 @@ kubectl delete -f https://github.com/bitnami-labs/sealed-secrets/releases/downlo
 kubectl get helmreleases -o=name --all-namespaces | xargs kubectl patch $1 --type merge -p '{ "metadata": { "finalizers": [] } }'
 ```
 
-Wait until everything in the namespace of Kubeapps has been deleted:
+等待直到删除Kubeapps Plus命名空间中的所有内容：
 
 ```
-$ kubectl get all --namespace kubeapps
+$ kubectl get all --namespace kubeapps-plus
 No resources found.
 ```
 
-### Delete Kubeless
+### 删除无块
 
-If you want to delete Kubeless (if you are not using it) you can delete it executing the following command:
+如果要删除Kubeless(如果不使用它)，则可以执行以下命令将其删除：
 
 ```
 kubectl delete -f https://github.com/kubeless/kubeless/releases/download/v0.6.0/kubeless-v0.6.0.yaml
 ```
 
-## Install the Kubeapps chart
+## 安装Kubeapps Plus图表
 
-Now you can install the new version of Kubeapps using the Helm chart included in this repository:
+现在，您可以使用此存储库中包含的Helm图表安装新版本的Kubeapps Plus：
 
 ```
 helm repo add bitnami https://charts.bitnami.com/bitnami
@@ -72,10 +72,10 @@ helm install \
   --set tillerProxy.tls.ca="$(cat ca.cert.pem)" \
   --set tillerProxy.tls.key="$(cat helm.key.pem)" \
   --set tillerProxy.tls.cert="$(cat helm.cert.pem)" \
-  --namespace kubeapps \
+  --namespace kubeapps-plus \
   bitnami/kubeapps
 ```
 
-**NOTE**: You can skip the TLS flags if you have not installed Helm with a TLS certificate.
+**NOTE**: 如果尚未使用TLS证书安装Helm，则可以跳过TLS标志。
 
-When the chart is finally ready you can access the application and you will see your previous applications.
+当图表最终准备就绪时，您可以访问该应用程序，您将看到以前的应用程序。

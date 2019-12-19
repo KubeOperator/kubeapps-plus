@@ -12,7 +12,7 @@
 
 ### 背景
 
-当前，通过try / catch呈现错误或通过调度自定义的Redux操作来按情况管理错误处理。 然后，将在这些特定组件内部处理并显示这些错误。
+当前，通过try/catch呈现错误或通过调度自定义的Redux操作来按情况管理错误处理。 然后，将在这些特定组件内部处理并显示这些错误。
 
 ## 总览
 
@@ -85,14 +85,14 @@
 
 1 - 显示错误
 
-不同的组件或Thunk动作将能够通过将其及其某些属性作为通用的“ kubeapps @ ERROR / SHOW” Redux动作来“引发”错误。 一些功能要求：
+不同的组件或Thunk动作将能够通过将其及其某些属性作为通用的“ kubeapps @ ERROR/SHOW” Redux动作来“引发”错误。 一些功能要求：
 
 * 此操作应在其有效负载中包含足够的属性，以便ErrorSelector能够识别出哪个错误以及如何处理该错误。
 * `kubeapps-plus@ERROR/SHOW` 将取代目前 `ERROR_APPS`, `ERROR_CATALOG`, `ERROR_CHART`, `ERROR_README`, `ERROR_REPOS` , `AUTHENTICATION_ERROR`
 
 2 - 清除全部或单个错误
 
-需要一种方法来从商店或所有商店中删除一个错误，从而使其从UI中消失。 我们将通过调度“ ERROR / CLEAR”操作来实现。
+需要一种方法来从商店或所有商店中删除一个错误，从而使其从UI中消失。 我们将通过调度“ ERROR/CLEAR”操作来实现。
 
 可以在两种情况下触发此错误。
 
@@ -126,8 +126,8 @@ AllId将包含标识符列表，并将用于指示顺序。
 
 ## 注意事项
 
-* 如前所述，例如ThunkActions中发生了errorBoundary [不捕获异步错误](https://reactjs.org/docs/error-boundaries.html#how-about-event-handlers)，这意味着我们需要 重新检查我们的操作，并确保我们正在分发“ ERRORS / SHOW”。
-* 此设计不包括按错误类型清除特定错误的功能。 可以通过扩展`ERROR / CLEAR`，即`{Type：“ ERROR / CLEAR”，有效载荷：{errorType：“ NotFound”}}`来轻松支持。
+* 如前所述，例如ThunkActions中发生了errorBoundary [不捕获异步错误](https://reactjs.org/docs/error-boundaries.html#how-about-event-handlers)，这意味着我们需要 重新检查我们的操作，并确保我们正在分发“ ERRORS/SHOW”。
+* 此设计不包括按错误类型清除特定错误的功能。 可以通过扩展`ERROR/CLEAR`，即`{Type：“ ERROR/CLEAR”，有效载荷：{errorType：“ NotFound”}}`来轻松支持。
 
 ## 行动计划
 

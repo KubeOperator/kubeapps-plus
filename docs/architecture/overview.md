@@ -8,7 +8,7 @@
 
 Kubeapps Plus的核心是集群内Kubernetes仪表板，可为您提供简单的浏览和单击体验，以安装和管理打包为Helm图表的Kubernetes应用程序。
 
-此外，仪表板还与[Kubernetes服务目录](https://github.com/kubernetes-incubator/service-catalog)集成在一起，使您可以通过[Open Service Broker API](https：/ /github.com/openservicebrokerapi/servicebroker)。
+此外，仪表板还与[Kubernetes服务目录](https://github.com/kubernetes-incubator/service-catalog)集成在一起，使您可以通过[Open Service Broker API](https：//github.com/openservicebrokerapi/servicebroker)。
 
 仪表板使用Javascript编程语言编写，并使用React Javascript库进行开发。
 
@@ -16,7 +16,7 @@ Kubeapps Plus的核心是集群内Kubernetes仪表板，可为您提供简单的
 
 为了保护对Tiller的访问并允许仪表板联系Helm Tiller服务器，我们部署了代理来处理与Tiller的通信。 该代理的目标是验证发出请求的用户是否具有足够的权限来创建或删除作为正在部署或删除的特定图表一部分的所有资源。
 
-该代理是用Go编写的。 在此[document](/ cmd / tiller-proxy / README.md)中检查有关实现的更多详细信息。
+该代理是用Go编写的。 在此[document](/cmd/tiller-proxy/README.md)中检查有关实现的更多详细信息。
 
 ### Apprepository CRD and Controller
 

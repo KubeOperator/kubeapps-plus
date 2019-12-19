@@ -1,31 +1,31 @@
 # Migration to v1.0.0
 
-This release includes several breaking changes that can make upgrading fairly
-difficult. Helm 2.10 and above is also now required to install Kubeapps.
+此版本包含一些重大更改，可以使升级合理
+难。 现在还需要Helm 2.10及更高版本才能安装Kubeapps Plus。
 
-If you have difficulty upgrading to the v1.0.0 release, we recommend backing up
-any AppRepository objects (custom repositories) you may have added and perform a
-clean install of Kubeapps.
+如果您在升级到v1.0.0版本时遇到困难，我们建议备份
+您可能添加的所有AppRepository对象(自定义存储库)并执行
+全新安装的Kubeapps Plus。
 
-To backup a custom repository, run the following command for each repository:
+要备份自定义存储库，请为每个存储库运行以下命令：
 
 ```
 kubectl get apprepository -o yaml <repo name> > <repo name>.yaml
 ```
 
-**Note**: you do not need to backup the `stable`, `incubator`, `bitnami` or
-`svc-cat` repositories, as these will be recreated when reinstalling Kubeapps.
+**Note**: 您无需备份“稳定”，“孵化器”，“ bitnami”或
+svc-cat存储库，因为在重新安装Kubeapps Plus时将重新创建它们。
 
-After backing up your custom repositories, run the following command to remove
-and reinstall Kubeapps:
+备份自定义存储库后，运行以下命令删除
+并重新安装Kubeapps Plus：
 
 ```
 helm delete --purge kubeapps
 helm install bitnami/kubeapps --version 1.0.0
 ```
 
-To recover your custom repository backups, run the following command for each
-repository:
+要恢复自定义存储库备份，请为每个备份库运行以下命令
+仓库：
 
 ```
 kubectl apply -f <repo name>.yaml

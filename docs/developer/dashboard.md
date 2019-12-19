@@ -27,7 +27,7 @@ export KUBEAPPS_DIR=$GOPATH/src/github.com/kubeapps/kubeapps
 git clone --recurse-submodules https://github.com/kubeapps/kubeapps $KUBEAPPS_DIR
 ```
 
-仪表板应用程序源位于存储库的“ dashboard /”目录下
+仪表板应用程序源位于存储库的“ dashboard/”目录下
 
 ```bash
 cd $KUBEAPPS_DIR/dashboard
@@ -35,7 +35,7 @@ cd $KUBEAPPS_DIR/dashboard
 
 ### 在您的集群中安装Kubeapps Plus
 
-Kubeapps Plus是Kubernetes本地应用程序。 要开发和测试Kubeapps Plus组件，我们需要一个已安装Kubeapps Plus的Kubernetes集群。 遵循[Kubeapps Plus安装指南](../../ chart / kubeapps / README.md)在您的群集中安装Kubeapps Plus。
+Kubeapps Plus是Kubernetes本地应用程序。 要开发和测试Kubeapps Plus组件，我们需要一个已安装Kubeapps Plus的Kubernetes集群。 遵循[Kubeapps Plus安装指南](../../chart/kubeapps/README.md)在您的群集中安装Kubeapps Plus。
 
 ### 在开发中运行仪表板
 

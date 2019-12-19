@@ -1,8 +1,8 @@
-# Kubeapps Dashboard Developer Guide
+# Kubeapps Plus仪表板开发人员指南
 
-The dashboard is the main UI component of the Kubeapps project. Written in Javascript, the dashboard uses the React Javascript library for the frontend.
+仪表板是Kubeapps Plus项目的主要UI组件。 仪表板使用Javascript编写，使用VUE Javascript库作为前端。
 
-## Prerequisites
+## 先决条件
 
 - [Git](https://git-scm.com/)
 - [Node 8.x](https://nodejs.org/)
@@ -12,68 +12,68 @@ The dashboard is the main UI component of the Kubeapps project. Written in Javas
 - [Docker CE](https://www.docker.com/community-edition)
 - [Telepresence](https://telepresence.io)
 
-*Telepresence is not a hard requirement, but is recommended for a better developer experience*
+*网真并不是一个硬性要求，但建议使用它来获得更好的开发人员体验*
 
-## Environment
+## 环境
 
 ```bash
 export GOPATH=~/gopath
 export PATH=$GOPATH/bin:$PATH
 export KUBEAPPS_DIR=$GOPATH/src/github.com/kubeapps/kubeapps
 ```
-## Download the kubeapps source code
+## 下载kubeapps-plus源代码
 
 ```bash
 git clone --recurse-submodules https://github.com/kubeapps/kubeapps $KUBEAPPS_DIR
 ```
 
-The dashboard application source is located under the `dashboard/` directory of the repository.
+仪表板应用程序源位于存储库的“ dashboard /”目录下
 
 ```bash
 cd $KUBEAPPS_DIR/dashboard
 ```
 
-### Install Kubeapps in your cluster
+### 在您的集群中安装Kubeapps Plus
 
-Kubeapps is a Kubernetes-native application. To develop and test Kubeapps components we need a Kubernetes cluster with Kubeapps already installed. Follow the [Kubeapps installation guide](../../chart/kubeapps/README.md) to install Kubeapps in your cluster.
+Kubeapps Plus是Kubernetes本地应用程序。 要开发和测试Kubeapps Plus组件，我们需要一个已安装Kubeapps Plus的Kubernetes集群。 遵循[Kubeapps Plus安装指南](../../ chart / kubeapps / README.md)在您的群集中安装Kubeapps Plus。
 
-### Running the dashboard in development
+### 在开发中运行仪表板
 
-[Telepresence](https://www.telepresence.io/) is a local development tool for Kubernetes microservices. As the dashboard is a service running in the Kubernetes cluster we use telepresence to proxy requests to the dashboard running in your cluster to your local development host.
+[网真](https://www.telepresence.io/)是Kubernetes微服务的本地开发工具。 由于仪表板是在Kubernetes集群中运行的服务，因此我们使用网真将对集群中运行的仪表板的请求代理到本地开发主机。
 
-First install the dashboard dependency packages:
+首先安装仪表板依赖包：
 
 ```bash
 yarn install
 ```
 
-Next, create a `telepresence` shell to swap the `kubeapps-internal-dashboard` deployment in the `kubeapps` namespace, forwarding local port `3000` to port `8080` of the `kubeapps-internal-dashboard` pod.
+接下来，创建一个“ telepresence”外壳，以交换“ kubeapps”命名空间中的“ kubeapps-internal-dashboard”部署，并将本地端口“ 3000”转发到“ kubeapps-internal-dashboard” pod的端口“ 8080”。
 
 ```bash
-telepresence --namespace kubeapps --method inject-tcp --swap-deployment kubeapps-internal-dashboard --expose 3000:8080 --run-shell
+telepresence --namespace kubeapps-plus --method inject-tcp --swap-deployment kubeapps-internal-dashboard --expose 3000:8080 --run-shell
 ```
 
-> **NOTE**: If you encounter issues getting this setup working correctly, please try switching the telepresence proxying method in the above command to `vpn-tcp`. Refer to [the telepresence docs](https://www.telepresence.io/reference/methods) to learn more about the available proxying methods and their limitations.
+> **NOTE**: 如果遇到使此设置正常运行的问题，请尝试将上述命令中的智真代理方法切换为“ vpn-tcp”。 请参阅[网真文档](https://www.telepresence.io/reference/methods)，以了解有关可用代理方法及其局限性的更多信息。
 
-Finally, launch the dashboard within the telepresence shell
+最后，在网真外壳中启动仪表板
 
 ```bash
 yarn run start
 ```
 
-You can now access the local development server simply by accessing the dashboard as you usually would (e.g. doing a port-forward or accesing the Ingress URL).
+现在，您只需像往常一样访问仪表板即可访问本地开发服务器(例如，进行端口转发或访问Ingress URL)。
 
-#### Troubleshooting
+#### 故障排除
 
-In some cases, the 'Create React App' scripts keep listening on the 3000 port, even when you disconnect telepresence. If you see that `localhost:3000` is still serving the dashboard, even with your telepresence down, check if there is a 'Create React App' script process running (`ps aux | grep react`) and kill it.
+在某些情况下，即使断开网真，“创建VUE应用”脚本仍会继续监听3000端口。 如果您发现localhost：3000仍在服务于仪表板，即使您的网真已关闭，请检查是否正在运行“ Create VUE App”脚本进程(“ ps aux | grep react”)并将其杀死。
 
-### Running tests
+### 运行测试
 
-Execute the following command within the dashboard directory to start the test runner which will watch for changes and automatically re-run the tests when changes are detected.
+在显示板目录中执行以下命令以启动测试运行程序，该运行程序将监视更改并在检测到更改时自动重新运行测试。
 
 ```bash
 yarn run test
 ```
 
-> **NOTE**: macOS users may need to install watchman (https://facebook.github.io/watchman/).
+> **NOTE**: macOS用户可能需要安装watchman(https://facebook.github.io/watchman/)。
 

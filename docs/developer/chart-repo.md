@@ -1,8 +1,8 @@
-# Kubeapps chart-repo Developer Guide
+# Kubeapps Plus chart-repo开发人员指南
 
-The `chart-repo` component is tool that scans a Helm chart repository and populates chart metadata in a MongoDB server. This metadata is then served by the `chartsvc` component. Its source is maintained in the [Monocular project repository](https://github.com/helm/monocular).
+“ chart-repo”组件是一种工具，可扫描Helm图表存储库并在MongoDB服务器中填充图表元数据。 然后，由“ chartsvc”组件提供此元数据。 其源代码保存在[Monocular项目存储库](https://github.com/helm/monocular)中。
 
-## Prerequisites
+## 先决条件
 
 - [Git](https://git-scm.com/)
 - [Make](https://www.gnu.org/software/make/)
@@ -12,7 +12,7 @@ The `chart-repo` component is tool that scans a Helm chart repository and popula
 - [kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/)
 - [Telepresence](https://telepresence.io)
 
-## Environment
+## 环境
 
 ```bash
 export GOPATH=~/gopath
@@ -20,19 +20,19 @@ export PATH=$GOPATH/bin:$PATH
 export MONOCULAR_DIR=$GOPATH
 ```
 
-## Download the Monocular source code
+## 下载Monocular源代码
 
 ```bash
 git clone https://github.com/helm/monocular $MONOCULAR_DIR
 ```
 
-The `chart-repo` sources are located under the `cmd/chart-repo/` directory.
+“ chart-repo”源位于“ cmd / chart-repo /”目录下。
 
-### Install Kubeapps in your cluster
+### 在您的集群中安装Kubeapps Plus
 
-Kubeapps is a Kubernetes-native application. To develop and test Kubeapps components we need a Kubernetes cluster with Kubeapps already installed. Follow the [Kubeapps installation guide](../../chart/kubeapps/README.md) to install Kubeapps in your cluster.
+Kubeapps Plus是Kubernetes本地应用程序。 要开发和测试Kubeapps Plus组件，我们需要一个已安装Kubeapps Plus的Kubernetes集群。 遵循[Kubeapps Plus安装指南](../../ chart / kubeapps / README.md)在您的群集中安装Kubeapps Plus。
 
-### Building the `chart-repo` image
+### 构建 `chart-repo` 镜像
 
 ```bash
 cd $MONOCULAR_DIR
@@ -40,20 +40,20 @@ go mod tidy
 make -C cmd/chart-repo docker-build
 ```
 
-This builds the `chart-repo` Docker image. Please refer to [Monocular Developers Guide](https://github.com/helm/monocular/blob/master/docs/development.md) for more details.
+这将构建`chart-repo` Docker镜像。 有关更多详细信息，请参考[Monocular Developers Guide](https://github.com/helm/monocular/blob/master/docs/development.md)。
 
-### Running in development
+### 在开发中运行
 
 ```bash
 export MONGO_PASSWORD=$(kubectl get secret --namespace kubeapps kubeapps-mongodb -o go-template='{{index .data "mongodb-root-password" | base64decode}}')
 telepresence --namespace kubeapps --docker-run -e MONGO_PASSWORD=$MONGO_PASSWORD --rm -ti quay.io/helmpack/chart-repo /chart-repo sync --mongo-user=root --mongo-url=kubeapps-mongodb stable https://kubernetes-charts.storage.googleapis.com
 ```
 
-Note that the chart-repo should be rebuilt for new changes to take effect.
+请注意，应重新构建图表仓库，以使新更改生效。
 
-### Running tests
+### 运行测试
 
-You can run the chart-repo tests along with the tests for the Monocular project:
+您可以运行图表chart-repo测试以及Monocular项目的测试：
 
 ```bash
 go test -v ./...

@@ -1,8 +1,8 @@
-# Kubeapps chartsvc Developer Guide
+# Kubeapps Plus Chartsvc开发人员指南
 
-The `chartsvc` component is a micro-service that creates an API endpoint for accessing the metadata for charts in Helm chart repositories that's populated in a MongoDB server. Its source is maintained in the [Monocular project repository](https://github.com/helm/monocular).
+“ chartsvc”组件是一个微服务，它创建一个API端点来访问在MongoDB服务器中填充的Helm图表存储库中图表的元数据。 其源代码保存在[Monocular项目存储库](https://github.com/helm/monocular)中。
 
-## Prerequisites
+## 先决条件
 
 - [Git](https://git-scm.com/)
 - [Make](https://www.gnu.org/software/make/)
@@ -12,7 +12,7 @@ The `chartsvc` component is a micro-service that creates an API endpoint for acc
 - [kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/)
 - [Telepresence](https://telepresence.io)
 
-## Environment
+## 环境
 
 ```bash
 export GOPATH=~/gopath
@@ -20,19 +20,19 @@ export PATH=$GOPATH/bin:$PATH
 export MONOCULAR_DIR=$GOPATH
 ```
 
-## Download the Monocular source code
+## 下载Monocular源代码
 
 ```bash
 git clone https://github.com/helm/monocular $MONOCULAR_DIR
 ```
 
-The `chartsvc` sources are located under the `cmd/chartsvc/` directory.
+“ chartsvc”源位于“ cmd / chartsvc /”目录下。
 
-### Install Kubeapps in your cluster
+### 在您的集群中安装Kubeapps Plus
 
-Kubeapps is a Kubernetes-native application. To develop and test Kubeapps components we need a Kubernetes cluster with Kubeapps already installed. Follow the [Kubeapps installation guide](../../chart/kubeapps/README.md) to install Kubeapps in your cluster.
+Kubeapps Plus是Kubernetes本地应用程序。 要开发和测试Kubeapps Plus组件，我们需要一个已安装Kubeapps Plus的Kubernetes集群。 遵循[Kubeapps Plus安装指南](../../ chart / kubeapps / README.md)在您的群集中安装Kubeapps Plus。
 
-### Building the `chartsvc` image
+### 建立`chartsvc`图像
 
 ```bash
 cd $MONOCULAR_DIR
@@ -40,21 +40,21 @@ dep ensure
 make -C cmd/chartsvc docker-build
 ```
 
-This builds the `chartsvc` Docker image.
+这将构建`chartsvc` Docker镜像。
 
-### Running in development
+### 在开发中运行
 
-#### Option 1: Using Telepresence (recommended)
+#### 选项1：使用网真(推荐)
 
 ```bash
 telepresence --swap-deployment kubeapps-internal-chartsvc --namespace kubeapps --expose 8080:8080 --docker-run --rm -ti quay.io/helmpack/chartsvc /chartsvc --mongo-user=root --mongo-url=kubeapps-mongodb
 ```
 
-Note that the chartsvc should be rebuilt for new changes to take effect.
+请注意，应重新构建Chartsvc，以使新更改生效。
 
-#### Option 2: Replacing the image in the chartsvc Deployment
+#### 选项2：替换Chartsvc部署中的图像
 
-Note: By default, Kubeapps will try to fetch the latest version of the image so in order to make this workflow work in Minikube you will need to update the imagePullPolicy first:
+注意：默认情况下，Kubeapps Plus会尝试获取图像的最新版本，因此为了使此工作流在Minikube中正常工作，您需要首先更新imagePullPolicy：
 
 ```
 kubectl patch deployment kubeapps-internal-chartsvc -n kubeapps --type=json -p='[{"op": "replace", "path": "/spec/template/spec/containers/0/imagePullPolicy", "value": "IfNotPresent"}]'
@@ -64,17 +64,17 @@ kubectl patch deployment kubeapps-internal-chartsvc -n kubeapps --type=json -p='
 kubectl set image -n kubeapps deployment kubeapps-internal-chartsvc chartsvc=quay.io/helmpack/chartsvc:latest
 ```
 
-For further redeploys you can change the version to deploy a different tag or rebuild the same image and restart the pod executing:
+为了进一步重新部署，您可以更改版本以部署不同的标记或重建相同的映像并重新启动Pod执行：
 
 ```
 kubectl delete pod -n kubeapps -l app=kubeapps-internal-chartsvc
 ```
 
-Note: If you using a cloud provider to develop the service you will need to retag the image and push it to a public registry.
+注意：如果您使用云提供商来开发服务，则需要重新标记映像并将其推送到公共注册表。
 
-### Running tests
+### 运行测试
 
-You can run the chartsvc tests along with the tests for the Monocular project:
+您可以将Chartsvc测试与Monocular项目的测试一起运行：
 
 ```bash
 go test -v ./...

@@ -1,27 +1,27 @@
-# Basic Form Support
+# 基本表格支持
 
-**NOTE:** This feature is under heavy development. Some of the described below may change in the future.
+**NOTE:** 此功能正在大力开发中。 下文所述的某些内容将来可能会更改。
 
-Since Kubeapps 1.6.0, it's possible to include a JSON schema with a chart that defines the structure of the `values.yaml` file. This JSON schema is used with two goals:
+从Kubeapps Plus 1.6.0开始，可以在图表中包含JSON模式，该图表定义了values.yaml文件的结构。 此JSON模式用于两个目标：
 
- - Validate that the given values satisfy the schema defined. In case the submitted values are not valid, the installation or upgrade will fail. This has been introduced with Helm v3.
- - Present the user with a simpler so the chart is easier to deploy and configure.
+ - 验证给定的值满足定义的架构。 如果提交的值无效，则安装或升级将失败。 Helm v3中已引入了此功能。
+ - 为用户提供了一个更简单的视图，因此该图表更易于部署和配置。
 
-The goal of this feature is to present the user with the most common parameters which are typically modified before deploying a chart (like username and password) in a more user-friendly form.
+此功能的目的是向用户提供最常用的参数，这些参数通常在以更加用户友好的形式部署图表(如用户名和密码)之前进行修改。
 
-This document specifies what's needed to be defined in order to present this basic form to the users of a chart.
+本文档指定了需要定义哪些内容才能向图表用户呈现此基本形式。
 
-## Create a values.schema.json
+## 创建一个values.schema.json
 
-This file, introduced with Helm v3, is a [JSON Schema](https://json-schema.org/) that defines the structure of the `values.yaml` file of the chart, including as many validations as needed. If a chart includes its schema, the values used are validated before submitting the new release.
+这个文件是随Helm v3一起引入的，是一个[JSON Schema](https://json-schema.org/)，用于定义图表的“ values.yaml”文件的结构，包括所需的验证次数。 如果图表包含其架构，则在提交新版本之前会验证所使用的值。
 
-This file can define some or every possible value of the chart. Once it's written it should be included in the Helm package. The proposal to include it in Helm can be found [here](https://github.com/helm/helm/issues/5812).
+该文件可以定义图表的一些或每个可能的值。 写入后，应将其包含在Helm软件包中。 可以在[here](https://github.com/helm/helm/issues/5812)中找到将其包含在Helm中的建议。
 
-## Additional annotations used to identify basic parameters
+## 用于标识基本参数的附加注释
 
-In order to identify which values should be presented in the form, it's necessary to include some special tags.
+为了识别应在表单中显示的值，必须包含一些特殊标签。
 
-First of all, it's necessary to specify the tag `form` and set it to `true`. All the properties marked with this tag in the schema will be represented in the form. For example:
+首先，必须指定标签“ form”并将其设置为“ true”。 模式中用此标记标记的所有属性都将以表格形式表示。 例如：
 
 ```
     "wordpressUsername": {
@@ -30,31 +30,31 @@ First of all, it's necessary to specify the tag `form` and set it to `true`. All
     },
 ```
 
-With the definition above, we are marking the value `wordpressUsername` as a value to be represented in the form. Note that the `type` tag, apart than for validating that the submitted value has the correct type, will be used to render the proper HTML components to represent the input in the form:
+通过上面的定义，我们将值“ wordpressUsername”标记为要在表单中表示的值。 请注意，除了用于验证提交的值是否具有正确的类型之外，“ type”标记还将用于呈现适当的HTML组件，以以下形式表示输入：
 
-![username-input](../img/username-input.png)
+![用户名输入](../img/username-input.png)
 
-In addition to the `type`, there are other tags that can be used to customize the way the parameter is represented:
+除了`type`，还有其他标签可用于自定义参数的表示方式：
 
- - `title` is used to render the title of the parameter. If it's not specified, Kubeapps will use the path of the value (i.e. `credentials.username`).
- - `description` is used to include additional information of the parameter.
- - `default` is used to set a default value. Note that this field will only be used if the `values.yaml` file doesn't have already a default value for the parameter.
+ - `title` 用于呈现参数的标题。 如果未指定，则Kubeapps Plus将使用该值的路径(即“ credentials.username”)。
+ - `description` 用于包含参数的其他信息。
+ - `default` 用于设置默认值。 请注意，只有在`values.yaml`文件尚未具有参数默认值的情况下，才使用此字段。
+ 
+### 自定义类型: Slider
 
-### Custom type: Slider
+可以将组件渲染为滑块，然后用户可以拖放此滑块以选择其首选值：
 
-It's possible to render a component as a slider, users can then drag and drop this slider to select their preferred value:
+![磁盘输入](../img/disk-input.png)
 
-![disk-input](../img/disk-input.png)
+为了渲染滑块，您可能需要设置一些要求和其他标签：
 
-In order to render a slider, there are some requirements and additional tags that you may need to set:
+ - 目前唯一支持的`type`是字符串。 其他类型，例如“整数”将被转换为字符串。
+ - 有必要指定标签“ render”并将其设置为“ slider”。
+ - 标签“ sliderMin”标识了滑块允许的最小值(可以绕过在输入中写入较小的值)。
+ - 标签`sliderMax`标识了滑块允许的最大值(可以绕过在输入中写入较大的值)。
+ - 标签“ sliderUnit”指定要设置的值的单位。 例如“ Gi”。
 
- - The only supported `type` for the moment is a string. Other types like `integer` will be transformed to a string.
- - It's necessary to specify the tag `render` and set it to `slider`.
- - The tag `sliderMin` identifies the minimum value the slider allows (this can be bypassed writting a smaller value in the input).
- - The tag `sliderMax` identifies the maximum value the slider allows (this can be bypassed writting a bigger value in the input).
- - The tag `sliderUnit` specifies the unit of the value to set. For example `Gi`.
-
- This is an example of a slider param:
+ 这是一个滑块参数的示例：
 
 ```json
     "size": {
@@ -68,17 +68,17 @@ In order to render a slider, there are some requirements and additional tags tha
     }
 ```
 
-### Subsections
+### 小节
 
-When a property of type `object` is set with a `form` identifier, it will be rendered as a subsection. A subsection is a set of parameters that are grouped together:
+当类型为object的属性设置为form标识符时，它将被呈现为一个小节。 子部分是一组参数，这些参数组合在一起：
 
-![hostname-section](../img/hostname-section.png)
+![主机名部分](../img/hostname-section.png)
 
-All the parameters within an `object` will be rendered in the subsection.
+“对象”中的所有参数将在小节中呈现。
 
-Note that in some cases, a parameter cause that the rest of parameters are no longer relevant. For example, setting `ingress.enabled` to `false` makes the `ingress.hostname` irrelevant. To avoid confussion, you can hide that parameter setting the special tag `hidden`. The tag `hidden` can be a `string` pointing to the parameter that needs to be `true` to hide the element or an object to also set the value that the pointed value needs to match.
+请注意，在某些情况下，参数会导致其余参数不再相关。 例如，将“ ingress.enabled”设置为“ false”会使“ ingress.hostname”无关紧要。 为了避免混淆，您可以设置特殊标签“ hidden”来隐藏该参数。 标签“ hidden”可以是一个“字符串”，指向需要为true的参数，以隐藏元素或对象以设置指向的值需要匹配的值。
 
-This is an example for a subsection with a parameter that can be hidden:
+这是带有可隐藏参数的小节的示例：
 
 ```json
     "ingress": {
@@ -105,7 +105,7 @@ This is an example for a subsection with a parameter that can be hidden:
     },
 ```
 
-Note that the parameter that hides another parameter doesn't need to be within the section itself. In this other example, `mariadb.enabled` is used to hide some parameters within `externalDatabase`:
+请注意，隐藏另一个参数的参数不必位于该部分本身内。 在另一个示例中，“ mariadb.enabled”用于隐藏“ externalDatabase”中的某些参数：
 
 ```json
     "mariadb": {
@@ -133,10 +133,10 @@ Note that the parameter that hides another parameter doesn't need to be within t
     },
 ```
 
-## Example
+## 例
 
-This is a [working example for the WordPress chart](https://github.com/helm/charts/blob/master/stable/wordpress/values.schema.json)
+这是[WordPress图表的工作示例](https://github.com/helm/charts/blob/master/stable/wordpress/values.schema.json)
 
-And the resulting form:
+以及结果形式：
 
-![basic-form](../img/basic-form.png)
+![基本形式](../img/basic-form.png)

@@ -1,8 +1,8 @@
-# The Kubeapps Build Guide
+# Kubeapps Plus构建指南
 
-This guide explains how to build Kubeapps.
+本指南说明了如何构建Kubeapps Plus。
 
-## Prerequisites
+## 先决条件
 
 - [Git](https://git-scm.com/)
 - [Make](https://www.gnu.org/software/make/)
@@ -10,29 +10,29 @@ This guide explains how to build Kubeapps.
 - [kubecfg](https://github.com/ksonnet/kubecfg)
 - [Docker CE](https://www.docker.com/community-edition)
 
-## Environment setup
+## 环境设定
 
 ```bash
 export GOPATH=~/gopath
 export PATH=$GOPATH/bin:$PATH
 export KUBEAPPS_DIR=$GOPATH/src/github.com/kubeapps/kubeapps
 ```
-## Download kubeapps source code
+## 下载Kubeapps Plus源代码
 
 ```bash
 git clone --recurse-submodules https://github.com/kubeapps/kubeapps $KUBEAPPS_DIR
 cd $KUBEAPPS_DIR
 ```
 
-## Build kubeapps
+## 构建Kubeapps Plus
 
-Kubeapps consists of a number of in-cluster components. To build all these components in one go:
+Kubeapps Plus由许多集群内组件组成。 一次性构建所有这些组件：
 
 ```bash
 make IMAGE_TAG=myver all
 ```
 
-Or if you wish to build specific component(s):
+或者，如果您希望构建特定的组件，请执行以下操作：
 
 ```bash
 # to build the kubeapps binary
@@ -48,15 +48,15 @@ make IMAGE_TAG=myver kubeapps/apprepository-controller
 make IMAGE_TAG=myver kubeapps/tiller-proxy
 ```
 
-## Running tests
+## 运行测试
 
-To test all the components:
+要测试所有组件：
 
 ```bash
 make test
 ```
 
-Or if you wish to test specific component(s):
+或者，如果您想测试特定组件，请执行以下操作：
 
 ```bash
 # to test the kubeapps binary

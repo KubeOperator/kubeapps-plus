@@ -1,8 +1,8 @@
-# Kubeapps Tiller Proxy Developer Guide
+# Kubeapps Plus分iller代理开发指南
 
-The `tiller-proxy` component is a micro-service that creates a API endpoint for accessing the Helm Tiller server.
+“ tiller-proxy”组件是一个微服务，可创建用于访问Helm Tiller服务器的API端点。
 
-## Prerequisites
+## 先决条件
 
 - [Git](https://git-scm.com/)
 - [Make](https://www.gnu.org/software/make/)
@@ -11,72 +11,72 @@ The `tiller-proxy` component is a micro-service that creates a API endpoint for 
 - [Kubernetes cluster (v1.8+)](https://kubernetes.io/docs/setup/pick-right-solution/). [Minikube](https://github.com/kubernetes/minikbue) is recommended.
 - [kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/)
 
-## Environment
+## 环境
 
 ```bash
 export GOPATH=~/gopath
 export PATH=$GOPATH/bin:$PATH
 export KUBEAPPS_DIR=$GOPATH/src/github.com/kubeapps/kubeapps
 ```
-## Download the kubeapps source code
+## 下载kubeapps plus源代码
 
 ```bash
 git clone --recurse-submodules https://github.com/kubeapps/kubeapps $KUBEAPPS_DIR
 ```
 
-The `tiller-proxy` sources are located under the `cmd/tiller-proxy/` and it uses packages from the `pkg` directory.
+tiller-proxy源位于cmd / tiller-proxy /目录下，并使用pkg目录中的软件包。
 
-### Install Kubeapps in your cluster
+### 在您的集群中安装Kubeapps Plus
 
-Kubeapps is a Kubernetes-native application. To develop and test Kubeapps components we need a Kubernetes cluster with Kubeapps already installed. Follow the [Kubeapps installation guide](../../chart/kubeapps/README.md) to install Kubeapps in your cluster.
+Kubeapps Plus是Kubernetes本地应用程序。 要开发和测试Kubeapps Plus组件，我们需要一个已安装Kubeapps Plus的Kubernetes集群。 遵循[Kubeapps Plus安装指南](../../ chart / kubeapps / README.md)在您的群集中安装Kubeapps Plus。
 
-### Building the `tiller-proxy` binary
+### 构建`tiller-proxy`二进制文件
 
 ```bash
 cd $KUBEAPPS_DIR/cmd/tiller-proxy
 go build
 ```
 
-This builds the `tiller-proxy` binary in the working directory.
+这将在工作目录中构建`tiller-proxy`二进制文件。
 
-### Running in development
+### 在开发中运行
 
-If you are using Minikube it is important to start the cluster enabling RBAC (on by default in Minikube 0.26+) in order to check the authorization features:
+如果您使用的是Minikube，请务必启动启用RBAC的集群(在Minikube 0.26+中默认情况下处于启用状态)，以便检查授权功能：
 
 ```
 minikube start
 eval $(minikube docker-env)
 ```
 
-Note: By default, Kubeapps will try to fetch the latest version of the image so in order to make this workflow work in Minikube you will need to update the imagePullPolicy first:
+注意：默认情况下，Kubeapps Plus会尝试获取图像的最新版本，因此为了使此工作流在Minikube中正常工作，您需要首先更新imagePullPolicy：
 
 ```
 kubectl patch deployment kubeapps-internal-tiller-proxy -n kubeapps --type=json -p='[{"op": "replace", "path": "/spec/template/spec/containers/0/imagePullPolicy", "value": "IfNotPresent"}]'
 ```
 
-The easiest way to create the `tiller-proxy` image is execute the Makefile task to do so:
+创建`tiller-proxy`映像的最简单方法是执行Makefile任务来执行此操作：
 
 ```bash
 IMAGE_TAG=dev make kubeapps/tiller-proxy
 ```
 
-This will generate an image `kubeapps/tiller-proxy:dev` that you can use in the current deployment:
+这将生成一个映像kubeapps / tiller-proxy：dev，可以在当前部署中使用：
 
 ```
 kubectl set image -n kubeapps deployment kubeapps-internal-tiller-proxy proxy=kubeapps/tiller-proxy:dev
 ```
 
-For further redeploys you can change the version to deploy a different tag or rebuild the same image and restart the pod executing:
+为了进一步重新部署，您可以更改版本以部署不同的标记或重建相同的映像并重新启动Pod执行：
 
 ```
 kubectl delete pod -n kubeapps -l app=kubeapps-internal-tiller-proxy
 ```
 
-Note: If you using a cloud provider to develop the service you will need to retag the image and push it to a public registry.
+注意：如果您使用云提供商来开发服务，则需要重新标记映像并将其推送到公共注册表。
 
-### Running tests
+### 运行测试
 
-You can run the tiller-proxy tests along with the tests of all the projecs
+您可以运行分er代理测试以及所有项目的测试
 
 ```bash
 make test

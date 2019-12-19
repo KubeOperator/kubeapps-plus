@@ -1,25 +1,25 @@
-# The Kubeapps Components
+# Kubeapps Plus组件
 
-### Kubeapps dashboard
+### Kubeapps Plus仪表板
 
-The dashboard is the main UI component of the Kubeapps project. Written in Javascript, the dashboard uses the React Javascript library for the frontend.
+仪表板是Kubeapps Plus项目的主要UI组件。 仪表板使用Javascript编写，使用React Javascript库作为前端。
 
-Please refer to the [Kubeapps Dashboard Developer Guide](dashboard.md) for the developer setup.
+请参阅[Kubeapps Plus仪表板开发人员指南](dashboard.md)中的开发人员设置。
 
 ### chartsvc
 
-The `chartsvc` component is a micro-service that creates a API endpoint for accessing the metadata for charts in Helm chart repositories that's populated in a MongoDB server.
+“ chartsvc”组件是一个微服务，可创建API端点来访问在MongoDB服务器中填充的Helm图表存储库中图表的元数据。
 
-Please refer to the [Kubeapps chartsvc Developer Guide](chartsvc.md) for the developer setup.
+请参阅[Kubeapps Plus Chartsvc开发人员指南](chartsvc.md)中的开发人员设置。
 
 ### chart-repo
 
-The `chart-repo` component is tool that scans a Helm chart repository and populates chart metadata in a MongoDB server. This metadata is then served by the `chartsvc` component.
+“ chart-repo”组件是一种工具，可扫描Helm图表存储库并在MongoDB服务器中填充图表元数据。 然后，由“ chartsvc”组件提供此元数据。
 
-Please refer to the [Kubeapps chart-repo Developer Guide](chart-repo.md) for the developer setup.
+请参阅[Kubeapps Plus chart-repo开发人员指南](chart-repo.md)进行开发人员设置。
 
 ### tiller-proxy
 
-The `tiller-proxy` component is a service used both as a client for Tiller but also to provide a way to authorize users to deploy, upgrade and delete charts in different namespaces.
+“ tiller-proxy”组件是一种服务，既用作Tiller的客户端，又提供一种授权用户在不同名称空间中部署，升级和删除图表的方法。
 
-Please refer to the [Kubeapps tiller-proxy Developer Guide](tiller-proxy.md) for the developer setup.
+请参阅[Kubeapps Plus耕till代理开发指南](tiller-proxy.md)进行开发人员设置。

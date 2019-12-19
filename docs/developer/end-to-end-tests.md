@@ -1,41 +1,41 @@
-# End-to-end tests in the project
+# 项目中的端到端测试
 
-In every CI build, a set of end-to-end tests are run to verify, as much as possible, that the changes don't include regressions from an user point of view. The current end-to-end tests are executed in two steps (or categories):
+在每个CI构建中，都会运行一组端到端测试，以尽可能多地验证这些更改不包括从用户角度出发的回归。 当前的端到端测试分两个步骤(或类别)执行：
 
- - Chart tests
- - Browser tests
+ - 图表测试
+ - 浏览器测试
 
-These tests are executed by the script [scripts/e2e-test.sh](../../script/e2e-test.sh). This script:
+这些测试由脚本[scripts / e2e-test.sh](../../ script / e2e-test.sh)执行。 该脚本：
 
- 1. Installs Tiller using a certificate
- 2. Installs Kubeapps using the images built during the CI process
- 3. Waits for the different deployments to be ready
- 4. Execute the Helm tests (see the section below for more details).
- 5. Execute the web browser tests (see the section below for more details).
+ 1. 使用证书安装Tiller
+ 2. 使用CI流程中生成的映像安装Kubeapps Plus
+ 3. 等待不同的部署准备就绪
+ 4. 执行Helm测试(有关更多详细信息，请参阅以下部分)。
+ 5. 执行Web浏览器测试(有关更多详细信息，请参见以下部分)。
 
-If all of the above succeeded, the control is returned to the CI with the proper exit code.
+如果以上所有方法均成功，则将控制以正确的退出代码返回给CI。
 
-## Chart tests
+## 图表测试
 
-Chart tests in the project are defined using the testing functionality [provided by Helm](https://helm.sh/docs/developing_charts/#chart-tests). The goal of these tests is that the chart has been successfully deployed and that the basic functionality for each of the microservices deployed work as expected. Specific functionality tests should be covered by either unit tests or browser tests if needed.
+项目中的图表测试是使用[Helm提供的]测试功能定义的(https://helm.sh/docs/developing_charts/#chart-tests)。 这些测试的目标是图表已成功部署，并且所部署的每个微服务的基本功能均按预期工作。 如果需要，特定的功能测试应包含在单元测试或浏览器测试中。
 
-You can find the current chart tests in the [chart folder](../../chart/kubeapps/templates/tests).
+您可以在[图表文件夹](../../ chart / kubeapps / templates / tests)中找到当前的图表测试。
 
-## Web Browser tests
+## Web浏览器测试
 
-Apart from the basic functionality tests run by the chart tests, this project contains web browser test that you can find in the [integration](../../integration) folder.
+除了图表测试运行的基本功能测试之外，该项目还包含Web浏览器测试，您可以在[integration](../../ integration)文件夹中找到该测试。
 
-These tests are based on [Puppeteer](https://github.com/GoogleChrome/puppeteer). Puppeteer is a NodeJS library that provides a high-level API to control Chrome or Chromium (in headless mode by default).
+这些测试基于[Puppeteer](https://github.com/GoogleChrome/puppeteer)。 Puppeteer是一个NodeJS库，它提供了高级API来控制Chrome或Chromium(默认情况下为无头模式)。
 
-On top of Puppeteer we are using the `jest-puppeteer` module that allow us to execute these tests using the same syntax than in the rest of unit-tests that we have in the project.
+在Puppeteer之上，我们使用`jest-puppeteer`模块，该模块允许我们使用与项目中其余单元测试相同的语法执行这些测试。
 
-The `integration` folder pointed above is self-contained. That means that the different dependencies required to run the browser tests are not included in the default `package.json`. In that folder, it can be found a `Dockerfile` used to generate an image with all the dependencies needed to run the browser tests.
+上面指向的“集成”文件夹是独立的。 这意味着运行浏览器测试所需的不同依赖关系未包含在默认的“ package.json”中。 在该文件夹中，可以找到一个“ Dockerfile”，该文件用于生成具有运行浏览器测试所需的所有依赖项的映像。
 
-It's possible to run these tests either locally or in a container environment.
+可以在本地或在容器环境中运行这些测试。
 
-### Runing browser tests locally
+### 在本地运行浏览器测试
 
-To run the tests locally you just need to install the required dependencies and set the required environment variables:
+要在本地运行测试，您只需要安装所需的依赖项并设置所需的环境变量：
 
 ```bash
 cd integration
@@ -43,11 +43,11 @@ yarn install
 INTEGRATION_ENTRYPOINT=http://kubeapps.local LOGIN_TOKEN=foo yarn start
 ```
 
-If anything goes wrong, apart from the logs of the test, you can find the screenshot of the failed test in the folder `reports/screenshots`.
+如果发生任何问题，除了测试日志外，您还可以在“报告/屏幕截图”文件夹中找到失败测试的屏幕截图。
 
-### Running browser tests in a pod
+### 在Pod中运行浏览器测试
 
-Since the CI environment don't have the required dependencies and to provide a reproducible environment, it's possible to run the browser tests in a Kubernetes pod. To do so, you can spin up an instance running the image `kubeapps/integration-tests`. This image contains all the required dependencies and it waits forever so you can execute commands within it. The goal of this setup is that you can copy the latest tests to the image, run the tests and extract the screenshots in case of failure:
+由于CI环境没有必需的依赖关系并提供了可重现的环境，因此可以在Kubernetes窗格中运行浏览器测试。 为此，您可以启动一个实例，该实例运行映像“ kubeapps / integration-tests”。 该映像包含所有必需的依赖关系，并且它将一直等待，因此您可以在其中执行命令。 此设置的目的是，您可以将最新测试复制到映像中，运行测试并在出现故障的情况下提取屏幕截图：
 
 ```bash
 cd integration

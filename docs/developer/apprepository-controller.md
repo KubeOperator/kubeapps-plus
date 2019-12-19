@@ -1,8 +1,8 @@
-# Kubeapps apprepository-controller Developer Guide
+# Kubeapps Plus apprepository-controller开发人员指南
 
-The `apprepository-controller` is a Kubernetes controller for managing Helm chart repositories added to Kubeapps.
+apprepository-controller是Kubernetes控制器，用于管理添加到Kubeapps Plus的Helm图表存储库。
 
-## Prerequisites
+## 先决条件
 
 - [Git](https://git-scm.com/)
 - [Make](https://www.gnu.org/software/make/)
@@ -12,9 +12,9 @@ The `apprepository-controller` is a Kubernetes controller for managing Helm char
 - [kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/)
 - [Telepresence](https://telepresence.io)
 
-*Telepresence is not a hard requirement, but is recommended for a better developer experience*
+*远程呈现并不是一个很难的要求，但是推荐使用它来获得更好的开发体验*
 
-## Environment
+## 环境
 
 ```bash
 export GOPATH=~/gopath
@@ -22,59 +22,59 @@ export PATH=$GOPATH/bin:$PATH
 export KUBEAPPS_DIR=$GOPATH/src/github.com/kubeapps/kubeapps
 ```
 
-## Download the kubeapps source code
+## 下载Kubeapps Plus源代码
 
 ```bash
 git clone --recurse-submodules https://github.com/kubeapps/kubeapps $KUBEAPPS_DIR
 ```
 
-The `apprepository-controller` sources are located under the `cmd/apprepository-controller/` directory of the repository.
+“ apprepository-controller”源位于存储库的“ cmd / apprepository-controller /”目录下。
 
 ```bash
 cd $KUBEAPPS_DIR/cmd/apprepository-controller
 ```
 
-### Install Kubeapps in your cluster
+### 在您的集群中安装Kubeapps Plus
 
-Kubeapps is a Kubernetes-native application. To develop and test Kubeapps components we need a Kubernetes cluster with Kubeapps already installed. Follow the [Kubeapps installation guide](../../chart/kubeapps/README.md) to install Kubeapps in your cluster.
+Kubeapps Plus是Kubernetes本地应用程序。 要开发和测试Kubeapps Plus组件，我们需要一个已安装Kubeapps Plus的Kubernetes集群。 遵循[Kubeapps Plus安装指南](../../ chart / kubeapps / README.md)在您的群集中安装Kubeapps Plus。
 
-### Building `apprepository-controller` binary
+### 构建`apprepository-controller`二进制文件
 
 ```bash
 go build
 ```
 
-This builds the `apprepository-controller` binary in the working directory.
+这将在工作目录中构建`apprepository-controller`二进制文件。
 
-### Running in development
+### 在开发中运行
 
-Before running the `apprepository-controller` binary on the development host we should stop the existing controller that is running in the development cluster. The best way to do this is to scale the number of replicas of the `apprepository-controller` deployment to `0`.
+在开发主机上运行`apprepository-controller`二进制文件之前，我们应该停止在开发集群中运行的现有控制器。 最好的方法是将“ apprepository-controller”部署的副本数缩放为“ 0”。
 
 ```bash
 kubectl -n kubeapps scale deployment apprepository-controller --replicas=0
 ```
 
-> **NOTE** Remember to scale the deployment back to `1` replica when you are done
+> **NOTE** 完成后，请记住将部署扩展回“ 1”副本
 
-You can now execute the `apprepository-controller` binary on the developer host with:
+现在，您可以使用以下命令在开发人员主机上执行“ apprepository-controller”二进制文件：
 
 ```bash
 ./apprepository-controller --logtostderr --repo-sync-image=quay.io/helmpack/chart-repo:myver --kubeconfig ~/.kube/config
 ```
 
-Performing application repository actions in the Kubeapps dashboard will now trigger operations in the `apprepository-controller` binary running locally on your development host.
+现在，在Kubeapps Plus仪表板上执行应用程序存储库操作将触发在开发主机本地运行的“ apprepository-controller”二进制文件中的操作。
 
-### Running tests
+### 运行测试
 
-To start the tests on the `apprepository-controller` execute the following command:
+要在apprepository-controller上开始测试，请执行以下命令：
 
 ```bash
 go test
 ```
 
-## Building the kubeapps/apprepository-controller Docker image
+## 构建Kubeapps /存储库控制器Docker映像
 
-To build the `kubeapps/apprepository-controller` docker image with the docker image tag `myver`:
+要使用docker image标签myver构建`kubeapps / apprepository-controller` docker镜像：
 
 ```bash
 cd $KUBEAPPS_DIR

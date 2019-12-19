@@ -1,7 +1,5 @@
 # <img src="./docs/img/logo.png" width="40" align="left"> Kubeapps Plus
 
-[![CircleCI](https://circleci.com/gh/kubeapps/kubeapps/tree/master.svg?style=svg)](https://circleci.com/gh/kubeapps/kubeapps/tree/master)
-
 Kubeapps Plus是借鉴kubeapps的一个国产项目。基于Web的UI，用于在Kubernetes集群中部署和管理应用程序。 Kubeapps Plus使您能够：
 
 - 从图表存储库浏览和部署图表 [Helm](https://github.com/helm/helm)

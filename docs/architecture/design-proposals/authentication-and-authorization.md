@@ -1,82 +1,82 @@
-# AuthN/AuthZ in Kubeapps
+# AuthN/AuthZ in Kubeapps Plus
 
-## Objective
+## 目的
 
-Take advantage of RBAC primitives from Kubernetes in Kubeapps to:
+利用Kubeapps Plus中Kubernetes的RBAC原语来：
 
-1.  provide authenticated access to the Dashboard
-1.  restrict certain operations within the Dashboard for individual users
+1.  提供对仪表板的身份验证访问
+1.  将仪表板中的某些操作限制为单个用户
 
-## Motivation
+## 动机
 
-Consider an enterprise, MyCompany Ltd., that wants to provide Kubeapps to its employees as a means to deploy and manage applications running in a Kubernetes cluster. Kubeapps is installed into the cluster by the Cluster Operator and access is given via Kubeconfig credentials. Employees run kubeapps dashboard on their local machines to access Kubeapps.
+考虑一家企业MyCompany Ltd.，它希望向其员工提供Kubeapps Plus，作为部署和管理在Kubernetes集群中运行的应用程序的一种方式。 Kubeapps Plus由集群操作员安装到集群中，并通过Kubeconfig凭据进行访问。 员工在其本地计算机上运行Kubeapps Plus仪表板以访问Kubeapps Plus。
 
-In order to make it easier to access Kubeapps, the Cluster Operator configures Kubeapps to be externally accessible via Ingress. Now everyone is able to visit _kubeapps.mycompany.com_ to access the Kubeapps Dashboard. In order to restrict access to this external domain, the company wants to enable employees to login using their Kubernetes credentials from the user interface.
+为了使访问Kubeapps Plus更加容易，群集操作员将Kubeapps Plus配置为可通过Ingress进行外部访问。 现在，每个人都可以访问_kubeapps.mycompany.com_来访问Kubeapps Plus仪表板。 为了限制对该外部域的访问，该公司希望使员工能够从其用户界面使用其Kubernetes凭据登录。
 
-Further, the company wants to restrict the ability to manage certain applications to certain teams. They create a restricted namespace for Team A, and only allow employees in that team to view, create and manage applications within that namespace by creating the appropriate RBAC roles. However, since Kubeapps uses its own Service Account and RBAC roles to access the Kubernetes API, all employees are able to view, create and manage applications in Team A's namespace, even if their Kubeconfig credentials restrict it.
+此外，该公司希望将管理某些应用程序的能力限制于某些团队。 他们为团队A创建一个受限制的名称空间，并且仅允许该团队中的员工通过创建适当的RBAC角色来查看，创建和管理该名称空间内的应用程序。 但是，由于Kubeapps Plus使用其自己的服务帐户和RBAC角色来访问Kubernetes API，因此所有员工都可以在Team A的命名空间中查看，创建和管理应用程序，即使他们的Kubeconfig凭据对其进行了限制。
 
-As described above, this is a solved problem in Kubernetes through the use of Kubeconfig credentials and RBAC roles. The Kubernetes Dashboard allows users to leverage their credentials and RBAC roles by providing a login form that accepts a bearer token. When a user is logged in with a token, all requests to the Kubernetes API are made using it. The Kubeapps Dashboard has very similar access mechanisms to the Kubernetes Dashboard, and I propose that we follow in their footsteps to enable authenticated and authorized access.
+如上所述，这是通过使用Kubeconfig凭据和RBAC角色在Kubernetes中解决的问题。 Kubernetes仪表板允许用户通过提供接受承载令牌的登录表单来利用其凭据和RBAC角色。 当用户使用令牌登录时，使用该令牌向Kubernetes API发出所有请求。 Kubeapps Plus仪表板具有与Kubernetes仪表板非常相似的访问机制，我建议我们遵循他们的脚步以启用经过身份验证和授权的访问。
 
-## Goals and Non-Goals
+## 目标与非目标
 
-* Enable using user provided Kubernetes credentials to access Kubernetes APIs from the UI
-* Leverage existing Kubernetes RBAC roles to restrict unauthorized operations, providing a mechanism to restrict operations by namespaces or type (Helm, Kubeless, Service Catalog, etc.)
-* Support the ability to expose Kubeapps externally in a secure way, enabling easier access to Kubeapps without having to install the CLI
-* Avoid introducing a separate way to manage access and authorization to Kubernetes resources (e.g. Kubeapps internal user database)
-* Don't support every possible Kubernetes authentication provider & method
+* 启用使用用户提供的Kubernetes凭据从UI访问Kubernetes API
+* 利用现有的Kubernetes RBAC角色来限制未经授权的操作，提供一种根据名称空间或类型(Helm，Kubeless，服务目录等)限制操作的机制
+* 支持以安全方式在外部公开Kubeapps Plus的能力，从而无需安装CLI即可更轻松地访问Kubeapps Plus
+* 避免引入单独的方法来管理对Kubernetes资源的访问和授权(例如Kubeapps Plus内部用户数据库)
+* 不支持所有可能的Kubernetes身份验证提供程序和方法
 
-## User Stories
+## 用户故事
 
-* As a cluster operator, I want to expose Kubeapps externally but only let authorized users perform certain operations
-* As a member of one engineering team in an organization, I want the ability to deploy and manage applications within my team's namespaces, but I don't want to have access to another team's applications
-* As an SRE, I want to provide my team access to view the state of running applications in the cluster, but I don't want to give out write access to create or delete applications
-* As an SRE, I want to restrict access to provision more expensive service plans from the Service Catalog
+* 作为集群运营商，我想在外部公开Kubeapps Plus，但只允许授权用户执行某些操作
+* 作为组织中一个工程团队的成员，我希望能够在我的团队的命名空间中部署和管理应用程序，但是我不想访问另一个团队的应用程序
+* 作为SRE，我想向我的团队提供访问权限以查看集群中正在运行的应用程序的状态，但是我不想放弃写访问权限以创建或删除应用程序
+* 作为SRE，我希望限制访问服务目录中提供更昂贵的服务计划的权限
 
-## Methods of Authentication
+## 认证方式
 
-Cluster operators have the ability to implement various strategies to authenticate with a Kubernetes cluster. The most common methods are client certificate/key and token authentication. Additionally, an authentication proxy can be used to integrate with other authentication protocols, and an authentication webhook can be used to verify bearer tokens in token authentication.
+集群运营商能够实施各种策略以对Kubernetes集群进行身份验证。 最常见的方法是客户端证书/密钥和令牌认证。 此外，身份验证代理可用于与其他身份验证协议集成，身份验证Webhook可用于验证令牌身份验证中的承载令牌。
 
-### Configuring an authentication provider on `kubeapps up`
+### 在`Kubeapps Plus up'上配置身份验证提供程序
 
-Configuring an authentication provider is typically done by a cluster operator, and usually requires configuring the API server with flags to enable different strategies. As such, it is out of scope for Kubeapps to configure a cluster with an authentication provider.
+配置身份验证提供程序通常由集群运营商完成，并且通常需要使用标志来配置API服务器以启用不同的策略。 因此，使用身份验证提供程序配置群集超出了Kubeapps Plus的范围。
 
-### Logging in with Client Certificate/Key Auth
+### 使用客户端证书/密钥验证登录
 
-Client certificate and key pairs are a common way to authenticate against a cluster. The Kubeconfig can either point to certificates or keys in the filesystem, or they can be embedded within the file as base64 encoded strings. Unfortunately for Kubeapps, it is not possible to include a client certificate and key pair in an XMLHttpRequest (browser AJAX request), so we would not be able to leverage client certificate/key authentication within Kubeapps (see [#200](https://github.com/kubeapps/kubeapps/issues/200#issuecomment-376617420)).
+客户端证书和密钥对是针对群集进行身份验证的常用方法。 Kubeconfig可以指向文件系统中的证书或密钥，也可以将它们作为base64编码的字符串嵌入到文件中。 不幸的是，对于Kubeapps Plus，无法在XMLHttpRequest(浏览器AJAX请求)中包含客户端证书和密钥对，因此我们将无法在Kubeapps Plus中利用客户端证书/密钥身份验证(请参阅[＃200](https ：//github.com/Kubeapps Plus / Kubeapps Plus / issues / 200＃issuecomment-376617420））。
 
-### Logging in with Token Auth
+### 使用令牌验证登录
 
-Bearer tokens are passed via the _Authorization_ header in an HTTP request, which makes them very easy to pass in requests from Kubeapps. In order to use Token Authentication for users, a cluster operator will need to configure the API server with a [Token Auth file](https://kubernetes.io/docs/admin/authentication/#static-token-file) that defines user-token pairs.
+承载令牌通过HTTP请求中的_Authorization_标头传递，这使得它们很容易传递来自Kubeapps Plus的请求。 为了对用户使用令牌认证，集群运营商将需要使用[令牌认证文件](https://kubernetes.io/docs/admin/authentication/#static-token-file)配置API服务器。 用户令牌对。
 
-However, an alternative way to use token authentication is through the use of [Service Accounts](https://kubernetes.io/docs/admin/authentication/#service-account-tokens). These are typically robot accounts for use within Pods, and Kubernetes generates bearer tokens for them to authenticate with the API. Since Service Accounts are enabled by default in most Kubernetes distributions, they can provide for a good way to create and manage user access to Kubeapps. The Kubernetes Dashboard [describes using Service Accounts to create users for the Dashboard in their documentation](https://github.com/kubernetes/dashboard/wiki/Creating-sample-user).
+但是，使用令牌身份验证的另一种方法是使用[服务帐户](https://kubernetes.io/docs/admin/authentication/#service-account-tokens)。 这些通常是在Pod中使用的机器人帐户，Kubernetes会生成承载令牌以供他们通过API进行身份验证。 由于大多数Kubernetes发行版都默认启用了服务帐户，因此它们可以为创建和管理用户对Kubeapps Plus的访问提供一种好方法。 Kubernetes仪表板[在其文档中描述了使用服务帐户为仪表板创建用户](https://github.com/kubernetes/dashboard/wiki/Creating-sample-user)。
 
-Cluster operators can also configure clusters to use [OpenID Connect tokens to authenticate users](https://kubernetes.io/docs/admin/authentication/#openid-connect-tokens). These tokens could be retrieved from OpenID Connect providers such as Azure Active Directory, Salesforce and Google. With this method configured, the ID token returned by one of these providers can be used as a bearer token. As you can see, supporting token authentication in itself provides a plethora of different options for configuring access to Kubernetes and Kubeapps.
+集群运营商还可以将集群配置为使用[OpenID Connect令牌对用户进行身份验证](https://kubernetes.io/docs/admin/authentication/#openid-connect-tokens)。 可以从OpenID Connect提供程序(例如Azure Active Directory，Salesforce和Google)中检索这些令牌。 配置此方法后，可以将这些提供者之一返回的ID令牌用作承载令牌。 如您所见，支持令牌身份验证本身提供了许多不同的选项，用于配置对Kubernetes和Kubeapps Plus的访问。
 
-## User Experience
+## 用户体验
 
-### Cluster Operator
+### 集群运营商
 
-#### Configuring Kubeapps for authentication
+#### 配置Kubeapps Plus进行身份验证
 
-By default, Kubeapps should be configured for a production use-case in mind. The Service Account used for the Kubernetes API proxy will have no RBAC roles attached to it. A Cluster Operator will need to create tokens and give them to users of Kubeapps.
+默认情况下，应根据生产用例配置Kubeapps Plus。 用于Kubernetes API代理的服务帐户将没有附加RBAC角色。 集群运营商将需要创建令牌并将其提供给Kubeapps Plus用户。
 
-The Cluster Operator may want to configure the API Server to authenticate users against different providers, such as Azure Active Directory or Google. Developers accessing the cluster could then login using these providers and receive a short-lived access token to access the Kubernetes API and Kubeapps.
+群集操作员可能需要配置API服务器，以针对不同的提供程序(例如Azure Active Directory或Google)对用户进行身份验证。 然后，访问集群的开发人员可以使用这些提供程序登录，并获得短暂的访问令牌来访问Kubernetes API和Kubeapps Plus。
 
-#### Creating new users
+#### 创建新用户
 
-Given that most, if not all, Kubernetes distributions will have Service Accounts, this would be an easy way for a Cluster Operator to manage access to Kubeapps. To create a user, the Cluster Operator would create a Service Account:
+鉴于大多数(如果不是全部)Kubernetes发行版都将具有服务帐户，这对于集群运营商来说是管理对Kubeapps Plus的访问的一种简便方法。 要创建用户，集群运营商将创建一个服务帐户：
 
 ```
 apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: johnsmith
-  namespace: kubeapps-users
+  namespace: Kubeapps-plus-users
 ```
 
-The Service Account can be created in any namespace, the above example uses _kubeapps-users_ to isolate Service Accounts for Kubeapps users.
+可以在任何命名空间中创建服务帐户，上面的示例使用_kubeapps-users_隔离Kubeapps Plus用户的服务帐户。
 
-Then the Cluster Operator will need to create a set of RBAC roles and binding for the user. The Kubeapps documentation will need to define the set of roles for different features. For the purpose of this example, we will bind the Service Account to the _cluster-admin_ role.
+然后，集群运营商将需要为用户创建一组RBAC角色和绑定。 Kubeapps Plus文档将需要定义不同功能的角色集。 就本示例而言，我们将服务帐户绑定到_cluster-admin_角色。
 
 ```
 apiVersion: rbac.authorization.k8s.io/v1beta1
@@ -90,18 +90,18 @@ roleRef:
 subjects:
 - kind: ServiceAccount
   name: johnsmith
-  namespace: kubeapps-users
+  namespace: Kubeapps-plus-users
 ```
 
-Now to retrieve the token for this account, the Cluster Operator would need to run the following:
+现在，要检索该帐户的令牌，集群操作员将需要运行以下命令：
 
 ```
-kubectl -n kube-system describe secret $(kubectl -n kubeapps-users get secret | grep johnsmith | awk '{print $1}')
+kubectl -n kube-system describe secret $(kubectl -n Kubeapps-plus-users get secret | grep johnsmith | awk '{print $1}')
 ```
 
 ```
 Name: johnsmith-token-6gl6l
-Namespace: kubeapps-users
+Namespace: Kubeapps Plus-users
 Labels: <none>
 Annotations: kubernetes.io/service-account.name=johnsmith
               kubernetes.io/service-account.uid=b16afba9-dfec-11e7-bbb9-901b0e532516
@@ -114,79 +114,79 @@ namespace: 11 bytes
 token: eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9...
 ```
 
-The token can then be copied and given to the developer, who can then login to Kubeapps.
+然后可以将令牌复制并提供给开发人员，然后开发人员可以登录到Kubeapps Plus。
 
-### Developer
+### 开发者
 
-#### Accessing Kubeapps for the first time
+#### 首次访问Kubeapps Plus
 
-When a developer accesses Kubeapps for the first time or on a new device, they will be greeted with a login prompt, similar to the one from the Kubernetes Dashboard shown below.
+当开发人员首次访问Kubeapps Plus或在新设备上访问Kubeapps Plus时，将看到一个登录提示，类似于下面显示的Kubernetes仪表板中的登录提示。
 
-![Kubernetes Dashboard Login](image_0.png)
+![Kubernetes仪表板登录](image_0.png)
 
-The user will need to ask their Cluster Operator for a token to access Kubeapps, and once they receive one they will be able to enter it in the login form and click "Sign In". From then on, all requests to the Kubernetes API from the dashboard will use this token.
+用户将需要向集群运营商索取令牌以访问Kubeapps Plus，一旦收到令牌，便可以在登录表单中输入令牌并单击“登录”。 从那时起，仪表板对Kubernetes API的所有请求都将使用此令牌。
 
-#### Returning to Kubeapps
+#### 返回Kubeapps Plus
 
-After logging in, the token should be persisted (e.g. in a cookie or local storage), so that we do not need to prompt the user to login when returning to the dashboard.
+登录后，令牌应保留(例如保存在cookie或本地存储中)，这样我们在返回仪表板时无需提示用户登录。
 
-#### Logging out
+#### 注销
 
-There will need to be a "Sign Out"/"Log Out" option in the top navigation bar so that logged in users can return to the login prompt to end their session or login with a different token.
+顶部导航栏中将需要有一个“注销” /“注销”选项，以便已登录的用户可以返回登录提示以结束其会话或使用其他令牌登录。
 
-#### Namespaces
+#### Namespaces 命名空间
 
-Everything the developer does inside Kubeapps will be within a Kubernetes namespace. The _default_ namespace will be used by default, and there will be a selector in the top-level navigation to select namespaces.
+开发人员在Kubeapps Plus中所做的一切都将在Kubernetes命名空间中。 默认情况下将使用_default_名称空间，并且在顶级导航中将有一个选择器来选择名称空间。
 
-![Namespace selector](image_1.png)
+![命名空间选择器](image_1.png)
 
-#### Unauthorized access
+#### 未经授权访问
 
-If a logged in user tries to perform an unauthorized action within Kubeapps (e.g. installing a Helm Release in a namespace they don't have access to), the UI should show a meaningful error of the failed request. In particular it should explain what RBAC roles are required for the particular operation and point to documentation on how a Cluster Operator might extend a role.
+如果登录的用户尝试在Kubeapps Plus中执行未经授权的操作(例如，在他们无权访问的命名空间中安装Helm Release)，则UI应该显示失败请求的有意义的错误。 特别是，它应该解释特定操作需要哪些RBAC角色，并指向有关群集操作员如何扩展角色的文档。
 
-## Implementation
+## 实施
 
-### Dashboard
+### 仪表板
 
-#### Namespacing
+#### 命名空间
 
-Currently, all list views (Apps, Functions, etc.) are not scoped by a namespace. To enable the ability to list and view application resources within specific namespaces without requiring cluster-wide permissions, the Dashboard will scope all operations by a namespace by default. The current namespace will be selectable in the top navigation bar.
+当前，所有列表视图(应用程序，功能等)均不受命名空间限制。 为了能够在特定名称空间中列出和查看应用程序资源而无需群集范围的权限，默认情况下，仪表板将按名称空间对所有操作进行作用域设置。 在顶部导航栏中可以选择当前名称空间。
 
-Kubeapps will try to fetch the list of namespaces from the API, but if this operation is not permitted (due to not having the relevant RBAC role), it will fallback to listing the namespaces in the _kubernetes_namespaces_ array stored in localStorage. By default, this will contain _default_. When in this fallback mode, there will be an option for the user to add namespaces to the _kuberetes_namespaces_ array.
+Kubeapps Plus将尝试从API提取名称空间列表，但是如果不允许此操作(由于没有相关的RBAC角色)，它将回退到在存储在localStorage中的_kubernetes_namespaces_数组中列出名称空间。 默认情况下，它将包含_default_。 在此后备模式下，用户可以选择向_kuberetes_namespaces_数组添加名称空间。
 
-It will also be possible to list resources cluster-wide by selecting the _all_ option in the namespace selector.
+通过选择名称空间选择器中的_all_选项，也可以列出群集范围内的资源。
 
-#### Token Authentication
+#### 令牌认证
 
-The Dashboard will display a login prompt to enter a bearer token to be used for all requests to the Kubernetes API proxy. The bearer token will be stored in localStorage with the key _kubernetes_access_token_. When logging out, the _kubernetes_access_token_ in localStorage will need to be deleted. We may need to setup a singleton to expose the axios library (HTTP request library) pre-configured to fetch and include the token in the Authorization header of every request.
+仪表板将显示登录提示，以输入用于对Kubernetes API代理的所有请求的承载令牌。 承载令牌将通过密钥_kubernetes_access_token_存储在localStorage中。 注销时，将需要删除localStorage中的_kubernetes_access_token_。 我们可能需要设置一个单例，以暴露预先配置为获取的axios库(HTTP请求库)并将令牌包含在每个请求的Authorization标头中。
 
-#### Error Handling
+#### 错误处理
 
-The Dashboard does not currently handle API errors well in all cases. With this change, there are likely to be more API errors (unauthorized errors) when certain RBAC roles are missing. With _await/async_, API errors that would normally cause promise rejections are thrown as JavaScript exceptions. It may be possible to make use of [React Error Boundaries](https://reactjs.org/blog/2017/07/26/error-handling-in-react-16.html) to catch errors within components and display an error message.
+当前，在所有情况下，仪表板都无法很好地处理API错误。 通过此更改，当某些RBAC角色丢失时，可能会出现更多API错误(未经授权的错误)。 使用_await / async_时，通常会导致承诺拒绝的API错误会作为JavaScript异常抛出。 可能可以利用[React Error Boundaries](https://reactjs.org/blog/2017/07/26/error-handling-in-react-16.html)捕获组件内的错误并显示 错误信息。
 
 ### Kubernetes API Proxy
 
-#### Enabling external access
+#### 启用外部访问
 
-By default for security reasons, kubectl proxy does not accept requests from hostnames other than localhost. To enable access from a LoadBalancer IP/hostname or Ingress hostname, we will set the `--accept-hosts=.*` option when running the proxy.
+出于安全原因，默认情况下，kubectl代理不接受来自非本地主机名的请求。 要启用从LoadBalancer IP /主机名或Ingress主机名的访问，我们将在运行代理时设置`--accept-hosts =。*`选项。
 
-This obviously raises security concerns as Kubeapps will now happily expose the whole Kubernetes API to the configured Ingress. To mitigate the attack surface of this:
+由于Kubeapps Plus现在将很高兴将整个Kubernetes API暴露给已配置的Ingress，因此这显然引起了安全方面的担忧。 为了减轻这种攻击面：
 
-1.  The Service Account given to the proxy container will have no configured RBAC roles by default
+1.  默认情况下，分配给代理容器的服务帐户将没有配置的RBAC角色
 
-2.  We will configure the _--accept-paths_ option on the proxy to only expose the endpoints Kubeapps uses
+2.  我们将在代理上配置_-- accept-paths_选项以仅公开Kubeapps Plus使用的端点
 
-3.  The Kubeapps nginx-ingress Service will be configured as _ClusterIP_ by default (as it is today), a Cluster Operator will need to explicitly setup their own Ingress or switch the Service to LoadBalancer to enable access from outside the cluster - this will be documented
+3.  默认情况下(今天)，Kubeapps Plus nginx-ingress服务将默认配置为_ClusterIP_，集群操作员将需要显式设置自己的Ingress或将服务切换到LoadBalancer以启用从集群外部的访问-将记录在案
 
-On top of that, documentation should encourage Cluster Operators to ensure that Kubeapps is only accessible over a private, internal network (e.g. VPN).
+最重要的是，文档应鼓励集群运营商确保仅可通过私有内部网络(例如VPN)访问Kubeapps Plus。
 
-### Documentation
+### 文献资料
 
-#### RBAC Roles for Kubeapps
+#### Kubeapps Plus的RBAC角色
 
-In order for Cluster Operators to clearly and correctly assign RBAC roles to Kubeapps users, we outline the exact roles required to perform specific operations within Kubeapps. Roles that indicate a specific namespace **must** be applied within that namespace. A wildcard in the _Namespace_ column indicates that the role can be applied either to specific namespaces (recommended) or cluster-wide.
+为了使集群运营商能够清楚，正确地将RBAC角色分配给Kubeapps Plus用户，我们概述了在Kubeapps Plus中执行特定操作所需的确切角色。 表示特定名称空间的角色必须在该名称空间中应用。 _Namespace_列中的通配符指示该角色可以应用于特定的名称空间(推荐)或群集范围内。
 
-##### Applications
+##### 应用领域
 
 <table>
   <tr>
@@ -208,7 +208,7 @@ In order for Cluster Operators to clearly and correctly assign RBAC roles to Kub
   <tr>
     <td></td>
     <td></td>
-    <td>kubeapps</td>
+    <td>Kubeapps Plus</td>
     <td>configmaps</td>
     <td>list</td>
     <td>Helm (Tiller) stores release data in ConfigMaps</td>
@@ -224,7 +224,7 @@ In order for Cluster Operators to clearly and correctly assign RBAC roles to Kub
   <tr>
     <td></td>
     <td></td>
-    <td>kubeapps</td>
+    <td>Kubeapps Plus</td>
     <td>configmaps</td>
     <td>get</td>
     <td>Helm (Tiller) stores release data in ConfigMaps</td>
@@ -235,7 +235,7 @@ In order for Cluster Operators to clearly and correctly assign RBAC roles to Kub
     <td>*</td>
     <td>deployments</td>
     <td>list, watch</td>
-    <td>Kubeapps watches Deployments to monitor rollout status</td>
+    <td>Kubeapps Plus watches Deployments to monitor rollout status</td>
   </tr>
   <tr>
     <td>View Application URLs</td>
@@ -243,7 +243,7 @@ In order for Cluster Operators to clearly and correctly assign RBAC roles to Kub
     <td>*</td>
     <td>services</td>
     <td>list, watch</td>
-    <td>Kubeapps watches App's Services to display URLs to access the app</td>
+    <td>Kubeapps Plus watches App's Services to display URLs to access the app</td>
   </tr>
   <tr>
     <td>Deploy Helm Chart</td>
@@ -251,7 +251,7 @@ In order for Cluster Operators to clearly and correctly assign RBAC roles to Kub
     <td>*</td>
     <td>helmreleases</td>
     <td>create</td>
-    <td>Kubeapps uses the Helm CRD controller to create and manage Helm Releases</td>
+    <td>Kubeapps Plus uses the Helm CRD controller to create and manage Helm Releases</td>
   </tr>
   <tr>
     <td>Upgrade Helm Release</td>
@@ -271,7 +271,7 @@ In order for Cluster Operators to clearly and correctly assign RBAC roles to Kub
   </tr>
 </table>
 
-##### Functions
+##### 功能
 
 <table>
   <tr>
@@ -304,7 +304,7 @@ In order for Cluster Operators to clearly and correctly assign RBAC roles to Kub
     <td>*</td>
     <td>deployments</td>
     <td>list, watch</td>
-    <td>Kubeapps watches Deployments to monitor rollout status</td>
+    <td>Kubeapps Plus watches Deployments to monitor rollout status</td>
   </tr>
   <tr>
     <td>View Function Logs</td>
@@ -357,7 +357,7 @@ create</td>
   </tr>
 </table>
 
-##### App Repositories
+##### 应用程式储存库
 
 <table>
   <tr>
@@ -370,47 +370,47 @@ create</td>
   </tr>
   <tr>
     <td>List App Repositories</td>
-    <td>kubeapps.com</td>
-    <td>kubeapps</td>
+    <td>Kubeapps Plus.com</td>
+    <td>Kubeapps Plus</td>
     <td>apprepositories</td>
     <td>list</td>
     <td></td>
   </tr>
   <tr>
     <td>View App Repository</td>
-    <td>kubeapps.com</td>
-    <td>kubeapps</td>
+    <td>Kubeapps Plus.com</td>
+    <td>Kubeapps Plus</td>
     <td>apprepositories</td>
     <td>get</td>
     <td></td>
   </tr>
   <tr>
     <td>Resync App Repository</td>
-    <td>kubeapps.com</td>
-    <td>kubeapps</td>
+    <td>Kubeapps Plus.com</td>
+    <td>Kubeapps Plus</td>
     <td>apprepositories</td>
     <td>update</td>
     <td></td>
   </tr>
   <tr>
     <td>Update App Repository</td>
-    <td>kubeapps.com</td>
-    <td>kubeapps</td>
+    <td>Kubeapps Plus.com</td>
+    <td>Kubeapps Plus</td>
     <td>apprepositories</td>
     <td>update</td>
     <td></td>
   </tr>
   <tr>
     <td>Delete App Repository</td>
-    <td>kubeapps.com</td>
-    <td>kubeapps</td>
+    <td>Kubeapps Plus.com</td>
+    <td>Kubeapps Plus</td>
     <td>apprepositories</td>
     <td>delete</td>
     <td></td>
   </tr>
 </table>
 
-##### Service Catalog
+##### 服务目录
 
 <table>
   <tr>
@@ -507,7 +507,7 @@ create</td>
     <td>*</td>
     <td>secrets</td>
     <td>get</td>
-    <td>Kubeapps can display credentials retrieved from the binding</td>
+    <td>Kubeapps Plus can display credentials retrieved from the binding</td>
   </tr>
   <tr>
     <td>Create Service Bindings</td>
@@ -527,20 +527,20 @@ create</td>
   </tr>
 </table>
 
-#### Externally exposing Kubeapps
+#### 在外部公开Kubeapps Plus
 
-We will add documentation to describe how Kubeapps can be externally exposed. There are multiple ways to achieve this:
+我们将添加文档来描述如何在外部公开Kubeapps Plus。 有多种方法可以实现此目的：
 
-1.  Create and manage a separate Ingress resource that acts as a reverse proxy to the Kubeapps created nginx-ingress Service (**recommended**)
+1.  创建和管理一个单独的Ingress资源，该资源充当Kubeapps Plus创建的Nginx-ingress服务的反向代理(**推荐**)
 
-2.  Change the nginx-ingress Service Kubeapps creates to a LoadBalancer type and get an IP address/hostname provisioned by the underlying cloud provider
+2.  将Kubeapps Plus创建的nginx-ingress服务更改为LoadBalancer类型，并获取由基础云提供商提供的IP地址/主机名
 
-3.  Modify the Kubeapps created Ingress object to make use of a different Ingress controller (by configuring the _kubernetes.io/ingress.class_ annotation)
+3.  修改Kubeapps Plus创建的Ingress对象以使用其他Ingress控制器(通过配置_kubernetes.io/ingress.class_批注)
 
-#### Providing an additional authentication layer using oauth2_proxy
+#### 使用oauth2_proxy提供额外的身份验证层
 
-We will add documentation to describe how to put something like [oauth2_proxy](https://github.com/bitly/oauth2_proxy) in front of Kubeapps to enable an additional layer of authentication/authorization. With oauth2_proxy it is possible to configure login through a company's GitHub organization, Google domain, etc.
+我们将添加文档来描述如何在Kubeapps Plus前面放置[oauth2_proxy](https://github.com/bitly/oauth2_proxy)之类的东西，以启用附加的身份验证/授权层。 使用oauth2_proxy可以通过公司的GitHub组织，Google域等配置登录。
 
-After going through the oauth2 jump with the configured provider, the user will still need to login with an token to access the Kubernetes API. It may be possible to setup the proxy to forward the access token retrieved from the oauth2 jump so that Kubeapps can use it. See [https://github.com/kubernetes/dashboard/pull/1539](https://github.com/kubernetes/dashboard/pull/1539)
+在使用已配置的提供程序执行oauth2跳转之后，用户仍然需要使用令牌登录才能访问Kubernetes API。 可能可以设置代理以转发从oauth2跳转中检索到的访问令牌，以便Kubeapps Plus可以使用它。 参见[https://github.com/kubernetes/dashboard/pull/1539](https://github.com/kubernetes/dashboard/pull/1539)
 
-## Open Questions
+## 公开问题

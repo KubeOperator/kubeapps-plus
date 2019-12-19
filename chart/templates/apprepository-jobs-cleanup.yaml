@@ -45,5 +45,3 @@ spec:
             - |
               kubectl delete apprepositories.kubeapps.com -n {{ .Release.Namespace }} --all
               kubectl delete secrets -n {{ .Release.Namespace }} -l app={{ template "kubeapps.name" $ }},release={{ $.Release.Name }}
-      imagePullSecrets:
-        - name: kubeapps-registry-fit2cloud-com-key

@@ -60,5 +60,3 @@ spec:
           {{- if .Values.chartsvc.resource }}
           resources: {{- toYaml .Values.chartsvc.resources | nindent 12 }}
           {{- end }}
-      imagePullSecrets:
-        - name: kubeapps-registry-fit2cloud-com-key

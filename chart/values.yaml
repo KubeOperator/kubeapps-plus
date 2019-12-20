@@ -414,8 +414,8 @@ dashboard:
   ##
   image:
     registry: docker.io
-    repository: orangem21/kubeappsplus_dashboard
-    tag: latest
+    repository: kubeoperator/kubeapps-plus
+    tag: v1.0
   ## Dashboard service parameters
   ##
   service:

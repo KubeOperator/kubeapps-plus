@@ -45,7 +45,7 @@ func (c *Clientset) KubeappsV1alpha1() kubeappsv1alpha1.KubeappsV1alpha1Interfac
 	return c.kubeappsV1alpha1
 }
 
-//不推荐：Kubeapps检索KubeappsClient的默认版本。
+//不推荐: Kubeapps检索KubeappsClient的默认版本。
 //请明确选择版本。
 func (c *Clientset) Kubeapps() kubeappsv1alpha1.KubeappsV1alpha1Interface {
 	return c.kubeappsV1alpha1
@@ -81,7 +81,7 @@ func NewForConfig(c *rest.Config) (*Clientset, error) {
 }
 
 // NewForConfigOrDie 为给定的配置创建一个新的客户端集
-// 如果配置中有错误，则会死机.
+// 如果配置中有错误, 则会死机.
 func NewForConfigOrDie(c *rest.Config) *Clientset {
 	var cs Clientset
 	cs.kubeappsV1alpha1 = kubeappsv1alpha1.NewForConfigOrDie(c)

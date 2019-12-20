@@ -3,7 +3,7 @@
 用于管理应用程序(Helm)存储库的控制器为
 [Kubeapps Plus](https://kubeapps.com).
 
-一个AppRepository资源如下所示：
+一个AppRepository资源如下所示: 
 
 ```
 apiVersion: v1

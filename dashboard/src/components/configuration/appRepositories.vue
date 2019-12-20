@@ -101,7 +101,7 @@
                     cancelButtonText: '取消',
                     type: 'warning'
                 }).then(() => {
-                    noticeMessage(this, ' 正在删除，请稍等 ', 'success')
+                    noticeMessage(this, ' 正在删除, 请稍等 ', 'success')
                     this.loading = true
                     this.deleteRepo(row)
                 }).catch(() => {

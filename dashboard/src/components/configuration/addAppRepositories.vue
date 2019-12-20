@@ -136,17 +136,17 @@
             },
             installRepo: async function(){
                 if (!this.name) {
-                    noticeMessage(this, ' 名称不允许为空，请填写名称 ', 'warning')
+                    noticeMessage(this, ' 名称不允许为空, 请填写名称 ', 'warning')
                 } else if (!this.url) {
-                    noticeMessage(this, ' URL不允许为空，请填写版本 ', 'warning')
+                    noticeMessage(this, ' URL不允许为空, 请填写版本 ', 'warning')
                 } else if (this.radio === 'basic' && !this.username) {
-                    noticeMessage(this, '用户名称不允许为空，请填写用户名称', 'warning')
+                    noticeMessage(this, '用户名称不允许为空, 请填写用户名称', 'warning')
                 }else if(this.radio === 'basic' && !this.password){
-                    noticeMessage(this, '密码不允许为空，请填写密码', 'warning')
+                    noticeMessage(this, '密码不允许为空, 请填写密码', 'warning')
                 } else if (this.radio === 'bearer' && !this.token) {
-                    noticeMessage(this, '令牌不允许为空，请填写令牌', 'warning')
+                    noticeMessage(this, '令牌不允许为空, 请填写令牌', 'warning')
                 } else if (this.radio === 'custom' && !this.completeAuthorizationHeader) {
-                    noticeMessage(this, '完整的授权抬头不允许为空，请填写完整的授权抬头', 'warning')
+                    noticeMessage(this, '完整的授权抬头不允许为空, 请填写完整的授权抬头', 'warning')
                 }else{
                     await this.$confirm('是否保存?', '提示', {
                         confirmButtonText: '确定',
@@ -155,11 +155,11 @@
                     }).then(() => {
                         for(let param of this.params){
                             if(this.name == param.metadata.name){
-                                noticeMessage(this, '名称不允许重复，请重新填写', 'warning')
+                                noticeMessage(this, '名称不允许重复, 请重新填写', 'warning')
                                 return;
                             }
                         }
-                        noticeMessage(this, ' 正在保存，请稍等 ', 'success')
+                        noticeMessage(this, ' 正在保存, 请稍等 ', 'success')
                         this.loading = true
                         this.installRepoSubmit()
                     }).catch(() => {

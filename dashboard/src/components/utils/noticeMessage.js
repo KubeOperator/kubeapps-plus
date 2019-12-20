@@ -1,6 +1,6 @@
 /**
  * @msg 消息提示
- * @type 类型：成功 success、警告 warning、消息 info、错误 error
+ * @type 类型: 成功 success、警告 warning、消息 info、错误 error
  * @author: maguohao
  */
 var noticeMessage = function (obj, msg, type) {

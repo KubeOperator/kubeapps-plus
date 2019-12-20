@@ -10,6 +10,7 @@
 >### 声明
 >Kubeapps Plus是基于[Kubeapps](https://github.com/kubeapps/kubeapps)的扩展，[Kubeapps](https://github.com/kubeapps/kubeapps)是由[bitnami](https://bitnami.com/)发布的面向Kubernetes的应用服务目录。Kubeapps Plus的主要扩展是中文本地化，以及支持离线应用包的管理。<br>
 >Kubeapps Plus使用Apache License 2.0许可, 与[Kubeapps](https://github.com/kubeapps/kubeapps/blob/master/LICENSE)相同.
+---
 
 Kubeapps Plus是借鉴kubeapps的一个国产项目。基于Web的UI，用于在Kubernetes集群中部署和管理应用程序。 Kubeapps Plus使您能够：
 

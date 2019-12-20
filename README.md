@@ -3,7 +3,7 @@
 ![License](https://img.shields.io/badge/License-Apache%202.0-red)
 ![HitCount](http://hits.dwyl.io/kubeoperator/kubeapps-plus.svg)
 
->### Sate
+>### Statement
 >Kubeapps Plus is an extension for [Kubeapps](https://github.com/kubeapps/kubeapps) which is a popular application dashboard on Kubernetes powered by [bitnami](https://bitnami.com/). The main extensions are localization for chinese and supporting off-line application package management.<br>
 >Kubeapps Plus is licensed under the Apache License 2.0, same as [Kubeapps](https://github.com/kubeapps/kubeapps/blob/master/LICENSE).
 >              

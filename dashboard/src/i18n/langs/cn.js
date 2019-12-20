@@ -40,7 +40,7 @@ const cn = {
         'not_ready': '未准备',
         'access_urls': '访问网址',
         'notes': '描述',
-        'Secrets': '机密',
+        'secrets': '机密',
         'deployments': '部署',
         'services': '服务',
         'other_resources': '其他资源',

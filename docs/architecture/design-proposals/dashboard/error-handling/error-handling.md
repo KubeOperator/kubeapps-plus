@@ -22,7 +22,7 @@
 * 总会有一个可以显示错误的地方。
 * 错误消息必须以一致的方式显示在UI中。
 * 我们将有一个定义的API来引发错误。 聚合资源特定的错误操作。
-* 意外错误和已处理错误均应通过相同机制提出并显示。 这意味着例如React组件和异步Thunk Action具有一致的引发错误的方式。
+* 意外错误和已处理错误均应通过相同机制提出并显示。 这意味着例如Vue组件和异步Thunk Action具有一致的引发错误的方式。
 * 支持显示多个错误。 在我们的案例中很重要，因为我们依赖于为单一目的(添加新存储库)并行调用多个API端点(创建密钥，创建appRepository)。
 
 ## 详细设计
@@ -41,7 +41,7 @@
 
 #### 实施细节
 
-从理论上讲，使用React的[Error boundary](https://reactjs.org/docs/error-boundaries.html)可以轻松实现全部目标。 在我们的例子中，我们将包装“ Root”或“ Layout”组件的渲染内容。 如果我们希望允许应用程序呈现页眉和页脚但包装动态内容，则可以在LayoutComponent中进行操作，例如：
+从理论上讲，使用Vue的[Error boundary](https://reactjs.org/docs/error-boundaries.html)可以轻松实现全部目标。 在我们的例子中，我们将包装“ Root”或“ Layout”组件的渲染内容。 如果我们希望允许应用程序呈现页眉和页脚但包装动态内容，则可以在LayoutComponent中进行操作，例如：
 
 将动态内容包装在页面内，但不包括页眉和页脚。
 
@@ -71,7 +71,7 @@
 
 我们可以实现单个ErrorSelector组件，该组件仅在布局中呈现一次并连接到Redux存储。 这是[此模式](https://stackoverflow.com/a/34403521)的示例。
 
-这个新商店将能够包含多个错误。 这旨在支持其中2个异步调用可以返回2个都相关的错误的情况。 这也使我们将来可以使用[this](https://github.com/fkhadra/react-toastify)之类的第三方库轻松处理堆积的错误。
+这个新商店将能够包含多个错误。 这旨在支持其中2个异步调用可以返回2个都相关的错误的情况。 这也使我们将来可以使用类的第三方库轻松处理堆积的错误。
 
 在我们的案例中，实施概述可能看起来像这样，下面有更多详细信息：
 
@@ -143,6 +143,6 @@ AllId将包含标识符列表，并将用于指示顺序。
 
 ## 参考文献
 
-* [全局错误模式示例](https://stackoverflow.com/questions/34403269/what-is-the-best-way-to-deal-with-a-fetch-error-in-react-redux/34403521#34403521 )
+* [全局错误模式示例](https://stackoverflow.com/questions/34403269/what-is-the-best-way-to-deal-with-a-fetch-error-in-Vue-redux/34403521#34403521 )
 * [Redux状态最佳实践](https://redux.js.org/recipes/structuringreducers/normalizingstateshape#designing-a-normalized-state)
-* [React错误边界](https://reactjs.org/docs/error-boundaries.html)
+* [Vue错误边界](https://reactjs.org/docs/error-boundaries.html)

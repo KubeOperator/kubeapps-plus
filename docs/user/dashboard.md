@@ -10,7 +10,7 @@
 
 * 从仪表板欢迎页面开始：
 
-  ![仪表板主页](../img/dashboard-home.png)
+  ![仪表板主页](../img/dashboard-home1.png)
 
 * 使用“图表”菜单从官方Kubernetes图表存储库中的图表列表中选择一个应用程序。 本示例假定您要部署MariaDB。
 

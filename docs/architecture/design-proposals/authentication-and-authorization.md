@@ -1,13 +1,13 @@
-# AuthN/AuthZ in Kubeapps Plus
+# Kubeapps Plus中的身份验证/授权
 
 ## 目的
 
-利用Kubeapps Plus中Kubernetes的RBAC原语来：
+利用Kubeapps Plus中Kubernetes的RBAC：
 
 1.  提供对仪表板的身份验证访问
 1.  将仪表板中的某些操作限制为单个用户
 
-## 动机
+## 目的
 
 考虑一家企业MyCompany Ltd.，它希望向其员工提供Kubeapps Plus，作为部署和管理在Kubernetes集群中运行的应用程序的一种方式。 Kubeapps Plus由集群操作员安装到集群中，并通过Kubeconfig凭据进行访问。 员工在其本地计算机上运行Kubeapps Plus仪表板以访问Kubeapps Plus。
 
@@ -25,7 +25,7 @@
 * 避免引入单独的方法来管理对Kubernetes资源的访问和授权(例如Kubeapps Plus内部用户数据库)
 * 不支持所有可能的Kubernetes身份验证提供程序和方法
 
-## 用户故事
+## 用户目标
 
 * 作为集群运营商，我想在外部公开Kubeapps Plus，但只允许授权用户执行某些操作
 * 作为组织中一个工程团队的成员，我希望能够在我的团队的命名空间中部署和管理应用程序，但是我不想访问另一个团队的应用程序
@@ -36,7 +36,7 @@
 
 集群运营商能够实施各种策略以对Kubernetes集群进行身份验证。 最常见的方法是客户端证书/密钥和令牌认证。 此外，身份验证代理可用于与其他身份验证协议集成，身份验证Webhook可用于验证令牌身份验证中的承载令牌。
 
-### 在`Kubeapps Plus up'上配置身份验证提供程序
+### 在`Kubeapps Plus up`上配置身份验证提供程序
 
 配置身份验证提供程序通常由集群运营商完成，并且通常需要使用标志来配置API服务器以启用不同的策略。 因此，使用身份验证提供程序配置群集超出了Kubeapps Plus的范围。
 
@@ -162,7 +162,7 @@ Kubeapps Plus将尝试从API提取名称空间列表，但是如果不允许此�
 
 #### 错误处理
 
-当前，在所有情况下，仪表板都无法很好地处理API错误。 通过此更改，当某些RBAC角色丢失时，可能会出现更多API错误(未经授权的错误)。 使用_await/async_时，通常会导致承诺拒绝的API错误会作为JavaScript异常抛出。 可能可以利用[React Error Boundaries](https://reactjs.org/blog/2017/07/26/error-handling-in-react-16.html)捕获组件内的错误并显示 错误信息。
+当前，在所有情况下，仪表板都无法很好地处理API错误。 通过此更改，当某些RBAC角色丢失时，可能会出现更多API错误(未经授权的错误)。 使用_await/async_时，通常会导致承诺拒绝的API错误会作为JavaScript异常抛出。 可能可以利用Vue Error Boundaries 捕获组件内的错误并显示"错误信息"。
 
 ### Kubernetes API Proxy
 
@@ -170,19 +170,19 @@ Kubeapps Plus将尝试从API提取名称空间列表，但是如果不允许此�
 
 出于安全原因，默认情况下，kubectl代理不接受来自非本地主机名的请求。 要启用从LoadBalancer IP/主机名或Ingress主机名的访问，我们将在运行代理时设置`--accept-hosts =。*`选项。
 
-由于Kubeapps Plus现在将很高兴将整个Kubernetes API暴露给已配置的Ingress，因此这显然引起了安全方面的担忧。 为了减轻这种攻击面：
+由于 Kubeapps Plus 现在将很高兴将整个 Kubernetes API 暴露给已配置的 Ingress ，因此这显然引起了安全方面的担忧。 为了减轻这种攻击面：
 
 1.  默认情况下，分配给代理容器的服务帐户将没有配置的RBAC角色
 
-2.  我们将在代理上配置_-- accept-paths_选项以仅公开Kubeapps Plus使用的端点
+2.  我们将在代理上配置`_-- accept-paths_`选项以仅公开 Kubeapps Plus 使用的端点
 
-3.  默认情况下(今天)，Kubeapps Plus nginx-ingress服务将默认配置为_ClusterIP_，集群操作员将需要显式设置自己的Ingress或将服务切换到LoadBalancer以启用从集群外部的访问-将记录在案
+3.  默认情况下(今天), Kubeapps Plus nginx-ingress 服务将默认配置为 _ClusterIP_ , 集群操作员将需要显式设置自己的Ingress或将服务切换到LoadBalancer以启用从集群外部的访问-将记录在案
 
 最重要的是，文档应鼓励集群运营商确保仅可通过私有内部网络(例如VPN)访问Kubeapps Plus。
 
 ### 文献资料
 
-#### Kubeapps Plus的RBAC角色
+#### Kubeapps Plus 的 RBAC 角色
 
 为了使集群运营商能够清楚，正确地将RBAC角色分配给Kubeapps Plus用户，我们概述了在Kubeapps Plus中执行特定操作所需的确切角色。 表示特定名称空间的角色必须在该名称空间中应用。 _Namespace_列中的通配符指示该角色可以应用于特定的名称空间(推荐)或群集范围内。
 
@@ -537,10 +537,8 @@ create</td>
 
 3.  修改Kubeapps Plus创建的Ingress对象以使用其他Ingress控制器(通过配置_kubernetes.io/ingress.class_批注)
 
-#### 使用oauth2_proxy提供额外的身份验证层
+#### 使用 oauth2_proxy 提供额外的身份验证层
 
-我们将添加文档来描述如何在Kubeapps Plus前面放置[oauth2_proxy](https://github.com/bitly/oauth2_proxy)之类的东西，以启用附加的身份验证/授权层。 使用oauth2_proxy可以通过公司的GitHub组织，Google域等配置登录。
+我们将添加文档来描述如何在 Kubeapps Plus 前面放置[oauth2_proxy](https://github.com/bitly/oauth2_proxy)之类的东西，以启用附加的身份验证/授权层。 使用oauth2_proxy可以通过公司的GitHub组织，Google域等配置登录。
 
 在使用已配置的提供程序执行oauth2跳转之后，用户仍然需要使用令牌登录才能访问Kubernetes API。 可能可以设置代理以转发从oauth2跳转中检索到的访问令牌，以便Kubeapps Plus可以使用它。 参见[https://github.com/kubernetes/dashboard/pull/1539](https://github.com/kubernetes/dashboard/pull/1539)
-
-## 公开问题

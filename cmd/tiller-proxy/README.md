@@ -1,66 +1,66 @@
 # Tiller Proxy
 
-This proxy is a service for Kubeapps Plus that connects the Dashboard with Tiller. The goal of this Proxy is to provide a secure proxy for authenticated users to deploy, upgrade and delete charts in different namespaces.
+该代理是Kubeapps Plus的一项服务，该服务将仪表板与Tiller连接起来。 该代理的目标是为经过身份验证的用户提供安全的代理，以在不同名称空间中部署，升级和删除图表。
 
-Part of the logic of this tool has been extracted from [helm-CRD](https://github.com/bitnami-labs/helm-crd). That tool has been deprecated in Kubeapps Plus to avoid having to synchronize the state of a release in two different places (Tiller and the CRD object).
+该工具的部分逻辑已从[helm-CRD](https://github.com/bitnami-labs/helm-crd)中提取。 该工具已在Kubeapps Plus中弃用，以避免必须在两个不同的地方(Tiller和CRD对象)同步发布的状态。
 
-The client should provide the header `Authorization: Bearer TOKEN` being TOKEN the Kubernetes API Token in order to perform any action.
+客户端应该提供标头`Authorization：Bearer TOKEN`作为令牌，Kubernetes API令牌才能执行任何操作。
 
-# Configuration
+# 配置
 
-It is possible to configure this proxy with the following flags:
+可以使用以下标志配置此代理：
 
 ```
-      --debug                           enable verbose output
-      --disable-auth                    Disable authorization check
-      --home string                     location of your Helm config. Overrides $HELM_HOME (default "/root/.helm")
-      --host string                     address of Tiller. Overrides $HELM_HOST
-      --kube-context string             name of the kubeconfig context to use
-      --list-max int                    maximum number of releases to fetch (default 256)
-      --tiller-connection-timeout int   the duration (in seconds) Helm will wait to establish a connection to tiller (default 300)
-      --tiller-namespace string         namespace of Tiller (default "kube-system")
-      --tls                             enable TLS for request
-      --tls-ca-cert string              path to TLS CA certificate file (default "/ca.crt")
-      --tls-cert string                 path to TLS certificate file (default "/tls.crt")
-      --tls-key string                  path to TLS key file (default "/tls.key")
-      --tls-verify                      enable TLS for request and verify remote
+      --debug                           启用详细输出
+      --disable-auth                    禁用授权检查
+      --home string                     您的头盔配置的位置。 覆盖$ HELM_HOME(默认为`/root/.helm`)
+      --host string                     Tiller地址。 覆盖$HELM_HOST
+      --kube-context string             要使用的kubeconfig上下文的名称
+      --list-max int                    要获取的最大发行数量(默认256)
+      --tiller-connection-timeout int   持续时间(以秒为单位)Helm将等待建立与分till的连接(默认为300)持续时间(以秒为单位)Helm将等待建立与分till的连接(默认为300)
+      --tiller-namespace string         Tiller的名称空间(默认为“kube-system”)
+      --tls                             为请求启用TLS
+      --tls-ca-cert string              TLS CA证书文件的路径(默认为“/ca.crt”)
+      --tls-cert string                 TLS证书文件的路径(默认为“/tls.crt”)
+      --tls-key string                  TLS密钥文件的路径(默认为“/tls.key”)
+      --tls-verify                      启用TLS进行请求并验证远程
 ```
 
-# Routes
+# 路径
 
-This proxy provides 6 different routes:
+该代理提供6种不同的路由：
 
- - `GET` `/v1/releases`: List all the releases of the Tiller
- - `GET` `/v1/namespaces/{namespace}/releases`: List all the releases within a namespace
- - `POST` `/v1/namespaces/{namespace}/releases`: Create a new release
- - `GET` `/v1/namespaces/{namespace}/releases/{release}`: Get release info
- - `PUT` `/v1/namespaces/{namespace}/releases/{release}`: Update release info
- - `DELETE` `/v1/namespaces/{namespace}/releases/{release}`: Delete a release
+  - `GET` `/v1/releases`：列出耕种机的所有版本
+  - `GET` `/v1/namespaces/{namespace}/releases`：列出名称空间中的所有版本
+  - `POST` `/v1/namespaces/{namespace}/releases`：创建一个新版本
+  - `GET` `/v1/namespaces/{namespace}/releases/{release}`：获取发布信息
+  - `PUT` `/v1/namespaces/{namespace}/releases/{release}`：更新发布信息
+  - `DELETE` `/v1/namespaces/{namespace}/releases/{release}`：删除发行版
 
-# Enabling authorization
+# 启用授权
 
-By default, authorization for any request is enabled (it can be disabled using the flag --disable-auth). If enabled, the client should have permissions to:
+默认情况下，将启用任何请求的授权(可以使用标志--disable-auth禁用该请求)。 如果启用，则客户端应具有以下权限：
 
- - "Read" access to all the release resources in a release when doing a HTTP GET over a specific release.
- - "Create" access to all the release resources in a release when doing a when doing an HTTP POST.
- - "Create", "Update" and "Delete" permissions to all the release resources when doing an HTTP PUT to upgrade a release.
- - "Delete" permissions to all the release resources when doing an HTTP PUT.
+  - 在特定版本上执行HTTP GET时，“读取”对版本中所有版本资源的访问权限。
+  - 执行HTTP POST时，“创建”对版本中所有版本资源的访问权限。
+  - 执行HTTP PUT升级发行版时，对所有发行版资源具有“创建”，“更新”和“删除”权限。
+  - 执行HTTP PUT时，对所有发布资源具有“删除”权限。
 
-Note that the user only needs a valid token in order to list releases.
+请注意，用户只需要有效的令牌即可列出发行版。
 
-Right now, the only supported method for authentication is using a bearer token.
+目前，唯一支持的身份验证方法是使用承载令牌。
 
-# Workflow
+# 工作流程
 
-Each request should contain at least:
+每个请求应至少包含：
 
- - The required action: "get", "create", "upgrade" or "delete".
- - The URL of the chart repository.
- - The ID of the chart within the chart repository.
- - The version and values to use.
+  -必需的操作：“获取”，“创建”，“升级”或“删除”。
+  -图表存储库的网址。
+  -图表存储库中图表的ID。
+  -要使用的版本和值。
 
-With that information the proxy will resolve the complete manifest of the application. Then it will gather the different API groups that are included in the manifest to validate that the user identified by the bearer token can perform the requested action.
+有了这些信息，代理将解析应用程序的完整清单。 然后，它将收集清单中包含的不同API组，以验证由承载令牌标识的用户可以执行请求的操作。
 
-This is an example diagram of the communication between Kubeapps Plus (the dashboard), the proxy, Tiller and the K8s API for deploying an application "foo" that is composed of a `Deployment` and a `Service`:
+这是Kubeapps Plus(仪表板)，代理，Tiller和K8s API之间的通信示例图，用于部署由“ Deployment”和“ Service”组成的应用程序“ foo”：
 
 ![diagram](diagram.png)

@@ -1,9 +1,9 @@
 # AppRepository Controller
 
-The controller for managing app (Helm) repository syncs for
-[Kubeapps](https://kubeapps.com).
+用于管理应用程序(Helm)存储库的控制器为
+[Kubeapps Plus](https://kubeapps.com).
 
-An AppRepository resource looks like this:
+一个AppRepository资源如下所示：
 
 ```
 apiVersion: v1
@@ -17,10 +17,8 @@ spec:
   type: helm
 ```
 
-This controller will monitor resources of the above type and create [Kubernetes
-CronJobs](https://kubernetes.io/docs/concepts/workloads/controllers/cron-jobs/)
-to schedule the repository to be synced to the database. This is a component of
-Kubeapps and is intended to be used with it.
+该控制器将监视上述类型的资源并创建[Kubernetes CronJobs](https://kubernetes.io/docs/concepts/workloads/controllers/cron-jobs/)
+计划将存储库同步到数据库。 这是
+Kubeapps Plus旨在与它一起使用。
 
-Based off the [Kubernetes Sample
-Controller](https://github.com/kubernetes/sample-controller).
+基于[Kubernetes示例控制器](https://github.com/kubernetes/sample-controller)。

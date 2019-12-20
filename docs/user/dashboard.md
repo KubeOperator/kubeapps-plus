@@ -16,9 +16,7 @@
 
   ![MariaDB图表](../img/mariadb-chart.png)
 
-* Click the "Deploy using Helm" button. You will be prompted for the release name, cluster namespace and values for your application deployment.
-
-  单击“使用头盔部署”按钮。 系统将提示您输入发行名称，集群名称空间和应用程序部署的值。
+* 单击“使用 Helm 部署”按钮。 系统将提示您输入发行名称，集群名称空间和应用程序部署的值。
 
 * 点击“提交”按钮。 该应用程序将被部署。 您将能够直接从浏览器跟踪新的Kubernetes部署。 部署页面的“注释”部分包含帮助您使用该应用程序的重要信息。
 

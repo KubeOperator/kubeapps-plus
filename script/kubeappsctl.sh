@@ -191,7 +191,7 @@ function set_chartrepo() {
 
 function upload_chart() {
     cd ${PROJECT_DIR}/jenkins
-    helm push . localrepo
+    helm push . localrepo -f
     if [ $? -eq 0 ]; then
         echo ">>> 上传完成"
     else

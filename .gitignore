@@ -2,3 +2,5 @@
 .idea/
 target/
 script/jenkins/.DS_Store
+script/jenkins/Image/jenkins.jar
+script/jenkins/Image/jnlp-slave.jar

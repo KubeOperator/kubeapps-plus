@@ -1,3 +1,4 @@
 # IDEs and editors
 .idea/
 target/
+script/jenkins/.DS_Store

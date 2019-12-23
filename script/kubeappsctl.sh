@@ -134,7 +134,7 @@ function docker_upload_image() {
     docker load <jenkins.jar
     docker load <jnlp-slave.jar
     #jenkins
-    docker tag a3f949e5ebfd ${registry_host}/jenkins/jenkins:lts
+    docker tag 22b8b9a84dbe ${registry_host}/jenkins/jenkins:lts
     #jnlp-salve
     docker tag 6bf8f3767d8b ${registry_host}/jenkins/jnlp-slave:3.27-1
 
@@ -200,14 +200,14 @@ function upload_chart() {
 }
 
 function usage() {
-    echo "Kubeapps 镜像推送脚本"
+    echo "Kubeapps 推送Docker镜像及Helm Chart包脚本"
     echo
     echo "Usage: "
-    echo "  ./jmsctl.sh [COMMAND] [ARGS...]"
-    echo "  ./jmsctl.sh --help"
+    echo "  ./kubeappsctl.sh [COMMAND] [ARGS...]"
+    echo "  ./kubeappsctl.sh --help"
     echo
     echo "Commands: "
-    echo "  start 配置并推送镜像jumpserver"
+    echo "  start 推送Docker镜像及Helm Chart包"
 }
 
 #主进程

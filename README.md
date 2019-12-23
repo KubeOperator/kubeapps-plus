@@ -1,38 +1,21 @@
-# <img src="./docs/img/logo.png" width="40" align="left"> Kubeapps Plus
+# <img src="./docs/img/logo.png" width="40" align="left"> KubeApps Plus
 
 ![License](https://img.shields.io/badge/License-Apache%202.0-red)
 ![HitCount](http://hits.dwyl.io/kubeoperator/kubeapps-plus.svg)
 
->
->Kubeapps Plus is an extension for [Kubeapps](https://github.com/kubeapps/kubeapps) which is a popular application dashboard on Kubernetes powered by [bitnami](https://bitnami.com/). The main extensions are localization for chinese and supporting offline application package management.<br>
->Kubeapps Plus is licensed under the Apache License 2.0, same as [Kubeapps](https://github.com/kubeapps/kubeapps/blob/master/LICENSE).
->              
->Kubeapps Plus是基于[Kubeapps](https://github.com/kubeapps/kubeapps)的扩展, [Kubeapps](https://github.com/kubeapps/kubeapps)是由[bitnami](https://bitnami.com/)发布的面向Kubernetes的应用服务目录。Kubeapps Plus的主要扩展是中文本地化, 以及支持离线应用包的管理。<br>
->Kubeapps Plus使用Apache License 2.0许可, 与[Kubeapps](https://github.com/kubeapps/kubeapps/blob/master/LICENSE)相同.
->***
+KubeApps Plus 是 [KubeApps](https://github.com/kubeapps/kubeapps) 的定制版本，基于 Web UI 界面在 Kubernetes 集群中部署和管理 Helm-based 的应用程序。[KubeApps](https://github.com/kubeapps/kubeapps) 是由 [Bitnami](https://bitnami.com/) 发布的 Kubernetes 应用商店，KubeApps Plus 当前的主要定制是中文支持和离线应用包支持。KubeApps Plus 使用 Apache License 2.0 许可, 与 [KubeApps](https://github.com/kubeapps/kubeapps/blob/master/LICENSE) 相同。
 
-## 一、概要
+## 主要功能
 
-Kubeapps Plus 是借鉴 kubeapps 的一个国产项目。基于 Web 的UI, 用于在 Kubernetes 集群中部署和管理应用程序。
+- 从 Helm Chart Repo 中浏览并部署 Helm Chart 应用；
+- 集群中已有 Helm-based 应用的查看、升级和卸载；
+- 支持自定义 Helm Chart Repo（比如 ChartMuseum 和 JFrog Artifactory 等）；
+- 基于 Kubernetes RBAC 的身份验证和授权；
 
-## 二、功能说明
+## 安装 KubeApps Plus
 
-- 从图表存储库浏览和部署图表 [Helm](https://github.com/helm/helm)
-- 检查, 升级和删除群集中安装的基于 Helm 的应用程序
-- 添加自定义和 [私人图表存储库](docs/user/private-app-repository.md) (支持 [ChartMuseum](https://github.com/helm/chartmuseum) 和 [JFrog Artifactory](https://www.jfrog.com/confluence/display/RTF/Helm+Chart+Repositories))
-- 从以下位置浏览并提供外部服务 [服务目录](https://github.com/kubernetes-incubator/service-catalog)
-- 使用服务目录绑定将基于 Helm 的应用程序连接到外部服务
-- 基于 Kubernetes 的安全身份验证和授权 [基于角色的访问控制](docs/user/access-control.md)
-
-## 三、基于角色的使用流程
-
-- 管理员角色安装、注册 Kubeapps Plus, 工作空间用户开通上面的其他应用。
-
-![基于角色的使用流程](./docs/img/user-role-process.png)
-
-## 四、快速开始
-
-使用 Helm 图表安装最新版本的 Kubeapps Plus: 
+- 自动安装：KubeApps Plus 是 KubeOperator 的一个内置应用。通过 KubeOperator 部署的 K8s 集群会自动安装上 KubeApps Plus；
+- 手动安装：使用如下脚本自行在已有 K8s 集群中安装 KubeApps Plus；
 
 ```bash
 git clone https://github.com/KubeOperator/kubeapps-plus.git
@@ -40,26 +23,20 @@ cd kubeapps_plus
 helm install --name kubeapps-plus --namespace kubeapps-plus ./chart
 ```
 
-有关如何安装和使用 Kubeapps Plus 的详细说明, 请遵循 [入门指南](docs/user/getting-started.md).
+具体请参考：[KubeApps Plus 手动安装指南](chart+/README.md)
 
-## 五、开发人员文件
+## 使用 KubeApps Plus
 
-- The [Kubeapps Plus 构建指南](docs/developer/build.md) 有关从源代码设置构建环境和构建 Kubeapps Plus 的说明。
-- The [Kubeapps Plus 开发人员文档](docs/developer/README.md) 有关设置开发人员环境以在 Kubeapps Plus 及其组件上进行开发的说明。
+- 具体请参考：[KubeApps Plus 使用指南](docs/user/getting-started.md)
 
-## 六、下一步
+## KubeApps Plus 开发指南
 
-如果您已按照 [安装 Kubeapps Plus](docs/user/getting-started.md) 的说明进行操作,  请检查如何 [使用 Kubeapps Plus](docs/user/dashboard.md) 轻松管理在集群中运行的应用程序, 或 [深入了解Kubeapps Plus中包含的内容]](docs/architecture/overview.md).
+- [Kubeapps Plus 架构说明](docs/architecture/overview.md)；
+- [KubeApps Plus 构建指南](docs/developer/build.md)；
+- [KubeApps Plus 开发文档](docs/developer/README.md)；
 
-## 七、相关资源
-
-- [初学者入门](docs/user/getting-started.md)
-- [详细的安装说明](chart+/README.md)
-- [Kubeapps Plus仪表板文档](docs/user/dashboard.md)
-- [Kubeapps Plus组件](docs/architecture/overview.md)
-
-## 八、沟通交流
+## 沟通交流
  
 - 技术交流 QQ 群：825046920；
 - 技术支持邮箱：support@fit2cloud.com；
-- 微信群： 搜索微信号 wh_it0224，添加好友，备注（城市-github用户名）, 验证通过会加入群聊；
+- 微信群： 搜索微信号 wh_it0224，添加好友，备注（城市-github用户名）, 验证通过会加入群聊。

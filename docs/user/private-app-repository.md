@@ -86,12 +86,12 @@ For more details, please visit https://github.com/goharbor/harbor .
 - 首先在Harbor.yml中以默认管理员用户身份登录“ http: // <IP>”处的Harbor管理门户。
 - 创建一个具有公共访问权限的名为“ my-helm-repo”的新项目。 每个项目都将用作Helm图表存储库。
   <img src="../img/harbor-new-project.png" width="300px">
-- 单击项目名称以查看项目详细信息页面, 然后单击“头盔图”选项卡以列出所有头盔图。
+- 单击项目名称以查看项目详细信息页面, 然后单击“helm chart”选项卡以列出所有helm charts。
   <img src="../img/harbor-list-charts.png" width="600px">
-- 点击“上传”按钮上传头盔图表。 您也可以使用helm命令上传图表。
+- 点击“上传”按钮上传helm chart。 您也可以使用helm命令上传图表。
   <img src="../img/harbor-upload-chart.png" width="500px">
 
-有关更多详细信息, 请参考['在港口管理头盔图表'](https://github.com/goharbor/harbor/blob/master/docs/user_guide.md#manage-helm-charts)。
+有关更多详细信息, 请参考['在港口管理helm chart'](https://github.com/goharbor/harbor/blob/master/docs/user_guide.md#manage-helm-charts)。
 
 ### Harbor: 在Kubeapps Plus中配置存储库
 

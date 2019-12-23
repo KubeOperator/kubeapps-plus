@@ -1,8 +1,8 @@
 # 保护 Kubeapps Plus 安装
 
-在本指南中, 我们将说明如何保护多租户群集中Kubeapps Plus的安装。 仅当具有不同权限的不同人员可以访问同一群集时, 才需要执行以下步骤。 可以在[here](https://github.com/kubernetes/helm/blob/master/docs/securing_installation.md)中找到保护头盔的通用说明。
+在本指南中, 我们将说明如何保护多租户群集中Kubeapps Plus的安装。 仅当具有不同权限的不同人员可以访问同一群集时, 才需要执行以下步骤。 可以在[here](https://github.com/kubernetes/helm/blob/master/docs/securing_installation.md)中找到保护helm的通用说明。
 
-主要目标是确保对[Tiller](https://github.com/kubernetes/helm/blob/master/docs/securing_installation.md)的访问(头盔服务器端组件)。 Tiller有权创建或删除集群中的任何资源, 因此我们在公开其提供的功能时应格外小心。
+主要目标是确保对[Tiller](https://github.com/kubernetes/helm/blob/master/docs/securing_installation.md)的访问(helm服务器端组件)。 Tiller有权创建或删除集群中的任何资源, 因此我们在公开其提供的功能时应格外小心。
 
 为了利用Kubeapps Plus安全功能, 您需要配置两件事: ** TLS证书**, 用于控制对Tiller和[** RBAC角色**]的访问(https://kubernetes.io/docs/reference/access-authn-authz/rbac/)授权请求。
 

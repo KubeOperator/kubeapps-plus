@@ -59,7 +59,7 @@ helm install --name kubeapps-plus --namespace kubeapps-plus ./chart
 ## 八、与 Monocular 的区别
 
 [Monocular](https://github.com/helm/monocular) 项目旨在运行一个针对Helm存储库的公共搜索和发现网站 (e.g. https://hub.kubeapps+.com). 在1.0版本发布之后, Monocular致力于为Helm Hub提供体验。
-Monocular 0.7及更高版本的版本具有在 Kubernetes 集群中安装, 查看和删除Helm发行版的基本功能。 专注于头盔中心体验, 自1.0版以来, 这些 [功能已删除]](https://github.com/helm/monocular#looking-for-an-in-cluster-application-management-ui) 并且不再受支持。 我们建议Monocular集群内功能的用户尝试使用Kubeapps Plus, 因为它提供了功能更强大, 更强大和更安全的解决方案来管理集群中的Helm应用程序。
+Monocular 0.7及更高版本的版本具有在 Kubernetes 集群中安装, 查看和删除Helm发行版的基本功能。 专注于helm中心体验, 自1.0版以来, 这些 [功能已删除]](https://github.com/helm/monocular#looking-for-an-in-cluster-application-management-ui) 并且不再受支持。 我们建议Monocular集群内功能的用户尝试使用Kubeapps Plus, 因为它提供了功能更强大, 更强大和更安全的解决方案来管理集群中的Helm应用程序。
 
 ## 九、沟通交流
  

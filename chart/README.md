@@ -39,7 +39,7 @@ cd kubeapps_plus
 helm install --name kubeapps-plus --namespace kubeapps-plus ./chart
 ```
 
-> **IMPORTANT** 这假设头盔安装不安全, 在生产中不建议使用。 请参阅[文档以了解如何在生产中保护Helm和Kubeapps Plus的安全](https://github.com/kubeapps/kubeapps/blob/master/docs/user/securing-kubeapps.md)。
+> **IMPORTANT** 这假设helm安装不安全, 在生产中不建议使用。 请参阅[文档以了解如何在生产中保护Helm和Kubeapps Plus的安全](https://github.com/kubeapps/kubeapps/blob/master/docs/user/securing-kubeapps.md)。
 
 该命令在Kubeapps名称空间的Kubernetes集群上部署Kubeapps Plus。 [Parameters](＃parameters)部分列出了可以在安装过程中配置的参数。
 
@@ -73,7 +73,7 @@ $ helm install --name kubeapps-plus --namespace kubeapps-plus -f custom-values.y
 
 ### 配置初始存储库
 
-默认情况下, Kubeapps Plus将跟踪[社区头盔图表](https://github.com/helm/charts)和[Kubernetes服务目录图表](https://github.com/kubernetes-incubator/service-catalog )。 要更改这些默认值, 请使用所需的参数覆盖[values.yaml](values.yaml)文件中存在的`apprepository.initialRepos`对象。
+默认情况下, Kubeapps Plus将跟踪[社区helm chart](https://github.com/helm/charts)和[Kubernetes服务目录图表](https://github.com/kubernetes-incubator/service-catalog )。 要更改这些默认值, 请使用所需的参数覆盖[values.yaml](values.yaml)文件中存在的`apprepository.initialRepos`对象。
 
 ### 配置与自定义名称空间Tiller实例的连接
 

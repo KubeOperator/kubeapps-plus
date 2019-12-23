@@ -13,7 +13,7 @@
 ```
       --debug                           启用详细输出
       --disable-auth                    禁用授权检查
-      --home string                     您的头盔配置的位置。 覆盖$ HELM_HOME(默认为`/root/.helm`)
+      --home string                     您的helm配置的位置。 覆盖$ HELM_HOME(默认为`/root/.helm`)
       --host string                     Tiller地址。 覆盖$HELM_HOST
       --kube-context string             要使用的kubeconfig上下文的名称
       --list-max int                    要获取的最大发行数量(默认256)

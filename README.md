@@ -11,7 +11,7 @@
 
 KubeApps Plus 是 KubeApps 的扩展项目，基于 Web UI 界面在 Kubernetes 集群中部署和管理 Helm-based 的应用程序。
 
-## 功能列表
+## 主要功能
 
 - 从 Helm Chart Repo 中浏览并部署 Helm Chart 应用；
 - 集群中已有 Helm-based 应用的查看、升级和卸载；
@@ -35,7 +35,7 @@ helm install --name kubeapps-plus --namespace kubeapps-plus ./chart
 
 - 具体请参考：[KubeApps Plus 使用指南](docs/user/getting-started.md)
 
-## 开发人员指南
+## KubeApps Plus 开发指南
 
 - [Kubeapps Plus 架构说明](docs/architecture/overview.md)；
 - [KubeApps Plus 构建指南](docs/developer/build.md) ；

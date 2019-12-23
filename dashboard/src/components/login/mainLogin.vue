@@ -35,8 +35,8 @@
                     <div style="margin-top: 50px">
                         <span>
                             <a
-                                    href="https://github.com/f2c-innovation/kubeapps_plus_dashborad"
-                                    target="_blank"
+                                href="https://github.com/KubeOperator/kubeapps-plus/issues"
+                                target="_blank"
                             >{{$t('message.ask_for_help')}}</a>
                         </span>
                     </div>

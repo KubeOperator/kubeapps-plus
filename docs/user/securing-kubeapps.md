@@ -27,15 +27,17 @@ helm init --tiller-tls --tiller-tls-verify \
 
 这是使用我们的证书安装Kubeapps Plus的命令: 
 
-```
-helm repo add bitnami https://charts.bitnami.com/bitnami
+```bash
+git clone https://github.com/KubeOperator/kubeapps-plus.git
+cd kubeapps_plus
 helm install \
   --tls --tls-ca-cert ca.cert.pem --tls-cert helm.cert.pem --tls-key helm.key.pem \
   --set tillerProxy.tls.ca="$(cat ca.cert.pem)" \
   --set tillerProxy.tls.key="$(cat helm.key.pem)" \
   --set tillerProxy.tls.cert="$(cat helm.cert.pem)" \
-  --namespace kubeapps \
-  bitnami/kubeapps
+  --name kubeapps-plus \
+  --namespace kubeapps-plus \
+  ./chart
 ```
 
 > Note: 要使用“ tls-verify”标志(并验证Tiller主机名), 证书应已在群集内配置了Tiller的主机: 默认情况下为“ tiller-deploy.kube-system”。

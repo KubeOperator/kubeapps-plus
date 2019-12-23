@@ -12,8 +12,9 @@
 ## TL;DR;
 
 ```bash
-helm repo add bitnami https://charts.bitnami.com/bitnami
-helm install --name kubeapps --namespace kubeapps bitnami/kubeapps
+git clone https://github.com/KubeOperator/kubeapps-plus.git
+cd kubeapps_plus
+helm install --name kubeapps-plus --namespace kubeapps-plus ./chart
 ```
 
 ## 介绍
@@ -32,9 +33,10 @@ helm install --name kubeapps --namespace kubeapps bitnami/kubeapps
 
 要以发布名称`kubeapps`安装图表: 
 
-```console
-$ helm repo add bitnami https://charts.bitnami.com/bitnami
-$ helm install --name kubeapps-plus --namespace kubeapps-plus bitnami/kubeapps
+```bash
+git clone https://github.com/KubeOperator/kubeapps-plus.git
+cd kubeapps_plus
+helm install --name kubeapps-plus --namespace kubeapps-plus ./chart
 ```
 
 > **IMPORTANT** 这假设头盔安装不安全, 在生产中不建议使用。 请参阅[文档以了解如何在生产中保护Helm和Kubeapps Plus的安全](https://github.com/kubeapps/kubeapps/blob/master/docs/user/securing-kubeapps.md)。

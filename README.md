@@ -31,8 +31,9 @@ Kubeapps Plus 是借鉴 kubeapps 的一个国产项目。基于 Web 的UI, 用�
 使用 Helm 图表安装最新版本的 Kubeapps Plus: 
 
 ```bash
-helm repo add bitnami https://charts.bitnami.com/bitnami
-helm install --name kubeapps-plus --namespace kubeapps-plus bitnami/kubeapps
+git clone https://github.com/KubeOperator/kubeapps-plus.git
+cd kubeapps_plus
+helm install --name kubeapps-plus --namespace kubeapps-plus ./chart
 ```
 
 有关如何安装和使用 Kubeapps Plus 的详细说明, 请遵循 [入门指南](docs/user/getting-started.md).

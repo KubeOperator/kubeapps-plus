@@ -15,8 +15,9 @@ Kubeapps Plus 已通过 Azure Kubernetes 服务(AKS), Google Kubernetes 引擎(G
 使用 Helm 图表安装最新版本的 Kubeapps Plus: 
 
 ```bash
-helm repo add bitnami https://charts.bitnami.com/bitnami
-helm install --name kubeapps-plus --namespace kubeapps-plus bitnami/kubeapps
+git clone https://github.com/KubeOperator/kubeapps-plus.git
+cd kubeapps_plus
+helm install --name kubeapps-plus --namespace kubeapps-plus ./chart
 ```
 
 有关安装, 配置和升级 Kubeapps Plus 的详细信息, 请点击[图表介绍文档](../../chart/README.md)。

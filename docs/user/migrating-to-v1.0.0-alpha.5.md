@@ -65,15 +65,17 @@ kubectl delete -f https://github.com/kubeless/kubeless/releases/download/v0.6.0/
 
 现在, 您可以使用此存储库中包含的Helm图表安装新版本的Kubeapps Plus: 
 
-```
-helm repo add bitnami https://charts.bitnami.com/bitnami
+```bash
+git clone https://github.com/KubeOperator/kubeapps-plus.git
+cd kubeapps_plus
 helm install \
   --tls --tls-ca-cert ca.cert.pem --tls-cert helm.cert.pem --tls-key helm.key.pem \
   --set tillerProxy.tls.ca="$(cat ca.cert.pem)" \
   --set tillerProxy.tls.key="$(cat helm.key.pem)" \
   --set tillerProxy.tls.cert="$(cat helm.cert.pem)" \
+  --name kubeapps-plus \
   --namespace kubeapps-plus \
-  bitnami/kubeapps
+  ./chart
 ```
 
 **NOTE**: 如果尚未使用TLS证书安装Helm, 则可以跳过TLS标志。

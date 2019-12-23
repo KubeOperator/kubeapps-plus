@@ -12,7 +12,7 @@
 
 如果Kubeapps Plus检测到反向代理(例如Ingress)已经设置了“ Authorization”标头, 则会跳过登录表单。 可以将Ingress对象配置为在对Kubeapps Plus的每个请求上注入硬编码的有效Kubernetes API令牌, 以强制跳过登录表单并允许所有API请求使用硬编码的令牌。
 
-**NOTE**: 在生产中不建议这样做, 因为任何有权访问Kubeapps Plus的人都将被授予与硬编码令牌关联的权限。
+**NOTE**: 在生产中不建议这样做, 因为任何有权访问 Kubeapps Plus 的人都将被授予与硬编码令牌关联的权限。
 
 这是您可以在Kubeapps Plus图表中配置以设置有效令牌的值的示例: 
 

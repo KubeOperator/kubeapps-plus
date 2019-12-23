@@ -24,7 +24,11 @@ Kubeapps Plus 是借鉴 kubeapps 的一个国产项目。基于 Web 的UI, 用�
 - 使用服务目录绑定将基于 Helm 的应用程序连接到外部服务
 - 基于 Kubernetes 的安全身份验证和授权 [基于角色的访问控制](docs/user/access-control.md)
 
-## 三、角色、使用流程
+## 三、基于角色的使用流程
+
+- 管理员角色安装、注册 Kubeapps Plus, 工作空间用户开通上面的其他应用。
+
+![基于角色的使用流程](../docs/img/user-role-process.png)
 
 ## 四、快速开始
 
@@ -40,10 +44,8 @@ helm install --name kubeapps-plus --namespace kubeapps-plus ./chart
 
 ## 五、开发人员文件
 
-请参阅: 
-
-- The [Kubeapps Plus 构建指南](docs/developer/build.md) 有关从源代码设置构建环境和构建Kubeapps Plus的说明。
-- The [Kubeapps Plus 开发人员文档](docs/developer/README.md) 有关设置开发人员环境以在Kubeapps Plus及其组件上进行开发的说明。
+- The [Kubeapps Plus 构建指南](docs/developer/build.md) 有关从源代码设置构建环境和构建 Kubeapps Plus 的说明。
+- The [Kubeapps Plus 开发人员文档](docs/developer/README.md) 有关设置开发人员环境以在 Kubeapps Plus 及其组件上进行开发的说明。
 
 ## 六、下一步
 
@@ -56,12 +58,7 @@ helm install --name kubeapps-plus --namespace kubeapps-plus ./chart
 - [Kubeapps Plus仪表板文档](docs/user/dashboard.md)
 - [Kubeapps Plus组件](docs/architecture/overview.md)
 
-## 八、与 Monocular 的区别
-
-[Monocular](https://github.com/helm/monocular) 项目旨在运行一个针对Helm存储库的公共搜索和发现网站 (e.g. https://hub.kubeapps+.com). 在1.0版本发布之后, Monocular致力于为Helm Hub提供体验。
-Monocular 0.7及更高版本的版本具有在 Kubernetes 集群中安装, 查看和删除Helm发行版的基本功能。 专注于helm中心体验, 自1.0版以来, 这些 [功能已删除]](https://github.com/helm/monocular#looking-for-an-in-cluster-application-management-ui) 并且不再受支持。 我们建议Monocular集群内功能的用户尝试使用Kubeapps Plus, 因为它提供了功能更强大, 更强大和更安全的解决方案来管理集群中的Helm应用程序。
-
-## 九、沟通交流
+## 八、沟通交流
  
 - 技术交流 QQ 群：825046920；
 - 技术支持邮箱：support@fit2cloud.com；

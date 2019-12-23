@@ -20,8 +20,8 @@ KubeApps Plus 是 KubeApps 的扩展项目，基于 Web UI 界面在 Kubernetes 
 
 ## 安装 KubeApps Plus
 
-- 自动安装：KubeApps Plus 是 KubeOperator 的一个内置应用。通过 KubeOperator 部署的 K8s 集群会自动安装上 KubeApps Plus。
-- 手动安装：使用如下脚本自行在已有 K8s 集群中安装 KubeApps Plus.
+- 自动安装：KubeApps Plus 是 KubeOperator 的一个内置应用。通过 KubeOperator 部署的 K8s 集群会自动安装上 KubeApps Plus；
+- 手动安装：使用如下脚本自行在已有 K8s 集群中安装 KubeApps Plus。
 
 ```bash
 git clone https://github.com/KubeOperator/kubeapps-plus.git
@@ -29,20 +29,20 @@ cd kubeapps_plus
 helm install --name kubeapps-plus --namespace kubeapps-plus ./chart
 ```
 
-具体请参考：[手动安装指南](chart+/README.md)
+具体请参考：[KubeApps Plus 手动安装指南](chart+/README.md)
 
 ## 使用 KubeApps Plus
 
-- 详细使用文档请参考：[使用指南](docs/user/getting-started.md)
+- 具体请参考：[KubeApps Plus 使用指南](docs/user/getting-started.md)
 
 ## 开发人员指南
 
-- [Kubeapps Plus 架构说明](docs/architecture/overview.md)
-- [KubeApps Plus 构建指南](docs/developer/build.md) 
-- [KubeApps Plus 开发文档](docs/developer/README.md)
+- [Kubeapps Plus 架构说明](docs/architecture/overview.md)；
+- [KubeApps Plus 构建指南](docs/developer/build.md) ；
+- [KubeApps Plus 开发文档](docs/developer/README.md)。
 
 ## 沟通交流
  
 - 技术交流 QQ 群：825046920；
 - 技术支持邮箱：support@fit2cloud.com；
-- 微信群： 搜索微信号 wh_it0224，添加好友，备注（城市-github用户名）, 验证通过会加入群聊；
+- 微信群： 搜索微信号 wh_it0224，添加好友，备注（城市-github用户名）, 验证通过会加入群聊。

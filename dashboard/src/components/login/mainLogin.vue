@@ -9,7 +9,7 @@
                     <div class="login_title">
                       <span>
                         <i class="iconfont login_title">&#xe650;</i>
-                        {{ $t('message.login') }}
+                          {{'Kubeapps'}}<span style="color: #fc5a4a;">+ </span>{{ $t('message.login') }}
                       </span>
                     </div>
                     <div class="login_label">{{$t('message.k8s_api_token')}}</div>
@@ -35,8 +35,8 @@
                     <div style="margin-top: 50px">
                         <span>
                             <a
-                                    href="https://github.com/f2c-innovation/kubeapps_plus_dashborad"
-                                    target="_blank"
+                                href="https://github.com/KubeOperator/kubeapps-plus/issues"
+                                target="_blank"
                             >{{$t('message.ask_for_help')}}</a>
                         </span>
                     </div>
@@ -118,6 +118,10 @@
         background-color: white;
     }
 
+    .box-card /deep/ .el-card__body {
+        padding: 0 !important;
+    }
+
     .login_img {
         max-width: 100%;
         max-height: 100%;
@@ -127,17 +131,17 @@
     .box-card-right {
         position: relative;
         float: left;
-        max-width: 397px;
-        max-height: 428px;
+        max-width: 439px;
+        max-height: 488px;
         padding: 1em;
-        margin: 0 0 0 4em;
+        margin: 0 0 0 3em;
     }
 
     .box-card-left {
         position: relative;
         float: left;
-        max-width: 397px;
-        max-height: 448px;
+        max-width: 439px;
+        max-height: 488px;
     }
 
     .main {

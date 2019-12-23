@@ -9,6 +9,6 @@ const i18n = new VueI18n({
   locale: localStorage.lang || 'cn',
   messages
 })
-locale.i18n((key, value) => i18n.t(key, value)) //重点：为了实现element插件的多语言切换
+locale.i18n((key, value) => i18n.t(key, value)) //重点: 为了实现element插件的多语言切换
 
 export default i18n

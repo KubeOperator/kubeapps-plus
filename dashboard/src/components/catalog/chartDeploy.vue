@@ -42,7 +42,7 @@
                     <div class="margin-t-normal">
                         <label>{{$t('message.values_yaml')}}</label>
                         <div class="ace-container">
-                            <!-- 官方文档中使用 id，这里禁止使用，在后期打包后容易出现问题，使用 ref 或者 DOM 就行 -->
+                            <!-- 官方文档中使用 id, 这里禁止使用, 在后期打包后容易出现问题, 使用 ref 或者 DOM 就行 -->
                             <div class="ace-editor" ref="ace">
                             </div>
                         </div>
@@ -86,7 +86,7 @@
                 releaseName: '',
                 loading: true,
                 aceEditor: null,
-                themePath: 'ace/theme/monokai', // 不导入 webpack-resolver，该模块路径会报错
+                themePath: 'ace/theme/monokai', // 不导入 webpack-resolver, 该模块路径会报错
                 modePath: 'ace/mode/yaml' // 同上
             }
         },
@@ -94,8 +94,8 @@
         },
         mounted() {
             this.aceEditor = ace.edit(this.$refs.ace, {
-                maxLines: 30, // 最大行数，超过会自动出现滚动条
-                minLines: 10, // 最小行数，还未到最大行数时，编辑器会自动伸缩大小
+                maxLines: 30, // 最大行数, 超过会自动出现滚动条
+                minLines: 10, // 最小行数, 还未到最大行数时, 编辑器会自动伸缩大小
                 fontSize: 14, // 编辑器内字体大小
                 theme: this.themePath, // 默认设置的主题
                 mode: this.modePath, // 默认设置的语言模式
@@ -157,18 +157,18 @@
             },
             submit: async function(releaseName, version, chartName) {
                 if (!releaseName) {
-                    noticeMessage(this, ' 名称不允许为空，请填写名称 ', 'warning')
+                    noticeMessage(this, ' 名称不允许为空, 请填写名称 ', 'warning')
                 } else if (!version) {
-                    noticeMessage(this, ' 版本不允许为空，请填写版本 ', 'warning')
+                    noticeMessage(this, ' 版本不允许为空, 请填写版本 ', 'warning')
                 } else if (!this.aceEditor.getValue()) {
-                    noticeMessage(this, ' 值(YAML)不允许为空，请填写值(YAML) ', 'warning')
+                    noticeMessage(this, ' 值(YAML)不允许为空, 请填写值(YAML) ', 'warning')
                 } else {
                     await this.$confirm('即将开始部署, 是否继续?', '提示', {
                         confirmButtonText: '确定',
                         cancelButtonText: '取消',
                         type: 'warning'
                     }).then(() => {
-                        noticeMessage(this, ' 正在部署，请稍等 ', 'success')
+                        noticeMessage(this, ' 正在部署, 请稍等 ', 'success')
                         this.loading = true
                         this.deploy(releaseName, version, chartName)
                     }).catch(() => {

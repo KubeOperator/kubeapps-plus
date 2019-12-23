@@ -62,6 +62,8 @@ const en = {
         'back_to_previous': 'Back to previous',
         'default_sync_job': 'It\'s possible to modify the default sync job.',
         'restore_chart_defaults': 'Restore Chart Defaults',
+        'deploy_applications':'Supercharge your Kubernetes cluster',
+        'deploy_applications_desc':'Deploy applications on your Kubernetes cluster with a single click.',
     },
     ...enLocale
 }

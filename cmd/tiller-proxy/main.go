@@ -172,7 +172,7 @@ func main() {
 		chartsvcPrefix := "/chartsvc"
 		chartsvcRouter := r.PathPrefix(chartsvcPrefix).Subrouter()
 
-		//Logos不需要验证，因此请跳过该步骤
+		//Logos不需要验证, 因此请跳过该步骤
 		chartsvcRouter.Methods("GET").Path("/v1/assets/{repo}/{id}/logo").Handler(negroni.New(
 			negroni.Wrap(http.StripPrefix(chartsvcPrefix, chartsvcProxy)),
 		))
@@ -211,11 +211,11 @@ func main() {
 		log.Debug("Set system to get notified on signals")
 		s := <-c
 		log.Infof("Received signal: %v. Waiting for existing requests to finish", s)
-		//设置一个足够高的超时值，让k8s终止宽限期秒生效
-		//相应地，如果需要，发送一个SIGKILL
+		//设置一个足够高的超时值, 让k8s终止宽限期秒生效
+		//相应地, 如果需要, 发送一个SIGKILL
 		ctx, cancel := context.WithTimeout(context.Background(), time.Second*3600)
 		defer cancel()
-		//如果没有连接，则不阻止，否则将等待
+		//如果没有连接, 则不阻止, 否则将等待
 		//直到最后期限
 		srv.Shutdown(ctx)
 		log.Info("All requests have been served. Exiting")

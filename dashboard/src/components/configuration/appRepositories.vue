@@ -55,8 +55,6 @@
     import errorMessage from '../utils/errorMessage.js';
     import getParamApi from "../utils/getParamApi";
     import noticeMessage from "../utils/noticeMessage";
-    // import loading from '../utils/loading.js';
-    // import noticeMessage from '../utils/noticeMessage.js';
 
     /* eslint-disable */
     export default {
@@ -75,7 +73,6 @@
                     if (res.status == 200) {
                         this.tableData = res.data.items
                     } else {
-                        //Error Message
                         this.loading = false;
                         errorMessage(this, res);
                     }
@@ -101,7 +98,7 @@
                     cancelButtonText: '取消',
                     type: 'warning'
                 }).then(() => {
-                    noticeMessage(this, ' 正在删除，请稍等 ', 'success')
+                    noticeMessage(this, ' 正在删除, 请稍等 ', 'success')
                     this.loading = true
                     this.deleteRepo(row)
                 }).catch(() => {

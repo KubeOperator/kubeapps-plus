@@ -34,8 +34,8 @@ axios.interceptors.response.use(response => {
 function errorState(response) {
     //  ..隐藏loading
     // console.log(response)
-    // console.log('失败，统一判断后端返回的错误码')
-    // 如果http状态码正常，则直接返回数据
+    // console.log('失败, 统一判断后端返回的错误码')
+    // 如果http状态码正常, 则直接返回数据
     if (response && (response.status === 200 || response.status === 304 || response.status === 400)) {
         return response
     } else {
@@ -46,7 +46,7 @@ function errorState(response) {
 function successState(res) {
     //  ..隐藏loading
     // console.log(res)
-    // console.log('成功，统一判断后端返回的错误码')
+    // console.log('成功, 统一判断后端返回的错误码')
     // 统一判断后端返回的错误码
     // if (res.data.errCode == '000002') {
     //   console.log(res.data.errDesc || '网络异常')
@@ -65,7 +65,7 @@ const httpServer = (opts, data) => {
         // baseURL,  // 基础 url 前缀
         url: opts.url,
         // 请求的地址
-        timeout: 60000,
+        timeout: 120000,
         // 超时时间, 单位毫秒
         params: Object.assign(Public, data),
         // get 请求时带的参数
@@ -93,7 +93,7 @@ const httpServer = (opts, data) => {
     }
 
     /*
-   * 将异常部分直接封装到业务调用的 then 方法中 例如：
+   * 将异常部分直接封装到业务调用的 then 方法中 例如:
     promise(apiSetting.getProjects).then(
       res => {
         //... do something

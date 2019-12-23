@@ -19,15 +19,13 @@ KubeApps Plus 是 KubeApps 的扩展项目，基于 Web UI 界面在 Kubernetes 
 ## 安装 KubeApps Plus
 
 - 自动安装：KubeApps Plus 是 KubeOperator 的一个内置应用。通过 KubeOperator 部署的 K8s 集群会自动安装上 KubeApps Plus；
-- 手动安装：使用如下脚本自行在已有 K8s 集群中安装 KubeApps Plus；
+- 手动安装：使用如下脚本自行在已有 K8s 集群中安装 [KubeApps Plus 安装指南](chart/README.md)；
 
 ```bash
 git clone https://github.com/KubeOperator/kubeapps-plus.git
 cd kubeapps_plus
 helm install --name kubeapps-plus --namespace kubeapps-plus ./chart
 ```
-
-具体请参考：[KubeApps Plus 手动安装指南](chart+/README.md)
 
 ## 使用 KubeApps Plus
 

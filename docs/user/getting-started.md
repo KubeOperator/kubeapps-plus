@@ -1,18 +1,18 @@
-# Kubeapps Plus 入门
+# KubeApps Plus 入门
 
-本指南将引导您完成为集群部署 Kubeapps Plus 并安装示例应用程序的过程。
+本指南将引导您完成为集群部署 KubeApps Plus 并安装示例应用程序的过程。
 
 ## 先决条件
 
-Kubeapps Plus 假设您的Kubernetes集群(v1.8 +), 安装在集群中的[`Helm`](https://helm.sh/)(2.14.0+) 和[`kubectl`](https://kubernetes.io/docs/tasks/tools/install-kubectl/)已安装并配置为与Kubernetes集群通信。 
+KubeApps Plus 假设您的 Kubernetes 集群(v1.8 +), 安装在集群中的 [`Helm`](https://helm.sh/)(2.14.0+) 和 [`kubectl`](https://kubernetes.io/docs/tasks/tools/install-kubectl/)已安装并配置为与 Kubernetes 集群通信。 
 
-Kubeapps Plus 已通过 Azure Kubernetes 服务(AKS), Google Kubernetes 引擎(GKE), `minikube`和用于桌面 Kubernetes 的 Docker 进行了测试。 Kubeapps Plus 可在启用RBAC的群集上运行, 建议使用此配置以实现更安全的安装。
+KubeApps Plus 已通过 Azure Kubernetes 服务(AKS), Google Kubernetes 引擎(GKE), `minikube`和 用于桌面 Kubernetes 的 Docker 进行了测试。 KubeApps Plus 可在启用 RBAC 的群集上运行, 建议使用此配置以实现更安全的安装。
 
-> 在GKE上, 您必须是`Owner`或具有`Container Engine Admin`角色才能安装 Kubeapps Plus。
+> 在GKE上, 您必须是`Owner`或具有`Container Engine Admin`角色才能安装 KubeApps Plus。
 
-## Step 1: 安装Kubeapps Plus
+## Step 1: 安装 KubeApps Plus
 
-使用 Helm 图表安装最新版本的 Kubeapps Plus: 
+使用 Helm 图表安装最新版本的 KubeApps Plus: 
 
 ```bash
 git clone https://github.com/KubeOperator/kubeapps-plus.git
@@ -20,9 +20,9 @@ cd kubeapps_plus
 helm install --name kubeapps-plus --namespace kubeapps-plus ./chart
 ```
 
-有关安装, 配置和升级 Kubeapps Plus 的详细信息, 请点击[图表介绍文档](../../chart/README.md)。
+有关安装, 配置和升级 KubeApps Plus 的详细信息, 请点击[图表介绍文档](../../chart/README.md)。
 
-上面的命令会将 Kubeapps Plus 部署到集群中的 `kubeapps-plus` 名称空间中。 执行可能需要几分钟。 部署完成并且 Kubeapps Plus 容器运行后, 继续执行步骤2。
+上面的命令会将 KubeApps Plus 部署到集群中的 `kubeapps-plus` 名称空间中。 执行可能需要几分钟。 部署完成并且 KubeApps Plus 容器运行后, 继续执行步骤2。
 
 ## Step 2: 创建一个 Kubernetes API 令牌
 
@@ -33,7 +33,7 @@ kubectl create serviceaccount kubeapps-operator
 kubectl create clusterrolebinding kubeapps-operator --clusterrole=cluster-admin --serviceaccount=default:kubeapps-operator
 ```
 
-> **注意** 不建议为 Kubeapps Plus 生产用途创建`cluster-admin`用户。 请参考 [访问控制](/docs/user/access-control.md)文档, 为用户配置细粒度的访问控制。
+> **注意** 不建议为 KubeApps Plus 生产用途创建`cluster-admin`用户。 请参考 [访问控制](/docs/user/access-control.md)文档, 为用户配置细粒度的访问控制。
 
 获取令牌:
 
@@ -64,27 +64,27 @@ certutil -decode b64.txt token.txt
 
 打开命令提示符并运行 `GetDashToken.cmd` 您的令牌可以在 `token.txt` 文件中找到。
 
-## Step 3: 启动 Kubeapps Plus 仪表板
+## Step 3: 启动 KubeApps Plus 仪表板
 
-安装 Kubeapps Plus 后, 请运行以下命令从系统安全地访问 Kubeapps Plus 仪表板: 
+安装 KubeApps Plus 后, 请运行以下命令从系统安全地访问 KubeApps Plus 仪表板: 
 
 ```bash
 export POD_NAME=$(kubectl get pods -n kubeapps -l "app=kubeapps,release=kubeapps" -o jsonpath="{.items[0].metadata.name}")
-echo "Visit http://127.0.0.1:8080 in your browser to access the Kubeapps Plus Dashboard"
+echo "Visit http://127.0.0.1:8080 in your browser to access the KubeApps Plus Dashboard"
 kubectl port-forward -n kubeapps $POD_NAME 8080:8080
 ```
 
-这将启动HTTP代理, 以安全地访问 Kubeapps Plus 仪表板。 在您喜欢的网络浏览器中访问 `http://127.0.0.1:8080/` 以打开仪表板。 这是您应该看到的: 
+这将启动HTTP代理, 以安全地访问 KubeApps Plus 仪表板。 在您喜欢的网络浏览器中访问 `http://127.0.0.1:8080/` 以打开仪表板。 这是您应该看到的: 
 
 ![控制台登录页面](../img/dashboard-login.png)
 
-粘贴上一步中生成的令牌以认证和访问 Kubernetes 的 Kubeapps Plus 仪表板。
+粘贴上一步中生成的令牌以认证和访问 Kubernetes 的 KubeApps Plus 仪表板。
 
 ![仪表板主页](../img/dashboard-home.png)
 
 ## Step 4: 部署 WordPress
 
-一旦 Kubeapps Plus 仪表板启动并运行, 就可以开始将应用程序部署到群集中。
+一旦 KubeApps Plus 仪表板启动并运行, 就可以开始将应用程序部署到群集中。
 
 - 使用仪表板中的“目录”页面从任何已配置的Helm图表存储库中的图表列表中选择一个应用程序。 本示例假定您要部署 WordPress。
 
@@ -112,8 +112,8 @@ kubectl port-forward -n kubeapps $POD_NAME 8080:8080
 
 ## 下一步
 
-通过以下链接了解有关 Kubeapps Plus 的更多信息: 
+通过以下链接了解有关 KubeApps Plus 的更多信息: 
 
 - [详细的安装说明](../../chart/README.md)
-- [Kubeapps Plus仪表板文档](dashboard.md)
-- [Kubeapps Plus组件](../architecture/overview.md)
+- [KubeApps Plus仪表板文档](dashboard.md)
+- [KubeApps Plus组件](../architecture/overview.md)

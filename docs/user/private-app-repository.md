@@ -91,7 +91,7 @@ For more details, please visit https://github.com/goharbor/harbor .
 - 点击“上传”按钮上传helm chart。 您也可以使用helm命令上传图表。
   <img src="../img/harbor-upload-chart.png" width="500px">
 
-有关更多详细信息, 请参考['在港口管理helm chart'](https://github.com/goharbor/harbor/blob/master/docs/user_guide.md#manage-helm-charts)。
+有关更多详细信息, 请参考['在harbor管理helm chart'](https://github.com/goharbor/harbor/blob/master/docs/user_guide.md#manage-helm-charts)。
 
 ### Harbor: 在Kubeapps Plus中配置存储库
 
@@ -105,7 +105,7 @@ For more details, please visit https://github.com/goharbor/harbor .
 
 可以将Harbor配置为使用HTTP基本身份验证: 
 
-   - 在港口中创建新项目以用作掌舵图存储库时, 请将项目的“访问权限”设置为非公开。 这将强制进行身份验证, 以通过Helm CLI或其他客户端访问图表存储库中的图表。
+   - 在harbor中创建新项目以用作掌舵图存储库时, 请将项目的“访问权限”设置为非公开。 这将强制进行身份验证, 以通过Helm CLI或其他客户端访问图表存储库中的图表。
    - 在Kubeapps Plus中的“添加应用程序存储库”时, 为“授权”选择“基本身份验证”, 然后为Harbor指定用户名和密码。
 
 ## Artifactory

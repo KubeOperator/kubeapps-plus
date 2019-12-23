@@ -134,7 +134,7 @@ function docker_upload_image() {
     docker load <jenkins.jar
     docker load <jnlp-slave.jar
     #jenkins
-    docker tag a3f949e5ebfd ${registry_host}/jenkins/jenkins:lts
+    docker tag 22b8b9a84dbe ${registry_host}/jenkins/jenkins:lts
     #jnlp-salve
     docker tag 6bf8f3767d8b ${registry_host}/jenkins/jnlp-slave:3.27-1
 

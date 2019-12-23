@@ -48,7 +48,7 @@
                     <line x1="12" y1="16" x2="12" y2="12" />
                     <line x1="12" y1="8" x2="12" y2="8" />
                   </svg>
-                </span>Supercharge your Kubernetes cluster
+                </span>{{$t('message.deploy_applications')}}
               </h5>
             </div>
           </header>
@@ -56,7 +56,7 @@
             <div>
               <p
                 class="margin-v-normal"
-              >Deploy applications on your Kubernetes cluster with a single click.</p>
+              >{{$t('message.deploy_applications_desc')}}</p>
             </div>
           </div>
         </div>

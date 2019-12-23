@@ -156,7 +156,10 @@ export default {
       if (this.purge) {
         baseurl.url = baseurl.url + "?purge=true";
       }
-      http(baseurl).then(this.$router.push("/applications"));
+      http(baseurl).then(
+
+          this.$router.push("/applications")
+      );
     },
     getdebug() {
     },

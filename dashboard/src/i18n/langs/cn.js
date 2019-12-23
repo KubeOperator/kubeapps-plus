@@ -62,6 +62,8 @@ const cn = {
         'back_to_previous': '返回上一级',
         'default_sync_job': '可以修改默认的同步作业。',
         'restore_chart_defaults': '恢复图表默认值',
+        'deploy_applications':'增强您的Kubernetes集群',
+        'deploy_applications_desc':'只需单击一下，即可在Kubernetes集群上部署应用程序。',
     },
     ...zhLocale
 }

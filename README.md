@@ -18,7 +18,10 @@ KubeApps Plus 是 KubeApps 的扩展项目，基于 Web UI 界面在 Kubernetes 
 - 支持自定义 Helm Chart Repo（比如 ChartMuseum 和 JFrog Artifactory 等）；
 - 基于 Kubernetes RBAC 的身份验证和授权；
 
-## 安装和使用
+## 安装 KubeApps Plus
+
+- 自动安装：KubeApps Plus 是 KubeOperator 的一个内置应用。通过 KubeOperator 部署的 K8s 集群会自动安装上 KubeApps Plus。
+- 手动安装：使用如下脚本自行在已有 K8s 集群中安装 KubeApps Plus.
 
 ```bash
 git clone https://github.com/KubeOperator/kubeapps-plus.git
@@ -26,14 +29,17 @@ cd kubeapps_plus
 helm install --name kubeapps-plus --namespace kubeapps-plus ./chart
 ```
 
-- 详细安装文档请参考：[安装指南](chart+/README.md)
+具体请参考：[手动安装指南](chart+/README.md)
+
+## 使用 KubeApps Plus
+
 - 详细使用文档请参考：[使用指南](docs/user/getting-started.md)
 
 ## 开发人员指南
 
 - [Kubeapps Plus 架构说明](docs/architecture/overview.md)
-- [KubeApps Plus 构建指南](docs/developer/build.md) 有关从源代码设置构建环境和构建 Kubeapps Plus 的说明。
-- [KubeApps Plus 开发文档](docs/developer/README.md) 有关设置开发人员环境以在 Kubeapps Plus 及其组件上进行开发的说明。
+- [KubeApps Plus 构建指南](docs/developer/build.md) 
+- [KubeApps Plus 开发文档](docs/developer/README.md)
 
 ## 沟通交流
  

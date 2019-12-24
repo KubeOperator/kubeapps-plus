@@ -86,6 +86,7 @@
                 releaseName: '',
                 loading: true,
                 aceEditor: null,
+                value_yaml: '',
                 themePath: 'ace/theme/monokai', // 不导入 webpack-resolver, 该模块路径会报错
                 modePath: 'ace/mode/yaml' // 同上
             }
@@ -156,6 +157,9 @@
 
             },
             submit: async function(releaseName, version, chartName) {
+                let namespace = 'namespace: ' + this.$store.state.namespaces.activeSpace
+                this.value_yaml = `${namespace}
+${this.aceEditor.getValue()}`
                 if (!releaseName) {
                     noticeMessage(this, ' 名称不允许为空, 请填写名称 ', 'warning')
                 } else if (!version) {
@@ -189,7 +193,7 @@
                     appRepositoryResourceName: chartName.split('/')[0],
                     chartName: chartName.split('/')[1],
                     releaseName: releaseName,
-                    values: this.aceEditor.getValue(),
+                    values: this.value_yaml,
                     version: version
                 }
                 await http(getParamApi(apiSetting.kubernetes.deployReleases, this.$store.state.namespaces.activeSpace, 'releases'), params).then((res) => {

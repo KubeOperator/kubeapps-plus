@@ -29,7 +29,7 @@ helm init --tiller-tls --tiller-tls-verify \
 
 ```bash
 git clone https://github.com/KubeOperator/kubeapps-plus.git
-cd kubeapps_plus
+cd kubeapps-plus
 helm install \
   --tls --tls-ca-cert ca.cert.pem --tls-cert helm.cert.pem --tls-key helm.key.pem \
   --set tillerProxy.tls.ca="$(cat ca.cert.pem)" \

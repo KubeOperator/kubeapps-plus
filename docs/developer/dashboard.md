@@ -2,7 +2,7 @@
 
 仪表板是Kubeapps Plus项目的主要UI组件。 仪表板使用Javascript编写, 使用VUE Javascript库作为前端。
 
-## 先决条件
+## 前提条件
 
 - [Git](https://git-scm.com/)
 - [Node 8.x](https://nodejs.org/)

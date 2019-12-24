@@ -67,7 +67,7 @@ kubectl delete -f https://github.com/kubeless/kubeless/releases/download/v0.6.0/
 
 ```bash
 git clone https://github.com/KubeOperator/kubeapps-plus.git
-cd kubeapps_plus
+cd kubeapps-plus
 helm install \
   --tls --tls-ca-cert ca.cert.pem --tls-cert helm.cert.pem --tls-key helm.key.pem \
   --set tillerProxy.tls.ca="$(cat ca.cert.pem)" \

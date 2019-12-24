@@ -25,7 +25,7 @@ TBD
 
 ```bash
 git clone https://github.com/KubeOperator/kubeapps-plus.git
-cd kubeapps_plus
+cd kubeapps-plus
 helm install --name kubeapps-plus --namespace kubeapps-plus ./chart
 ```
 

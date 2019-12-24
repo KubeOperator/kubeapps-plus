@@ -2,7 +2,7 @@
 
 apprepository-controller是Kubernetes控制器, 用于管理添加到Kubeapps Plus的Helm图表存储库。
 
-## 先决条件
+## 前提条件
 
 - [Git](https://git-scm.com/)
 - [Make](https://www.gnu.org/software/make/)

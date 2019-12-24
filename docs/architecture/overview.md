@@ -1,14 +1,10 @@
-# Kubeapps Plus 概述
+# KubeApps Plus 概述
 
-本文档从高层次描述了 Kubeapps Plus 架构。
+本文档从高层次描述了 KubeApps Plus 架构。
 
-## 组件
+### KubeApps Plus 仪表盘
 
-### Kubeapps Plus dashboard
-
-Kubeapps Plus 的核心是集群内 Kubernetes 仪表板, 可为您提供简单的浏览和单击体验, 以安装和管理打包为 Helm 图表的 Kubernetes 应用程序。
-
-此外, 仪表板还与 [Kubernetes服务目录](https://github.com/kubernetes-incubator/service-catalog)集成在一起, 使您可以通过 [打开Service Broker API](https://github.com/openservicebrokerapi/servicebroker)。
+KubeApps Plus 的核心是集群内 Kubernetes 仪表板, 可为您提供简单的浏览和单击体验, 以安装和管理打包为 Helm 图表的 Kubernetes 应用程序。
 
 仪表板使用 Javascript 编程语言编写, 并使用 Vue.js 库进行开发。
 
@@ -18,9 +14,9 @@ Kubeapps Plus 的核心是集群内 Kubernetes 仪表板, 可为您提供简单�
 
 该代理是用Go编写的。 在此 [document](/cmd/tiller-proxy/README.md)中检查有关实现的更多详细信息。
 
-### CRD储存库 和 控制器
+### CRD 储存库 和 控制器
 
-Kubeapps Plus 中的图表存储库通过名为 “apprepositories.kubeapps.com” 的 “CustomResourceDefinition”进行管理。 添加到 Kubeapps Plus 的每个存储库都是一个类型为 AppRepository 的对象, 而 apprepository-controller 将监视这些对象类型的更改以更新要部署的可用图表的列表。
+KubeApps Plus 中的图表存储库通过名为 “apprepositories.kubeapps.com” 的 “CustomResourceDefinition” 进行管理。 添加到 KubeApps Plus 的每个存储库都是一个类型为 AppRepository 的对象, 而 apprepository-controller 将监视这些对象类型的更改以更新要部署的可用图表的列表。
 
 ### `chart-repo`
 
@@ -28,4 +24,4 @@ Kubeapps Plus 中的图表存储库通过名为 “apprepositories.kubeapps.com�
 
 ### `chartsvc`
 
-“chartsvc” 组件是一个微服务, 可创建 API 端点来访问在 MongoDB 数据库中的 Helm 图表存储库中图表的元数据。 它是 [Helm Monocular 项目](https://github.com/helm/monocular/tree/master/cmd/chartsvc)的一部分进行维护。
+“chartsvc” 组件是一个微服务, 可创建 API 端点来访问在 MongoDB 数据库中的 Helm 图表存储库中图表的元数据。 它是 [Helm Monocular 项目](https://github.com/helm/monocular/tree/master/cmd/chartsvc) 的一部分进行维护。

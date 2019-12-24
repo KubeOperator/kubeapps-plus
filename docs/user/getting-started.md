@@ -2,8 +2,6 @@
 
 本指南将引导您完成为集群部署 KubeApps Plus 并安装示例应用程序的过程。
 
-## 先决条件
-
 KubeApps Plus 假设您的 Kubernetes 集群(v1.8 +), 安装在集群中的 [`Helm`](https://helm.sh/)(2.14.0+) 和 [`kubectl`](https://kubernetes.io/docs/tasks/tools/install-kubectl/)已安装并配置为与 Kubernetes 集群通信。 
 
 KubeApps Plus 已通过 Azure Kubernetes 服务(AKS), Google Kubernetes 引擎(GKE), `minikube`和 用于桌面 Kubernetes 的 Docker 进行了测试。 KubeApps Plus 可在启用 RBAC 的群集上运行, 建议使用此配置以实现更安全的安装。
@@ -16,11 +14,11 @@ KubeApps Plus 已通过 Azure Kubernetes 服务(AKS), Google Kubernetes 引擎(G
 
 ```bash
 git clone https://github.com/KubeOperator/kubeapps-plus.git
-cd kubeapps_plus
+cd kubeapps-plus
 helm install --name kubeapps-plus --namespace kubeapps-plus ./chart
 ```
 
-有关安装, 配置和升级 KubeApps Plus 的详细信息, 请点击[图表介绍文档](../../chart/README.md)。
+有关安装, 配置和升级 KubeApps Plus 的详细信息, 请点击[KubeApps Plus 安装指南](chart/README.md)。
 
 上面的命令会将 KubeApps Plus 部署到集群中的 `kubeapps-plus` 名称空间中。 执行可能需要几分钟。 部署完成并且 KubeApps Plus 容器运行后, 继续执行步骤2。
 
@@ -33,7 +31,7 @@ kubectl create serviceaccount kubeapps-operator
 kubectl create clusterrolebinding kubeapps-operator --clusterrole=cluster-admin --serviceaccount=default:kubeapps-operator
 ```
 
-> **注意** 不建议为 KubeApps Plus 生产用途创建`cluster-admin`用户。 请参考 [访问控制](/docs/user/access-control.md)文档, 为用户配置细粒度的访问控制。
+> **注意** 不建议为 KubeApps Plus 生产用途创建 `cluster-admin` 用户。
 
 获取令牌:
 
@@ -74,7 +72,7 @@ echo "Visit http://127.0.0.1:8080 in your browser to access the KubeApps Plus Da
 kubectl port-forward -n kubeapps $POD_NAME 8080:8080
 ```
 
-这将启动HTTP代理, 以安全地访问 KubeApps Plus 仪表板。 在您喜欢的网络浏览器中访问 `http://127.0.0.1:8080/` 以打开仪表板。 这是您应该看到的: 
+这将启动 HTTP 代理, 以安全地访问 KubeApps Plus 仪表板。 在您喜欢的网络浏览器中访问 `http://127.0.0.1:8080/` 以打开仪表板。 这是您应该看到的: 
 
 ![控制台登录页面](../img/dashboard-login.png)
 
@@ -86,7 +84,7 @@ kubectl port-forward -n kubeapps $POD_NAME 8080:8080
 
 一旦 KubeApps Plus 仪表板启动并运行, 就可以开始将应用程序部署到群集中。
 
-- 使用仪表板中的“目录”页面从任何已配置的Helm图表存储库中的图表列表中选择一个应用程序。 本示例假定您要部署 WordPress。
+- 使用仪表板中的 “目录” 页面从任何已配置的Helm图表存储库中的图表列表中选择一个应用程序。 本示例假定您要部署 WordPress。
 
   ![WordPress图表](../img/wordpress-search.png)
 
@@ -114,6 +112,6 @@ kubectl port-forward -n kubeapps $POD_NAME 8080:8080
 
 通过以下链接了解有关 KubeApps Plus 的更多信息: 
 
-- [详细的安装说明](../../chart/README.md)
-- [KubeApps Plus仪表板文档](dashboard.md)
-- [KubeApps Plus组件](../architecture/overview.md)
+- [KubeApps Plus安装说明](chart/README.md)
+- [KubeApps Plus仪表板](dashboard/README.md)
+- [KubeApps Plus架构说明](docs/architecture/overview.md)

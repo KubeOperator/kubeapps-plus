@@ -1,8 +1,8 @@
-# Kubeapps Plus构建指南
+# KubeApps Plus 构建指南
 
-本指南说明了如何构建Kubeapps Plus。
+本指南说明了如何构建 KubeApps Plus。
 
-## 先决条件
+## 前提条件
 
 - [Git](https://git-scm.com/)
 - [Make](https://www.gnu.org/software/make/)
@@ -15,18 +15,18 @@
 ```bash
 export GOPATH=~/gopath
 export PATH=$GOPATH/bin:$PATH
-export KUBEAPPS_DIR=$GOPATH/src/github.com/kubeapps/kubeapps
+export KUBEAPPS_DIR=$GOPATH/src/github.com/KubeOperator/kubeapps-plus
 ```
-## 下载Kubeapps Plus源代码
+## 下载 KubeApps Plus 源代码
 
 ```bash
-git clone --recurse-submodules https://github.com/kubeapps/kubeapps $KUBEAPPS_DIR
+git clone git@github.com:KubeOperator/kubeapps-plus.git $KUBEAPPS_DIR
 cd $KUBEAPPS_DIR
 ```
 
-## 构建Kubeapps Plus
+## 构建 KubeApps Plus
 
-Kubeapps Plus由许多集群内组件组成。 一次性构建所有这些组件: 
+KubeApps Plus 由许多集群内组件组成。 一次性构建所有这些组件: 
 
 ```bash
 make IMAGE_TAG=myver all
@@ -35,8 +35,8 @@ make IMAGE_TAG=myver all
 或者, 如果您希望构建特定的组件, 请执行以下操作: 
 
 ```bash
-# to build the kubeapps binary
-make IMAGE_TAG=myver kubeapps
+# to build the kubeapps-plus binary
+make IMAGE_TAG=myver kubeapps-plus
 
 # to build the kubeapps/dashboard docker image
 make IMAGE_TAG=myver kubeapps/dashboard
@@ -59,10 +59,10 @@ make test
 或者, 如果您想测试特定组件, 请执行以下操作: 
 
 ```bash
-# to test the kubeapps binary
-make test-kubeapps
+# to test the kubeapps-plus binary
+make test-kubeapps-plus
 
-# to test kubeapps/dashboard
+# to test kubeapps-plus/dashboard
 make test-dashboard
 
 # to test the cmd/apprepository-controller package

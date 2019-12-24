@@ -5,7 +5,7 @@ OpenID Connect(OIDC)是OAuth 2.0协议之上的一个简单的身份层, 它允�
 可以将您的Kubernetes集群配置为使用OIDC提供程序, 以便通过单个应用程序管理帐户, 组和角色。 此外, 某些托管的Kubernetes环境允许通过普通OAuth2(GKE)进行身份验证。
 本指南将说明如何使用现有的OAuth2提供程序(包括OIDC)对Kubeapps Plus中的用户进行身份验证。
 
-## 先决条件
+## 前提条件
 
 对于本指南, 我们假设您具有一个Kubernetes群集, 该群集已正确配置为使用身份提供程序(IdP)来处理对群集的身份验证。 您可以在[此处](https://kubernetes.io/docs/reference/access-authn-authz/authentication/#openid-connect-tokens)中找到有关Kubernetes如何使用OIDC令牌的更多信息。 这意味着应该将Kubernetes API服务器配置为使用该OIDC提供程序。
 

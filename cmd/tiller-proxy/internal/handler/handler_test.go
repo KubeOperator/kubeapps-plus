@@ -28,10 +28,10 @@ import (
 	"k8s.io/helm/pkg/proto/hapi/chart"
 	"k8s.io/helm/pkg/proto/hapi/release"
 
-	"github.com/kubeapps_plus/pkg/auth"
-	authFake "github.com/kubeapps_plus/pkg/auth/fake"
-	chartFake "github.com/kubeapps_plus/pkg/chart/fake"
-	proxyFake "github.com/kubeapps_plus/pkg/proxy/fake"
+	"github.com/kubeapps/pkg/auth"
+	authFake "github.com/kubeapps/pkg/auth/fake"
+	chartFake "github.com/kubeapps/pkg/chart/fake"
+	proxyFake "github.com/kubeapps/pkg/proxy/fake"
 )
 
 func TestErrorCodeWithDefault(t *testing.T) {

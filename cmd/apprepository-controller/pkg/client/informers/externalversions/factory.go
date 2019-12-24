@@ -23,9 +23,9 @@ import (
 	sync "sync"
 	time "time"
 
-	versioned "github.com/kubeapps_plus/cmd/apprepository-controller/pkg/client/clientset/versioned"
-	apprepository "github.com/kubeapps_plus/cmd/apprepository-controller/pkg/client/informers/externalversions/apprepository"
-	internalinterfaces "github.com/kubeapps_plus/cmd/apprepository-controller/pkg/client/informers/externalversions/internalinterfaces"
+	versioned "github.com/kubeapps/cmd/apprepository-controller/pkg/client/clientset/versioned"
+	apprepository "github.com/kubeapps/cmd/apprepository-controller/pkg/client/informers/externalversions/apprepository"
+	internalinterfaces "github.com/kubeapps/cmd/apprepository-controller/pkg/client/informers/externalversions/internalinterfaces"
 	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	runtime "k8s.io/apimachinery/pkg/runtime"
 	schema "k8s.io/apimachinery/pkg/runtime/schema"

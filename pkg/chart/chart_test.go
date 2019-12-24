@@ -29,8 +29,8 @@ import (
 	"github.com/google/go-cmp/cmp"
 
 	"github.com/arschles/assert"
-	appRepov1 "github.com/kubeapps_plus/cmd/apprepository-controller/pkg/apis/apprepository/v1alpha1"
-	fakeAppRepo "github.com/kubeapps_plus/cmd/apprepository-controller/pkg/client/clientset/versioned/fake"
+	appRepov1 "github.com/kubeapps/cmd/apprepository-controller/pkg/apis/apprepository/v1alpha1"
+	fakeAppRepo "github.com/kubeapps/cmd/apprepository-controller/pkg/client/clientset/versioned/fake"
 	corev1 "k8s.io/api/core/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	fakeK8s "k8s.io/client-go/kubernetes/fake"

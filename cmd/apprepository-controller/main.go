@@ -20,9 +20,9 @@ import (
 	"flag"
 
 	"github.com/golang/glog"
-	clientset "github.com/kubeapps_plus/cmd/apprepository-controller/pkg/client/clientset/versioned"
-	informers "github.com/kubeapps_plus/cmd/apprepository-controller/pkg/client/informers/externalversions"
-	"github.com/kubeapps_plus/cmd/apprepository-controller/pkg/signals"
+	clientset "github.com/kubeapps/cmd/apprepository-controller/pkg/client/clientset/versioned"
+	informers "github.com/kubeapps/cmd/apprepository-controller/pkg/client/informers/externalversions"
+	"github.com/kubeapps/cmd/apprepository-controller/pkg/signals"
 	kubeinformers "k8s.io/client-go/informers"
 	"k8s.io/client-go/kubernetes"
 	"k8s.io/client-go/tools/clientcmd" // Uncomment the following line to load the gcp plugin (only required to authenticate against GKE clusters).

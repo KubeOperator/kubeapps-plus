@@ -1,4 +1,4 @@
-module github.com/kubeapps_plus
+module github.com/kubeapps
 
 go 1.13
 

@@ -20,7 +20,7 @@ import (
 	"encoding/json"
 	"net/http"
 
-	chartUtils "github.com/kubeapps_plus/pkg/chart"
+	chartUtils "github.com/kubeapps/pkg/chart"
 	"k8s.io/helm/pkg/proto/hapi/chart"
 )
 

@@ -20,7 +20,7 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/kubeapps_plus/pkg/proxy"
+	"github.com/kubeapps/pkg/proxy"
 	"k8s.io/helm/pkg/proto/hapi/chart"
 	"k8s.io/helm/pkg/proto/hapi/release"
 )

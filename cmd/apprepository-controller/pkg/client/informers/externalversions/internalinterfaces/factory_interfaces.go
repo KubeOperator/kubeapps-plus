@@ -21,7 +21,7 @@ package internalinterfaces
 import (
 	time "time"
 
-	versioned "github.com/kubeapps_plus/cmd/apprepository-controller/pkg/client/clientset/versioned"
+	versioned "github.com/kubeapps/cmd/apprepository-controller/pkg/client/clientset/versioned"
 	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	runtime "k8s.io/apimachinery/pkg/runtime"
 	cache "k8s.io/client-go/tools/cache"

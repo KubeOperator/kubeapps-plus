@@ -20,7 +20,7 @@ import (
 	"fmt"
 	"strings"
 
-	yamlUtils "github.com/kubeapps_plus/pkg/yaml"
+	yamlUtils "github.com/kubeapps/pkg/yaml"
 	authorizationapi "k8s.io/api/authorization/v1"
 	k8sErrors "k8s.io/apimachinery/pkg/api/errors"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"

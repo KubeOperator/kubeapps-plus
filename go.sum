@@ -68,8 +68,8 @@ github.com/konsorten/go-windows-terminal-sequences v1.0.1 h1:mweAR1A6xJ3oS2pRaGi
 github.com/konsorten/go-windows-terminal-sequences v1.0.1/go.mod h1:T0+1ngSBFLxvqU3pZ+m/2kptfBszLMUkC4ZK/EgS/cQ=
 github.com/kubeapps/common v0.0.0-20180208112310-707d33bc9333 h1:RRLxBMt+t732hFTOtaVttWAVOENv8KsliWEcTeIloZg=
 github.com/kubeapps/common v0.0.0-20180208112310-707d33bc9333/go.mod h1:TsgmjeDpbftqhwPKInJ3v+l+xbHs4goiB6DFb2WqY9c=
-github.com/kubeapps_plus v1.6.1 h1:kx1I/7bek3NOEnAXKxz8DLO2nkxVhJtvnPXYt4hXq8c=
-github.com/kubeapps_plus v1.6.1/go.mod h1:5vEsEEnDV5Ex5vOqeyrMtv/RRtM4UZGQ/wr0yL6AFMs=
+github.com/kubeapps v1.6.1 h1:kx1I/7bek3NOEnAXKxz8DLO2nkxVhJtvnPXYt4hXq8c=
+github.com/kubeapps v1.6.1/go.mod h1:5vEsEEnDV5Ex5vOqeyrMtv/RRtM4UZGQ/wr0yL6AFMs=
 github.com/matttproud/golang_protobuf_extensions v1.0.1 h1:4hp9jkHxhMHkqkrB3Ix0jegS5sx/RkqARlsWZ6pIwiU=
 github.com/matttproud/golang_protobuf_extensions v1.0.1/go.mod h1:D8He9yQNgCq6Z5Ld7szi9bcBfOoFv/3dc6xSMkL2PC0=
 github.com/modern-go/concurrent v0.0.0-20180306012644-bacd9c7ef1dd h1:TRLaZ9cD/w8PVh93nsPXa1VrQ6jlwL5oN8l14QlcNfg=

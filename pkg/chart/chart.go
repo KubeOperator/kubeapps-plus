@@ -33,8 +33,8 @@ import (
 	"time"
 
 	"github.com/ghodss/yaml"
-	appRepov1 "github.com/kubeapps_plus/cmd/apprepository-controller/pkg/apis/apprepository/v1alpha1"
-	appRepoClientSet "github.com/kubeapps_plus/cmd/apprepository-controller/pkg/client/clientset/versioned"
+	appRepov1 "github.com/kubeapps/cmd/apprepository-controller/pkg/apis/apprepository/v1alpha1"
+	appRepoClientSet "github.com/kubeapps/cmd/apprepository-controller/pkg/client/clientset/versioned"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/kubernetes"
 	"k8s.io/helm/pkg/proto/hapi/chart"
@@ -144,7 +144,6 @@ func checksum(data []byte) string {
 }
 
 // Cache the result of parsing the repo index since parsing this YAML
-// is an expensive operation. See https://github.com/kubeapps_plus/issues/1052
 func getIndexFromCache(repoURL string, data []byte) (*repo.IndexFile, string) {
 	sha := checksum(data)
 	if repoIndexes[repoURL] == nil || repoIndexes[repoURL].checksum != sha {

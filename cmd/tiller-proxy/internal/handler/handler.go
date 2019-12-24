@@ -27,9 +27,9 @@ import (
 
 	"github.com/gorilla/mux"
 	"github.com/kubeapps/common/response"
-	"github.com/kubeapps_plus/pkg/auth"
-	chartUtils "github.com/kubeapps_plus/pkg/chart"
-	proxy "github.com/kubeapps_plus/pkg/proxy"
+	"github.com/kubeapps/pkg/auth"
+	chartUtils "github.com/kubeapps/pkg/chart"
+	proxy "github.com/kubeapps/pkg/proxy"
 	log "github.com/sirupsen/logrus"
 	"github.com/urfave/negroni"
 	"k8s.io/helm/pkg/proto/hapi/chart"

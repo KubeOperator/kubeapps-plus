@@ -3,19 +3,25 @@
 ![License](https://img.shields.io/badge/License-Apache%202.0-red)
 ![HitCount](http://hits.dwyl.io/kubeoperator/kubeapps-plus.svg)
 
-KubeApps Plus 是 [KubeApps](https://github.com/kubeapps/kubeapps) 的定制版本，基于 Web UI 界面在 Kubernetes 集群中部署和管理 Helm-based 的应用程序。[KubeApps](https://github.com/kubeapps/kubeapps) 是由 [Bitnami](https://bitnami.com/) 发布的 Kubernetes 应用商店，KubeApps Plus 当前的主要定制是中文支持和离线应用包支持。KubeApps Plus 使用 Apache License 2.0 许可, 与 [KubeApps](https://github.com/kubeapps/kubeapps/blob/master/LICENSE) 相同。
+KubeApps Plus 是 [KubeApps](https://github.com/kubeapps/kubeapps) 的定制版本，基于 Web UI 界面在 Kubernetes 集群中部署和管理 Helm Chart 应用程序。[KubeApps](https://github.com/kubeapps/kubeapps) 是由 [Bitnami](https://bitnami.com/) 发布的 Kubernetes 应用商店，KubeApps Plus 当前的主要定制包括前端重写、中文支持和纯离线支持。KubeApps Plus 使用 Apache License 2.0 许可, 与 [KubeApps](https://github.com/kubeapps/kubeapps/blob/master/LICENSE) 相同。
+
+KubeApps Plus 是 [KubeOperator](https://github.com/KubeOperator/KubeOperator) 内置的应用商店方案。
+
+## WEB UI 展示
+
+TBD
 
 ## 主要功能
 
-- 从 Helm Chart Repo 中浏览并部署 Helm Chart 应用；
-- 集群中已有 Helm-based 应用的查看、升级和卸载；
-- 支持自定义 Helm Chart Repo（比如 ChartMuseum 和 JFrog Artifactory 等）；
+- 从 Helm Chart 仓库中浏览并部署 Helm Chart 应用；
+- 集群中已有 Helm chart 应用的查看、升级和卸载；
+- 支持自定义 Helm Chart 仓库（比如 ChartMuseum 和 JFrog Artifactory 等）；
 - 基于 Kubernetes RBAC 的身份验证和授权；
 
 ## 安装 KubeApps Plus
 
 - 自动安装：KubeApps Plus 是 KubeOperator 的一个内置应用。通过 KubeOperator 部署的 K8s 集群会自动安装上 KubeApps Plus；
-- 手动安装：使用如下脚本自行在已有 K8s 集群中安装 [KubeApps Plus 安装指南](chart/README.md)；
+- 手动安装：使用如下脚本自行在已有 K8s 集群中安装。详情请参考： [KubeApps Plus 安装指南](chart/README.md)；
 
 ```bash
 git clone https://github.com/KubeOperator/kubeapps-plus.git

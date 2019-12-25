@@ -1,6 +1,6 @@
 # IDEs and editors
 .idea/
 target/
-script/jenkins/.DS_Store
-script/jenkins/Image/jenkins.jar
-script/jenkins/Image/jnlp-slave.jar
+script/apps/jenkins/.DS_Store
+script/apps/jenkins/Image/jenkins.jar
+script/apps/jenkins/Image/jnlp-slave.jar

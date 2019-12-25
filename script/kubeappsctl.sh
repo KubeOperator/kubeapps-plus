@@ -130,17 +130,74 @@ function set_registry() {
 
 function docker_upload_image() {
 
-    cd ${PROJECT_DIR}/jenkins/image
+    #jenkins start
+    cd ${PROJECT_DIR}/apps/jenkins/image
     docker load <jenkins.jar
     docker load <jnlp-slave.jar
-    #jenkins
     docker tag 22b8b9a84dbe ${registry_host}/jenkins/jenkins:lts
-    #jnlp-salve
     docker tag 6bf8f3767d8b ${registry_host}/jenkins/jnlp-slave:3.27-1
-
     docker push ${registry_host}/jenkins/jenkins:lts
-
     docker push ${registry_host}/jenkins/jnlp-slave:3.27-1
+    #jenkins end
+
+    #gitlab start
+    cd ${PROJECT_DIR}/apps/gitlab-ce/image
+    docker load <gitlab.jar
+    docker tag 6099ff61e4ff ${registry_host}/gitlab/gitlab:lts
+    docker push ${registry_host}/gitlab/gitlab:lts
+    #gitlab end
+
+    #sonarqube start
+    cd ${PROJECT_DIR}/apps/sonarqube/image
+    docker load <sonarqube.jar
+    docker tag ea9ce8f562b5 ${registry_host}/sonarqube/sonarqube:lts
+    docker push ${registry_host}/sonarqube/sonarqube:lts
+    #gitlab end
+
+    #harbor start
+    cd ${PROJECT_DIR}/apps/harbor/image
+    docker load <harbor-chartmuseum-photon.jar
+    docker load <harbor-clair-adapter-photon.jar
+    docker load <harbor-clair-photon.jar
+    docker load <harbor-core.jar
+    docker load <harbor-db.jar
+    docker load <harbor-jobservice.jar
+    docker load <harbor-nginx-photon.jar
+    docker load <harbor-notary-server-photon.jar
+    docker load <harbor-notary-signer-photon.jar
+    docker load <harbor-portal.jar
+    docker load <harbor-redis-photon.jar
+    docker load <harbor-registryctl.jar
+    docker load <harbor-registry-photon.jar
+    
+    docker tag 72907320ffac ${registry_host}/harbor/harbor-chartmuseum-photon:lts
+    docker tag ad64fa39c62b ${registry_host}/harbor/harbor-clair-adapter-photon:lts
+    docker tag 53440cf589b9 ${registry_host}/harbor/harbor-clair-photon:lts
+    docker tag 26436ee0e558 ${registry_host}/harbor/harbor-core:lts
+    docker tag 5f4b52e24061 ${registry_host}/harbor/harbor-db:lts
+    docker tag 362bfafa892b ${registry_host}/harbor/harbor-jobservice:lts
+    docker tag f49106ca9f4a ${registry_host}/harbor/harbor-nginx-photon:lts
+    docker tag 0f05fe55ce34 ${registry_host}/harbor/harbor-notary-server-photon:lts
+    docker tag e98944d2dbd6 ${registry_host}/harbor/harbor-notary-signer-photon:lts
+    docker tag 9cf90487afc9 ${registry_host}/harbor/harbor-portal:lts
+    docker tag 3b5fc4767360 ${registry_host}/harbor/harbor-redis-photon:lts
+    docker tag 2e6fe7b484bb ${registry_host}/harbor/harbor-registryctl:lts
+    docker tag bd03f4313216 ${registry_host}/harbor/harbor-registry-photon:lts
+
+    docker push ${registry_host}/harbor/harbor-chartmuseum-photon:lts
+    docker push ${registry_host}/harbor/harbor-clair-adapter-photon:lts
+    docker push ${registry_host}/harbor/harbor-clair-photon:lts
+    docker push ${registry_host}/harbor/harbor-core:lts
+    docker push ${registry_host}/harbor/harbor-db:lts
+    docker push ${registry_host}/harbor/harbor-jobservice:lts
+    docker push ${registry_host}/harbor/harbor-nginx-photon:lts
+    docker push ${registry_host}/harbor/harbor-notary-server-photon:lts
+    docker push ${registry_host}/harbor/harbor-notary-signer-photon:lts
+    docker push ${registry_host}/harbor/harbor-portal:lts
+    docker push ${registry_host}/harbor/harbor-redis-photon:lts
+    docker push ${registry_host}/harbor/harbor-registryctl:lts
+    docker push ${registry_host}/harbor/harbor-registry-photon:lts
+    #gitlab end
 }
 
 #打包Helm Chart

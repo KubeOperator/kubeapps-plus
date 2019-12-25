@@ -55,16 +55,18 @@ function set_docker_config() {
     secret=$(base64 -w 0 utils/docker-config.json)
     all_variables_secret="secret=${secret}"
     #替换Secert
-    resourcefile=`cat jenkins/templates/userdefined-secret.yaml`
-    printf "$all_variables_secret\ncat << EOF\n$resourcefile\nEOF" | bash >jenkins/templates/userdefined-secret.yaml
+    resourcefile=`cat apps/jenkins/templates/userdefined-secret.yaml`
+    printf "$all_variables_secret\ncat << EOF\n$resourcefile\nEOF" | bash >apps/jenkins/templates/userdefined-secret.yaml
 
     #TODO
     #替换source
-    # registryfile=`cat jenkins/values.yaml`
+    # registryfile=`cat apps/jenkins/values.yaml`
     # all_variables_source="imageregistry=\"${url}\""
-    # printf "$all_variables_source\ncat << EOF\n$registryfile\nEOF" | bash >jenkins/values.yaml
-    sed "s/imageregistryvalue/\"${url}\"/g" jenkins/values_default.yaml > jenkins/values.yaml
-
+    # printf "$all_variables_source\ncat << EOF\n$registryfile\nEOF" | bash >apps/jenkins/values.yaml
+    sed "s/imageregistryvalue/\"${url}\"/g" apps/jenkins/values_default.yaml > apps/jenkins/values.yaml
+    sed "s/imageregistryvalue/\"${url}\"/g" apps/gitlab-ce/values_default.yaml > apps/gitlab-ce/values.yaml
+    sed "s/imageregistryvalue/\"${url}\"/g" apps/sonarqube/values_default.yaml > apps/sonarqube/values.yaml
+    sed "s/imageregistryvalue/\"${url}\"/g" apps/harbor/values_default.yaml > apps/harbor/values.yaml
 }
 
 ## 检查环境 安装helm push
@@ -244,7 +246,7 @@ function set_chartrepo() {
 #上传Chart 到 Chart Repo
 
 function upload_chart() {
-    cd ${PROJECT_DIR}/jenkins
+    cd ${PROJECT_DIR}/apps
     helm push . localrepo -f
     if [ $? -eq 0 ]; then
         echo ">>> 上传完成"

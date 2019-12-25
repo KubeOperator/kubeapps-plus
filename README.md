@@ -7,8 +7,8 @@ KubeApps Plus 是 [KubeApps](https://github.com/kubeapps/kubeapps) 的定制版�
 
 KubeApps Plus 是 [KubeOperator](https://github.com/KubeOperator/KubeOperator) 内置的应用商店方案，目前应用商店中的应用（支持离线部署）包括：
 
-- CI/CD 类应用：GitLab、Jenkins、Harbor、Sonarqube、Istio；
-- AI 深度学习类应用：Tensorflow、Pytorch;
+- DevOps 工具链应用：GitLab、Jenkins、Harbor、Sonarqube、Istio；
+- AI 深度学习应用：Tensorflow;
 
 其他的应用可以通过自定义 Helm Chart 仓库进行安装。
 

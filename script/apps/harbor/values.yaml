@@ -238,7 +238,7 @@ imagePullPolicy: IfNotPresent
 
 # Use this set to assign a list of default pullSecrets
 imagePullSecrets:
-#  - name: docker-registry-secret
+ - name: kubeapps-registry-fit2cloud-com-key
 #  - name: internal-registry-secret
 
 # The update strategy for deployments with persistent volumes(jobservice, registry 

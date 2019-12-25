@@ -131,7 +131,7 @@ function set_registry() {
 function docker_upload_image() {
 
     #jenkins start
-    cd ${PROJECT_DIR}/apps/jenkins/image
+    cd ${PROJECT_DIR}/apps/image
     docker load <jenkins.jar
     docker load <jnlp-slave.jar
     docker tag 22b8b9a84dbe ${registry_host}/jenkins/jenkins:lts
@@ -141,21 +141,18 @@ function docker_upload_image() {
     #jenkins end
 
     #gitlab start
-    cd ${PROJECT_DIR}/apps/gitlab-ce/image
     docker load <gitlab.jar
     docker tag 6099ff61e4ff ${registry_host}/gitlab/gitlab:lts
     docker push ${registry_host}/gitlab/gitlab:lts
     #gitlab end
 
     #sonarqube start
-    cd ${PROJECT_DIR}/apps/sonarqube/image
     docker load <sonarqube.jar
     docker tag ea9ce8f562b5 ${registry_host}/sonarqube/sonarqube:lts
     docker push ${registry_host}/sonarqube/sonarqube:lts
     #gitlab end
 
     #harbor start
-    cd ${PROJECT_DIR}/apps/harbor/image
     docker load <harbor-chartmuseum-photon.jar
     docker load <harbor-clair-adapter-photon.jar
     docker load <harbor-clair-photon.jar

@@ -55,8 +55,8 @@ function set_docker_config() {
     secret=$(base64 -w 0 utils/docker-config.json)
     all_variables_secret="secret=${secret}"
     #替换Secert
-    resourcefile=`cat apps/jenkins/templates/userdefined-secret.yaml`
-    printf "$all_variables_secret\ncat << EOF\n$resourcefile\nEOF" | bash >apps/jenkins/templates/userdefined-secret.yaml
+    resourcefile=`cat apps/userdefined-secret.yaml`
+    printf "$all_variables_secret\ncat << EOF\n$resourcefile\nEOF" | bash >apps/userdefined-secret.yaml
 
     #TODO
     #替换source

@@ -60,7 +60,9 @@ const imageIcon = {
     tomcat: 'https://dyltqmyl993wv.cloudfront.net/assets/stacks/tomcat/img/tomcat-stack-110x117.png',
     wordpress: 'https://dyltqmyl993wv.cloudfront.net/assets/stacks/wordpress/img/wordpress-stack-110x117.png',
     zookeeper: 'https://dyltqmyl993wv.cloudfront.net/assets/stacks/zookeeper/img/zookeeper-stack-110x117.png',
-    gitlab: 'https://dyltqmyl993wv.cloudfront.net/assets/stacks/gitlab/img/gitlab-stack-110x117.png'
+    gitlab: 'https://dyltqmyl993wv.cloudfront.net/assets/stacks/gitlab/img/gitlab-stack-110x117.png',
+    sonarqube: 'https://dyltqmyl993wv.cloudfront.net/assets/stacks/sonarqube/img/sonarqube-stack-110x117.png',
+    istio: 'https://hub.kubeapps.com/api/chartsvc/v1/assets/ibm-charts/ibm-istio/logo'
 }
 
 var searchIcon = function (val){

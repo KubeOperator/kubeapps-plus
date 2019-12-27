@@ -1,18 +1,18 @@
-# KubeApps Plus 概述
+# Kubeapps Plus 架构说明
 
 本文档从高层次描述了 KubeApps Plus 架构。
 
 ### KubeApps Plus 仪表盘
 
-KubeApps Plus 的核心是集群内 Kubernetes 仪表板, 可为您提供简单的浏览和单击体验, 以安装和管理打包为 Helm 图表的 Kubernetes 应用程序。
+KubeApps Plus 的核心是集群内 Kubernetes 仪表板, 可为您提供简单的浏览和体验, 以安装和管理打包为 Helm 图表的 Kubernetes 应用程序。
 
 仪表板使用 Javascript 编程语言编写, 并使用 Vue.js 库进行开发。
 
 ### Tiller proxy
 
-为了保护对 Tiller 的访问并允许仪表板联系 Helm Tiller 服务器, 我们部署了代理来处理与 Tiller 的通信。 该代理的目标是验证发出请求的用户是否具有足够的权限来创建或删除作为正在部署或删除的特定图表一部分的所有资源。
+为了保护对 Tiller 的访问并允许仪表板交互 Helm Tiller 服务器, 我们部署了 proxy 来处理与 Tiller 的通信。 该 proxy 的目标是验证发出请求的用户是否具有足够的权限来创建或删除作为正在部署或删除的特定图表部分的所有资源。
 
-该代理是用Go编写的。 在此 [document](/cmd/tiller-proxy/README.md)中检查有关实现的更多详细信息。
+该代理是用Go编写的。 在此 [tiller-proxy](/cmd/tiller-proxy/README.md) 中检查有关实现的更多详细信息。
 
 ### CRD 储存库 和 控制器
 

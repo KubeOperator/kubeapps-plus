@@ -1,8 +1,8 @@
 # Tiller Proxy
 
-该代理是Kubeapps Plus的一项服务, 该服务将仪表板与Tiller连接起来。 该代理的目标是为经过身份验证的用户提供安全的代理, 以在不同名称空间中部署, 升级和删除图表。
+该代理是 KubeApps Plus 的一项服务, 该服务将仪表板与 Tiller 连接起来。 该代理的目标是为经过身份验证的用户提供安全的代理, 以在不同名称空间中部署, 升级和删除图表。
 
-该工具的部分逻辑已从[helm-CRD](https://github.com/bitnami-labs/helm-crd)中提取。 该工具已在Kubeapps Plus中弃用, 以避免必须在两个不同的地方(Tiller和CRD对象)同步发布的状态。
+该工具的部分逻辑已从 [helm-CRD](https://github.com/bitnami-labs/helm-crd)中提取。 该工具已在 KubeApps Plus 中弃用, 以避免必须在两个不同的地方( Tiller 和 CRD对象 )同步发布的状态。
 
 客户端应该提供标头`Authorization: Bearer TOKEN`作为令牌, Kubernetes API令牌才能执行任何操作。
 
@@ -39,7 +39,7 @@
 
 # 启用授权
 
-默认情况下, 将启用任何请求的授权(可以使用标志--disable-auth禁用该请求)。 如果启用, 则客户端应具有以下权限: 
+默认情况下, 将启用任何请求的授权(可以使用标志 --disable-auth 禁用该请求)。 如果启用, 则客户端应具有以下权限: 
 
   - 在特定版本上执行HTTP GET时, “读取”对版本中所有版本资源的访问权限。
   - 执行HTTP POST时, “创建”对版本中所有版本资源的访问权限。
@@ -61,6 +61,6 @@
 
 有了这些信息, 代理将解析应用程序的完整清单。 然后, 它将收集清单中包含的不同API组, 以验证由承载令牌标识的用户可以执行请求的操作。
 
-这是Kubeapps Plus(仪表板), 代理, Tiller和K8s API之间的通信示例图, 用于部署由“ Deployment”和“ Service”组成的应用程序“ foo”: 
+这是 KubeApps Plus (仪表板), 代理, Tiller 和 K8s API 之间的通信示例图, 用于部署由 “Deployment” 和 “ Service” 组成的应用程序 “foo”: 
 
 ![diagram](diagram.png)

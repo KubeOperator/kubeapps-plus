@@ -1,6 +1,6 @@
-# KubeApps Plus Chartsvc开发指南
+# Chartsvc 开发指南
 
-“chartsvc” 组件是一个微服务, 它创建一个 API 端点来访问在 MongoDB 服务器中的 Helm 图表存储库中图表的元数据。 其源代码保存在[Monocular项目存储库](https://github.com/helm/monocular)中。
+“chartsvc” 组件是一个微服务, 它创建一个 API 端点来访问在 MongoDB 服务器中的 Helm 图表存储库中图表的元数据。 其源代码保存在 [Monocular项目存储库](https://github.com/helm/monocular)中。
 
 ## 前提条件
 
@@ -40,7 +40,7 @@ dep ensure
 make -C cmd/chartsvc docker-build
 ```
 
-这将构建`chartsvc` Docker镜像。
+这将构建 `chartsvc` Docker 镜像。
 
 ### 在开发中运行
 
@@ -52,7 +52,7 @@ telepresence --swap-deployment kubeapps-internal-chartsvc --namespace kubeapps-p
 
 请注意, 应重新构建Chartsvc, 以使新更改生效。
 
-#### 选项2: 替换Chartsvc部署中的图像
+#### 选项2: 替换 Chartsvc 部署中的图像
 
 注意: 默认情况下, KubeApps Plus 会尝试获取图像的最新版本, 因此为了使此工作流在 Minikube 中正常工作, 您需要首先更新 imagePullPolicy: 
 

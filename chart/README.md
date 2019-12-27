@@ -1,4 +1,4 @@
-# KubeApps Plus
+# KubeApps Plus 安装指南
 
 [KubeApps Plus](https://kubeapps.com) 是基于Web的UI, 用于在 Kubernetes 集群中部署和管理应用程序。 KubeApps Plus 使您能够: 
 
@@ -27,7 +27,7 @@ helm install --name kubeapps-plus --namespace kubeapps-plus ./chart
 
 > 使用`helm list`列出所有发行版本
 
-安装 KubeApps Plus 后, 请按照[入门指南](../docs/user/getting-started.md) 了解有关如何访问和使用 KubeApps Plus 的更多信息
+安装 KubeApps Plus 后, 请按照 [KubeApps Plus 入门指南](../docs/user/getting-started.md) 了解有关如何访问和使用 KubeApps Plus 的更多信息
 
 ## 配置参数
 
@@ -51,7 +51,7 @@ $ helm install --name kubeapps-plus --namespace kubeapps-plus -f custom-values.y
 
 ### 配置初始存储库
 
-默认情况下, KubeApps Plus 将跟踪[社区helm chart](https://github.com/helm/charts)和[Kubernetes服务目录图表](https://github.com/kubernetes-incubator/service-catalog )。 要更改这些默认值, 请使用所需的参数覆盖[values.yaml](values.yaml) 文件中存在的 `apprepository.initialRepos` 对象。
+默认情况下, KubeApps Plus 将跟踪 [社区helm chart](https://github.com/helm/charts) 和 [Kubernetes服务目录图表](https://github.com/kubernetes-incubator/service-catalog )。 要更改这些默认值, 请使用所需的参数覆盖[values.yaml](values.yaml) 文件中存在的 `apprepository.initialRepos` 对象。
 
 #### 负载均衡服务
 

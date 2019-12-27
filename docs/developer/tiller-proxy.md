@@ -1,4 +1,4 @@
-# KubeApps Plus Tiller proxy开发指南
+# tiller-proxy 开发指南
 
 “tiller-proxy” 组件是一个微服务, 可创建用于访问 Helm Tiller 服务器的 API。
 
@@ -28,7 +28,7 @@ tiller-proxy 源位于 cmd/tiller-proxy/ 目录下, 并使用 pkg 目录中的�
 
 ### 在您的集群中安装 KubeApps Plus
 
-KubeApps Plus 是 Kubernetes 本地应用程序。 要开发和测试 KubeApps Plus 组件, 我们需要一个已安装 KubeApps Plus 的 Kubernetes 集群。 遵循[KubeApps Plus安装指南](../../chart/README.md)在您的群集中安装 KubeApps Plus。
+KubeApps Plus 是 Kubernetes 本地应用程序。 要开发和测试 KubeApps Plus 组件, 我们需要一个已安装 KubeApps Plus 的 Kubernetes 集群。 遵循 [KubeApps Plus安装指南](../../chart/README.md)在您的群集中安装 KubeApps Plus。
 
 ### 构建`tiller-proxy`二进制文件
 

@@ -1,6 +1,6 @@
-# 使用仪表板
+# 仪表板开发指南
 
-[在群集中安装Kubeapps Plus](../../chart/kubeapps/README.md)之后, 您可以使用仪表板开始在群集中管理和部署应用程序。 请查看[Getting Started](getting-started.md)指南, 以了解如何访问仪表板和部署第一个应用程序。
+[KubeApps Plus 安装指南](../../chart/kubeapps/README.md) 您可以使用仪表板开始在群集中管理和部署应用程序。 请查看 [KubeApps Plus 使用指南](getting-started.md)指南, 以了解如何访问仪表板和部署第一个应用程序。
 
 以下各节将引导您完成Kubeapps Plus仪表板的一些常见任务。
 
@@ -43,29 +43,29 @@
 通过单击“添加应用程序存储库”按钮来添加新的存储库(例如, 您组织的图表存储库)。 使用以下准则填写“添加存储库”表单: 
 
 * 名称: 使用任何唯一标识符。
-* URL: 添加图表存储库的URL(与“ helm repo add”使用的URL相同)
+* URL: 添加图表存储库的URL(与 “helm repo add” 使用的URL相同)
 
 ![添加存储库](../img/dashboard-add-repo.png)
 
-## Project setup
+## 项目设置
 ```
 yarn install
 ```
 
-### Compiles and hot-reloads for development
+### 编译和热重装以进行开发
 ```
 yarn serve
 ```
 
-### Compiles and minifies for production
+### 编译并最小化生产
 ```
 yarn build
 ```
 
-### Lints and fixes files
+### 整理和修复文件
 ```
 yarn lint
 ```
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+### 自定义配置
+查看 [配置参考](https://cli.vuejs.org/config/).

@@ -1,4 +1,4 @@
-# KubeApps Plus 入门
+# KubeApps Plus 使用指南
 
 本指南将引导您完成为集群部署 KubeApps Plus 并安装示例应用程序的过程。
 
@@ -18,7 +18,7 @@ cd kubeapps-plus
 helm install --name kubeapps-plus --namespace kubeapps-plus ./chart
 ```
 
-有关安装, 配置和升级 KubeApps Plus 的详细信息, 请点击[KubeApps Plus 安装指南](chart/README.md)。
+有关安装, 配置和升级 KubeApps Plus 的详细信息, 请点击 [KubeApps Plus 安装指南](../../chart/README.md)。
 
 上面的命令会将 KubeApps Plus 部署到集群中的 `kubeapps-plus` 名称空间中。 执行可能需要几分钟。 部署完成并且 KubeApps Plus 容器运行后, 继续执行步骤2。
 
@@ -112,6 +112,6 @@ kubectl port-forward -n kubeapps $POD_NAME 8080:8080
 
 通过以下链接了解有关 KubeApps Plus 的更多信息: 
 
-- [KubeApps Plus安装说明](chart/README.md)
+- [KubeApps Plus安装说明](../../chart/README.md)
 - [KubeApps Plus仪表板](dashboard/README.md)
-- [KubeApps Plus架构说明](docs/architecture/overview.md)
+- [KubeApps Plus架构说明](../architecture/overview.md)

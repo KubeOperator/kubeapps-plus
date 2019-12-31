@@ -40,7 +40,9 @@ const imageIcon2 = {
     tomcat: '../../assets/image/charts/tomcat-stack-110x117.png',
     wordpress: '../../assets/image/charts/wordpress-stack-110x117.png',
     zookeeper: '../../assets/image/charts/zookeeper-stack-110x117.png',
-    gitlab: '../../assets/image/charts/gitlab-stack-110x117.png'
+    gitlab: '../../assets/image/charts/gitlab-stack-110x117.png',
+    sonarqube: '../../assets/image/charts/sonarqube-stack-110x117.png',
+    istio: '../../assets/image/charts/istio-110x117.png'
 }
 
 const imageIcon = {

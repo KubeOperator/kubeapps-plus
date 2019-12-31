@@ -56,10 +56,10 @@ function set_docker_config() {
     all_variables_secret="secret=${secret}"
     #替换Secert
     resourcefile=`cat apps/userdefined-secret.yaml`
-    printf "$all_variables_secret\ncat << EOF\n$resourcefile\nEOF" | bash >jenkins/templates/userdefined-secret.yaml
-    printf "$all_variables_secret\ncat << EOF\n$resourcefile\nEOF" | bash >gitlab-ce/templates/userdefined-secret.yaml
-    printf "$all_variables_secret\ncat << EOF\n$resourcefile\nEOF" | bash >sonarqube/templates/userdefined-secret.yaml
-    printf "$all_variables_secret\ncat << EOF\n$resourcefile\nEOF" | bash >harbor/templates/userdefined-secret.yaml
+    printf "$all_variables_secret\ncat << EOF\n$resourcefile\nEOF" | bash >apps/jenkins/templates/userdefined-secret.yaml
+    printf "$all_variables_secret\ncat << EOF\n$resourcefile\nEOF" | bash >apps/gitlab-ce/templates/userdefined-secret.yaml
+    printf "$all_variables_secret\ncat << EOF\n$resourcefile\nEOF" | bash >apps/sonarqube/templates/userdefined-secret.yaml
+    printf "$all_variables_secret\ncat << EOF\n$resourcefile\nEOF" | bash >apps/harbor/templates/userdefined-secret.yaml
 
     #TODO
     #替换source
@@ -146,9 +146,9 @@ function docker_upload_image() {
     #jenkins end
 
     #gitlab start
-    docker load <gitlab-ce.jar
-    docker tag 6099ff61e4ff ${registry_host}/gitlab/gitlab-ce:lts
-    docker push ${registry_host}/gitlab/gitlab-ce:lts
+    docker load <gitlab.jar
+    docker tag 6099ff61e4ff ${registry_host}/gitlab/gitlab:lts
+    docker push ${registry_host}/gitlab/gitlab:lts
     #gitlab end
 
     #sonarqube start

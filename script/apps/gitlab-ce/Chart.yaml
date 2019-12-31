@@ -1,8 +1,8 @@
-name: gitlab-ce
+name: Gitlab
 deprecated: true
 version: 0.2.2
 appVersion: 9.4.1
-description: GitLab Community Edition
+description: GitLab 社区版是一个基于Web的 DevOps的生命周期工具。
 keywords:
 - git
 - ci

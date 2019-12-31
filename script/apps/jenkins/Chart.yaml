@@ -1,11 +1,9 @@
 apiVersion: v1
-name: jenkins
+name: Jenkins
 home: https://jenkins.io/
 version: 1.9.9
 appVersion: lts
-description: Open source continuous integration server. It supports multiple SCM tools
-  including CVS, Subversion and Git. It can execute Apache Ant and Apache Maven-based
-  projects as well as arbitrary scripts.
+description: 开源持续集成服务器。 它支持多种SCM工具，包括CVS，Subversion 和 Git。 它可以执行基于Apache Ant和Apache Maven的项目以及任意脚本。
 sources:
 - https://github.com/jenkinsci/jenkins
 - https://github.com/jenkinsci/docker-jnlp-slave

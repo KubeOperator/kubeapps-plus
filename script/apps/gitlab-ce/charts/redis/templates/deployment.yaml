@@ -26,7 +26,7 @@ spec:
       {{- end }}
       containers:
       - name: {{ template "redis.fullname" . }}
-        image: "{{ .Values.image }}"
+        image: "{{ .Values.imageRegistry }}/{{ .Values.image }}"
         imagePullPolicy: {{ default "" .Values.imagePullPolicy | quote }}
         {{- if .Values.args }}
         args:

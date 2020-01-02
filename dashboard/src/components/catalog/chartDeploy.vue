@@ -202,6 +202,7 @@
                         noticeMessage(this, releaseName + ' 部署成功! ', 'success')
                         this.$router.push('/apps/ns/' + this.$store.state.namespaces.activeSpace + '/' + releaseName)
                     } else {
+                        console.log('部署失败', res)
                         noticeMessage(this, releaseName + ' 部署失败: ' + res.message, 'error')
                     }
                 }).catch(msg => {

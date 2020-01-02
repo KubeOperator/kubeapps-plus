@@ -1,12 +1,12 @@
 
 ##############################################################################
-This chart has been deprecated in favor of the official GitLab chart:
+This chart has been deprecated in favor of the official gitlab chart:
 http://docs.gitlab.com/ce/install/kubernetes/gitlab_omnibus.html
 ##############################################################################
 
 {{- if default "" .Values.externalUrl }}
 
-1. Get your GitLab URL by running:
+1. Get your gitlab URL by running:
 
 {{- if contains "NodePort" .Values.serviceType }}
 
@@ -53,7 +53,7 @@ http://docs.gitlab.com/ce/install/kubernetes/gitlab_omnibus.html
 ##############################################################################
 
 This deployment will be incomplete until you provide the URL that your
-GitLab install will be reachable to your users under:
+gitlab install will be reachable to your users under:
 
     helm upgrade {{ .Release.Name }} \
         --set externalUrl=http://your-domain.com stable/gitlab-ce

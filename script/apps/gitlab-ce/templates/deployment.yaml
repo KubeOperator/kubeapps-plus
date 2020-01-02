@@ -23,9 +23,9 @@ spec:
         image: "{{ .Values.imageRegistry }}/{{ .Values.image }}:{{ .Values.image.tag }}"
         imagePullPolicy: {{ default "" .Values.imagePullPolicy | quote }}
         env:
-        ## General GitLab Configs
+        ## General gitlab Configs
         ##
-        # This is a free-form env var that GitLab Omnibus uses to configure
+        # This is a free-form env var that gitlab Omnibus uses to configure
         # everything. We're passing this in from a configmap and pulling some
         # of the values from the env vars defined below. This is done to
         # avoid leaving secrets visible in kubectl.

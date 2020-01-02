@@ -1,14 +1,14 @@
-> This chart is deprecated in favor of the [official GitLab chart](https://docs.gitlab.com/ee/install/kubernetes/gitlab_chart.html).
+> This chart is deprecated in favor of the [official gitlab chart](https://docs.gitlab.com/ee/install/kubernetes/gitlab_chart.html).
 
-# GitLab Community Edition
+# gitlab Community Edition
 
-[GitLab Community Edition](https://about.gitlab.com/) is an application to code, test, and deploy code together. It provides Git repository management with fine grained access controls, code reviews, issue tracking, activity feeds, wikis, and continuous integration. 
+[gitlab Community Edition](https://about.gitlab.com/) is an application to code, test, and deploy code together. It provides Git repository management with fine grained access controls, code reviews, issue tracking, activity feeds, wikis, and continuous integration. 
 
 ## Introduction
 
-This chart stands up a GitLab Community Edition install. This includes:
+This chart stands up a gitlab Community Edition install. This includes:
 
-- A [GitLab Omnibus](https://docs.gitlab.com/omnibus/) Pod
+- A [gitlab Omnibus](https://docs.gitlab.com/omnibus/) Pod
 - Redis
 - Postgresql
 
@@ -17,7 +17,7 @@ This chart stands up a GitLab Community Edition install. This includes:
 - _At least_ 3 GB of RAM available on your cluster, in chunks of 1 GB
 - Kubernetes 1.4+ with Beta APIs enabled
 - PV provisioner support in the underlying infrastructure
-- The ability to point a DNS entry or URL at your GitLab install
+- The ability to point a DNS entry or URL at your gitlab install
 
 ## Installing the Chart
 
@@ -44,7 +44,7 @@ The command removes all the Kubernetes components associated with the chart and 
 
 ## Configuration
 
-Refer to [values.yaml](values.yaml) for the full run-down on defaults. These are a mixture of Kubernetes and GitLab-related directives.
+Refer to [values.yaml](values.yaml) for the full run-down on defaults. These are a mixture of Kubernetes and gitlab-related directives.
 
 Specify each parameter using the `--set key=value[,key=value]` argument to `helm install`. For example,
 
@@ -64,6 +64,6 @@ $ helm install --name my-release -f values.yaml stable/gitlab-ce
 
 ## Persistence
 
-By default, persistence of GitLab data and configuration happens using PVCs. If you know that you'll need a larger amount of space, make _sure_ to look at the `persistence` section in [values.yaml](values.yaml).
+By default, persistence of gitlab data and configuration happens using PVCs. If you know that you'll need a larger amount of space, make _sure_ to look at the `persistence` section in [values.yaml](values.yaml).
 
 > *"If you disable persistence, the contents of your volume(s) will only last as long as the Pod does. Upgrading or changing certain settings may lead to data loss without persistence."*

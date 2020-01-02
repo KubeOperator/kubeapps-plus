@@ -8,7 +8,7 @@ metadata:
     release: "{{ .Release.Name }}"
     heritage: "{{ .Release.Service }}"
 data:
-  ## This is used by GitLab Omnibus as the primary means of configuration.
+  ## This is used by gitlab Omnibus as the primary means of configuration.
   ## ref: https://gitlab.com/gitlab-org/omnibus-gitlab/blob/master/files/gitlab-config-template/gitlab.rb.template
   ##
   gitlab_omnibus_config: |

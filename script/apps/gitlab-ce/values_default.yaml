@@ -1,5 +1,5 @@
 imageRegistry: imageregistryvalue
-## GitLab CE image
+## gitlab CE image
 ## ref: https://hub.docker.com/r/gitlab/gitlab-ce/tags/
 ##
 image: gitlab/gitlab-ce:9.5.10-ce.0
@@ -52,7 +52,7 @@ readinessPort: http
 ## ref: http://kubernetes.io/docs/user-guide/compute-resources/
 ##
 resources:
-  ## GitLab requires a good deal of resources. We have split out Postgres and
+  ## gitlab requires a good deal of resources. We have split out Postgres and
   ## redis, which helps some. Refer to the guidelines for larger installs.
   ## ref: https://docs.gitlab.com/ce/install/requirements.html#hardware-requirements
   requests:
@@ -93,7 +93,7 @@ persistence:
 ## ref: https://github.com/kubernetes/charts/blob/master/stable/postgresql/README.md
 ##
 postgresql:
-  # 9.6 is the newest supported version for the GitLab container
+  # 9.6 is the newest supported version for the gitlab container
   image: "postgres"
   imageTag: "9.6"
   cpu: 1000m

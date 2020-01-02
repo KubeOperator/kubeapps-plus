@@ -31,12 +31,12 @@
                 <el-card :body-style="{ padding: '0px' }">
                     <div class="catalog-image" @click="goDetails(catalog)">
                         <a>
-                            <img v-if="catalog.attributes.icon.search('harbor')>=0" src="../../assets/image/charts/harbor-stack-110x117.png" class="image" require>
-                            <img v-else-if="catalog.attributes.icon.search('jenkins')>=0" src="../../assets/image/charts/jenkins-stack-110x117.png" class="image" require>
-                            <img v-else-if="catalog.attributes.icon.search('sonarqube')>=0" src="../../assets/image/charts/sonarqube-stack-110x117.png" class="image" require>
-                            <img v-else-if="catalog.attributes.icon.search('gitlab')>=0" src="../../assets/image/charts/gitlab-stack-110x117.png" class="image" require>
-                            <img v-else-if="catalog.attributes.icon.search('istio')>=0" src="../../assets/image/charts/istio-110x117.png" class="image" require>
-                            <img v-else-if="!catalog.attributes.icon" src="../../assets/image/default.png" class="image">
+                            <img v-if="!catalog.attributes.icon" src="../../assets/image/default.png" class="image">
+                            <img v-else-if="(catalog.attributes.icon.search('harbor')>=0)" src="../../assets/image/charts/harbor-stack-110x117.png" class="image" require>
+                            <img v-else-if="(catalog.attributes.icon.search('jenkins')>=0)" src="../../assets/image/charts/jenkins-stack-110x117.png" class="image" require>
+                            <img v-else-if="(catalog.attributes.icon.search('sonarqube')>=0)" src="../../assets/image/charts/sonarqube-stack-110x117.png" class="image" require>
+                            <img v-else-if="(catalog.attributes.icon.search('gitlab')>=0)" src="../../assets/image/charts/gitlab-stack-110x117.png" class="image" require>
+                            <img v-else-if="(catalog.attributes.icon.search('istio')>=0)" src="../../assets/image/charts/istio-110x117.png" class="image" require>
                             <img v-else :src="catalog.attributes.icon" class="image" require>
                         </a>
                     </div>

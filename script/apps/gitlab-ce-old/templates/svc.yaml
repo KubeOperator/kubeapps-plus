@@ -11,13 +11,13 @@ spec:
   type: {{ .Values.serviceType }}
   ports:
   - name: ssh
-    port: {{ .Values.sshPort }}
+    port: {{ .Values.sshPort | int }}
     targetPort: ssh
   - name: http
-    port: {{ .Values.httpPort }}
+    port: {{ .Values.httpPort | int }}
     targetPort: http
   - name: https
-    port: {{ .Values.httpsPort }}
+    port: {{ .Values.httpsPort | int }}
     targetPort: https
   selector:
     app: {{ template "gitlab-ce.fullname" . }}

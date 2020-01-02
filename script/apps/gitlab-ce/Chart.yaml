@@ -1,8 +1,7 @@
-name: Gitlab
-deprecated: true
-version: 0.2.2
-appVersion: 9.4.1
-description: GitLab 社区版是一个基于Web的 DevOps的生命周期工具。
+appVersion: 9.5.10
+description: Fit2cloud GitLab
+home: https://www.kubeoperator.io
+icon: https://gitlab.com/uploads/group/avatar/6543/gitlab-logo-square.png
 keywords:
 - git
 - ci
@@ -10,8 +9,5 @@ keywords:
 - issue tracker
 - code review
 - wiki
-home: https://about.gitlab.com
-sources:
-- https://hub.docker.com/r/gitlab/gitlab-ce/
-- https://docs.gitlab.com/omnibus/
-icon: https://gitlab.com/uploads/group/avatar/6543/gitlab-logo-square.png
+name: fit2cloud-gitlab
+version: 1.0.0

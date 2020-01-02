@@ -1,5 +1,5 @@
 {{- if default "" .Values.externalUrl }}
-apiVersion: apps/v1
+apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
   name: {{ template "gitlab-ce.fullname" . }}
@@ -10,9 +10,6 @@ metadata:
     heritage: "{{ .Release.Service }}"
 spec:
   replicas: 1
-  selector:
-    matchLabels:
-      app: {{ template "gitlab-ce.fullname" . }}
   template:
     metadata:
       labels:
@@ -20,7 +17,7 @@ spec:
     spec:
       containers:
       - name: {{ template "gitlab-ce.fullname" . }}
-        image: "{{ .Values.imageRegistry }}/{{ .Values.image }}:{{ .Values.image.tag }}"
+        image: "{{ .Values.imageRegistry }}/{{ .Values.image.repository }}:{{ .Values.image.tag }}"
         imagePullPolicy: {{ default "" .Values.imagePullPolicy | quote }}
         env:
         ## General GitLab Configs
@@ -102,7 +99,6 @@ spec:
           mountPath: /gitlab-data
         resources:
 {{ toYaml .Values.resources | indent 10 }}
-      serviceAccount: gitlab-fit2cloud-gitlab
       volumes:
       - name: gitlab-etc
       {{- if .Values.persistence.gitlabEtc.enabled }}

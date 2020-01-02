@@ -1,29 +1,29 @@
-imageRegistry: imageregistryvalue
 ## GitLab CE image
 ## ref: https://hub.docker.com/r/gitlab/gitlab-ce/tags/
 ##
-image: gitlab/gitlab-ce:9.5.10-ce.0
+image: gitlab/gitlab-ce:9.4.1-ce.0
+imageRegistry: imageregistryvalue
 
 ## Specify a imagePullPolicy
 ## 'Always' if imageTag is 'latest', else set to 'IfNotPresent'
 ## ref: http://kubernetes.io/docs/user-guide/images/#pre-pulling-images
 ##
-imagePullPolicy: IfNotPresent
+# imagePullPolicy:
 
 ## The URL (with protocol) that your users will use to reach the install.
 ## ref: https://docs.gitlab.com/omnibus/settings/configuration.html#configuring-the-external-url-for-gitlab
 ##
-externalUrl: http://gitlab.apps.fit2cloud.com/
+# externalUrl: http://your-domain.com/
 
 ## Change the initial default admin password if set. If not set, you'll be
 ## able to set it when you first visit your install.
 ##
-gitlabRootPassword: 1qaz@WSX
+# gitlabRootPassword: ""
 
 ## For minikube, set this to NodePort, elsewhere use LoadBalancer
 ## ref: http://kubernetes.io/docs/user-guide/services/#publishing-services---service-types
 ##
-serviceType: NodePort
+serviceType: LoadBalancer
 
 ## Ingress configuration options
 ##
@@ -31,12 +31,12 @@ ingress:
   annotations:
       # kubernetes.io/ingress.class: nginx
       # kubernetes.io/tls-acme: "true"
-  enabled: true
+  enabled: false
   tls:
       # - secretName: gitlab.cluster.local
       #   hosts:
       #     - gitlab.cluster.local
-  url: gitlab.apps.fit2cloud.com
+  url: gitlab.cluster.local
 
 ## Configure external service ports
 ## ref: http://kubernetes.io/docs/user-guide/services/
@@ -94,7 +94,6 @@ persistence:
 ##
 postgresql:
   # 9.6 is the newest supported version for the GitLab container
-  image: "postgres"
   imageTag: "9.6"
   cpu: 1000m
   memory: 1Gi
@@ -110,7 +109,6 @@ postgresql:
 ## ref: https://github.com/kubernetes/charts/blob/master/stable/redis/README.md
 ##
 redis:
-  image: bitnami/redis:3.2.9-r2
   redisPassword: "gitlab"
 
   resources:

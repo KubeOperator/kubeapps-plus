@@ -249,7 +249,13 @@ function set_chartrepo() {
 #上传Chart 到 Chart Repo
 
 function upload_chart() {
-    cd ${PROJECT_DIR}/apps
+    cd ${PROJECT_DIR}/apps/gitlab-ce
+    helm push . localrepo -f
+    cd ${PROJECT_DIR}/apps/harbor
+    helm push . localrepo -f
+    cd ${PROJECT_DIR}/apps/jenkins
+    helm push . localrepo -f
+    cd ${PROJECT_DIR}/apps/sonarqube
     helm push . localrepo -f
     if [ $? -eq 0 ]; then
         echo ">>> 上传完成"

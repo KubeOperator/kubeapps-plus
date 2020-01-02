@@ -90,27 +90,27 @@ certmanager:
   enabled: false
 
 #
-# Istio CNI plugin enabled
-#   This must be enabled to use the CNI plugin in Istio.  The CNI plugin is installed separately.
+# istio CNI plugin enabled
+#   This must be enabled to use the CNI plugin in istio.  The CNI plugin is installed separately.
 #   If true, the privileged initContainer istio-init is not needed to perform the traffic redirect
 #   settings for the istio-proxy.
 #
 istio_cni:
   enabled: false
 
-# addon Istio CoreDNS configuration
+# addon istio CoreDNS configuration
 #
 istiocoredns:
   enabled: false
 
 # Common settings used among istio subcharts.
 global:
-  # Default hub for Istio images.
+  # Default hub for istio images.
   # Releases are published to docker hub under 'istio' project.
   # Dev builds from prow are on gcr.io
   hub: gcr.io/istio-testing
 
-  # Default tag for Istio images.
+  # Default tag for istio images.
   tag: latest
 
   # Comma-separated minimum per-scope logging level of messages to output, in the form of <scope>:<level>,<scope>:<level>
@@ -270,14 +270,14 @@ global:
     # Disabled by default.
     # The istio-statsd-prom-bridge is deprecated and should not be used moving forward.
     envoyStatsd:
-      # If enabled is set to true, host and port must also be provided. Istio no longer provides a statsd collector.
+      # If enabled is set to true, host and port must also be provided. istio no longer provides a statsd collector.
       enabled: false
       host: # example: statsd-svc.istio-system
       port: # example: 9125
 
     # Sets the Envoy Metrics Service address, used to push Envoy metrics to an external collector
     # via the Metrics Service gRPC API. This contains detailed stats information emitted directly
-    # by Envoy and should not be confused with the the Istio telemetry. The Envoy stats are also
+    # by Envoy and should not be confused with the the istio telemetry. The Envoy stats are also
     # available to scrape via the Envoy admin port at either /stats or /stats/prometheus.
     #
     # See https://www.envoyproxy.io/docs/envoy/latest/api-v2/config/metrics/v2/metrics_service.proto
@@ -369,12 +369,12 @@ global:
     # destination rules or service annotations.
     enabled: false
     # If set to true, and a given service does not have a corresponding DestinationRule configured,
-    # or its DestinationRule does not have TLSSettings specified, Istio configures client side
+    # or its DestinationRule does not have TLSSettings specified, istio configures client side
     # TLS configuration automatically, based on the server side mTLS authentication policy and the
     # availibity of sidecars.
     auto: true
 
-  # Lists the secrets you need to use to pull Istio images from a private registry.
+  # Lists the secrets you need to use to pull istio images from a private registry.
   imagePullSecrets: []
     # - private-registry-key
 
@@ -402,7 +402,7 @@ global:
   # scheduled to a particular nodes with matching taints. Each component can overwrite
   # these default values by adding its tolerations block in the relevant section below
   # and setting the desired values.
-  # Configure this field in case that all pods of Istio control plane are expected to
+  # Configure this field in case that all pods of istio control plane are expected to
   # be scheduled to particular nodes with specified taints.
   defaultTolerations: []
 
@@ -432,7 +432,7 @@ global:
   multiCluster:
     # Set to true to connect two kubernetes clusters via their respective
     # ingressgateway services when pods in each cluster cannot directly
-    # talk to one another. All clusters should be using Istio mTLS and must
+    # talk to one another. All clusters should be using istio mTLS and must
     # have a shared root CA for this model to work.
     enabled: false
 
@@ -453,14 +453,14 @@ global:
     #   memory: 128Mi
 
   # enable pod distruption budget for the control plane, which is used to
-  # ensure Istio control plane components are gradually upgraded or recovered.
+  # ensure istio control plane components are gradually upgraded or recovered.
   defaultPodDisruptionBudget:
     enabled: true
     # The values aren't mutable due to a current PodDisruptionBudget limitation
     # minAvailable: 1
 
   # Kubernetes >=v1.11.0 will create two PriorityClass, including system-cluster-critical and
-  # system-node-critical, it is better to configure this in order to make sure your Istio pods
+  # system-node-critical, it is better to configure this in order to make sure your istio pods
   # will not be killed because of low priority class.
   # Refer to https://kubernetes.io/docs/concepts/configuration/pod-priority-preemption/#priorityclass
   # for more detail.
@@ -483,7 +483,7 @@ global:
   #  trustDomain: td1
   #  trustDomainAliases: [“td2”, "td3"]
   #  Any service with the identity "td1/ns/foo/sa/a-service-account", "td2/ns/foo/sa/a-service-account",
-  #  or "td3/ns/foo/sa/a-service-account" will be treated the same in the Istio mesh.
+  #  or "td3/ns/foo/sa/a-service-account" will be treated the same in the istio mesh.
   trustDomainAliases: []
 
   # Mesh ID means Mesh Identifier. It should be unique within the scope where
@@ -504,7 +504,7 @@ global:
   # of migration TBD, and it may be a disruptive operation to change the Mesh
   # ID post-install.
   #
-  # If the mesh admin does not specify a value, Istio will use the value of the
+  # If the mesh admin does not specify a value, istio will use the value of the
   # mesh's Trust Domain. The best practice is to select a proper Trust Domain
   # value.
   meshID: ""
@@ -619,7 +619,7 @@ global:
 
   # Configure whether Operator manages webhook configurations. The current behavior
   # of Galley and Sidecar Injector is that they manage their own webhook configurations.
-  # When this option is set as true, Istio Operator, instead of webhooks, manages the
+  # When this option is set as true, istio Operator, instead of webhooks, manages the
   # webhook configurations. When this option is set as false, webhooks manage their
   # own webhook configurations.
   operatorManageWebhooks: false

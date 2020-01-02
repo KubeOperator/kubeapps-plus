@@ -29,8 +29,8 @@ const imageIcon2 = {
     drupal: '../../assets/image/charts/drupal-stack-110x117.png',
     elasticsearch: '../.././assets/image/charts/elasticsearch-curator-stack-110x117.png',
     etcd: '../../assets/image/charts/etcd-stack-110x117.png',
-    harbor: '../../assets/image/charts/Harbor-stack-110x117.png',
-    jenkins: '../../assets/image/charts/Jenkins-stack-110x117.png',
+    harbor: '../../assets/image/charts/harbor-stack-110x117.png',
+    jenkins: '../../assets/image/charts/jenkins-stack-110x117.png',
     kafka: '../../assets/image/charts/kafka-stack-110x117.png',
     mysql: '../../assets/image/charts/mysql-stack-110x117.png',
     mongodb: '../../assets/image/charts/mongodb-sharded-stack-110x117.png',
@@ -41,8 +41,8 @@ const imageIcon2 = {
     wordpress: '../../assets/image/charts/wordpress-stack-110x117.png',
     zookeeper: '../../assets/image/charts/zookeeper-stack-110x117.png',
     gitlab: '../../assets/image/charts/gitlab-stack-110x117.png',
-    sonarqube: '../../assets/image/charts/Sonarqube-stack-110x117.png',
-    istio: '../../assets/image/charts/Istio-110x117.png'
+    sonarqube: '../../assets/image/charts/sonarqube-stack-110x117.png',
+    istio: '../../assets/image/charts/istio-110x117.png'
 }
 
 const imageIcon = {

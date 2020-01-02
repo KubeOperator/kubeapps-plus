@@ -83,23 +83,23 @@ master:
   useSecurity: true
 
   # enables configuration done directly via XML files
-  # People who want to configure Jenkins via https://github.com/jenkinsci/configuration-as-code-plugin only can set it to false
+  # People who want to configure jenkins via https://github.com/jenkinsci/configuration-as-code-plugin only can set it to false
   enableXmlConfig: true
-  # Allows to configure different SecurityRealm using Jenkins XML
+  # Allows to configure different SecurityRealm using jenkins XML
   securityRealm: |-
     <securityRealm class="hudson.security.LegacySecurityRealm"/>
-  # Allows to configure different AuthorizationStrategy using Jenkins XML
+  # Allows to configure different AuthorizationStrategy using jenkins XML
   authorizationStrategy: |-
      <authorizationStrategy class="hudson.security.FullControlOnceLoggedInAuthorizationStrategy">
        <denyAnonymousReadAccess>true</denyAnonymousReadAccess>
      </authorizationStrategy>
   hostNetworking: false
-  # When enabling LDAP or another non-Jenkins identity source, the built-in admin account will no longer exist.
+  # When enabling LDAP or another non-jenkins identity source, the built-in admin account will no longer exist.
   # Since the AdminUser is used by configAutoReload, in order to use configAutoReload you must change the
   # .master.adminUser to a valid username on your LDAP (or other) server.  This user does not need
-  # to have administrator rights in Jenkins (the default Overall:Read is sufficient) nor will it be granted any
+  # to have administrator rights in jenkins (the default Overall:Read is sufficient) nor will it be granted any
   # additional rights.  Failure to do this will cause the sidecar container to fail to authenticate via SSH and enter
-  # a restart loop.  Likewise if you disable the non-Jenkins identity store and instead use the Jenkins internal one,
+  # a restart loop.  Likewise if you disable the non-jenkins identity store and instead use the jenkins internal one,
   # you should revert master.adminUser to your preferred admin user:
   adminUser: "admin"
   # adminPassword: <defaults to random>
@@ -132,7 +132,7 @@ master:
   # jenkinsUriPrefix: "/jenkins"
   # Enable pod security context (must be `true` if runAsUser or fsGroup are set)
   usePodSecurityContext: true
-  # Set runAsUser to 1000 to let Jenkins run as non-root user 'jenkins' which exists in 'jenkins/jenkins' docker image.
+  # Set runAsUser to 1000 to let jenkins run as non-root user 'jenkins' which exists in 'jenkins/jenkins' docker image.
   # When setting runAsUser to a different value than 0 also set fsGroup to the same value:
   # runAsUser: <defaults to 0>
   # fsGroup: <will be omitted in deployment if runAsUser is 0>
@@ -141,21 +141,21 @@ master:
   # For minikube, set this to NodePort, elsewhere use LoadBalancer
   # Use ClusterIP if your setup includes ingress controller
   serviceType: ClusterIP
-  # Jenkins master service annotations
+  # jenkins master service annotations
   serviceAnnotations: {}
-  # Jenkins master custom labels
+  # jenkins master custom labels
   deploymentLabels: {}
   #   foo: bar
   #   bar: foo
-  # Jenkins master service labels
+  # jenkins master service labels
   serviceLabels: {}
   #   service.beta.kubernetes.io/aws-load-balancer-backend-protocol: https
-  # Put labels on Jenkins master pod
+  # Put labels on jenkins master pod
   podLabels: {}
   # Used to create Ingress record (should used with ServiceType: ClusterIP)
   # nodePort: <to set explicitly, choose port between 30000-32767
   # Enable Kubernetes Liveness and Readiness Probes
-  # ~ 2 minutes to allow Jenkins to restart when upgrading plugins. Set ReadinessTimeout to be shorter than LivenessTimeout.
+  # ~ 2 minutes to allow jenkins to restart when upgrading plugins. Set ReadinessTimeout to be shorter than LivenessTimeout.
   healthProbes: true
   healthProbesLivenessTimeout: 5
   healthProbesReadinessTimeout: 5
@@ -209,7 +209,7 @@ master:
   # - name: BuildInfoProxy
   #   port: 9000
 
-  # List of plugins to be install during Jenkins master start
+  # List of plugins to be install during jenkins master start
   installPlugins:
     - kubernetes:1.21.2
     - workflow-job:2.36
@@ -226,22 +226,22 @@ master:
   scriptApproval: []
   #  - "method groovy.json.JsonSlurperClassic parseText java.lang.String"
   #  - "new groovy.json.JsonSlurperClassic"
-  # List of groovy init scripts to be executed during Jenkins master start
+  # List of groovy init scripts to be executed during jenkins master start
   initScripts: []
   #  - |
   #    print 'adding global pipeline libraries, register properties, bootstrap jobs...'
-  # Kubernetes secret that contains a 'credentials.xml' for Jenkins
+  # Kubernetes secret that contains a 'credentials.xml' for jenkins
   # credentialsXmlSecret: jenkins-credentials
-  # Kubernetes secret that contains files to be put in the Jenkins 'secrets' directory,
+  # Kubernetes secret that contains files to be put in the jenkins 'secrets' directory,
   # useful to manage encryption keys used for credentials.xml for instance (such as
   # master.key and hudson.util.Secret)
   # secretsFilesSecret: jenkins-secrets
-  # Jenkins XML job configs to provision
+  # jenkins XML job configs to provision
   jobs: {}
   #  test: |-
   #    <<xml here>>
 
-  # Below is the implementation of Jenkins Configuration as Code.  Add a key under configScripts for each configuration area,
+  # Below is the implementation of jenkins Configuration as Code.  Add a key under configScripts for each configuration area,
   # where each corresponds to a plugin or section of the UI.  Each key (prior to | character) is just a label, and can be any value.
   # Keys are only used to give the section a meaningful name.  The only restriction is they may only contain RFC 1123 \ DNS label
   # characters: lowercase letters, numbers, and hyphens.  The keys become the name of a configuration yaml file on the master in
@@ -258,7 +258,7 @@ master:
     configScripts: {}
     # welcome-message: |
     #   jenkins:
-    #     systemMessage: Welcome to our CI\CD server.  This Jenkins is configured and managed 'as code'.
+    #     systemMessage: Welcome to our CI\CD server.  This jenkins is configured and managed 'as code'.
   # Optionally specify additional init-containers
   customInitContainers: []
   # - name: custom-init
@@ -268,8 +268,8 @@ master:
 
   sidecars:
     configAutoReload:
-      # If enabled: true, Jenkins Configuration as Code will be reloaded on-the-fly without a reboot.  If false or not-specified,
-      # jcasc changes will cause a reboot and will only be applied at the subsequent start-up.  Auto-reload uses the Jenkins CLI
+      # If enabled: true, jenkins Configuration as Code will be reloaded on-the-fly without a reboot.  If false or not-specified,
+      # jcasc changes will cause a reboot and will only be applied at the subsequent start-up.  Auto-reload uses the jenkins CLI
       # over SSH to reapply config when changes to the configScripts are detected.  The admin user (or account you specify in
       # master.adminUser) will have a random SSH private key (RSA 4096) assigned unless you specify adminSshKey.  This will be saved to a k8s secret.
       enabled: false
@@ -283,8 +283,8 @@ master:
         #     cpu: 50m
         #     memory: 50Mi
       # SSH port value can be set to any unused TCP port.  The default, 1044, is a non-standard SSH port that has been chosen at random.
-      # Is only used to reload jcasc config from the sidecar container running in the Jenkins master pod.
-      # This TCP port will not be open in the pod (unless you specifically configure this), so Jenkins will not be
+      # Is only used to reload jcasc config from the sidecar container running in the jenkins master pod.
+      # This TCP port will not be open in the pod (unless you specifically configure this), so jenkins will not be
       # accessible via SSH from outside of the pod.  Note if you use non-root pod privileges (runAsUser & fsGroup),
       # this must be > 1024:
       sshTcpPort: 1044
@@ -297,7 +297,7 @@ master:
 
     # Allows you to inject additional/other sidecars
     other: []
-    ## The example below runs the client for https://smee.io as sidecar container next to Jenkins,
+    ## The example below runs the client for https://smee.io as sidecar container next to jenkins,
     ## that allows to trigger build behind a secure firewall.
     ## https://jenkins.io/blog/2019/01/07/webhook-firewalls/#triggering-builds-with-webhooks-behind-a-secure-firewall
     ##
@@ -324,7 +324,7 @@ master:
   # Add deployment annotation
   deploymentAnnotations: {}
 
-  # The below two configuration-related values are deprecated and replaced by Jenkins Configuration as Code (see above
+  # The below two configuration-related values are deprecated and replaced by jenkins Configuration as Code (see above
   # JCasC key).  They will be deleted in an upcoming version.
   customConfigMap: false
   # By default, the configMap is only used to set the initial config the first time
@@ -425,7 +425,7 @@ agent:
       memory: "512Mi"
   # You may want to change this to true while testing a new image
   alwaysPullImage: false
-  # Controls how agent pods are retained after the Jenkins build completes
+  # Controls how agent pods are retained after the jenkins build completes
   # Possible values: Always, Never, OnFailure
   podRetention: "Never"
   # You can define the volumes that you want to mount for this container

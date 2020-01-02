@@ -102,7 +102,7 @@ spec:
           mountPath: /gitlab-data
         resources:
 {{ toYaml .Values.resources | indent 10 }}
-      serviceAccount: gitlab-fit2cloud-gitlab
+      serviceAccount: {{ template "gitlab-ce.fullname" . }}
       volumes:
       - name: gitlab-etc
       {{- if .Values.persistence.gitlabEtc.enabled }}

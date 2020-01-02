@@ -2,7 +2,7 @@ imageRegistry: imageregistryvalue
 ## gitlab CE image
 ## ref: https://hub.docker.com/r/gitlab/gitlab-ce/tags/
 ##
-image: gitlab/gitlab-ce:9.5.10-ce.0
+image: gitlab/gitlab-ce:lts
 
 ## Specify a imagePullPolicy
 ## 'Always' if imageTag is 'latest', else set to 'IfNotPresent'

@@ -276,8 +276,8 @@ proxy:
 # If expose the service via "ingress", the Nginx will not be used
 nginx:
   image:
-    repository: goharbor/nginx-photon
-    tag: dev
+    repository: harbor/harbor-nginx-photon
+    tag: lts
   replicas: 1
   # resources:
   #  requests:
@@ -291,8 +291,8 @@ nginx:
 
 portal:
   image:
-    repository: goharbor/harbor-portal
-    tag: dev
+    repository: harbor/harbor-portal
+    tag: lts
   replicas: 1
 # resources:
 #  requests:
@@ -306,8 +306,8 @@ portal:
 
 core:
   image:
-    repository: goharbor/harbor-core
-    tag: dev
+    repository: harbor/harbor-core
+    tag: lts
   replicas: 1
   ## Liveness probe values
   livenessProbe:
@@ -337,8 +337,8 @@ core:
 
 jobservice:
   image:
-    repository: goharbor/harbor-jobservice
-    tag: dev
+    repository: harbor/harbor-jobservice
+    tag: lts
   replicas: 1
   maxJobWorkers: 10
   # The logger for jobs: "file", "database" or "stdout"
@@ -360,8 +360,8 @@ jobservice:
 registry:
   registry:
     image:
-      repository: goharbor/registry-photon
-      tag: dev
+      repository: harbor/harbor-registry-photon
+      tag: lts
 
     # resources:
     #  requests:
@@ -369,8 +369,8 @@ registry:
     #    cpu: 100m
   controller:
     image:
-      repository: goharbor/harbor-registryctl
-      tag: dev
+      repository: harbor/harbor-registryctl
+      tag: lts
 
     # resources:
     #  requests:
@@ -407,8 +407,8 @@ chartmuseum:
   # harbor defaults ChartMuseum to returning relative urls, if you want using absolute url you should enable it by change the following value to 'true'
   absoluteUrl: false
   image:
-    repository: goharbor/chartmuseum-photon
-    tag: dev
+    repository: harbor/harbor-chartmuseum-photon
+    tag: lts
   replicas: 1
   # resources:
   #  requests:
@@ -424,16 +424,16 @@ clair:
   enabled: true
   clair:
     image:
-      repository: goharbor/clair-photon
-      tag: dev
+      repository: harbor/harbor-clair-photon
+      tag: lts
     # resources:
     #  requests:
     #    memory: 256Mi
     #    cpu: 100m
   adapter:
     image:
-      repository: goharbor/clair-adapter-photon
-      tag: dev
+      repository: harbor/harbor-clair-adapter-photon
+      tag: lts
     # resources:
     #  requests:
     #    memory: 256Mi
@@ -452,8 +452,8 @@ notary:
   enabled: true
   server:
     image:
-      repository: goharbor/notary-server-photon
-      tag: dev
+      repository: harbor/harbor-notary-server-photon
+      tag: lts
     replicas: 1
     # resources:
     #  requests:
@@ -461,8 +461,8 @@ notary:
     #    cpu: 100m
   signer:
     image:
-      repository: goharbor/notary-signer-photon
-      tag: dev
+      repository: harbor/harbor-notary-signer-photon
+      tag: lts
     replicas: 1
     # resources:
     #  requests:
@@ -487,8 +487,8 @@ database:
   type: internal
   internal:
     image:
-      repository: goharbor/harbor-db
-      tag: dev
+      repository: harbor/harbor-db
+      tag: lts
     # the image used by the init container
     initContainerImage:
       repository: busybox
@@ -535,8 +535,8 @@ redis:
   type: internal
   internal:
     image:
-      repository: goharbor/redis-photon
-      tag: dev
+      repository: harbor-redis-photon
+      tag: lts
     # resources:
     #  requests:
     #    memory: 256Mi

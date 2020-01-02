@@ -203,7 +203,7 @@
                         this.$router.push('/apps/ns/' + this.$store.state.namespaces.activeSpace + '/' + releaseName)
                     } else {
                         console.log('部署失败', res)
-                        noticeMessage(this, releaseName + ' 部署失败: ' + res.message, 'error')
+                        noticeMessage(this, releaseName + ' 部署失败: ' + res.data.message, 'error')
                     }
                 }).catch(msg => {
                     noticeMessage(this, releaseName + ' 请求失败: ' + msg.data, 'error')

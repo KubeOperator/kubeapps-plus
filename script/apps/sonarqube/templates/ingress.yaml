@@ -1,7 +1,7 @@
 {{- if .Values.ingress.enabled -}}
 {{- $serviceName := include "sonarqube.fullname" . -}}
 {{- $servicePort := .Values.service.externalPort -}}
-apiVersion: v1
+apiVersion: apps/v1
 kind: Ingress
 metadata:
   name: {{ template "sonarqube.fullname" . }}

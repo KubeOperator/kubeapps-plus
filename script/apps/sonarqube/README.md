@@ -116,7 +116,7 @@ In environments with air-gapped setup, especially with internal tooling (repos) 
 1. Create a yaml file `cacerts.yaml` with a secret that contanins the `cacerts`
 
    ```yaml
-   apiVersion: v1
+   apiVersion: apps/v1
    kind: Secret
    metadata:
      name: my-cacerts

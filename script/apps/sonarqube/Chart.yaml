@@ -1,6 +1,6 @@
 apiVersion: v1
 name: sonarqube
-description: sonarqube 是一个开源代码质量扫描工具。
+description: Sonarqube 是一个开源代码质量扫描工具。
 version: 3.2.7
 appVersion: 7.9.1
 keywords:

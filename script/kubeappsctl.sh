@@ -250,12 +250,16 @@ function set_chartrepo() {
 
 function upload_chart() {
     cd ${PROJECT_DIR}/apps/gitlab-ce
+    helm package .
     helm push . localrepo -f
     cd ${PROJECT_DIR}/apps/harbor
+    helm package .
     helm push . localrepo -f
     cd ${PROJECT_DIR}/apps/jenkins
+    helm package .
     helm push . localrepo -f
     cd ${PROJECT_DIR}/apps/sonarqube
+    helm package .
     helm push . localrepo -f
     if [ $? -eq 0 ]; then
         echo ">>> 上传完成"

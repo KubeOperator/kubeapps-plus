@@ -6,7 +6,8 @@
                 <el-col :span="4">
                     <div class="grid-content bg-purple grid-img">
                         <img v-show="catalog.icon" :src="catalog.icon" class="image">
-                        <img v-show="!catalog.icon" src="../../assets/image/default.png" class="image">
+                        <img v-show="!catalog.icon && catalog.id.search('gitlib')>=0" src="../../assets/image/charts/gitlab-stack-110x117.png" class="image">
+                        <img v-show="!catalog.icon && !catalog.id.search('gitlib')>=0" src="../../assets/image/default.png" class="image">
                     </div>
                 </el-col>
                 <el-col :span="20">

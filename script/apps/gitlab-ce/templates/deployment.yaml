@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
       - name: {{ template "gitlab-ce.fullname" . }}
-        image: "{{ .Values.imageRegistry }}/{{ .Values.image }}:{{ .Values.image.tag }}"
+        image: "{{ .Values.imageRegistry }}/{{ .Values.image.repository }}:{{ .Values.image.tag }}"
         imagePullPolicy: {{ default "" .Values.imagePullPolicy | quote }}
         env:
         ## General gitlab Configs

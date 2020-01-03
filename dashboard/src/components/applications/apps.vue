@@ -26,7 +26,7 @@
           <!-- <el-col :offset="14" :span="3">
           <el-button @click="getdebug">Upgrade</el-button>-->
           <!-- </el-col> -->
-          <el-col v-show="!this.$route.params.namespace == 'kubeapps-plus' || !this.$route.params.namespace == 'kube-operator'" :offset="17" :span="3">
+          <el-col v-show="!(this.$store.state.namespaces.activeSpace == 'kubeapps-plus' || this.$store.state.namespaces.activeSpace == 'kube-operator')" :offset="17" :span="3">
             <el-button type="danger" @click="dialogVisible = true" icon="el-icon-delete">&nbsp;{{$t('message.delete')}}</el-button>
           </el-col>
         </el-row>

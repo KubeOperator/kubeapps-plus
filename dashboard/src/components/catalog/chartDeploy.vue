@@ -22,6 +22,7 @@
                     <div>
                         <label>{{$t('message.name')}}</label>
                         <el-input style="width: 100%;"
+                                  onkeyup="btKeyUp"
                                   pattern="[a-z0-9]([-a-z0-9]*[a-z0-9])?(\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*"
                                   v-model="releaseName" placeholder="请输入内容" required></el-input>
                     </div>
@@ -50,7 +51,7 @@
                     </div>
 
                     <div>
-                        <el-button v-show="!this.$route.params.namespace == 'kubeapps-plus' || !this.$route.params.namespace == 'kube-operator'" class="ace-xcode-btn" type="success" size="medium" icon="el-icon-success"
+                        <el-button v-show="!(this.$store.state.namespaces.activeSpace == 'kubeapps-plus' || this.$store.state.namespaces.activeSpace == 'kube-operator')" class="ace-xcode-btn" type="success" size="medium" icon="el-icon-success"
                                    @click="submit(releaseName, version, chartName)">{{$t('message.submit')}}
                         </el-button>
                         <el-button class="ace-xcode-btn" type="primary" size="medium" icon="el-icon-upload2"
@@ -215,6 +216,9 @@
             restoreChartDefaults(){
                 this.init()
             }
+        },
+        btKeyUp(e){
+            e.target.value = e.target.value.replace(/[a-z0-9]([-a-z0-9]*[a-z0-9])?(\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*/g, "")
         }
     }
 </script>

@@ -50,7 +50,7 @@
                     </div>
 
                     <div>
-                        <el-button class="ace-xcode-btn" type="success" size="medium" icon="el-icon-success"
+                        <el-button v-show="!this.$route.params.namespace == 'kubeapps-plus' || !this.$route.params.namespace == 'kube-operator'" class="ace-xcode-btn" type="success" size="medium" icon="el-icon-success"
                                    @click="submit(releaseName, version, chartName)">{{$t('message.submit')}}
                         </el-button>
                         <el-button class="ace-xcode-btn" type="primary" size="medium" icon="el-icon-upload2"

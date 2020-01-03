@@ -39,7 +39,7 @@ export default {
                     initNameSpaces.push(item)
                 }
             }
-            state.items = initNameSpaces //这里应该要做数据拆分
+            state.items = n.items //这里应该要做数据拆分
             state.kind = n.kind
             state.apiVersion = n.apiVersion
             state.metadata = n.metadata

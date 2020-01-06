@@ -179,13 +179,13 @@
                         customCA: {
                             secretKeyRef: {
                                 key: "ca.crt",
-                                name: "apprepo-" + this.name.trim() + "-secrets"
+                                name: "apprepo-" + this.name.replace(/\s+/g, "") + "-secrets"
                             }
                         },
                         header: {
                             secretKeyRef: {
                                 key: "authorizationHeader",
-                                name: "apprepo-" + this.name.trim() + "-secrets"
+                                name: "apprepo-" + this.name.replace(/\s+/g, "") + "-secrets"
                             }
                         }
                     }
@@ -194,13 +194,13 @@
                         customCA: {
                             secretKeyRef: {
                                 key: "ca.crt",
-                                name: "apprepo-" + this.name.trim() + "-secrets"
+                                name: "apprepo-" + this.name.replace(/\s+/g, "") + "-secrets"
                             }
                         },
                         header: {
                             secretKeyRef: {
                                 key: "authorizationHeader",
-                                name: "apprepo-" + this.name.trim() + "-secrets"
+                                name: "apprepo-" + this.name.replace(/\s+/g, "")+ "-secrets"
                             }
                         }
                     }
@@ -209,13 +209,13 @@
                         customCA: {
                             secretKeyRef: {
                                 key: "ca.crt",
-                                name: "apprepo-" + this.name.trim() + "-secrets"
+                                name: "apprepo-" + this.name.replace(/\s+/g, "") + "-secrets"
                             }
                         },
                         header: {
                             secretKeyRef: {
                                 key: "authorizationHeader",
-                                name: "apprepo-" + this.name.trim() + "-secrets"
+                                name: "apprepo-" + this.name.replace(/\s+/g, "") + "-secrets"
                             }
                         }
                     }
@@ -224,13 +224,13 @@
                     apiVersion: 'kubeapps.com/v1alpha1',
                     kind: 'AppRepository',
                     metadata: {
-                        name: this.name.trim()
+                        name: this.name.replace(/\s+/g, "")
                     },
                     spec: {
                         auth: auth,
                         syncJobPodTemplate: jsyaml.safeLoad(this.customSyncJobTemplate),
                         type: 'helm',
-                        url: this.url.trim()
+                        url: this.url.replace(/\s+/g, "")
                     },
                 }
                 await http(getParamApi(apiSetting.kubernetes.addAppRepositorie, sessionStorage.getItem('nameSpace'), 'apprepositories'), params).then((res) => {

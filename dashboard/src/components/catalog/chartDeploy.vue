@@ -21,10 +21,12 @@
 
                     <div>
                         <label>{{$t('message.name')}}</label>
-                        <el-input style="width: 100%;"
-                                  onkeyup="btKeyUp"
-                                  pattern="[a-z0-9]([-a-z0-9]*[a-z0-9])?(\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*"
-                                  v-model="releaseName" placeholder="请输入内容" required></el-input>
+                        <el-form :model="form" :rules="rules" :ref="form.releaseName" label-width="100px" class="ruleForm">
+                            <el-form-item prop="releaseName">
+                                <el-input style="width: 100%;"
+                                  v-model="form.releaseName" placeholder="请输入内容" required></el-input>
+                            </el-form-item>
+                        </el-form>
                     </div>
 
                     <div>
@@ -52,7 +54,7 @@
 
                     <div>
                         <el-button v-show="!(this.$store.state.namespaces.activeSpace == 'kubeapps-plus' || this.$store.state.namespaces.activeSpace == 'kube-operator')" class="ace-xcode-btn" type="success" size="medium" icon="el-icon-success"
-                                   @click="submit(releaseName, version, chartName)">{{$t('message.submit')}}
+                                   @click="submit(form.releaseName, version, chartName)">{{$t('message.submit')}}
                         </el-button>
                         <el-button class="ace-xcode-btn" type="primary" size="medium" icon="el-icon-upload2"
                                    @click="restoreChartDefaults()">{{$t('message.restore_chart_defaults')}}
@@ -84,12 +86,21 @@
                 options: [],
                 version: '',
                 chartName: '',
-                releaseName: '',
                 loading: true,
                 aceEditor: null,
+                form: {
+                    releaseName: ''
+                },
                 // value_yaml: '',
                 themePath: 'ace/theme/monokai', // 不导入 webpack-resolver, 该模块路径会报错
-                modePath: 'ace/mode/yaml' // 同上
+                modePath: 'ace/mode/yaml', // 同上
+                rules: {
+                    releaseName: [
+                        { required: true, message: '请输入名称', trigger: 'blur' },
+                        { min: 16, max: 53, message: '长度必须在 16 到 53 个字符', trigger: 'blur' },
+                        { pattern: /(([A-Za-z0-9][-A-Za-z0-9_.]*)?[A-Za-z0-9])+$/, message: '只支持英文字母与数字，中间用 - 连接',trigger: 'blur' }
+                    ]
+                }
             }
         },
         beforeMount() {
@@ -110,7 +121,7 @@
             this.chartName = chart.name
             this.version = chart.version
             this.getOptions(chart)
-            this.releaseName = this.chartName.split('/')[1] + '-' + this.randomWord(false, 6, 10)
+            this.form.releaseName = this.chartName.split('/')[1] + '-' + this.randomWord(false, 6, 10)
             this.init()
         },
         methods: {
@@ -158,6 +169,16 @@
 
             },
             submit: async function(releaseName, version, chartName) {
+                let flag = true
+                await this.$refs[releaseName].validate((valid) => {
+                    if (!valid) {
+                        flag = false
+                    }
+                });
+               if(!flag){
+                   noticeMessage(this, ' 名称校验不通过，请重新填写 ', 'warning')
+                   return;
+               }
 //                 let namespace = 'namespace: ' + this.$store.state.namespaces.activeSpace
 //                 this.value_yaml = `${namespace}
 // ${this.aceEditor.getValue()}`
@@ -191,9 +212,9 @@
             },
             deploy: async function(releaseName, version, chartName){
                 let params = {
-                    appRepositoryResourceName: chartName.split('/')[0],
-                    chartName: chartName.split('/')[1],
-                    releaseName: releaseName,
+                    appRepositoryResourceName: chartName.split('/')[0].replace(/\s+/g, ""),
+                    chartName: chartName.split('/')[1].replace(/\s+/g, ""),
+                    releaseName: releaseName.replace(/\s+/g, ""),
                     values: this.aceEditor.getValue(),
                     version: version
                 }
@@ -217,9 +238,6 @@
                 this.init()
             }
         },
-        btKeyUp(e){
-            e.target.value = e.target.value.replace(/[a-z0-9]([-a-z0-9]*[a-z0-9])?(\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*/g, "")
-        }
     }
 </script>
 
@@ -238,6 +256,10 @@
     .ace-xcode-btn {
         margin: 2em 2em 0 0;
         width: 31%;
+    }
+
+    .catalog-content /deep/ .el-form-item__content{
+        margin-left: 0 !important;
     }
 
 </style>

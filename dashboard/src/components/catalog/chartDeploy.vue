@@ -97,7 +97,7 @@
                 rules: {
                     releaseName: [
                         { required: true, message: '请输入名称', trigger: 'blur' },
-                        { min: 16, max: 53, message: '长度必须在 16 到 53 个字符', trigger: 'blur' },
+                        { min: 1, max: 53, message: '长度必须在 1 到 53 个字符', trigger: 'blur' },
                         { pattern: /(([A-Za-z0-9][-A-Za-z0-9_.]*)?[A-Za-z0-9])+$/, message: '只支持英文字母与数字，中间用 - 连接',trigger: 'blur' }
                     ]
                 }

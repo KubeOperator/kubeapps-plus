@@ -13,16 +13,22 @@
         <div class="foot-gril margin-t-normal">
             <div class="basic-lay">
                 <label>{{$t('message.name')}}</label>
-                <el-input style="width: 100%;"
-                          pattern="[a-z0-9]([-a-z0-9]*[a-z0-9])?(\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*"
-                          v-model="name" placeholder="example" required></el-input>
+                <el-form :model="form" :rules="rules" :ref="form.name" label-width="100px" class="ruleForm">
+                    <el-form-item prop="name">
+                        <el-input style="width: 100%;"
+                              v-model="form.name" placeholder="example" required></el-input>
+                    </el-form-item>
+                </el-form>
             </div>
 
             <div class="basic-lay">
                 <label>{{$t('message.url')}}</label>
-                <el-input style="width: 100%;"
-                          pattern="[a-z0-9]([-a-z0-9]*[a-z0-9])?(\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*"
-                          v-model="url" placeholder="https://charts.example.com/stable" required></el-input>
+                <el-form :model="form" :rules="rules" :ref="form.url" label-width="100px" class="ruleForm">
+                    <el-form-item prop="url">
+                        <el-input style="width: 100%;"
+                              v-model="form.url" placeholder="https://charts.example.com/stable" required></el-input>
+                    </el-form-item>
+                </el-form>
             </div>
 
             <div class="basic-lay">
@@ -37,23 +43,32 @@
 
             <div v-show="radio == 'basic'" class="basic-lay">
                 <label>{{$t('message.basic_auth')}} : {{$t('message.username')}}</label>
-                <el-input style="width: 100%;"
-                          pattern="[a-z0-9]([-a-z0-9]*[a-z0-9])?(\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*"
-                          v-model="username" placeholder="username" required></el-input>
+                <el-form :model="form" :rules="rules" :ref="form.username" label-width="100px" class="ruleForm">
+                    <el-form-item prop="username">
+                        <el-input style="width: 100%;"
+                              v-model="form.username" placeholder="username" required></el-input>
+                    </el-form-item>
+                </el-form>
             </div>
 
             <div v-show="radio == 'basic'" class="basic-lay">
                 <label>{{$t('message.basic_auth')}} : {{$t('message.password')}}</label>
-                <el-input style="width: 100%;"
-                          pattern="[a-z0-9]([-a-z0-9]*[a-z0-9])?(\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*"
-                          v-model="password" placeholder="password" required></el-input>
+                <el-form :model="form" :rules="rules" :ref="form.password" label-width="100px" class="ruleForm">
+                    <el-form-item prop="password">
+                        <el-input style="width: 100%;"
+                              v-model="form.password" placeholder="password" required></el-input>
+                    </el-form-item>
+                </el-form>
             </div>
 
             <div v-show="radio == 'bearer'" class="basic-lay">
                 <label>{{$t('message.bearer_token')}} : {{$t('message.token')}}</label>
-                <el-input style="width: 100%;"
-                          pattern="[a-z0-9]([-a-z0-9]*[a-z0-9])?(\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*"
-                          v-model="token" placeholder="xrxNcWghpRLdcPHFgVRM73rr4N7qjvjm" type="" required></el-input>
+                <el-form :model="form" :rules="rules" :ref="form.token" label-width="100px" class="ruleForm">
+                    <el-form-item prop="token">
+                        <el-input style="width: 100%;"
+                              v-model="form.token" placeholder="xrxNcWghpRLdcPHFgVRM73rr4N7qjvjm" type="" required></el-input>
+                    </el-form-item>
+                </el-form>
             </div>
 
             <div v-show="radio == 'custom'">
@@ -114,16 +129,40 @@
     export default {
         data() {
             return {
-                name: '',
-                url: '',
+                form: {
+                    name: '',
+                    url: '',
+                    username: '',
+                    password: '',
+                    token: '',
+                },
                 radio: 'none',
-                username: '',
-                password: '',
-                token: '',
                 completeAuthorizationHeader: '',
                 customCaCertificate: '',
                 customSyncJobTemplate: '',
-                params: []
+                params: [],
+                rules: {
+                    name: [
+                        { required: true, message: '请输入名称', trigger: 'blur' },
+                        { min: 1, max: 100, message: '长度必须在 1 到 100 个字符', trigger: 'blur' },
+                        { pattern: /[a-z0-9]([-a-z0-9]*[a-z0-9])?(\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*/, message: "使用小写字母数字字符, '-' 或 '.'",trigger: 'blur' }
+                    ],
+                    url: [
+                        { required: true, message: '请输入url', trigger: 'blur' },
+                        { min: 1, max: 100, message: '长度必须在 1 到 100 个字符', trigger: 'blur' },
+                    ],
+                    username: [
+                        { required: true, message: '请输入用户名', trigger: 'blur' },
+                        { min: 1, max: 100, message: '长度必须在 1 到 100 个字符', trigger: 'blur' },
+                    ],
+                    password: [
+                        { required: true, message: '请输入密码', trigger: 'blur' },
+                        { min: 1, max: 100, message: '长度必须在 1 到 100 个字符', trigger: 'blur' },
+                    ],
+                    token: [
+                        { required: true, message: '请输入token', trigger: 'blur' },
+                    ],
+                }
             }
         },
         created() {
@@ -135,13 +174,13 @@
 
             },
             installRepo: async function(){
-                if (!this.name) {
+                if (!this.form.name) {
                     noticeMessage(this, '名称不允许为空, 请填写名称', 'warning')
-                } else if (!this.url) {
+                } else if (!this.form.url) {
                     noticeMessage(this, 'URL不允许为空, 请填写版本', 'warning')
-                } else if (this.radio === 'basic' && !this.username) {
+                } else if (this.radio === 'basic' && !this.form.username) {
                     noticeMessage(this, '用户名称不允许为空, 请填写用户名称', 'warning')
-                }else if(this.radio === 'basic' && !this.password){
+                } else if(this.radio === 'basic' && !this.form.password){
                     noticeMessage(this, '密码不允许为空, 请填写密码', 'warning')
                 } else if (this.radio === 'bearer' && !this.token) {
                     noticeMessage(this, '令牌不允许为空, 请填写令牌', 'warning')
@@ -154,7 +193,7 @@
                         type: 'warning'
                     }).then(() => {
                         for(let param of this.params){
-                            if(this.name == param.metadata.name){
+                            if(this.form.name == param.metadata.name){
                                 noticeMessage(this, '名称不允许重复, 请重新填写', 'warning')
                                 return;
                             }
@@ -179,13 +218,13 @@
                         customCA: {
                             secretKeyRef: {
                                 key: "ca.crt",
-                                name: "apprepo-" + this.name.replace(/\s+/g, "") + "-secrets"
+                                name: "apprepo-" + this.form.name.replace(/\s+/g, "") + "-secrets"
                             }
                         },
                         header: {
                             secretKeyRef: {
                                 key: "authorizationHeader",
-                                name: "apprepo-" + this.name.replace(/\s+/g, "") + "-secrets"
+                                name: "apprepo-" + this.form.name.replace(/\s+/g, "") + "-secrets"
                             }
                         }
                     }
@@ -194,13 +233,13 @@
                         customCA: {
                             secretKeyRef: {
                                 key: "ca.crt",
-                                name: "apprepo-" + this.name.replace(/\s+/g, "") + "-secrets"
+                                name: "apprepo-" + this.form.name.replace(/\s+/g, "") + "-secrets"
                             }
                         },
                         header: {
                             secretKeyRef: {
                                 key: "authorizationHeader",
-                                name: "apprepo-" + this.name.replace(/\s+/g, "")+ "-secrets"
+                                name: "apprepo-" + this.form.name.replace(/\s+/g, "")+ "-secrets"
                             }
                         }
                     }
@@ -209,13 +248,13 @@
                         customCA: {
                             secretKeyRef: {
                                 key: "ca.crt",
-                                name: "apprepo-" + this.name.replace(/\s+/g, "") + "-secrets"
+                                name: "apprepo-" + this.form.name.replace(/\s+/g, "") + "-secrets"
                             }
                         },
                         header: {
                             secretKeyRef: {
                                 key: "authorizationHeader",
-                                name: "apprepo-" + this.name.replace(/\s+/g, "") + "-secrets"
+                                name: "apprepo-" + this.form.name.replace(/\s+/g, "") + "-secrets"
                             }
                         }
                     }
@@ -224,24 +263,24 @@
                     apiVersion: 'kubeapps.com/v1alpha1',
                     kind: 'AppRepository',
                     metadata: {
-                        name: this.name.replace(/\s+/g, "")
+                        name: this.form.name.replace(/\s+/g, "")
                     },
                     spec: {
                         auth: auth,
                         syncJobPodTemplate: jsyaml.safeLoad(this.customSyncJobTemplate),
                         type: 'helm',
-                        url: this.url.replace(/\s+/g, "")
+                        url: this.form.url.replace(/\s+/g, "")
                     },
                 }
                 await http(getParamApi(apiSetting.kubernetes.addAppRepositorie, sessionStorage.getItem('nameSpace'), 'apprepositories'), params).then((res) => {
                     if (res.status == 200 || res.status == 201) {
-                        noticeMessage(this, this.name + ' 保存成功! ', 'success')
+                        noticeMessage(this, this.form.name + ' 保存成功! ', 'success')
                         this.setScrets()
                     } else {
-                        noticeMessage(this, this.name + ' 保存失败: ' + res, 'error')
+                        noticeMessage(this, this.form.name + ' 保存失败: ' + res, 'error')
                     }
                 }).catch(msg => {
-                    noticeMessage(this, this.name + ' 请求失败: ' + msg.data, 'error')
+                    noticeMessage(this, this.form.name + ' 请求失败: ' + msg.data, 'error')
                 })
                 this.loading = false
             },
@@ -275,7 +314,7 @@
                     }
                 }else if (this.radio === 'basic') {
                     data = {
-                        authorizationHeader: btoa('Basic ' + btoa(this.username + ':' + this.password)),
+                        authorizationHeader: btoa('Basic ' + btoa(this.form.username + ':' + this.form.password)),
                         "ca.crt": btoa(this.customCaCertificate)
                     }
                 }else if(this.radio === 'bearer'){
@@ -295,12 +334,12 @@
                     type: "Opaque",
                     data: data,
                     metadata:{
-                        name: "apprepo-" + this.name + "-secrets",
+                        name: "apprepo-" + this.form.name + "-secrets",
                         ownerReferences: [{
                             apiVersion: "kubeapps.com/v1alpha1",
                             blockOwnerDeletion: true,
                             kind: "AppRepository",
-                            name: this.name,
+                            name: this.form.name,
                             uid: this.randomWord(false, 8, 8) + '-' + this.randomWord(false, 4, 4) + '-' +  this.randomWord(false, 4, 4) + '-' + this.randomWord(false, 4, 4) + '-' +  this.randomWord(false, 12, 12)
                         }]
                     }
@@ -309,10 +348,10 @@
                     if (res.status == 200 || res.status == 201) {
                         this.$router.push("/repositories");
                     } else {
-                        noticeMessage(this, this.name + ' 请求失败: ' + res, 'error')
+                        noticeMessage(this, this.form.name + ' 请求失败: ' + res, 'error')
                     }
                 }).catch(msg => {
-                    noticeMessage(this, this.name + ' 请求失败: ' + msg.data, 'error')
+                    noticeMessage(this, this.form.name + ' 请求失败: ' + msg.data, 'error')
                 })
                 this.loading = false
             }
@@ -347,5 +386,9 @@
 
     .item {
         margin: 4px;
+    }
+
+    .app-repositories-content /deep/ .el-form-item__content{
+        margin-left: 0 !important;
     }
 </style>

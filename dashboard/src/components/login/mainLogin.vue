@@ -61,6 +61,11 @@
                 input: "",
             };
         },
+        created: function(){
+            http(apiSetting.mock.getInfo).then(res => {
+                console.log(res)
+            }) 
+        },
         methods: {
             handleToken() {
                 Store.save("accessToken", this.input);

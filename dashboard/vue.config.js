@@ -18,6 +18,7 @@ module.exports = {
                     "^/rpc": ""
                 }
             }
-        }
+        },
+        before: require('./mock')
     }
 }

@@ -29,6 +29,9 @@ Vue.use(VueRouter)
 Vue.use(Resource)
 Vue.use(vuex)
 Vue.use(ace)
+Vue.filter('uppercase',function(value){
+  return value.toString().toUpperCase()
+})
 
 new Vue({
   render: h => h(App),

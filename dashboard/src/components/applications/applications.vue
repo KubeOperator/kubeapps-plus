@@ -100,7 +100,7 @@
                 size="small"
                 class="button-right"
                 round
-              >{{catalog.status}}</el-button>
+              >{{catalog.status | uppercase}}</el-button>
             </div>
           </div>
         </el-card>

@@ -163,6 +163,9 @@ export default {
     },
     getRelease(val) {
       this.releases = val.data;
+    },
+    "$route":function(){
+      this.$store.dispatch("getRelease");
     }
   }
 };

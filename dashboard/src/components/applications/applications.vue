@@ -6,7 +6,7 @@
       </el-col>
       <el-col :md="{span:4,offest:2}" :lg="3">
         <div style="margin: 1.2em 0;">
-          <el-input placeholder="请输入内容" v-model="search">
+          <el-input :placeholder="this.$t('message.Search_charts')" v-model="search">
             <i slot="prefix" class="el-input__icon el-icon-search"></i>
           </el-input>
         </div>

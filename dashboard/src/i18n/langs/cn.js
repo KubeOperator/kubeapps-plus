@@ -3,6 +3,7 @@ const cn = {
     message: {
         'hello': '你好, 世界',
         'login': '登录',
+        'Search_charts' : '搜索应用',
         'k8s_api_token': 'Kubernetes API 令牌',
         'token_warn_alert': '集群操作员应该为您提供一个kubernetes api令牌。',
         'token_placeholder': '请输入token',
@@ -62,7 +63,7 @@ const cn = {
         'back_to_previous': '返回上一级',
         'default_sync_job': '可以修改默认的同步作业。',
         'restore_chart_defaults': '恢复图表默认值',
-        'deploy_applications':'增强您的Kubernetes集群',
+        'deploy_applications':'部署您的Kubernetes应用',
         'deploy_applications_desc':'只需单击一下，即可在Kubernetes集群上部署应用程序。',
     },
     ...zhLocale

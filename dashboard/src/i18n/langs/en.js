@@ -3,6 +3,7 @@ const en = {
     message: {
         'hello': 'hello, world',
         'login': 'Login',
+        'Search_charts' : 'Search Charts',
         'k8s_api_token': 'Kubernetes API Token',
         'token_warn_alert': 'Your cluster operator should provide you with a Kubernetes API token.',
         'token_placeholder': 'Please enter token',

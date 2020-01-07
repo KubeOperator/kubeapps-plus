@@ -47,11 +47,7 @@
                         <div class="ace-container">
                             <!-- 官方文档中使用 id, 这里禁止使用, 在后期打包后容易出现问题, 使用 ref 或者 DOM 就行 -->
                             <div class="ace-editor" ref="ace">
-                            </div>
-                        </div>
-
-                    </div>
-
+                            </div
                     <div>
                         <el-button v-show="!(this.$store.state.namespaces.activeSpace == 'kubeapps-plus' || this.$store.state.namespaces.activeSpace == 'kube-operator')" class="ace-xcode-btn" type="success" size="medium" icon="el-icon-success"
                                    @click="submit(form.releaseName, version, chartName)">{{$t('message.submit')}}

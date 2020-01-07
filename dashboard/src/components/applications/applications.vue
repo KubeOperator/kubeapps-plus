@@ -95,13 +95,13 @@
                 type="primary"
                 class="button-right"
                 round
-              >{{catalog.namespace}}</el-button>
+              >{{catalog.namespace | uppercase }}</el-button>
               <el-button
                 :type="checkType(catalog.status)"
                 size="small"
                 class="button-right"
                 round
-              >{{catalog.status | uppercase}}</el-button>
+              >{{catalog.status}}</el-button>
             </div>
           </div>
         </el-card>

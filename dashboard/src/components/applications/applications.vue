@@ -75,7 +75,8 @@
         v-show="(catalog.status!='DELETED' || showdelete) && (catalog.releaseName.search(search)>=0)"
       >
         <el-card
-          :body-style="{ padding: '0px' }"
+          style="cursor:point;"
+          :body-style="{ padding: '0px'}"
           @click.native="$router.push('/apps/ns/'+ catalog.namespace + '/' + catalog.releaseName)"
         >
           <div class="catalog-image">

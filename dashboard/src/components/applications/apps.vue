@@ -64,7 +64,7 @@
                   @click.native.prevent="open(secrets[scope.$index].crt)"
                   type="text"
                   size="small"
-                >查看</el-button>
+                >{{$t('message.view')}}</el-button>
               </template>
             </el-table-column>
             <el-table-column label="KEY">
@@ -73,7 +73,7 @@
                   @click.native.prevent="open(secrets[scope.$index].key)"
                   type="text"
                   size="small"
-                >查看</el-button>
+                >{{$t('message.view')}}</el-button>
               </template>
             </el-table-column>
           </el-table>

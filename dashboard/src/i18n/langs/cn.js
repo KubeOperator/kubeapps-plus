@@ -3,6 +3,7 @@ const cn = {
     message: {
         'hello': '你好, 世界',
         'login': '登录',
+        'view': '查看',
         'Search_charts' : '搜索应用',
         'k8s_api_token': 'Kubernetes API 令牌',
         'token_warn_alert': '集群操作员应该为您提供一个kubernetes api令牌。',

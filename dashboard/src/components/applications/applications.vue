@@ -124,6 +124,9 @@ export default {
       search: ""
     };
   },
+  activated: function(){
+    this.init();
+  },
   created: function() {},
   mounted: function() {
     this.$store.dispatch("getRelease");

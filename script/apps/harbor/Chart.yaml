@@ -2,7 +2,7 @@ apiVersion: v1
 name: harbor
 version: 1.2.0-dev
 appVersion: dev
-description: Harbor是一个开源容器镜像注册仓库，可通过基于角色的访问控制来保护镜像，扫描镜像中的漏洞并将镜像标记为可信任。
+description: Harbor 是一个开源的容器镜像管理仓库。
 keywords:
 - docker
 - registry

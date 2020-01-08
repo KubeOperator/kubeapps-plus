@@ -80,12 +80,6 @@ const serviceModule = {
             url:'api/config.json',
             method:'get'
         },
-    },
-    mock:{
-        getInfo: {
-            url: '/user/userinfo',
-            method: 'get'
-        },
     }
 }
 const apiSetting = {...serviceModule}

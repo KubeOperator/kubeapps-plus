@@ -90,18 +90,18 @@
                 <i class="iconfont">&#xe67b;</i>
                 &nbsp;{{catalog.version}}
               </el-button>
-              <el-button
+              <!-- <el-button
                 size="small"
                 type="primary"
                 class="button-right"
                 round
-              >{{catalog.namespace | uppercase }}</el-button>
+              >{{catalog.namespace | uppercase }}</el-button> -->
               <el-button
                 :type="checkType(catalog.status)"
                 size="small"
                 class="button-right"
                 round
-              >{{catalog.status}}</el-button>
+              >{{catalog.status | uppercase }}</el-button>
             </div>
           </div>
         </el-card>

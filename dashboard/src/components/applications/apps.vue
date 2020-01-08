@@ -30,11 +30,13 @@
             <el-button type="danger" @click="dialogVisible = true" icon="el-icon-delete">&nbsp;{{$t('message.delete')}}</el-button>
           </el-col>
         </el-row>
-        <div v-show="this.AccessURLs!=''"></div>
+        <!-- <div v-show="this.AccessURLs!=''">
+          <h6>{{$t('message.access_urls')}}</h6>
+        </div>
         <div v-show="this.AccessURLs==''">
           <h6>{{$t('message.access_urls')}}</h6>
           <p>The current application does not expose a public URL.</p>
-        </div>
+        </div> -->
         <div v-show="this.note != undefined">
           <h6>{{$t('message.notes')}}</h6>
           <section class="AppNotes Terminal elevation-1">
@@ -53,7 +55,7 @@
             </div>
           </section>
         </div>
-        <div v-show="this.secrets.length != 0">
+        <!-- <div v-show="this.secrets.length != 0">
           <h6>{{$t('message.secrets')}}</h6>
           <el-table :data="secrets" stripe style="width: 100%">
             <el-table-column prop="name" label="NAME"></el-table-column>
@@ -77,7 +79,7 @@
               </template>
             </el-table-column>
           </el-table>
-        </div>
+        </div> -->
         <div v-show="this.deployments.length != 0">
           <h6>{{$t('message.deployments')}}</h6>
           <el-table :data="deployments" style="width: 100%">
@@ -115,10 +117,11 @@
     </el-row>
     <el-dialog title="提示" :visible.sync="dialogVisible" width="30%">
       <p>Are you sure you want to delete this?</p>
-      <el-switch v-model="purge" active-text="Purge release"></el-switch>
+      <p>{{$t('message.delete_chart')}}</p>
+      <el-switch v-model="purge" :active-text="this.$t('message.delete_valume')"></el-switch>
       <span slot="footer" class="dialog-footer">
-        <el-button @click="dialogVisible = false">取 消</el-button>
-        <el-button type="primary" @click="deleteapp">确 定</el-button>
+        <el-button @click="dialogVisible = false">{{$t('message.cancel')}}</el-button>
+        <el-button type="primary" @click="deleteapp">{{$t('message.confirm')}}</el-button>
       </span>
     </el-dialog>
   </div>

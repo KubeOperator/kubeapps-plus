@@ -116,7 +116,6 @@
       </el-col>
     </el-row>
     <el-dialog title="提示" :visible.sync="dialogVisible" width="30%">
-      <p>Are you sure you want to delete this?</p>
       <p>{{$t('message.delete_chart')}}</p>
       <el-switch v-model="purge" :active-text="this.$t('message.delete_valume')"></el-switch>
       <span slot="footer" class="dialog-footer">

@@ -4,7 +4,7 @@ const cn = {
         'hello': '你好, 世界',
         'login': '登录',
         'view': '查看',
-        'delete_chart': '你确定删除此应用吗？',
+        'delete_chart': '确定删除此应用吗？',
         'delete_valume': '删除存储',
         'Search_charts' : '搜索应用',
         'cancel': '取 消',

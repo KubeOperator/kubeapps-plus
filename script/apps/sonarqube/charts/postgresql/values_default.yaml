@@ -1,4 +1,5 @@
 ## postgres image repository
+imageRegistry: imageregistryvalue
 image: "postgres"
 ## postgres image version
 ## ref: https://hub.docker.com/r/library/postgres/tags/

@@ -8,10 +8,10 @@ imageRegistry: imageregistryvalue
 deploymentStrategy: {}
 
 image:
-  repository: sonarqube
+  repository: sonarqube/sonarqube
   tag: lts
   # If using a private repository, the name of the imagePullSecret to use
-  # pullSecret: my-repo-secret
+  pullSecret: kubeapps-registry-fit2cloud-com-key
 
 # Set security context for sonarqube pod
 securityContext:

@@ -69,6 +69,8 @@ function set_docker_config() {
     sed "s/imageregistryvalue/\"${url}\"/g" apps/jenkins/values_default.yaml > apps/jenkins/values.yaml
     sed "s/imageregistryvalue/\"${url}\"/g" apps/gitlab-ce/values_default.yaml > apps/gitlab-ce/values.yaml
     sed "s/imageregistryvalue/\"${url}\"/g" apps/sonarqube/values_default.yaml > apps/sonarqube/values.yaml
+    sed "s/imageregistryvalue/\"${url}\"/g" apps/sonarqube/chart/mysql/values_default.yaml > apps/sonarqube/chart/mysql/values.yaml
+    sed "s/imageregistryvalue/\"${url}\"/g" apps/sonarqube/chart/postgresql/values_default.yaml > apps/sonarqube/chart/postgresql/values.yaml
     sed "s/imageregistryvalue/\"${url}\"/g" apps/harbor/values_default.yaml > apps/harbor/values.yaml
 }
 
@@ -155,6 +157,15 @@ function docker_upload_image() {
     docker load <sonarqube.jar
     docker tag ea9ce8f562b5 ${registry_host}/sonarqube/sonarqube:lts
     docker push ${registry_host}/sonarqube/sonarqube:lts
+    docker load < mysql-5.7.jar
+    docker tag 4b3b6b994512 ${registry_host}/mysql:5.7.14
+    docker push ${registry_host}/mysql:5.7.14
+    docker load < busybox-125.jar
+    docker tag b3b8a2229953 ${registry_host}/busybox:1.25.0
+    docker push ${registry_host}/busybox:1.25.0
+    docker load < postgres.jar 
+    docker tag b3b8a2229953 ${registry_host}/postgres:9.6.2
+    docker push ${registry_host}/postgres:9.6.2
     #gitlab end
 
     #harbor start

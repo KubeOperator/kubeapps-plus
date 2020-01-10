@@ -2,19 +2,18 @@
     <div class="catalog-content" v-loading.fullscreen.lock="loading" element-loading-text="Loading" element-loading-background="rgba(0, 0, 0, 0.1)">
         <!-- header start -->
         <el-row>
-            <el-col :span="24">
+            <el-col :md="6" :lg="4">
                 <div class="grid-content">
-                    <h1 style="float: left">{{$t('message.catalog')}}</h1>
-                    <el-input class="catalog-search"
-                              :placeholder="$t('message.search_charts')"
-                              prefix-icon="el-icon-search"
-                              v-model="input"
-                              clearable>
-                    </el-input>
-                    <!--          <el-button size="medium" icon="el-icon-search" class="catalog-search-btn" @click="handleSelect(input)">-->
-                    <!--            {{$t('message.search')}}-->
-                    <!--          </el-button>-->
+                    <h1 class="app-type">{{$t('message.catalog')}}</h1>
                 </div>
+            </el-col>
+            <el-col :md="{span:16,offest:2}" :lg="6">
+                <el-input class="catalog-search"
+                          :placeholder="$t('message.search_charts')"
+                          prefix-icon="el-icon-search"
+                          v-model="input"
+                          clearable>
+                </el-input>
             </el-col>
         </el-row>
         <!-- header end -->
@@ -157,18 +156,14 @@
         min-height: 5em;
     }
 
+    .app-type {
+        margin:0.27em
+    }
+
     .catalog-search {
         float: left;
         width: 40%;
-        margin: 30px 0 0 1em;
-    }
-
-    .catalog-search-btn {
-        float: left;
-        width: 16%;
-        margin: 35px 0 0 1em;
-        padding: 11.5px 20px;
-        height: 38px;
+        margin: 1.2em 0px;;
     }
 
     .bottom {

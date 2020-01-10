@@ -1,10 +1,10 @@
 <template>
   <div class="dashborad" element-loading-text="Loading" element-loading-background="rgba(0, 0, 0, 0.1)">
-    <el-row style="margin-top:10px;border-bottom: 2px solid #f1f1f1;">
+    <el-row style="margin-top:20px !important;">
       <el-col :md="6" :lg="4">
         <h1 class="app_title" style="margin:0.27em">{{$t('message.application')}}</h1>
       </el-col>
-      <el-col :md="{span:4,offest:2}" :lg="3">
+      <el-col :md="{span:8,offest:2}" :lg="3">
         <div style="margin: 1.2em 0;">
           <el-input :placeholder="this.$t('message.Search_charts')" v-model="search">
             <i slot="prefix" class="el-input__icon el-icon-search"></i>
@@ -26,6 +26,11 @@
         </div>
       </el-col>
     </el-row>
+
+    <!-- 间隔线 start -->
+    <el-divider></el-divider>
+    <!-- 间隔线 end -->
+
     <el-row :gutter="24" v-show="this.releases.length==0">
       <el-col :span="20" :offset="2">
         <div class="alert margin-c margin-t-bigger">

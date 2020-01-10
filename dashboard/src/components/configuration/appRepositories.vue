@@ -1,15 +1,20 @@
 <template>
     <div class="app-repositories-content" v-loading.fullscreen.lock="loading" element-loading-text="Loading" element-loading-background="rgba(0, 0, 0, 0.1)">
-        <el-row>
-            <el-col :span="24">
+        <!-- header start -->
+        <el-row style="margin-top:10px;">
+            <el-col :md="6" :lg="4">
                 <div class="grid-content">
-                    <h1 style="float: left">{{$t('message.app_repositories')}}</h1>
+                    <h1 class="app-type">{{$t('message.app_repositories')}}</h1>
                 </div>
             </el-col>
         </el-row>
+        <!-- header end -->
 
+        <!-- 间隔线 start -->
         <el-divider></el-divider>
+        <!-- 间隔线 end -->
 
+        <!-- foot start -->
         <el-table
                 :data="tableData"
                 stripe
@@ -46,6 +51,7 @@
         <el-button class="gred-btn" type="primary" icon="el-icon-refresh" @click="refreshAll()">
             {{$t('message.refresh_all')}}
         </el-button>
+        <!-- foot end -->
     </div>
 </template>
 
@@ -141,5 +147,9 @@
     .gred-btn {
         margin: 2em;
         float: left;
+    }
+
+    .app-type {
+        margin:0.27em
     }
 </style>

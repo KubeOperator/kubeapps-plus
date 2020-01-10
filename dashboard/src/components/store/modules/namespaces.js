@@ -33,12 +33,6 @@ export default {
     },
     mutations: {
         initNamespace(state, n) {
-            let initNameSpaces = []
-            for (let item of n.items){
-                if(item.metadata.name != 'kubeapps-plus' && item.metadata.name != 'kube-operator'){
-                    initNameSpaces.push(item)
-                }
-            }
             state.items = n.items //这里应该要做数据拆分
             state.kind = n.kind
             state.apiVersion = n.apiVersion

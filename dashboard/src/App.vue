@@ -47,14 +47,13 @@ export default {
 @import "./assets/css/normalize.css";
 @import "./assets/css/ma.min.css";
 @font-face {
-  font-family: "iconfont"; /* project id 1481498 */
-  src: url("//at.alicdn.com/t/font_1481498_ytrqu85r3p.eot");
-  src: url("//at.alicdn.com/t/font_1481498_ytrqu85r3p.eot?#iefix")
-      format("embedded-opentype"),
-    url("//at.alicdn.com/t/font_1481498_ytrqu85r3p.woff2") format("woff2"),
-    url("//at.alicdn.com/t/font_1481498_ytrqu85r3p.woff") format("woff"),
-    url("//at.alicdn.com/t/font_1481498_ytrqu85r3p.ttf") format("truetype"),
-    url("//at.alicdn.com/t/font_1481498_ytrqu85r3p.svg#iconfont") format("svg");
+  font-family: 'iconfont';  /* project id 1230044 */
+  src: url('./assets/icon/iconfont.eot');
+  src: url('./assets/icon/iconfont.eot?#iefix') format('embedded-opentype'),
+  url('./assets/icon/iconfont.woff2') format('woff2'),
+  url('./assets/icon/iconfont.woff') format('woff'),
+  url('./assets/icon/iconfont.ttf') format('truetype'),
+  url('./assets/icon/iconfont.svg#iconfont') format('svg');
 }
 .iconfont {
   font-family: "iconfont" !important;

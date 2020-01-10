@@ -9,6 +9,7 @@ import repositories from "../components/configuration/appRepositories.vue"
 import addRepositories from "../components/configuration/addAppRepositories.vue"
 import brokers from "../components/configuration/serviceBroker.vue"
 import apps from "../components/applications/apps.vue"
+import Store from "../components/store/store.js"
 
 // 2. 定义路由
 // 每个路由应该映射一个组件。 其中"component" 可以是
@@ -27,8 +28,34 @@ const routes = [
   { name: 'apps', path: '/apps/ns/:namespace/:id',component: apps }
 ]
 
-// 3. 创建 router 实例, 然后传 `routes` 配置
-// 你还可以传别的配置参数, 不过先这么简单着吧。
-export default  new VueRouter({
+// 创建 router 实例, 然后传 `routes` 配置
+const router = new VueRouter({
   routes // (缩写) 相当于 routes: routes
 })
+
+//免登陆白名单
+const whiteList = ['/error', '/']
+
+//router.beforeEach 注册一个全局前置守卫
+router.beforeEach((to, from, next) => {
+  if (Store.fetch("accessToken")) {
+    // 检查权限
+    next()
+  } else {
+    if (whiteList.indexOf(to.path) !== -1) { // 在免登录白名单，直接进入
+      next() // 记得当所有程序执行完毕后要进行next()，不然是无法继续进行的;
+    } else {
+      next({
+        path: '/',
+        replace: true,
+        query: {
+          noGoBack: true
+        }
+      })
+    }
+  }
+
+})
+
+
+export default router

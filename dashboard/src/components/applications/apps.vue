@@ -134,6 +134,7 @@ import "ace-builds/src-noconflict/mode-javascript"; // 默认设置的语言模�
 import apiSetting from "../utils/apiSetting.js";
 import http from "../utils/httpAxios.js";
 import jsyaml from "js-yaml";
+import noticeMessage from "../utils/noticeMessage";
 // import { Base64 } from "js-base64";
 /* eslint-disable */
 export default {
@@ -158,10 +159,24 @@ export default {
       if (this.purge) {
         baseurl.url = baseurl.url + "?purge=true";
       }
-      http(baseurl).then(
-
+      noticeMessage(this, ' 正在删除, 请稍等 ', 'success')
+      this.loading = true
+      http(baseurl).then((res)=> {
+        this.timeout(2000);
+        if (res.status == 200) {
+          noticeMessage(this, '删除成功! ', 'success')
+          this.loading = false
           this.$router.push("/applications")
-      );
+        } else {
+          noticeMessage(this, '删除失败: ' + res.data.message, 'error')
+          this.loading = false
+        }
+      });
+    },
+    timeout: async function(ms) {
+      await new Promise((resolve) => {
+        setTimeout(resolve, ms);
+      })
     },
     getdebug() {
     },

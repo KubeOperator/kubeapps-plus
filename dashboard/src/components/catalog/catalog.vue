@@ -51,15 +51,16 @@
                                 catalog.relationships.latestChartVersion.data.version}}
                             </el-button>
                             <el-button size="medium" type="primary" class="button-right" v-if="catalog.id.indexOf('stable') > -1
-                                || catalog.id.indexOf('bitnami') > -1 || catalog.id.indexOf('svc-cat') > -1" round>
+                                || catalog.id.indexOf('bitnami') > -1 || catalog.id.indexOf('svc-cat') > -1"
+                                @click.native="$router.push('/repositories')" round>
                                 {{catalog.id | splitName(catalog.id)}}
                             </el-button>
                             <el-button type="warning" class="button-right" v-else-if="catalog.id.indexOf('incubator') > -1"
-                                       round>
+                                       @click.native="$router.push('/repositories')" round>
                                 {{catalog.id | splitName(catalog.id)}}
                             </el-button>
                             <el-button type="success" class="button-right" v-else
-                                       round>
+                                       @click.native="$router.push('/repositories')" round>
                                 {{catalog.id | splitName(catalog.id)}}
                             </el-button>
                         </div>

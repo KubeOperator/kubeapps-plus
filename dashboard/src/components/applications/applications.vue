@@ -80,13 +80,19 @@
         v-show="(catalog.status!='DELETED' || showdelete) && (catalog.releaseName.search(search)>=0)"
       >
         <el-card
-          style="cursor:point;"
           :body-style="{ padding: '0px'}"
-          @click.native="$router.push('/apps/ns/'+ catalog.namespace + '/' + catalog.releaseName)"
-        >
+          @click.native="$router.push('/apps/ns/'+ catalog.namespace + '/' + catalog.releaseName)">
           <div class="catalog-image">
-            <img v-show="catalog.icon" :src="catalog.icon" class="image" />
-            <img v-show="!catalog.icon" src="../../assets/image/default.png" class="image" />
+            <a>
+              <img v-if="!catalog.icon" src="../../assets/image/default.png" class="image">
+              <img v-else-if="(catalog.icon.search('gitlab')>=0)" src="../../assets/image/charts/gitlab-stack-110x117.png" class="image">
+              <img v-else-if="(catalog.icon.search('harbor')>=0)" src="../../assets/image/charts/harbor-stack-110x117.png" class="image" require>
+              <img v-else-if="(catalog.icon.search('jenkins')>=0)" src="../../assets/image/charts/jenkins-stack-110x117.png" class="image" require>
+              <img v-else-if="(catalog.icon.search('sonarqube')>=0)" src="../../assets/image/charts/sonarqube-stack-110x117.png" class="image" require>
+              <img v-else-if="(catalog.icon.search('gitlab')>=0)" src="../../assets/image/charts/gitlab-stack-110x117.png" class="image" require>
+              <img v-else-if="(catalog.icon.search('istio')>=0)" src="../../assets/image/charts/istio-110x117.png" class="image" require>
+              <img v-else :src="catalog.icon" class="image" require>
+            </a>
           </div>
           <div style="padding: 1em;">
             <h3 class="catalog-label">{{catalog.releaseName}}</h3>

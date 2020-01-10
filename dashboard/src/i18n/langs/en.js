@@ -70,6 +70,7 @@ const en = {
         'restore_chart_defaults': 'Restore Chart Defaults',
         'deploy_applications':'Supercharge your Kubernetes cluster',
         'deploy_applications_desc':'Deploy applications on your Kubernetes cluster with a single click.',
+        'update_namespace':'Update namespace',
     },
     ...enLocale
 }

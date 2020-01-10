@@ -42,6 +42,7 @@
                     {{$t('message.configuration')}}
                 </template>
                 <el-menu-item index="6-1" @click="appRepositories">{{$t('message.app_repositories')}}</el-menu-item>
+                <el-menu-item index="6-2" @click="updateNamespace">{{$t('message.update_namespace')}}</el-menu-item>
 <!--                <el-menu-item index="6-2" @click="serviceBroker">{{$t('message.service_broker')}}</el-menu-item>-->
             </el-submenu>
             <el-submenu index="7" class="header-right" v-if="this.$route.path != '/'">
@@ -59,7 +60,10 @@
 </template>
 
 <script>
-    // import Store from "../store/store.js";
+    import http from "../utils/httpAxios";
+    import apiSetting from "../utils/apiSetting";
+    import noticeMessage from "../utils/noticeMessage";
+
     export default {
         name: "basicHeader",
         props: {
@@ -95,7 +99,17 @@
             changeActiveSpace(name) {
                 this.$store.commit("updateActiveSapce", name);
                 this.$store.dispatch('getRelease')
-                //todo 处理加载逻辑
+            },
+            updateNamespace() {
+                noticeMessage(this, ' 正在更新, 请稍等 ', 'success')
+                http(apiSetting.kubernetes.getNamespaces).then(res => {
+                    if (res.status == 200) {
+                        noticeMessage(this, '更新成功', 'success')
+                        this.$store.commit('initNamespace', res.data)
+                    } else {
+                        noticeMessage(this, '更新失败 ' + res.data, 'error')
+                    }
+                });
             }
         },
         computed: {

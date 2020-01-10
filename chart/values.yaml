@@ -208,7 +208,7 @@ apprepository:
     #   url: https://charts.bitnami.com/bitnami
     # Additional repositories
     - name: chartmuseum
-      url: http://chartmuseum.kubeapps-plus.fit2cloud.com
+      url: http://chartmuseum:8080
   #   nodeSelector:
   #     somelabel: somevalue
   #   # Specify an Authorization Header if you are using an authentication method.

@@ -113,7 +113,7 @@ resources: {}
 #  cpu: 100m
 #  memory: 128Mi
 persistence:
-  enabled: false
+  enabled: true
   ## Set annotations on pvc
   annotations: {}
 
@@ -190,6 +190,12 @@ postgresql:
   # Specify the TCP port that PostgreSQL should use
   service:
     port: 5432
+  ## Persist data to a persitent volume
+  persistence:
+    enabled: true
+    # storageClass: "-"
+    accessMode: ReadWriteOnce
+    size: 8Gi
 
 ## Configuration values for the mysql dependency
 ## ref: https://github.com/kubernetes/charts/blob/master/stable/mysql/README.md
@@ -211,6 +217,12 @@ mysql:
   # Specify the TCP port that mySQL should use
   service:
     port: 3306
+  ## Persist data to a persistent volume
+  persistence:
+    enabled: true
+    # storageClass: "-"
+    accessMode: ReadWriteOnce
+    size: 8Gi
 #
 # Additional labels to add to the pods:
 # podLabels:

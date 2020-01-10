@@ -491,7 +491,7 @@ database:
       tag: lts
     # the image used by the init container
     initContainerImage:
-      repository: busybox
+      repository: harbor/busybox
       tag: latest
     # The initial superuser password for internal database
     password: "changeit"
@@ -535,7 +535,7 @@ redis:
   type: internal
   internal:
     image:
-      repository: harbor-redis-photon
+      repository: harbor/harbor-redis-photon
       tag: lts
     # resources:
     #  requests:

@@ -1,15 +1,16 @@
-{{ if .Values.clair.enabled }}
+{{- if .Values.clair.enabled }}
 apiVersion: v1
 kind: Service
 metadata:
-  name: "{{ template "harbor.clair" . }}"
-  labels:
-{{ include "harbor.labels" . | indent 4 }}
+  name: {{ include "harbor.clair" . }}
+  labels: {{- include "harbor.labels" . | nindent 4 }}
+    app.kubernetes.io/component: clair
 spec:
   ports:
-    - name: adapter
-      port: 8080
-  selector:
-{{ include "harbor.matchLabels" . | indent 4 }}
-    component: clair
-{{ end }}
+    - name: clair
+      port: 6060
+    - name: health
+      port: 6061
+  selector: {{- include "harbor.matchLabels" . | nindent 4 }}
+    app.kubernetes.io/component: clair
+{{- end }}

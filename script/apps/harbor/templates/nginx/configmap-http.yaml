@@ -1,14 +1,12 @@
-{{- if and (ne .Values.expose.type "ingress") (not .Values.expose.tls.enabled) }}
+{{- if and (ne .Values.service.type "Ingress") (not .Values.service.tls.enabled) }}
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: {{ template "harbor.nginx" . }}
-  labels:
-{{ include "harbor.labels" . | indent 4 }}
+  name: {{ include "harbor.nginx" . }}
+  labels: {{- include "harbor.labels" . | nindent 4 }}
 data:
   nginx.conf: |+
     worker_processes auto;
-    pid /tmp/nginx.pid;
 
     events {
       worker_connections 1024;
@@ -17,11 +15,6 @@ data:
     }
 
     http {
-      client_body_temp_path /tmp/client_body_temp;
-      proxy_temp_path /tmp/proxy_temp;
-      fastcgi_temp_path /tmp/fastcgi_temp;
-      uwsgi_temp_path /tmp/uwsgi_temp;
-      scgi_temp_path /tmp/scgi_temp;
       tcp_nodelay on;
 
       # this is necessary for us to be able to disable request buffering in all cases
@@ -42,25 +35,28 @@ data:
 
       access_log /dev/stdout timed_combined;
 
+      client_body_temp_path  "/opt/bitnami/nginx/tmp/client_body" 1 2;
+      proxy_temp_path        "/opt/bitnami/nginx/tmp/proxy" 1 2;
+      fastcgi_temp_path      "/opt/bitnami/nginx/tmp/fastcgi" 1 2;
+      scgi_temp_path         "/opt/bitnami/nginx/tmp/scgi" 1 2;
+      uwsgi_temp_path        "/opt/bitnami/nginx/tmp/uwsgi" 1 2;
+
       server {
         listen 8080;
         server_tokens off;
         # disable any limits to avoid HTTP 413 for large image uploads
         client_max_body_size 0;
 
-        # Add extra headers
-        add_header X-Frame-Options DENY;
-        add_header Content-Security-Policy "frame-ancestors 'none'";
-
         location / {
           proxy_pass http://portal/;
           proxy_set_header Host $host;
           proxy_set_header X-Real-IP $remote_addr;
           proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-          
-          # When setting up Harbor behind other proxy, such as an Nginx instance, remove the below line if the proxy already has similar settings.
+
+          {{- if not .Values.nginx.behindReverseProxy }}
           proxy_set_header X-Forwarded-Proto $scheme;
-          
+          {{- end }}
+
           proxy_buffering off;
           proxy_request_buffering off;
         }
@@ -71,21 +67,23 @@ data:
           proxy_set_header X-Real-IP $remote_addr;
           proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
 
-          # When setting up Harbor behind other proxy, such as an Nginx instance, remove the below line if the proxy already has similar settings.
+          {{- if not .Values.nginx.behindReverseProxy }}
           proxy_set_header X-Forwarded-Proto $scheme;
-          
+          {{- end }}
+
           proxy_buffering off;
           proxy_request_buffering off;
         }
-        
+
         location /chartrepo/ {
           proxy_pass http://core/chartrepo/;
           proxy_set_header Host $host;
           proxy_set_header X-Real-IP $remote_addr;
           proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
 
-          # When setting up Harbor behind other proxy, such as an Nginx instance, remove the below line if the proxy already has similar settings.
+          {{- if not .Values.nginx.behindReverseProxy }}
           proxy_set_header X-Forwarded-Proto $scheme;
+          {{- end }}
 
           proxy_buffering off;
           proxy_request_buffering off;
@@ -97,9 +95,10 @@ data:
           proxy_set_header X-Real-IP $remote_addr;
           proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
 
-          # When setting up Harbor behind other proxy, such as an Nginx instance, remove the below line if the proxy already has similar settings.
+          {{- if not .Values.nginx.behindReverseProxy }}
           proxy_set_header X-Forwarded-Proto $scheme;
-          
+          {{- end }}
+
           proxy_buffering off;
           proxy_request_buffering off;
         }
@@ -113,9 +112,11 @@ data:
           proxy_set_header Host $http_host;
           proxy_set_header X-Real-IP $remote_addr;
           proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-          
-          # When setting up Harbor behind other proxy, such as an Nginx instance, remove the below line if the proxy already has similar settings.
+
+          {{- if not .Values.nginx.behindReverseProxy }}
           proxy_set_header X-Forwarded-Proto $scheme;
+          {{- end }}
+
           proxy_buffering off;
           proxy_request_buffering off;
         }
@@ -125,18 +126,18 @@ data:
           proxy_set_header Host $host;
           proxy_set_header X-Real-IP $remote_addr;
           proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-          
-          # When setting up Harbor behind other proxy, such as an Nginx instance, remove the below line if the proxy already has similar settings.
+
+          {{- if not .Values.nginx.behindReverseProxy }}
           proxy_set_header X-Forwarded-Proto $scheme;
-          
+          {{- end }}
+
           proxy_buffering off;
           proxy_request_buffering off;
         }
-      
+
       location /service/notifications {
           return 404;
         }
       }
     }
 {{- end }}
-    

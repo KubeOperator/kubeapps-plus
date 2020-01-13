@@ -3,9 +3,9 @@
 ## Current available global Docker image parameters: imageRegistry and imagePullSecrets
 ##
 global:
-  imageRegistry: myRegistryName
+  imageRegistry: imageregistryvalue
   imagePullSecrets:
-    - myRegistryKeySecretName
+    - kubeapps-registry-fit2cloud-com-key
 
 ## TensorFlow Serving server image version
 ## ref: https://hub.docker.com/r/bitnami/tensorflow-serving/tags/

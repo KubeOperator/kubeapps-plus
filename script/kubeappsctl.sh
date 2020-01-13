@@ -61,7 +61,8 @@ function set_docker_config() {
     printf "$all_variables_secret\ncat << EOF\n$resourcefile\nEOF" | bash >apps/sonarqube/templates/userdefined-secret.yaml
     printf "$all_variables_secret\ncat << EOF\n$resourcefile\nEOF" | bash >apps/harbor/templates/userdefined-secret.yaml
     printf "$all_variables_secret\ncat << EOF\n$resourcefile\nEOF" | bash >apps/tensorflow-resnet/templates/userdefined-secret.yaml
-
+    printf "$all_variables_secret\ncat << EOF\n$resourcefile\nEOF" | bash >apps/tensorflow-notebook/templates/userdefined-secret.yaml
+     
     #TODO
     #替换source
     # registryfile=`cat apps/jenkins/values.yaml`
@@ -74,7 +75,9 @@ function set_docker_config() {
     sed "s/imageregistryvalue/\"${url}\"/g" apps/sonarqube/chart/postgresql/values_default.yaml > apps/sonarqube/chart/postgresql/values.yaml
     sed "s/imageregistryvalue/\"${url}\"/g" apps/harbor/values_default.yaml > apps/harbor/values.yaml
     # 替换变量
-    sed "s/imageRegistry/\"${url}\"/g" apps/tensorflow-resnet/values_default.yaml > apps/tensorflow-resnet/values.yaml
+    sed "s/imageregistryvalue/\"${url}\"/g" apps/tensorflow-resnet/values_default.yaml > apps/tensorflow-resnet/values.yaml
+    sed "s/imageregistryvalue/\"${url}\"/g" apps/tensorflow-notebook/values_default.yaml > apps/tensorflow-notebook/values.yaml
+
 
 }
 

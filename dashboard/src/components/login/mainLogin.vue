@@ -9,7 +9,7 @@
                     <div class="login_title">
                       <span>
                         <i class="iconfont login_title">&#xe650;</i>
-                          {{'Kubeapps'}}<span style="color: #fc5a4a;">+ </span>{{ $t('message.login') }}
+                          {{ $t('message.login') }} &nbsp;&nbsp;{{'Kubeapps'}}<span style="color: #fc5a4a;">+ </span>
                       </span>
                     </div>
                     <div class="login_label">{{$t('message.k8s_api_token')}}</div>

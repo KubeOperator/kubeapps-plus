@@ -8,6 +8,8 @@ metadata:
     release: "{{ .Release.Name }}"
     heritage: "{{ .Release.Service }}"
 spec:
+  imagePullSecrets:
+    - name: kubeapps-registry-fit2cloud-com-key
   selector:
     matchLabels:
       app: {{ template "redis.fullname" . }}

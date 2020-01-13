@@ -70,13 +70,13 @@ function set_docker_config() {
     sed "s/imageregistryvalue/\"${url}\"/g" apps/jenkins/values_default.yaml > apps/jenkins/values.yaml
     #Gitlab
     sed "s/imageregistryvalue/\"${url}\"/g" apps/gitlab-ce/values_default.yaml > apps/gitlab-ce/values.yaml
-    sed "s/imageregistryvalue/\"${url}\"/g" apps/gitlab-ce/chart/postgresql/values_default.yaml > apps/gitlab-ce/chart/postgresql/values.yaml
-    sed "s/imageregistryvalue/\"${url}\"/g" apps/gitlab-ce/chart/redis/values_default.yaml > apps/gitlab-ce/chart/redis/values.yaml
+    sed "s/imageregistryvalue/\"${url}\"/g" apps/gitlab-ce/charts/postgresql/values_default.yaml > apps/gitlab-ce/charts/postgresql/values.yaml
+    sed "s/imageregistryvalue/\"${url}\"/g" apps/gitlab-ce/charts/redis/values_default.yaml > apps/gitlab-ce/charts/redis/values.yaml
 
     #
     sed "s/imageregistryvalue/\"${url}\"/g" apps/sonarqube/values_default.yaml > apps/sonarqube/values.yaml
-    sed "s/imageregistryvalue/\"${url}\"/g" apps/sonarqube/chart/mysql/values_default.yaml > apps/sonarqube/chart/mysql/values.yaml
-    sed "s/imageregistryvalue/\"${url}\"/g" apps/sonarqube/chart/postgresql/values_default.yaml > apps/sonarqube/chart/postgresql/values.yaml
+    sed "s/imageregistryvalue/\"${url}\"/g" apps/sonarqube/charts/mysql/values_default.yaml > apps/sonarqube/charts/mysql/values.yaml
+    sed "s/imageregistryvalue/\"${url}\"/g" apps/sonarqube/charts/postgresql/values_default.yaml > apps/sonarqube/charts/postgresql/values.yaml
     sed "s/imageregistryvalue/\"${url}\"/g" apps/harbor/values_default.yaml > apps/harbor/values.yaml
     # 替换变量
     sed "s/imageregistryvalue/\"${url}\"/g" apps/tensorflow-notebook/values_default.yaml > apps/tensorflow-notebook/values.yaml

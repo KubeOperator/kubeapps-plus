@@ -181,31 +181,51 @@ function docker_upload_image() {
     docker load < postgres.jar 
     docker tag b3b8a2229953 ${registry_host}/postgres:9.6.2
     docker push ${registry_host}/postgres:9.6.2
-    #gitlab end
+    #sonarqube end
 
     #harbor start
-    docker load < harbor-core.jar
+    docker load < harbor-notary-server.jar
     docker load < harbor-portal.jar
     docker load < harbor-jobservice.jar
     docker load < harbor-chartmuseum.jar
+    docker load < harbor-registry.jar
+    docker load < harbor-registryctl.jar
+    docker load < harbor-clair.jar
+    docker load < harbor-jobservice.jar
+    docker load < harbor-notary-signer.jar
+    docker load < harbor-nginx.jar
+    docker load < harbor-minideb.jar
 
     docker tag d463d8c692e8 ${registry_host}/bitnami/harbor-portal:1.10.0-debian-9-r0
     docker tag adef6d703e66 ${registry_host}/bitnami/harbor-core:1.10.0-debian-9-r3
     docker tag 057377fcb879 ${registry_host}/bitnami/harbor-jobservice:1.10.0-debian-9-r3
     docker tag 9d612e5956c4 ${registry_host}/bitnami/chartmuseum:0.11.0-debian-9-r1
-    
+    docker tag 8afee10225bd ${registry_host}/bitnami/harbor-registry:1.10.0-debian-9-r3
+    docker tag 810432b24ea0 ${registry_host}/bitnami/harbor-registryctl:1.10.0-debian-9-r3
+    docker tag 4970db9b1e5f ${registry_host}/bitnami/harbor-clair:1.10.0-debian-9-r3
+    docker tag dac437e264bd ${registry_host}/bitnami/harbor-notary-server:1.10.0-debian-9-r3
+    docker tag ef51b2e2f1cf ${registry_host}/bitnami/harbor-notary-signer:1.10.0-debian-9-r3
+    docker tag e98944d2dbd6 ${registry_host}/bitnami/nginx:1.16.1-debian-9-r116
+    docker tag bd03f4313216 ${registry_host}/bitnami/minideb:stretch
+
     docker push ${registry_host}/bitnami/harbor-portal:1.10.0-debian-9-r0
     docker push ${registry_host}/bitnami/harbor-core:1.10.0-debian-9-r3
     docker push ${registry_host}/bitnami/harbor-jobservice:1.10.0-debian-9-r3
     docker push ${registry_host}/bitnami/chartmuseum:0.11.0-debian-9-r1
+    docker push ${registry_host}/bitnami/harbor-registry:1.10.0-debian-9-r3
+    docker push ${registry_host}/bitnami/harbor-registryctl:1.10.0-debian-9-r3
+    docker push ${registry_host}/bitnami/harbor-clair:1.10.0-debian-9-r3
+    docker push ${registry_host}/bitnami/harbor-notary-server:1.10.0-debian-9-r3
+    docker push ${registry_host}/bitnami/harbor-notary-signer:1.10.0-debian-9-r3
+    docker push ${registry_host}/bitnami/nginx:1.16.1-debian-9-r116
+    docker push ${registry_host}/bitnami/minideb:stretch
+    #harbor end
 
-    #gitlab end
-
-    #tensorflow 
-    #
+    #tensorflow start
     docker load < tensorflow-serving.jar
     docker tag 3272bb6c8a41 ${registry_host}/bitnami/tensorflow-serving:2.0.0-debian-9-r11
     docker push ${registry_host}/bitnami/tensorflow-serving:2.0.0-debian-9-r11
+    #tensorflow end
 }
 
 #打包Helm Chart

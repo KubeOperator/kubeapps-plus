@@ -60,18 +60,28 @@ function set_docker_config() {
     printf "$all_variables_secret\ncat << EOF\n$resourcefile\nEOF" | bash >apps/gitlab-ce/templates/userdefined-secret.yaml
     printf "$all_variables_secret\ncat << EOF\n$resourcefile\nEOF" | bash >apps/sonarqube/templates/userdefined-secret.yaml
     printf "$all_variables_secret\ncat << EOF\n$resourcefile\nEOF" | bash >apps/harbor/templates/userdefined-secret.yaml
-
+    printf "$all_variables_secret\ncat << EOF\n$resourcefile\nEOF" | bash >apps/tensorflow-notebook/templates/userdefined-secret.yaml
+     
     #TODO
     #替换source
     # registryfile=`cat apps/jenkins/values.yaml`
     # all_variables_source="imageregistry=\"${url}\""
     # printf "$all_variables_source\ncat << EOF\n$registryfile\nEOF" | bash >apps/jenkins/values.yaml
     sed "s/imageregistryvalue/\"${url}\"/g" apps/jenkins/values_default.yaml > apps/jenkins/values.yaml
+    #Gitlab
     sed "s/imageregistryvalue/\"${url}\"/g" apps/gitlab-ce/values_default.yaml > apps/gitlab-ce/values.yaml
+    sed "s/imageregistryvalue/\"${url}\"/g" apps/gitlab-ce/chart/postgresql/values_default.yaml > apps/gitlab-ce/chart/postgresql/values.yaml
+    sed "s/imageregistryvalue/\"${url}\"/g" apps/gitlab-ce/chart/redis/values_default.yaml > apps/gitlab-ce/chart/redis/values.yaml
+
+    #
     sed "s/imageregistryvalue/\"${url}\"/g" apps/sonarqube/values_default.yaml > apps/sonarqube/values.yaml
     sed "s/imageregistryvalue/\"${url}\"/g" apps/sonarqube/chart/mysql/values_default.yaml > apps/sonarqube/chart/mysql/values.yaml
     sed "s/imageregistryvalue/\"${url}\"/g" apps/sonarqube/chart/postgresql/values_default.yaml > apps/sonarqube/chart/postgresql/values.yaml
     sed "s/imageregistryvalue/\"${url}\"/g" apps/harbor/values_default.yaml > apps/harbor/values.yaml
+    # 替换变量
+    sed "s/imageregistryvalue/\"${url}\"/g" apps/tensorflow-notebook/values_default.yaml > apps/tensorflow-notebook/values.yaml
+
+
 }
 
 ## 检查环境 安装helm push
@@ -148,9 +158,12 @@ function docker_upload_image() {
     #jenkins end
 
     #gitlab start
-    docker load <gitlab.jar
+    docker load < gitlab.jar
     docker tag 6099ff61e4ff ${registry_host}/gitlab/gitlab:lts
     docker push ${registry_host}/gitlab/gitlab:lts
+    docker load < redis.jar
+    docker tag 40856dba0c5d ${registry_host}/bitnami/redis:3.2.9-r2
+    docker push ${registry_host}/bitnami/redis:3.2.9-r2
     #gitlab end
 
     #sonarqube start
@@ -211,6 +224,12 @@ function docker_upload_image() {
     docker push ${registry_host}/harbor/harbor-registryctl:lts
     docker push ${registry_host}/harbor/harbor-registry-photon:lts
     #gitlab end
+
+    #tensorflow 
+    #
+    docker load < tensorflow-serving.jar
+    docker tag 3272bb6c8a41 ${registry_host}/bitnami/tensorflow-serving:2.0.0-debian-9-r11
+    docker push ${registry_host}/bitnami/tensorflow-serving:2.0.0-debian-9-r11
 }
 
 #打包Helm Chart
@@ -270,6 +289,12 @@ function upload_chart() {
     helm package .
     helm push . localrepo -f
     cd ${PROJECT_DIR}/apps/sonarqube
+    helm package .
+    helm push . localrepo -f
+    cd ${PROJECT_DIR}/apps/tensorflow-notebook
+    helm package .
+    helm push . localrepo -f
+    cd ${PROJECT_DIR}/apps/tensorflow-serving
     helm package .
     helm push . localrepo -f
     if [ $? -eq 0 ]; then

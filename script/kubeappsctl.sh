@@ -188,18 +188,15 @@ function docker_upload_image() {
     docker load < harbor-portal.jar
     docker load < harbor-jobservice.jar
     docker load < harbor-chartmuseum.jar
-    docker load < harbor-registry.jar
 
     docker tag d463d8c692e8 ${registry_host}/bitnami/harbor-portal:1.10.0-debian-9-r0
     docker tag adef6d703e66 ${registry_host}/bitnami/harbor-core:1.10.0-debian-9-r3
     docker tag 057377fcb879 ${registry_host}/bitnami/harbor-jobservice:1.10.0-debian-9-r3
     docker tag 9d612e5956c4 ${registry_host}/bitnami/chartmuseum:0.11.0-debian-9-r1
-    docker tag 9d612e5956c4 ${registry_host}/bitnami/chartmuseum:0.11.0-debian-9-r1
     
     docker push ${registry_host}/bitnami/harbor-portal:1.10.0-debian-9-r0
     docker push ${registry_host}/bitnami/harbor-core:1.10.0-debian-9-r3
     docker push ${registry_host}/bitnami/harbor-jobservice:1.10.0-debian-9-r3
-    docker push ${registry_host}/bitnami/chartmuseum:0.11.0-debian-9-r1
     docker push ${registry_host}/bitnami/chartmuseum:0.11.0-debian-9-r1
 
     #gitlab end

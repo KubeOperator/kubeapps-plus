@@ -37,6 +37,7 @@
                             <img v-else-if="(catalog.attributes.icon.search('sonarqube')>=0)" src="../../assets/image/charts/sonarqube-stack-110x117.png" class="image" require>
                             <img v-else-if="(catalog.attributes.icon.search('gitlab')>=0)" src="../../assets/image/charts/gitlab-stack-110x117.png" class="image" require>
                             <img v-else-if="(catalog.attributes.icon.search('istio')>=0)" src="../../assets/image/charts/istio-110x117.png" class="image" require>
+                            <img v-else-if="(catalog.attributes.icon.search('tensorflow')>=0)" src="../../assets/image/charts/tensorflow-stack-110x117.png" class="image" require>
                             <img v-else :src="catalog.attributes.icon" class="image" require>
                         </a>
                     </div>

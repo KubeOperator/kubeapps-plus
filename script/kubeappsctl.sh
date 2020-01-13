@@ -60,6 +60,7 @@ function set_docker_config() {
     printf "$all_variables_secret\ncat << EOF\n$resourcefile\nEOF" | bash >apps/gitlab-ce/templates/userdefined-secret.yaml
     printf "$all_variables_secret\ncat << EOF\n$resourcefile\nEOF" | bash >apps/sonarqube/templates/userdefined-secret.yaml
     printf "$all_variables_secret\ncat << EOF\n$resourcefile\nEOF" | bash >apps/harbor/templates/userdefined-secret.yaml
+    printf "$all_variables_secret\ncat << EOF\n$resourcefile\nEOF" | bash >apps/tensorflow-resnet/templates/userdefined-secret.yaml
 
     #TODO
     #替换source
@@ -72,6 +73,9 @@ function set_docker_config() {
     sed "s/imageregistryvalue/\"${url}\"/g" apps/sonarqube/chart/mysql/values_default.yaml > apps/sonarqube/chart/mysql/values.yaml
     sed "s/imageregistryvalue/\"${url}\"/g" apps/sonarqube/chart/postgresql/values_default.yaml > apps/sonarqube/chart/postgresql/values.yaml
     sed "s/imageregistryvalue/\"${url}\"/g" apps/harbor/values_default.yaml > apps/harbor/values.yaml
+    # 替换变量
+    sed "s/imageRegistry/\"${url}\"/g" apps/tensorflow-resnet/values_default.yaml > apps/tensorflow-resnet/values.yaml
+
 }
 
 ## 检查环境 安装helm push
@@ -211,6 +215,15 @@ function docker_upload_image() {
     docker push ${registry_host}/harbor/harbor-registryctl:lts
     docker push ${registry_host}/harbor/harbor-registry-photon:lts
     #gitlab end
+
+    #tensorflow 
+    docker load < tensorflow-resnet.jar
+    docker tag 180311e1c37b ${registry_host}/bitnami/tensorflow-resnet:2.0.0-debian-9-r11
+    docker push ${registry_host}/bitnami/tensorflow-resnet:2.0.0-debian-9-r11
+    #
+    docker load < tensorflow-serving.jar
+    docker tag 3272bb6c8a41 ${registry_host}/bitnami/tensorflow-serving:2.0.0-debian-9-r11
+    docker push ${registry_host}/bitnami/tensorflow-serving:2.0.0-debian-9-r11
 }
 
 #打包Helm Chart

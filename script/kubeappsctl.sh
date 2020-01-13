@@ -174,7 +174,7 @@ function docker_upload_image() {
     docker tag 4b3b6b994512 ${registry_host}/mysql:5.7.14
     docker push ${registry_host}/mysql:5.7.14
     docker load < busybox-125.jar
-    docker tag e4db68de4ff2 ${registry_host}/busybox:1.25.0
+    docker tag 2b8fd9751c4c ${registry_host}/busybox:1.25.0
     docker push ${registry_host}/busybox:1.25.0
     docker load < postgres.jar 
     docker tag b3b8a2229953 ${registry_host}/postgres:9.6.2
@@ -195,6 +195,7 @@ function docker_upload_image() {
     docker load <harbor-redis-photon.jar
     docker load <harbor-registryctl.jar
     docker load <harbor-registry-photon.jar
+    docer load < busybox-latest.jar
     
     docker tag 72907320ffac ${registry_host}/harbor/harbor-chartmuseum-photon:lts
     docker tag ad64fa39c62b ${registry_host}/harbor/harbor-clair-adapter-photon:lts
@@ -209,6 +210,7 @@ function docker_upload_image() {
     docker tag 3b5fc4767360 ${registry_host}/harbor/harbor-redis-photon:lts
     docker tag 2e6fe7b484bb ${registry_host}/harbor/harbor-registryctl:lts
     docker tag bd03f4313216 ${registry_host}/harbor/harbor-registry-photon:lts
+    docker tag 6d5fcfe5ff17 ${registry_host}/harbor/busybox:latest
 
     docker push ${registry_host}/harbor/harbor-chartmuseum-photon:lts
     docker push ${registry_host}/harbor/harbor-clair-adapter-photon:lts
@@ -223,6 +225,7 @@ function docker_upload_image() {
     docker push ${registry_host}/harbor/harbor-redis-photon:lts
     docker push ${registry_host}/harbor/harbor-registryctl:lts
     docker push ${registry_host}/harbor/harbor-registry-photon:lts
+    docker push ${registry_host}/harbor/busybox:latest
     #gitlab end
 
     #tensorflow 

@@ -174,7 +174,7 @@ function docker_upload_image() {
     docker tag 4b3b6b994512 ${registry_host}/mysql:5.7.14
     docker push ${registry_host}/mysql:5.7.14
     docker load < busybox-125.jar
-    docker tag b3b8a2229953 ${registry_host}/busybox:1.25.0
+    docker tag e4db68de4ff2 ${registry_host}/busybox:1.25.0
     docker push ${registry_host}/busybox:1.25.0
     docker load < postgres.jar 
     docker tag b3b8a2229953 ${registry_host}/postgres:9.6.2

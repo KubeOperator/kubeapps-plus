@@ -1,17 +1,17 @@
 <template>
     <div class="app-repositories-content" v-loading.fullscreen.lock="loading" element-loading-text="Loading" element-loading-background="rgba(0, 0, 0, 0.1)">
         <!-- header start -->
-        <el-row style="margin-top:10px;">
+        <el-row style="border-bottom: 2px solid #f1f1f1;">
             <el-col :md="6" :lg="4">
                 <div class="grid-content">
-                    <h1 class="app-type">{{$t('message.app_repositories')}}</h1>
+                    <h2 class="app-type">{{$t('message.app_repositories')}}</h2>
                 </div>
             </el-col>
         </el-row>
         <!-- header end -->
 
         <!-- 间隔线 start -->
-        <el-divider></el-divider>
+<!--        <el-divider></el-divider>-->
         <!-- 间隔线 end -->
 
         <!-- foot start -->
@@ -141,7 +141,6 @@
 
     .grid-content {
         border-radius: 4px;
-        min-height: 5em;
     }
 
     .gred-btn {

@@ -7,7 +7,7 @@
       <el-main>
         <router-view></router-view>
       </el-main>
-      <el-footer>
+      <el-footer v-show="this.$route.path == '/'">
         <basicFooter></basicFooter>
       </el-footer>
     </el-container>

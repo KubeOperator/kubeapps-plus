@@ -1,18 +1,18 @@
 <template>
   <div class="dashborad" element-loading-text="Loading" element-loading-background="rgba(0, 0, 0, 0.1)">
-    <el-row style="margin-top:20px !important;">
-      <el-col :md="6" :lg="4">
-        <h1 class="app_title" style="margin:0.27em">{{$t('message.application')}}</h1>
-      </el-col>
-      <el-col :md="{span:8,offest:2}" :lg="3">
-        <div style="margin: 1.2em 0;">
+    <el-row style="border-bottom: 2px solid #f1f1f1;">
+<!--      <el-col :md="6" :lg="4">-->
+<!--        <h1 class="app_title" >{{$t('message.application')}}</h1>-->
+<!--      </el-col>-->
+      <el-col :md="{span:12,offest:2}" :lg="7">
+        <div style="margin: 1em 0 0 2em;">
           <el-input :placeholder="this.$t('message.Search_charts')" v-model="search">
             <i slot="prefix" class="el-input__icon el-icon-search"></i>
           </el-input>
         </div>
       </el-col>
-      <el-col :md="6" :lg="4">
-        <div style="margin: 1.8em 0;">
+      <el-col :md="8" :lg="4">
+        <div style="margin: 1.6em 0;">
           <el-switch
             v-model="showdelete"
             :active-text="this.$t('message.show_deleted_apps')"
@@ -21,14 +21,14 @@
         </div>
       </el-col>
       <el-col :md="{span:4,offest:2}" :lg="{span:6,offset:7}">
-        <div style="margin: 1.2em 0;">
+        <div style="margin: 1em 0;">
           <el-button type="primary" @click="getReleaseApp">{{$t('message.deploy_app')}} &nbsp;<i class="el-icon-d-arrow-right"/></el-button>
         </div>
       </el-col>
     </el-row>
 
     <!-- 间隔线 start -->
-    <el-divider></el-divider>
+<!--    <el-divider></el-divider>-->
     <!-- 间隔线 end -->
 
     <el-row :gutter="24" v-show="this.releases.length==0">

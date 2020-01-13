@@ -1,42 +1,44 @@
 <template>
     <div class="catalog-content" v-loading.fullscreen.lock="loading" element-loading-text="Loading" element-loading-background="rgba(0, 0, 0, 0.1)">
         <!-- header start -->
-        <el-row>
-            <el-row :gutter="20">
-                <el-col :span="4">
-                    <div class="grid-content bg-purple grid-img">
-                        <img v-show="catalog.icon" :src="catalog.icon" class="image">
-                        <img v-show="!catalog.icon && catalog.id.search('gitlib')>=0" src="../../assets/image/charts/gitlab-stack-110x117.png" class="image">
-                        <img v-show="!catalog.icon && !catalog.id.search('gitlib')>=0" src="../../assets/image/default.png" class="image">
+        <el-row style="border-bottom: 2px solid #f1f1f1;">
+            <el-row :gutter="20" style="margin-bottom: 1em;">
+                <el-col :span="3">
+                    <div class="grid-content grid-img">
+                        <img v-if="!catalog.icon && catalog.name.search('gitlab')>=0" src="../../assets/image/charts/gitlab-stack-110x117.png" class="image">
+                        <img v-else-if="!catalog.icon && !catalog.name.search(gitlab)>=0" src="../../assets/image/default.png" class="image">
+                        <img v-else-if="(catalog.icon.search('harbor')>=0)" src="../../assets/image/charts/harbor-stack-110x117.png" class="image" require>
+                        <img v-else-if="(catalog.icon.search('jenkins')>=0)" src="../../assets/image/charts/jenkins-stack-110x117.png" class="image" require>
+                        <img v-else-if="(catalog.icon.search('sonarqube')>=0)" src="../../assets/image/charts/sonarqube-stack-110x117.png" class="image" require>
+                        <img v-else-if="(catalog.icon.search('gitlab')>=0)" src="../../assets/image/charts/gitlab-stack-110x117.png" class="image" require>
+                        <img v-else-if="(catalog.icon.search('istio')>=0)" src="../../assets/image/charts/istio-110x117.png" class="image" require>
+                        <img v-else-if="(catalog.icon.search('tensorflow')>=0)" src="../../assets/image/charts/tensorflow-stack-110x117.png" class="image" require>
+                        <img v-else :src="catalog.icon" class="image" require>
                     </div>
                 </el-col>
                 <el-col :span="20">
-                    <el-col :span="19">
-                        <div class="grid-content bg-purple">
-                            <h1 class="h1">
-                                {{catalog.id}}
-                            </h1>
-                            <h5 class="h5">
-                                {{catalog.appVersion}}&nbsp;{{'-'}}&nbsp;{{catalog.id | splitName(catalog.id)}}
-                            </h5>
-                            <h5 class="h5">
-                                {{catalog.desc}}
-                            </h5>
-                        </div>
-                    </el-col>
-                    <el-col :span="1" class="deploy">
-                        <el-button type="success"
-                                   size="medium" icon="el-icon-download"
-                                   @click="deploy(catalog)">{{$t('message.deploy')}}
-                        </el-button>
-                    </el-col>
+                    <div class="grid-content">
+                        <h3 class="h1" style="margin: 0 !important;">
+                            <span>{{catalog.id}}</span>
+                            <el-button type="success" style="float: right;"
+                                       size="medium" icon="el-icon-download"
+                                       @click="deploy(catalog)">{{$t('message.deploy')}}
+                            </el-button>
+                        </h3>
+                        <h5 class="h5">
+                            {{catalog.appVersion}}&nbsp;{{'-'}}&nbsp;{{catalog.id | splitName(catalog.id)}}
+                        </h5>
+                        <h5 class="h5">
+                            {{catalog.desc}}
+                        </h5>
+                    </div>
                 </el-col>
             </el-row>
         </el-row>
         <!-- header end -->
 
         <!-- 间隔线 start -->
-        <el-divider></el-divider>
+<!--        <el-divider></el-divider>-->
         <!-- 间隔线 end -->
 
         <!-- foot start -->
@@ -213,16 +215,18 @@
 
     .grid-content {
         border-radius: 4px;
-        min-height: 5em;
         text-align: left;
     }
 
     .grid-img {
         text-align: center !important;
+        margin-top: 1em;
     }
 
     .image {
-        margin-top: 25px;
+        margin: 5px;
+        max-width: 50px;
+        max-height: 50px;
     }
 
     .h1 {
@@ -232,9 +236,8 @@
     .h5 {
         font-weight: normal;
         color: #44add5;
-        margin: 0.625em 0 0.3125em;
+        margin: 0 !important;
         font-size: 1.25em;
-        max-width: 80%;
     }
 
     .deploy {

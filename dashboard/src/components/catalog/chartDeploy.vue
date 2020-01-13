@@ -1,17 +1,17 @@
 <template>
     <div class="catalog-content" v-loading.fullscreen.lock="loading" element-loading-text="Loading" element-loading-background="rgba(0, 0, 0, 0.1)">
         <!-- header start -->
-        <el-row>
+        <el-row style="border-bottom: 2px solid #f1f1f1;">
             <el-col :span="24">
                 <div class="grid-content">
-                    <h1 style="float: left">{{chartName}}</h1>
+                    <h1 style="float: left;margin: 0 0 0 1em !important;">{{chartName}}</h1>
                 </div>
             </el-col>
         </el-row>
         <!-- header end -->
 
         <!-- 间隔线 start -->
-        <el-divider></el-divider>
+<!--        <el-divider></el-divider>-->
         <!-- 间隔线 end -->
 
         <!-- foot start -->

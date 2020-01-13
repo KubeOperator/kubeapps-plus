@@ -70,14 +70,16 @@ function set_docker_config() {
     sed "s/imageregistryvalue/\"${url}\"/g" apps/jenkins/values_default.yaml > apps/jenkins/values.yaml
     #Gitlab
     sed "s/imageregistryvalue/\"${url}\"/g" apps/gitlab-ce/values_default.yaml > apps/gitlab-ce/values.yaml
-    sed "s/imageregistryvalue/\"${url}\"/g" apps/gitlab-ce/chart/postgresql/values_default.yaml > apps/gitlab-ce/chart/postgresql/values.yaml
-    sed "s/imageregistryvalue/\"${url}\"/g" apps/gitlab-ce/chart/redis/values_default.yaml > apps/gitlab-ce/chart/redis/values.yaml
+    sed "s/imageregistryvalue/\"${url}\"/g" apps/gitlab-ce/charts/postgresql/values_default.yaml > apps/gitlab-ce/charts/postgresql/values.yaml
+    sed "s/imageregistryvalue/\"${url}\"/g" apps/gitlab-ce/charts/redis/values_default.yaml > apps/gitlab-ce/charts/redis/values.yaml
 
     #
     sed "s/imageregistryvalue/\"${url}\"/g" apps/sonarqube/values_default.yaml > apps/sonarqube/values.yaml
-    sed "s/imageregistryvalue/\"${url}\"/g" apps/sonarqube/chart/mysql/values_default.yaml > apps/sonarqube/chart/mysql/values.yaml
-    sed "s/imageregistryvalue/\"${url}\"/g" apps/sonarqube/chart/postgresql/values_default.yaml > apps/sonarqube/chart/postgresql/values.yaml
+    sed "s/imageregistryvalue/\"${url}\"/g" apps/sonarqube/charts/mysql/values_default.yaml > apps/sonarqube/charts/mysql/values.yaml
+    sed "s/imageregistryvalue/\"${url}\"/g" apps/sonarqube/charts/postgresql/values_default.yaml > apps/sonarqube/charts/postgresql/values.yaml
     sed "s/imageregistryvalue/\"${url}\"/g" apps/harbor/values_default.yaml > apps/harbor/values.yaml
+    sed "s/imageregistryvalue/\"${url}\"/g" apps/harbor/charts/postgresql/values_default.yaml > apps/harbor/charts/postgresql/values.yaml
+    sed "s/imageregistryvalue/\"${url}\"/g" apps/harbor/charts/redis/values_default.yaml > apps/harbor/charts/redis/values.yaml
     # 替换变量
     sed "s/imageregistryvalue/\"${url}\"/g" apps/tensorflow-notebook/values_default.yaml > apps/tensorflow-notebook/values.yaml
 
@@ -174,7 +176,7 @@ function docker_upload_image() {
     docker tag 4b3b6b994512 ${registry_host}/mysql:5.7.14
     docker push ${registry_host}/mysql:5.7.14
     docker load < busybox-125.jar
-    docker tag b3b8a2229953 ${registry_host}/busybox:1.25.0
+    docker tag 2b8fd9751c4c ${registry_host}/busybox:1.25.0
     docker push ${registry_host}/busybox:1.25.0
     docker load < postgres.jar 
     docker tag b3b8a2229953 ${registry_host}/postgres:9.6.2
@@ -182,47 +184,21 @@ function docker_upload_image() {
     #gitlab end
 
     #harbor start
-    docker load <harbor-chartmuseum-photon.jar
-    docker load <harbor-clair-adapter-photon.jar
-    docker load <harbor-clair-photon.jar
-    docker load <harbor-core.jar
-    docker load <harbor-db.jar
-    docker load <harbor-jobservice.jar
-    docker load <harbor-nginx-photon.jar
-    docker load <harbor-notary-server-photon.jar
-    docker load <harbor-notary-signer-photon.jar
-    docker load <harbor-portal.jar
-    docker load <harbor-redis-photon.jar
-    docker load <harbor-registryctl.jar
-    docker load <harbor-registry-photon.jar
-    
-    docker tag 72907320ffac ${registry_host}/harbor/harbor-chartmuseum-photon:lts
-    docker tag ad64fa39c62b ${registry_host}/harbor/harbor-clair-adapter-photon:lts
-    docker tag 53440cf589b9 ${registry_host}/harbor/harbor-clair-photon:lts
-    docker tag 26436ee0e558 ${registry_host}/harbor/harbor-core:lts
-    docker tag 5f4b52e24061 ${registry_host}/harbor/harbor-db:lts
-    docker tag 362bfafa892b ${registry_host}/harbor/harbor-jobservice:lts
-    docker tag f49106ca9f4a ${registry_host}/harbor/harbor-nginx-photon:lts
-    docker tag 0f05fe55ce34 ${registry_host}/harbor/harbor-notary-server-photon:lts
-    docker tag e98944d2dbd6 ${registry_host}/harbor/harbor-notary-signer-photon:lts
-    docker tag 9cf90487afc9 ${registry_host}/harbor/harbor-portal:lts
-    docker tag 3b5fc4767360 ${registry_host}/harbor/harbor-redis-photon:lts
-    docker tag 2e6fe7b484bb ${registry_host}/harbor/harbor-registryctl:lts
-    docker tag bd03f4313216 ${registry_host}/harbor/harbor-registry-photon:lts
+    docker load < harbor-core.jar
+    docker load < harbor-portal.jar
+    docker load < harbor-jobservice.jar
+    docker load < harbor-chartmuseum.jar
 
-    docker push ${registry_host}/harbor/harbor-chartmuseum-photon:lts
-    docker push ${registry_host}/harbor/harbor-clair-adapter-photon:lts
-    docker push ${registry_host}/harbor/harbor-clair-photon:lts
-    docker push ${registry_host}/harbor/harbor-core:lts
-    docker push ${registry_host}/harbor/harbor-db:lts
-    docker push ${registry_host}/harbor/harbor-jobservice:lts
-    docker push ${registry_host}/harbor/harbor-nginx-photon:lts
-    docker push ${registry_host}/harbor/harbor-notary-server-photon:lts
-    docker push ${registry_host}/harbor/harbor-notary-signer-photon:lts
-    docker push ${registry_host}/harbor/harbor-portal:lts
-    docker push ${registry_host}/harbor/harbor-redis-photon:lts
-    docker push ${registry_host}/harbor/harbor-registryctl:lts
-    docker push ${registry_host}/harbor/harbor-registry-photon:lts
+    docker tag d463d8c692e8 ${registry_host}/bitnami/harbor-portal:1.10.0-debian-9-r0
+    docker tag adef6d703e66 ${registry_host}/bitnami/harbor-core:1.10.0-debian-9-r3
+    docker tag 057377fcb879 ${registry_host}/bitnami/harbor-jobservice:1.10.0-debian-9-r3
+    docker tag 9d612e5956c4 ${registry_host}/bitnami/chartmuseum:0.11.0-debian-9-r1
+    
+    docker push ${registry_host}/bitnami/harbor-portal:1.10.0-debian-9-r0
+    docker push ${registry_host}/bitnami/harbor-core:1.10.0-debian-9-r3
+    docker push ${registry_host}/bitnami/harbor-jobservice:1.10.0-debian-9-r3
+    docker push ${registry_host}/bitnami/chartmuseum:0.11.0-debian-9-r1
+
     #gitlab end
 
     #tensorflow 

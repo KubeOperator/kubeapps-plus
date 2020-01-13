@@ -4,26 +4,19 @@
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
-  name: {{ template "harbor.jobservice" . }}
+  name: {{ include "harbor.jobservice" . }}
   {{- if eq .Values.persistence.resourcePolicy "keep" }}
   annotations:
     helm.sh/resource-policy: keep
   {{- end }}
-  labels:
-{{ include "harbor.labels" . | indent 4 }}
-    component: jobservice
+  labels: {{- include "harbor.labels" . | nindent 4 }}
+    app.kubernetes.io/component: jobservice
 spec:
-  accessModes: 
+  accessModes:
     - {{ $jobservice.accessMode }}
   resources:
     requests:
       storage: {{ $jobservice.size }}
-  {{- if $jobservice.storageClass }}
-    {{- if eq "-" $jobservice.storageClass }}
-  storageClassName: ""
-    {{- else }}
-  storageClassName: {{ $jobservice.storageClass }}
-    {{- end }}
-  {{- end }}
+  {{ include "harbor.jobservice.storageClass" . }}
 {{- end }}
 {{- end }}

@@ -4,7 +4,7 @@ imageRegistry: imageregistryvalue
 ##
 image:
   name: gitlab
-  repository: "gitlab"
+  repository: "gitlab/gitlab"
   tag: "lts"
 
 ## Specify a imagePullPolicy

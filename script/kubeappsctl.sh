@@ -178,6 +178,9 @@ function docker_upload_image() {
     docker load < busybox-125.jar
     docker tag 2b8fd9751c4c ${registry_host}/busybox:1.25.0
     docker push ${registry_host}/busybox:1.25.0
+    docker load < busybox-131.jar
+    docker tag 6d5fcfe5ff17 ${registry_host}/busybox:1.31.0
+    docker push ${registry_host}/busybox:1.31.0
     docker load < postgres.jar 
     docker tag b3b8a2229953 ${registry_host}/postgres:9.6.2
     docker push ${registry_host}/postgres:9.6.2
@@ -195,6 +198,7 @@ function docker_upload_image() {
     docker load < harbor-notary-signer.jar
     docker load < harbor-nginx.jar
     docker load < harbor-minideb.jar
+    docker load < harbor-core.jar
 
     docker tag d463d8c692e8 ${registry_host}/bitnami/harbor-portal:1.10.0-debian-9-r0
     docker tag adef6d703e66 ${registry_host}/bitnami/harbor-core:1.10.0-debian-9-r3

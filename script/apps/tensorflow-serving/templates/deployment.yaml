@@ -28,7 +28,7 @@ spec:
     spec:
       containers:
         - name: serving
-          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          image: "{{ .Values.imageRegistry }}/{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: "{{ .Values.image.pullPolicy }}"
           command:
             - "/usr/bin/tensorflow_model_server"

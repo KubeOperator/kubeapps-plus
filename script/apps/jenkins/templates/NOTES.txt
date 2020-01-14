@@ -1,64 +1,50 @@
-1. Get your '{{ .Values.master.adminUser }}' user password by running:
-  printf $(kubectl get secret --namespace {{ template "jenkins.namespace" . }} {{ template "jenkins.fullname" . }} -o jsonpath="{.data.jenkins-admin-password}" | base64 --decode);echo
 
-{{- if .Values.master.ingress.hostName }}
+** Please be patient while the chart is being deployed **
 
-2. Visit http://{{ .Values.master.ingress.hostName }}
-{{- else }}
-2. Get the Jenkins URL to visit by running these commands in the same shell:
-{{- if contains "NodePort" .Values.master.serviceType }}
-  export NODE_PORT=$(kubectl get --namespace {{ template "jenkins.namespace" . }} -o jsonpath="{.spec.ports[0].nodePort}" services {{ template "jenkins.fullname" . }})
-  export NODE_IP=$(kubectl get nodes --namespace {{ template "jenkins.namespace" . }} -o jsonpath="{.items[0].status.addresses[0].address}")
-  echo http://$NODE_IP:$NODE_PORT/login
+1. Get the Jenkins URL by running:
 
-{{- else if contains "LoadBalancer" .Values.master.serviceType }}
-  NOTE: It may take a few minutes for the LoadBalancer IP to be available.
-        You can watch the status of by running 'kubectl get svc --namespace {{ template "jenkins.namespace" . }} -w {{ template "jenkins.fullname" . }}'
-  export SERVICE_IP=$(kubectl get svc --namespace {{ template "jenkins.namespace" . }} {{ template "jenkins.fullname" . }} --template "{{ "{{ range (index .status.loadBalancer.ingress 0) }}{{ . }}{{ end }}" }}")
-{{- if .Values.master.httpsKeyStore.enable }}
-  echo https://$SERVICE_IP:{{ .Values.master.servicePort }}/login
-{{- else }}
-  echo http://$SERVICE_IP:{{ .Values.master.servicePort }}/login
+{{- if .Values.ingress.enabled }}
+
+  Jenkins URL(s):
+{{- if .Values.ingress.hostname }}
+    - http://{{ .Values.ingress.hostname }}
+{{- end }}
+{{- range $host := .Values.ingress.hosts }}
+  {{- range .paths }}
+    - http://{{ $host.name }}{{ . }}
+  {{- end }}
 {{- end }}
 
-{{- else if contains "ClusterIP"  .Values.master.serviceType }}
-  export POD_NAME=$(kubectl get pods --namespace {{ template "jenkins.namespace" . }} -l "app.kubernetes.io/component={{ .Values.master.componentName }}" -l "app.kubernetes.io/instance={{ .Release.Name }}" -o jsonpath="{.items[0].metadata.name}")
-  echo http://127.0.0.1:{{ .Values.master.servicePort }}
-  kubectl --namespace {{ template "jenkins.namespace" . }} port-forward $POD_NAME {{ .Values.master.servicePort }}:{{ .Values.master.servicePort }}
+{{- else if contains "NodePort" .Values.service.type }}
+
+  export NODE_PORT=$(kubectl get --namespace {{ .Release.Namespace }} -o jsonpath="{.spec.ports[0].nodePort}" services {{ template "jenkins.fullname" . }})
+  export NODE_IP=$(kubectl get nodes --namespace {{ .Release.Namespace }} -o jsonpath="{.items[0].status.addresses[0].address}")
+  echo "Jenkins URL: http://$NODE_IP:$NODE_PORT/"
+
+{{- else if contains "LoadBalancer" .Values.service.type }}
+
+** Please ensure an external IP is associated to the {{ template "jenkins.fullname" . }} service before proceeding **
+** Watch the status using: kubectl get svc --namespace {{ .Release.Namespace }} -w {{ template "jenkins.fullname" . }} **
+
+  export SERVICE_IP=$(kubectl get svc --namespace {{ .Release.Namespace }} {{ template "jenkins.fullname" . }} --template "{{"{{ range (index .status.loadBalancer.ingress 0) }}{{.}}{{ end }}"}}")
+{{- $port:=.Values.service.port | toString }}
+  echo "Jenkins URL: http://$SERVICE_IP{{- if ne $port "80" }}:{{ .Values.service.port }}{{ end }}/"
+
+{{- else if contains "ClusterIP"  .Values.service.type }}
+
+  echo "Jenkins URL: http://127.0.0.1:8080/"
+  kubectl port-forward --namespace {{ .Release.Namespace }} svc/{{ template "jenkins.fullname" . }} 8080:{{ .Values.service.port }}
 
 {{- end }}
-{{- end }}
 
-3. Login with the password from step 1 and the username: {{ .Values.master.adminUser }}
-{{ if .Values.master.JCasC.enabled }}
-4. Use Jenkins Configuration as Code by specifying configScripts in your values.yaml file, see documentation: http://{{ .Values.master.ingress.hostName }}/configuration-as-code and examples: https://github.com/jenkinsci/configuration-as-code-plugin/tree/master/demos
-{{- end }}
+2. Login with the following credentials
 
-For more information on running Jenkins on Kubernetes, visit:
-https://cloud.google.com/solutions/jenkins-on-container-engine
-{{- if .Values.master.JCasC.enabled }}
-For more information about Jenkins Configuration as Code, visit:
-https://jenkins.io/projects/jcasc/
-{{- end }}
+  echo Username: {{ .Values.jenkinsUser }}
+  echo Password: $(kubectl get secret --namespace {{ .Release.Namespace }} {{ template "jenkins.fullname" . }} -o jsonpath="{.data.jenkins-password}" | base64 --decode)
 
-{{- if .Values.persistence.enabled }}
-{{- else }}
-#################################################################################
-######   WARNING: Persistence is disabled!!! You will lose your data when   #####
-######            the Jenkins pod is terminated.                            #####
-#################################################################################
-{{- end }}
+{{- if and (contains "bitnami/" .Values.image.repository) (not (.Values.image.tag | toString | regexFind "-r\\d+$|sha256:")) }}
 
-{{- if .Values.master.imageTag }}
-#################################################################################
-######   WARNING: `master.imageTag` will be obsoleted soon!!!               #####
-######            It has been renamed to `master.tag`.                      #####
-#################################################################################
-{{- end }}
+WARNING: Rolling tag detected ({{ .Values.image.repository }}:{{ .Values.image.tag }}), please note that it is strongly recommended to avoid using rolling tags in a production environment.
++info https://docs.bitnami.com/containers/how-to/understand-rolling-tags-containers/
 
-{{- if .Values.agent.imageTag }}
-#################################################################################
-######   WARNING: `agent.imageTag` will be obsoleted soon!!!                #####
-######            It has been renamed to `agent.tag`.                       #####
-#################################################################################
 {{- end }}

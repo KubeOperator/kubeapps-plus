@@ -581,7 +581,7 @@ logLevel: debug
 ## Option to force users to specify passwords (core.secret, harborAdminPassword, and secretKey). That is required for 'helm upgrade' to work properly.
 ## If it is not forced, random values will be generated.
 ##
-forcePassword: true
+forcePassword: false
 
 ## The initial password of Harbor admin. Change it from portal after launching Harbor
 ##

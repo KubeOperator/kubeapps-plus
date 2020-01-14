@@ -8,7 +8,7 @@
             <img v-show="!catalog.icon" src="../../assets/image/default.png" class="image" />
           </div>
           <div style="padding: 1em;">
-            <h5 class="catalog-label" style="font-size: 18px;">{{catalog.releaseName}} ({{this.$route.params.id}})</h5>
+            <h5 class="catalog-label" style="font-size: 18px;">{{catalog.releaseName}} ({{catalog.name}})</h5>
             <p class="catalog-label" style="font-size: 14px;">{{catalog.description}}</p>
             <el-divider></el-divider>
             <p class="label" style="font-size: 12px;">{{'App Version: ' + catalog.appv}}</p>
@@ -155,7 +155,7 @@ export default {
         baseurl.url +
         this.$route.params.namespace +
         "/releases/" +
-        this.$route.params.id;
+        this.catalog.name;
       if (this.purge) {
         baseurl.url = baseurl.url + "?purge=true";
       }
@@ -196,6 +196,7 @@ export default {
         this.catalog.appv = res.data.data.chart.metadata.appVersion;
         this.catalog.releaseName = res.data.data.chart.metadata.name;
         this.catalog.chartv = res.data.data.chart.metadata.version;
+        this.catalog.name = res.data.data.name;
         this.note = res.data.data.info.status.notes;
         this.aceEditor = ace.edit(this.$refs.ace, {
           maxLines: 30, // 最大行数, 超过会自动出现滚动条
@@ -263,14 +264,15 @@ export default {
         http(_basicurl).then(res => {
           this.serviceDetail.push({
             name: res.data.metadata["name"],
-            type: res.data.spec.type,
-            cluster: res.data.spec.clusterIP,
+            type: res.data.spec ? res.data.spec.type : '',
+            cluster: res.data.spec ? res.data.spec.clusterIP : '',
             //TO_DO
             external: "NONE",
-            port:
+            port: res.data.spec ?
               res.data.spec.ports[0].port +
               "/" +
               res.data.spec.ports[0].protocol
+                    : ''
           });
         });
       }

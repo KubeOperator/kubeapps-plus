@@ -149,11 +149,11 @@ function docker_upload_image() {
     #jenkins start
     cd ${PROJECT_DIR}/apps/image
     docker load <jenkins.jar
-    docker load <jnlp-slave.jar
-    docker tag 22b8b9a84dbe ${registry_host}/jenkins/jenkins:lts
-    docker tag 6bf8f3767d8b ${registry_host}/jenkins/jnlp-slave:3.27-1
-    docker push ${registry_host}/jenkins/jenkins:lts
-    docker push ${registry_host}/jenkins/jnlp-slave:3.27-1
+    docker load <jenkins-exporter.jar
+    docker tag 30a01ef4eaab ${registry_host}/docker.io/bitnami/jenkins:2.204.1-debian-9-r0
+    docker tag ffca41295e0d ${registry_host}/docker.io/bitnami/jenkins-exporter:0.20171225.0-debian-9-r127
+    docker push ${registry_host}/docker.io/bitnami/jenkins:2.204.1-debian-9-r0
+    docker push ${registry_host}/docker.io/bitnami/jenkins-exporter:0.20171225.0-debian-9-r127
     #jenkins end
 
     #gitlab start

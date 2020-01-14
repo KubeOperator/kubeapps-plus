@@ -9,7 +9,11 @@ var getParamApi = function (apiSetting, ...params) {
     let str = ''
     if (apiSetting) {
         for (let param of params) {
-            str += '/' + param
+            if(!!param && param.indexOf('?') == -1){
+                str += '/' + param
+            }else if(!!param && param.indexOf('?') > -1){
+                str += param
+            }
         }
         let url = apiSetting.url + str
         api = {

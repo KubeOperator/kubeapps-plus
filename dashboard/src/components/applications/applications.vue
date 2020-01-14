@@ -92,6 +92,10 @@
               <img v-else-if="(catalog.icon.search('gitlab')>=0)" src="../../assets/image/charts/gitlab-stack-110x117.png" class="image" require>
               <img v-else-if="(catalog.icon.search('istio')>=0)" src="../../assets/image/charts/istio-110x117.png" class="image" require>
               <img v-else-if="(catalog.icon.search('tensorflow')>=0)" src="../../assets/image/charts/tensorflow-stack-110x117.png" class="image" require>
+              <img v-else-if="(catalog.icon.search('grafana')>=0)" src="../../assets/image/charts/grafana-stack-110x117.png" class="image" require>
+              <img v-else-if="(catalog.icon.search('kubeapps-plus')>=0)" src="../../assets/image/charts/kubeapps-plus-stack-110x117.png" class="image" require>
+              <img v-else-if="(catalog.icon.search('loki')>=0)" src="../../assets/image/charts/loki-stack-110x117.png" class="image" require>
+              <img v-else-if="(catalog.icon.search('prometheus')>=0)" src="../../assets/image/charts/prometheus-stack-110x117.png" class="image" require>
               <img v-else :src="catalog.icon" class="image" require>
             </a>
           </div>
@@ -115,7 +119,7 @@
                 round>
                 <span v-if="catalog.status == 'DELETED'">{{$t('message.delete_status')}}</span>
                 <span v-else-if="catalog.status == 'DEPLOYED'">{{$t('message.deployed_status')}}</span>
-                <span v-else-if="catalog.status == 'FAILED'">{{$t('message.failed_status')}}</span>
+                <span v-else>{{$t('message.failed_status')}}</span>
               </el-button>
             </div>
           </div>
@@ -152,12 +156,12 @@ export default {
       this.$router.push("/catalog");
     },
     checkType(type) {
-      if (type == "DELETE") {
+      if (type == "DELETED") {
         return "warning";
-      } else if (type == "FAILED") {
-        return "danger";
-      } else {
+      } else if (type == "DEPLOYED"){
         return "success";
+      } else {
+        return "danger";
       }
     }
   },

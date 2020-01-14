@@ -74,6 +74,7 @@ const en = {
         'delete_status':'DELETED',
         'deployed_status':'DEPLOYED',
         'failed_status':'FAILED',
+        'tips':'Tips'
     },
     ...enLocale
 }

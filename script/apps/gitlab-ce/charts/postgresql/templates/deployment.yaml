@@ -28,7 +28,7 @@ spec:
       - name: kubeapps-registry-fit2cloud-com-key
       containers:
       - name: {{ template "postgresql.fullname" . }}
-        image: "{{ .Values.image }}:{{ .Values.imageTag }}"
+        image: "{{ .Values.imageRegistry }}/{{ .Values.image }}:{{ .Values.imageTag }}"
         imagePullPolicy: {{ default "" .Values.imagePullPolicy | quote }}
         env:
         - name: POSTGRES_USER

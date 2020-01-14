@@ -71,6 +71,9 @@ const cn = {
         'deploy_applications':'部署您的Kubernetes应用',
         'deploy_applications_desc':'只需单击一下，即可在Kubernetes集群上部署应用程序。',
         'update_namespace':'更新命名空间',
+        'delete_status':'已删除',
+        'deployed_status':'已部署',
+        'failed_status':'失败',
     },
     ...zhLocale
 }

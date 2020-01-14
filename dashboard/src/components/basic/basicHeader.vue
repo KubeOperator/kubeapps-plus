@@ -5,11 +5,9 @@
                 mode="horizontal"
                 text-color="#ffffff"
                 background-color="#004971"
-                active-text-color="#ffb876"
-        >
+                active-text-color="#ffb876">
             <el-menu-item index="1">
-                <img src="../../assets/image/logo.svg" alt class="logo_header"/>
-                <i class="icon_font" style="color: #fc5a4a;margin-top: 5px;">&#xeb9b;</i>
+                <img src="../../assets/image/logo.png" alt class="logo_header"/>
             </el-menu-item>
             <el-menu-item
                     index="2"

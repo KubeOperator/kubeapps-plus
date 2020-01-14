@@ -32,7 +32,7 @@ helm install --name kubeapps-plus --namespace kubeapps-plus ./chart
 
 ## 使用 KubeApps Plus
 
-- 具体请参考：[KubeApps Plus 使用指南](docs/user/getting-started.md)
+- 具体请参考：[KubeApps Plus 使用指南](docs/user/getting-started.md)；
 
 ## KubeApps Plus 开发指南
 

@@ -8,7 +8,7 @@
             <img v-show="!catalog.icon" src="../../assets/image/default.png" class="image" />
           </div>
           <div style="padding: 1em;">
-            <h5 class="catalog-label" style="font-size: 18px;">{{catalog.releaseName}}</h5>
+            <h5 class="catalog-label" style="font-size: 18px;">{{catalog.releaseName}} ({{this.$route.params.id}})</h5>
             <p class="catalog-label" style="font-size: 14px;">{{catalog.description}}</p>
             <el-divider></el-divider>
             <p class="label" style="font-size: 12px;">{{'App Version: ' + catalog.appv}}</p>

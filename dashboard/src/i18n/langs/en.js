@@ -71,6 +71,9 @@ const en = {
         'deploy_applications':'Supercharge your Kubernetes cluster',
         'deploy_applications_desc':'Deploy applications on your Kubernetes cluster with a single click.',
         'update_namespace':'Update namespace',
+        'delete_status':'DELETED',
+        'deployed_status':'DEPLOYED',
+        'failed_status':'FAILED',
     },
     ...enLocale
 }

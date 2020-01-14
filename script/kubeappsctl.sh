@@ -163,6 +163,9 @@ function docker_upload_image() {
     docker load < gitlab.jar
     docker tag 6099ff61e4ff ${registry_host}/gitlab/gitlab:lts
     docker push ${registry_host}/gitlab/gitlab:lts
+    docker load < postgres.jar
+    docker tag be622cf06787 ${registry_host}/postgres:9.6
+    docker push ${registry_host}/postgres:9.6
     docker load < redis.jar
     docker tag 40856dba0c5d ${registry_host}/bitnami/redis:3.2.9-r2
     docker push ${registry_host}/bitnami/redis:3.2.9-r2

@@ -43,7 +43,11 @@ const imageIcon2 = {
     gitlab: '../../assets/image/charts/gitlab-stack-110x117.png',
     sonarqube: '../../assets/image/charts/sonarqube-stack-110x117.png',
     istio: '../../assets/image/charts/istio-110x117.png',
-    tensorflow: '../../assets/image/charts/tensorflow-stack-110x117.png'
+    tensorflow: '../../assets/image/charts/tensorflow-stack-110x117.png',
+    grafana: '../../assets/image/charts/grafana-stack-110x117.png',
+    'kubeapps-plus': '../../assets/image/charts/kubeapps-plus-stack-110x117.png',
+    loki: '../../assets/image/charts/loki-stack-110x117.png',
+    prometheus: '../../assets/image/charts/prometheus-stack-110x117.png'
 }
 
 const imageIcon = {

@@ -1,14 +1,14 @@
 <template>
     <div class="app-repositories-content" >
-        <el-row>
+        <el-row style="border-bottom: 2px solid #f1f1f1;">
             <el-col :span="24">
                 <div class="grid-content">
-                    <h1 style="float: left">{{$t('message.add_an_app_repository')}}</h1>
+                    <h3 style="float: left;margin-top: 0 !important;">{{$t('message.add_an_app_repository')}}</h3>
                 </div>
             </el-col>
         </el-row>
 
-        <el-divider></el-divider>
+<!--        <el-divider></el-divider>-->
 
         <div class="foot-gril margin-t-normal">
             <div class="basic-lay">
@@ -187,7 +187,7 @@
                 } else if (this.radio === 'custom' && !this.completeAuthorizationHeader) {
                     noticeMessage(this, '完整的授权抬头不允许为空, 请填写完整的授权抬头', 'warning')
                 }else{
-                    await this.$confirm('是否保存?', '提示', {
+                    await this.$confirm('是否添加?', this.$t('message.tips'), {
                         confirmButtonText: '确定',
                         cancelButtonText: '取消',
                         type: 'warning'
@@ -367,7 +367,6 @@
 
     .grid-content {
         border-radius: 4px;
-        min-height: 5em;
     }
 
     .gred-btn {

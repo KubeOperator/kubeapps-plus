@@ -64,7 +64,7 @@ const cn = {
         'password': '密码',
         'token': '令牌',
         'complete_authorization_header': '完整的授权标头',
-        'install_repo': '安装仓库',
+        'install_repo': '添加仓库',
         'back_to_previous': '返回上一级',
         'default_sync_job': '可以修改默认的同步作业。',
         'restore_chart_defaults': '恢复图表默认值',
@@ -74,6 +74,7 @@ const cn = {
         'delete_status':'已删除',
         'deployed_status':'已部署',
         'failed_status':'失败',
+        'tips':'提示'
     },
     ...zhLocale
 }

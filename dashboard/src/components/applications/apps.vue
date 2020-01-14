@@ -4,8 +4,19 @@
       <el-col :span="4" :offset="2">
         <el-card :body-style="{ padding: '0px'}" style="text-align:left">
           <div class="catalog-image">
-            <img v-show="catalog.icon" :src="catalog.icon" class="image" />
-            <img v-show="!catalog.icon" src="../../assets/image/default.png" class="image" />
+            <img v-if="!catalog.icon" src="../../assets/image/default.png" class="image">
+            <img v-else-if="(catalog.icon.search('gitlab')>=0)" src="../../assets/image/charts/gitlab-stack-110x117.png" class="image">
+            <img v-else-if="(catalog.icon.search('harbor')>=0)" src="../../assets/image/charts/harbor-stack-110x117.png" class="image" require>
+            <img v-else-if="(catalog.icon.search('jenkins')>=0)" src="../../assets/image/charts/jenkins-stack-110x117.png" class="image" require>
+            <img v-else-if="(catalog.icon.search('sonarqube')>=0)" src="../../assets/image/charts/sonarqube-stack-110x117.png" class="image" require>
+            <img v-else-if="(catalog.icon.search('gitlab')>=0)" src="../../assets/image/charts/gitlab-stack-110x117.png" class="image" require>
+            <img v-else-if="(catalog.icon.search('istio')>=0)" src="../../assets/image/charts/istio-110x117.png" class="image" require>
+            <img v-else-if="(catalog.icon.search('tensorflow')>=0)" src="../../assets/image/charts/tensorflow-stack-110x117.png" class="image" require>
+            <img v-else-if="(catalog.icon.search('grafana')>=0)" src="../../assets/image/charts/grafana-stack-110x117.png" class="image" require>
+            <img v-else-if="(catalog.icon.search('kubeapps-plus')>=0)" src="../../assets/image/charts/kubeapps-plus-stack-110x117.png" class="image" require>
+            <img v-else-if="(catalog.icon.search('loki')>=0)" src="../../assets/image/charts/loki-stack-110x117.png" class="image" require>
+            <img v-else-if="(catalog.icon.search('prometheus')>=0)" src="../../assets/image/charts/prometheus-stack-110x117.png" class="image" require>
+            <img v-else :src="catalog.icon" class="image" require>
           </div>
           <div style="padding: 1em;">
             <h5 class="catalog-label" style="font-size: 18px;">{{catalog.releaseName}} ({{catalog.name}})</h5>
@@ -115,7 +126,7 @@
         </div>
       </el-col>
     </el-row>
-    <el-dialog title="提示" :visible.sync="dialogVisible" width="30%">
+    <el-dialog title="$t('message.tips')" :visible.sync="dialogVisible" width="30%">
       <h3>{{$t('message.delete_chart')}}</h3>
       <el-switch :width="80" v-model="purge" :active-text="this.$t('message.delete_valume')"></el-switch>
       <span slot="footer" class="dialog-footer">

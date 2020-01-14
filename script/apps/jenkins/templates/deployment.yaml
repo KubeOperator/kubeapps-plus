@@ -29,9 +29,11 @@ spec:
       {{- if .Values.tolerations }}
       tolerations: {{- include "jenkins.tplValue" (dict "value" .Values.tolerations "context" $) | nindent 8 }}
       {{- end }}
+      imagePullSecrets:
+      - name: kubeapps-registry-fit2cloud-com-key
       containers:
         - name: jenkins
-          image: {{ template "jenkins.image" . }}
+          image: "{{ .Values.imageRegistry }}/{{ .Values.image.registry }}/{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy | quote }}
           env:
             - name: JENKINS_USERNAME
@@ -84,7 +86,7 @@ spec:
               mountPath: /bitnami/jenkins
           {{- if .Values.metrics.enabled }}
         - name: metrics
-          image: {{ template "jenkins.metrics.image" . }}
+          image: "{{ .Values.imageRegistry }}/{{ .Values.metrics.image.registry }}/{{ .Values.metrics.image.repository }}:{{ .Values.metrics.image.tag }}"
           imagePullPolicy: {{ .Values.metrics.image.pullPolicy | quote }}
           command:
             - sh

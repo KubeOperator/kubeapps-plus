@@ -60,7 +60,6 @@ function set_docker_config() {
     printf "$all_variables_secret\ncat << EOF\n$resourcefile\nEOF" | bash >apps/gitlab-ce/templates/userdefined-secret.yaml
     printf "$all_variables_secret\ncat << EOF\n$resourcefile\nEOF" | bash >apps/sonarqube/templates/userdefined-secret.yaml
     printf "$all_variables_secret\ncat << EOF\n$resourcefile\nEOF" | bash >apps/harbor/templates/userdefined-secret.yaml
-    printf "$all_variables_secret\ncat << EOF\n$resourcefile\nEOF" | bash >apps/tensorflow-notebook/templates/userdefined-secret.yaml
      
     #TODO
     #替换source
@@ -80,8 +79,6 @@ function set_docker_config() {
     sed "s/imageregistryvalue/\"${url}\"/g" apps/harbor/values_default.yaml > apps/harbor/values.yaml
     sed "s/imageregistryvalue/\"${url}\"/g" apps/harbor/charts/postgresql/values_default.yaml > apps/harbor/charts/postgresql/values.yaml
     sed "s/imageregistryvalue/\"${url}\"/g" apps/harbor/charts/redis/values_default.yaml > apps/harbor/charts/redis/values.yaml
-    # 替换变量
-    sed "s/imageregistryvalue/\"${url}\"/g" apps/tensorflow-notebook/values_default.yaml > apps/tensorflow-notebook/values.yaml
 
 
 }
@@ -243,12 +240,6 @@ function docker_upload_image() {
     docker push ${registry_host}/bitnami/redis-sentinel:5.0.6-debian-9-r6
     docker push ${registry_host}/bitnami/redis-exporter:1.3.4-debian-9-r4
     #harbor end
-
-    #tensorflow start
-    docker load < tensorflow-serving.jar
-    docker tag 3272bb6c8a41 ${registry_host}/bitnami/tensorflow-serving:2.0.0-debian-9-r11
-    docker push ${registry_host}/bitnami/tensorflow-serving:2.0.0-debian-9-r11
-    #tensorflow end
 }
 
 #打包Helm Chart
@@ -308,12 +299,6 @@ function upload_chart() {
     helm package .
     helm push . localrepo -f
     cd ${PROJECT_DIR}/apps/sonarqube
-    helm package .
-    helm push . localrepo -f
-    cd ${PROJECT_DIR}/apps/tensorflow-notebook
-    helm package .
-    helm push . localrepo -f
-    cd ${PROJECT_DIR}/apps/tensorflow-serving
     helm package .
     helm push . localrepo -f
     if [ $? -eq 0 ]; then

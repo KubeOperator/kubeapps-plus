@@ -64,7 +64,7 @@ const serviceModule = {
             method: 'get'
         },
         getdetailone:{
-            url: '/rpc/api/tiller-deploy/v1/namespaces/'
+            url: '/rpc/api/tiller-deploy/v1/namespaces'
         },
         getdetailtwo:{
             url: '/rpc/api/kube/apis/apps/v1/namespaces/'
@@ -73,7 +73,7 @@ const serviceModule = {
             url: '/rpc/api/kube/api/v1/namespaces/'
         },
         deleteapp:{
-            url:'/rpc/api/tiller-deploy/v1/namespaces/',
+            url:'/rpc/api/tiller-deploy/v1/namespaces',
             method:'DELETE'
         },
         getConfigJson:{

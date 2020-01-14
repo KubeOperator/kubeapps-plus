@@ -115,7 +115,7 @@
                 round>
                 <span v-if="catalog.status == 'DELETED'">{{$t('message.delete_status')}}</span>
                 <span v-else-if="catalog.status == 'DEPLOYED'">{{$t('message.deployed_status')}}</span>
-                <span v-else-if="catalog.status == 'FAILED'">{{$t('message.failed_status')}}</span>
+                <span v-else>{{$t('message.failed_status')}}</span>
               </el-button>
             </div>
           </div>
@@ -152,12 +152,12 @@ export default {
       this.$router.push("/catalog");
     },
     checkType(type) {
-      if (type == "DELETE") {
+      if (type == "DELETED") {
         return "warning";
-      } else if (type == "FAILED") {
-        return "danger";
-      } else {
+      } else if (type == "DEPLOYED"){
         return "success";
+      } else {
+        return "danger";
       }
     }
   },

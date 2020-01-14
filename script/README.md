@@ -1,8 +1,9 @@
 # Helm Charts 离线安装包
 
-本脚本为离线推送脚本，将 Kubeapps-plus 必须的 Chart 推送至指定的仓库。
+本脚本为离线推送脚本，将 Kubeapps-plus 默认的 Chart 推送至指定的仓库。
 
-默认使用本地ChartMuseum 仓库，如果需要修改仓库地址，请修改 kubeappsctl.sh 文件里的 repo_url、repo_username、repo_password 等参数。
+默认使用本地 ChartMuseum 仓库，如果需要修改仓库地址，请修改 kubeappsctl.sh 文件里的 repo_url、repo_username、repo_password 等参数。
+
 使用方法:
 
 ```

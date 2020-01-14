@@ -116,8 +116,8 @@
       </el-col>
     </el-row>
     <el-dialog title="提示" :visible.sync="dialogVisible" width="30%">
-      <p>{{$t('message.delete_chart')}}</p>
-      <el-switch v-model="purge" :active-text="this.$t('message.delete_valume')"></el-switch>
+      <h3>{{$t('message.delete_chart')}}</h3>
+      <el-switch :width="80" v-model="purge" :active-text="this.$t('message.delete_valume')"></el-switch>
       <span slot="footer" class="dialog-footer">
         <el-button @click="dialogVisible = false">{{$t('message.cancel')}}</el-button>
         <el-button type="primary" @click="deleteapp">{{$t('message.confirm')}}</el-button>
@@ -135,32 +135,23 @@ import apiSetting from "../utils/apiSetting.js";
 import http from "../utils/httpAxios.js";
 import jsyaml from "js-yaml";
 import noticeMessage from "../utils/noticeMessage";
+import getParamApi from "../utils/getParamApi";
 // import { Base64 } from "js-base64";
 /* eslint-disable */
 export default {
   created: function() {
-    this.url.url =
-      apiSetting.kubernetes.getdetailone.url +
-      this.$route.params.namespace +
-      "/releases/" +
-      this.$route.params.id;
+    this.url = getParamApi(apiSetting.kubernetes.getdetailone, this.$route.params.namespace, 'releases', this.$route.params.id)
   },
   mounted: function() {
     this.getResources();
   },
   methods: {
     deleteapp() {
-      let baseurl = apiSetting.kubernetes.deleteapp;
-      baseurl.url =
-        baseurl.url +
-        this.$route.params.namespace +
-        "/releases/" +
-        this.catalog.name;
-      if (this.purge) {
-        baseurl.url = baseurl.url + "?purge=true";
-      }
+      console.log(this.catalog.name)
+      let baseurl = getParamApi(apiSetting.kubernetes.deleteapp, this.$route.params.namespace, 'releases', this.catalog.name, this.purge ? '?purge=true' : '');
       noticeMessage(this, ' 正在删除, 请稍等 ', 'success')
       this.loading = true
+      console.log("？？？", baseurl)
       http(baseurl).then((res)=> {
         this.timeout(2000);
         if (res.status == 200) {
@@ -168,6 +159,7 @@ export default {
           this.loading = false
           this.$router.push("/applications")
         } else {
+          console.log(res)
           noticeMessage(this, '删除失败: ' + res.data.message, 'error')
           this.loading = false
         }

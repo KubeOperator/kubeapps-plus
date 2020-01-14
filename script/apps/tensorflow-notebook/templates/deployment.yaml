@@ -18,9 +18,11 @@ spec:
         app: {{ template "tensorflow-notebook.name" . }}
         release: {{ .Release.Name }}
     spec:
+      imagePullSecrets:
+        - name: kubeapps-registry-fit2cloud-com-key
       containers:
         - name: jupyter
-          image: "{{ .Values.jupyter.image.repository }}:{{ .Values.jupyter.image.tag }}"
+          image: "{{ .Values.imageRegistry }}/{{ .Values.jupyter.image.repository }}:{{ .Values.jupyter.image.tag }}"
           imagePullPolicy: {{ .Values.jupyter.image.pullPolicy }}
           ports:
             - containerPort: 8888
@@ -48,7 +50,7 @@ spec:
             - mountPath: /output/training_logs
               name: training-logs-volume
         - name: tensorboard
-          image: "{{ .Values.tensorboard.image.repository }}:{{ .Values.tensorboard.image.tag }}"
+          image: "{{ .Values.imageRegistry }}/{{ .Values.tensorboard.image.repository }}:{{ .Values.tensorboard.image.tag }}"
           imagePullPolicy: {{ .Values.tensorboard.image.pullPolicy }}
           ports:
             - containerPort: 6006

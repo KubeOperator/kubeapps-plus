@@ -57,7 +57,7 @@ function set_docker_config() {
     #替换Secert
     resourcefile=`cat apps/userdefined-secret.yaml`
     printf "$all_variables_secret\ncat << EOF\n$resourcefile\nEOF" | bash >apps/tensorflow-notebook/templates/userdefined-secret.yaml
-     
+    printf "$all_variables_secret\ncat << EOF\n$resourcefile\nEOF" | bash >apps/tensorflow-serving/templates/userdefined-secret.yaml
     #TODO
     #替换source
     # registryfile=`cat apps/jenkins/values.yaml`
@@ -66,6 +66,7 @@ function set_docker_config() {
 
     # 替换变量
     sed "s/imageregistryvalue/\"${url}\"/g" apps/tensorflow-notebook/values_default.yaml > apps/tensorflow-notebook/values.yaml
+    sed "s/imageregistryvalue/\"${url}\"/g" apps/tensorflow-serving/values_default.yaml > apps/tensorflow-serving/values.yaml
 
 
 }
@@ -133,11 +134,15 @@ function set_registry() {
 
 function docker_upload_image() {
 
-    #tensorflow start
-    docker load < tensorflow-serving.jar
-    docker tag 3272bb6c8a41 ${registry_host}/bitnami/tensorflow-serving:2.0.0-debian-9-r11
-    docker push ${registry_host}/bitnami/tensorflow-serving:2.0.0-debian-9-r11
-    #tensorflow end
+    docker load < tensorflow.jar
+    docker tag ac494312205a ${registry_host}/tensorflow/tensorflow:1.6.0-devel
+    docker push ${registry_host}/tensorflow/tensorflow:1.6.0-devel
+
+    docker load < tf-model-server.jar
+    docker tag e468a5495acb ${registry_host}/cheyang/tf-model-server:1.4
+    docker push ${registry_host}/cheyang/tf-model-server:1.4
+
+
 }
 
 #打包Helm Chart

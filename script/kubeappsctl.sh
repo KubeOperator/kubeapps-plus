@@ -199,6 +199,11 @@ function docker_upload_image() {
     docker load < harbor-nginx.jar
     docker load < harbor-minideb.jar
     docker load < harbor-core.jar
+    docker load < gitlab-postgresql.jar
+    docker load < postgres-exporter.jar
+    docker load < harbor-radis.jar
+    docker load < redis-sentinel.jar
+    docker load < redis-exporter.jar
 
     docker tag d463d8c692e8 ${registry_host}/bitnami/harbor-portal:1.10.0-debian-9-r0
     docker tag adef6d703e66 ${registry_host}/bitnami/harbor-core:1.10.0-debian-9-r3
@@ -211,6 +216,12 @@ function docker_upload_image() {
     docker tag ef51b2e2f1cf ${registry_host}/bitnami/harbor-notary-signer:1.10.0-debian-9-r3
     docker tag e98944d2dbd6 ${registry_host}/bitnami/nginx:1.16.1-debian-9-r116
     docker tag bd03f4313216 ${registry_host}/bitnami/minideb:stretch
+    docker tag d770c426a6fa ${registry_host}/bitnami/postgresql:11.6.0-debian-9-r0
+    docker tag f76c863e298b ${registry_host}/bitnami/postgres-exporter:0.7.0-debian-9-r12
+    docker tag 75ff9b143e44 ${registry_host}/bitnami/redis:5.0.7-debian-9-r0
+    docker tag 4f8dcc20b014 ${registry_host}/bitnami/redis-sentinel:5.0.6-debian-9-r6
+    docker tag 2f6296b551e9 ${registry_host}/bitnami/redis-exporter:1.3.4-debian-9-r4
+
 
     docker push ${registry_host}/bitnami/harbor-portal:1.10.0-debian-9-r0
     docker push ${registry_host}/bitnami/harbor-core:1.10.0-debian-9-r3
@@ -223,6 +234,11 @@ function docker_upload_image() {
     docker push ${registry_host}/bitnami/harbor-notary-signer:1.10.0-debian-9-r3
     docker push ${registry_host}/bitnami/nginx:1.16.1-debian-9-r116
     docker push ${registry_host}/bitnami/minideb:stretch
+    docker push ${registry_host}/bitnami/postgresql:11.6.0-debian-9-r0
+    docker push ${registry_host}/bitnami/postgres-exporter:0.7.0-debian-9-r12
+    docker push ${registry_host}/bitnami/redis:5.0.7-debian-9-r0
+    docker push ${registry_host}/bitnami/redis-sentinel:5.0.6-debian-9-r6
+    docker push ${registry_host}/bitnami/redis-exporter:1.3.4-debian-9-r4
     #harbor end
 
     #tensorflow start

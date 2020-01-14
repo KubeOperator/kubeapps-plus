@@ -318,14 +318,14 @@ service:
     ## The common name used to automatically generate the certificates.
     ## Mandatory when "secretName" is not provided or type is not "Ingress".
     ##
-    commonName: "core.harbor.domain"
+    commonName: "harbor.apps.fit2cloud.com"
   ## Ingress parameters
   ##
   ingress:
     ## The list of hostnames to be covered with this ingress record
     ##
     hosts:
-      core: core.harbor.domain
+      core: harbor.apps.fit2cloud.com
       #notary: notary.harbor.domain
     ## Set to the type of ingress controller if it has specific requirements.
     ## leave as `default` for most ingress controllers.
@@ -418,7 +418,7 @@ service:
 ## the IP address of k8s node. If Harbor is deployed behind the proxy,
 ## set it as the URL of proxy
 ##
-externalURL: https://core.harbor.domain
+externalURL: https://harbor.apps.fit2cloud.com
 
 ## UAA Authentication Options
 ## If you're using UAA for authentication behind a self-signed

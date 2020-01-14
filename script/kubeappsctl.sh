@@ -184,7 +184,7 @@ function docker_upload_image() {
     docker load < busybox-131.jar
     docker tag 6d5fcfe5ff17 ${registry_host}/busybox:1.31.0
     docker push ${registry_host}/busybox:1.31.0
-    docker load < postgres.jar 
+    docker load < postgres-9-6-2.jar
     docker tag b3b8a2229953 ${registry_host}/postgres:9.6.2
     docker push ${registry_host}/postgres:9.6.2
     #sonarqube end

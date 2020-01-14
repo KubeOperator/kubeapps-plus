@@ -99,18 +99,18 @@
                 this.$router.push({name: 'addRepositories', params: params})
             },
             deleteSubmit: async function(row){
-                await this.$confirm('是否确定删除?', '提示', {
-                    confirmButtonText: '确定',
-                    cancelButtonText: '取消',
+                await this.$confirm(this.$t('message.sure_delete'), this.$t('message.tips'), {
+                    confirmButtonText: this.$t('message.sure'),
+                    cancelButtonText: this.$t('message.cancle'),
                     type: 'warning'
                 }).then(() => {
-                    noticeMessage(this, ' 正在删除, 请稍等 ', 'success')
+                    noticeMessage(this, this.$t('message.wait_delete'), 'success')
                     this.loading = true
                     this.deleteRepo(row)
                 }).catch(() => {
                     this.$message({
                         type: 'info',
-                        message: '已取消删除'
+                        message: this.$t('message.cancle')
                     });
                 });
             },
@@ -119,13 +119,13 @@
                 let namespace = row.metadata.namespace
                 await http(getParamApi(apiSetting.kubernetes.delAppRepositorie, namespace, 'apprepositories', name), {}).then((res) => {
                     if (res.status == 200) {
-                        noticeMessage(this, name + ' 删除成功! ', 'success')
+                        noticeMessage(this, name + this.$t('message.delete_success'), 'success')
                         this.refreshAll()
                     } else {
-                        noticeMessage(this, name + ' 删除失败: ' + res, 'error')
+                        noticeMessage(this, name + this.$t('message.delete_failed') + res, 'error')
                     }
                 }).catch(msg => {
-                    noticeMessage(this, name + ' 请求失败: ' + msg.data, 'error')
+                    noticeMessage(this, name + this.$t('message.request_failed') + msg.data, 'error')
                 })
                 this.loading = false
             }

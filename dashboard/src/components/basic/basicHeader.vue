@@ -99,13 +99,13 @@
                 this.$store.dispatch('getRelease')
             },
             updateNamespace() {
-                noticeMessage(this, ' 正在更新, 请稍等 ', 'success')
+                noticeMessage(this, this.$t('message.update_wait'), 'success')
                 http(apiSetting.kubernetes.getNamespaces).then(res => {
                     if (res.status == 200) {
-                        noticeMessage(this, '更新成功', 'success')
+                        noticeMessage(this, this.$t('message.update_success'), 'success')
                         this.$store.commit('initNamespace', res.data)
                     } else {
-                        noticeMessage(this, '更新失败 ' + res.data, 'error')
+                        noticeMessage(this, this.$t('message.update_failed') + res.data, 'error')
                     }
                 });
             }

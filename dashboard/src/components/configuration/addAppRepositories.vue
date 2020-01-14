@@ -143,24 +143,24 @@
                 params: [],
                 rules: {
                     name: [
-                        { required: true, message: '请输入名称', trigger: 'blur' },
-                        { min: 1, max: 100, message: '长度必须在 1 到 100 个字符', trigger: 'blur' },
-                        { pattern: /[a-z0-9]([-a-z0-9]*[a-z0-9])?(\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*/, message: "使用小写字母数字字符, '-' 或 '.'",trigger: 'blur' }
+                        { required: true, message: this.$t('message.please_input'), trigger: 'blur' },
+                        { min: 1, max: 100, message: this.$t('message.must_1_100_characters'), trigger: 'blur' },
+                        { pattern: /[a-z0-9]([-a-z0-9]*[a-z0-9])?(\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*/, message: this.$t('message.use_lowercase_alphanumeric_characters'),trigger: 'blur' }
                     ],
                     url: [
-                        { required: true, message: '请输入url', trigger: 'blur' },
-                        { min: 1, max: 100, message: '长度必须在 1 到 100 个字符', trigger: 'blur' },
+                        { required: true, message: this.$t('message.please_enter_url'), trigger: 'blur' },
+                        { min: 1, max: 100, message: this.$t('message.must_1_100_characters'), trigger: 'blur' },
                     ],
                     username: [
-                        { required: true, message: '请输入用户名', trigger: 'blur' },
-                        { min: 1, max: 100, message: '长度必须在 1 到 100 个字符', trigger: 'blur' },
+                        { required: true, message: this.$t('message.please_enter_username'), trigger: 'blur' },
+                        { min: 1, max: 100, message: this.$t('message.must_1_100_characters'), trigger: 'blur' },
                     ],
                     password: [
-                        { required: true, message: '请输入密码', trigger: 'blur' },
-                        { min: 1, max: 100, message: '长度必须在 1 到 100 个字符', trigger: 'blur' },
+                        { required: true, message: this.$t('message.please_enter_password'), trigger: 'blur' },
+                        { min: 1, max: 100, message: this.$t('message.must_1_100_characters'), trigger: 'blur' },
                     ],
                     token: [
-                        { required: true, message: '请输入token', trigger: 'blur' },
+                        { required: true, message: this.$t('message.please_enter_token'), trigger: 'blur' },
                     ],
                 }
             }
@@ -175,36 +175,36 @@
             },
             installRepo: async function(){
                 if (!this.form.name) {
-                    noticeMessage(this, '名称不允许为空, 请填写名称', 'warning')
+                    noticeMessage(this, this.$t('message.name_cannot_be_empty'), 'warning')
                 } else if (!this.form.url) {
-                    noticeMessage(this, 'URL不允许为空, 请填写版本', 'warning')
+                    noticeMessage(this, this.$t('message.url_cannot_be_empty'), 'warning')
                 } else if (this.radio === 'basic' && !this.form.username) {
-                    noticeMessage(this, '用户名称不允许为空, 请填写用户名称', 'warning')
+                    noticeMessage(this, this.$t('message.username_cannot_be_empty'), 'warning')
                 } else if(this.radio === 'basic' && !this.form.password){
-                    noticeMessage(this, '密码不允许为空, 请填写密码', 'warning')
+                    noticeMessage(this, this.$t('message.password_cannot_be_empty'), 'warning')
                 } else if (this.radio === 'bearer' && !this.token) {
-                    noticeMessage(this, '令牌不允许为空, 请填写令牌', 'warning')
+                    noticeMessage(this, this.$t('message.token_cannot_be_empty'), 'warning')
                 } else if (this.radio === 'custom' && !this.completeAuthorizationHeader) {
-                    noticeMessage(this, '完整的授权抬头不允许为空, 请填写完整的授权抬头', 'warning')
+                    noticeMessage(this, this.$t('message.custom_cannot_be_empty'), 'warning')
                 }else{
-                    await this.$confirm('是否添加?', this.$t('message.tips'), {
-                        confirmButtonText: '确定',
-                        cancelButtonText: '取消',
+                    await this.$confirm(this.$t('message.sure_add'), this.$t('message.tips'), {
+                        confirmButtonText: this.$t('message.sure'),
+                        cancelButtonText: this.$t('message.cancle'),
                         type: 'warning'
                     }).then(() => {
                         for(let param of this.params){
                             if(this.form.name == param.metadata.name){
-                                noticeMessage(this, '名称不允许重复, 请重新填写', 'warning')
+                                noticeMessage(this, this.$t('message.name_cannot_be_empty'), 'warning')
                                 return;
                             }
                         }
-                        noticeMessage(this, ' 正在保存, 请稍等 ', 'success')
+                        noticeMessage(this, this.$t('message.save_now_please'), 'success')
                         this.loading = true
                         this.installRepoSubmit()
                     }).catch(() => {
                         this.$message({
                             type: 'info',
-                            message: '已取消'
+                            message: this.$t('message.cancle')
                         });
                     });
                 }
@@ -274,13 +274,13 @@
                 }
                 await http(getParamApi(apiSetting.kubernetes.addAppRepositorie, sessionStorage.getItem('nameSpace'), 'apprepositories'), params).then((res) => {
                     if (res.status == 200 || res.status == 201) {
-                        noticeMessage(this, this.form.name + ' 保存成功! ', 'success')
+                        noticeMessage(this, this.form.name + this.$t('message.save_success'), 'success')
                         this.setScrets()
                     } else {
-                        noticeMessage(this, this.form.name + ' 保存失败: ' + res, 'error')
+                        noticeMessage(this, this.form.name + this.$t('message.save_failed') + res, 'error')
                     }
                 }).catch(msg => {
-                    noticeMessage(this, this.form.name + ' 请求失败: ' + msg.data, 'error')
+                    noticeMessage(this, this.form.name + this.$t('message.request_failed') + msg.data, 'error')
                 })
                 this.loading = false
             },
@@ -348,10 +348,10 @@
                     if (res.status == 200 || res.status == 201) {
                         this.$router.push("/repositories");
                     } else {
-                        noticeMessage(this, this.form.name + ' 请求失败: ' + res, 'error')
+                        noticeMessage(this, this.form.name + this.$t('message.request_failed') + res, 'error')
                     }
                 }).catch(msg => {
-                    noticeMessage(this, this.form.name + ' 请求失败: ' + msg.data, 'error')
+                    noticeMessage(this, this.form.name + this.$t('message.request_failed') + msg.data, 'error')
                 })
                 this.loading = false
             }

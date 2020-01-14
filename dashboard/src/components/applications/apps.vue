@@ -160,18 +160,17 @@ export default {
     deleteapp() {
       console.log(this.catalog.name)
       let baseurl = getParamApi(apiSetting.kubernetes.deleteapp, this.$route.params.namespace, 'releases', this.catalog.name, this.purge ? '?purge=true' : '');
-      noticeMessage(this, ' 正在删除, 请稍等 ', 'success')
+      noticeMessage(this, this.$t('message.wait_delete'), 'success')
       this.loading = true
-      console.log("？？？", baseurl)
       http(baseurl).then((res)=> {
         this.timeout(2000);
         if (res.status == 200) {
-          noticeMessage(this, '删除成功! ', 'success')
+          noticeMessage(this, this.$t('message.delete_success'), 'success')
           this.loading = false
           this.$router.push("/applications")
         } else {
           console.log(res)
-          noticeMessage(this, '删除失败: ' + res.data.message, 'error')
+          noticeMessage(this, this.$t('message.delete_failed') + res.data.message, 'error')
           this.loading = false
         }
       });
@@ -252,6 +251,8 @@ export default {
                 ? res.data.status.availableReplicas
                 : 0
             });
+          } else {
+            noticeMessage(this, this.$t('message.error') + res.data.message, 'error')
           }
         });
       }

@@ -1,8 +1,8 @@
 # 仪表板开发指南
 
-[KubeApps Plus 安装指南](../../chart/kubeapps/README.md) 您可以使用仪表板开始在群集中管理和部署应用程序。 请查看 [KubeApps Plus 使用指南](getting-started.md)指南, 以了解如何访问仪表板和部署第一个应用程序。
+[KubeApps Plus 安装指南](../../chart/kubeapps/README.md) 您可以使用仪表板开始在群集中管理和部署应用程序。 请查看 [KubeApps Plus 使用指南](getting-started.md) 指南, 以了解如何访问仪表板和部署第一个应用程序。
 
-以下各节将引导您完成Kubeapps Plus仪表板的一些常见任务。
+以下各节将引导您完成 Kubeapps Plus 仪表板的一些常见任务。
 
 ## 使用图表
 
@@ -55,8 +55,9 @@
 
 ![添加存储库](../docs/img/dashboard-add-repo.png)
 
-## 项目设置
+### 仪表板 dashboard 开发项目设置
 ```
+cd dashboard
 yarn install
 ```
 

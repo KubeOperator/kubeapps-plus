@@ -163,6 +163,9 @@ function docker_upload_image() {
     docker load < gitlab.jar
     docker tag 6099ff61e4ff ${registry_host}/gitlab/gitlab:lts
     docker push ${registry_host}/gitlab/gitlab:lts
+    docker load < postgres.jar
+    docker tag be622cf06787 ${registry_host}/postgres:9.6
+    docker push ${registry_host}/postgres:9.6
     docker load < redis.jar
     docker tag 40856dba0c5d ${registry_host}/bitnami/redis:3.2.9-r2
     docker push ${registry_host}/bitnami/redis:3.2.9-r2
@@ -181,7 +184,7 @@ function docker_upload_image() {
     docker load < busybox-131.jar
     docker tag 6d5fcfe5ff17 ${registry_host}/busybox:1.31.0
     docker push ${registry_host}/busybox:1.31.0
-    docker load < postgres.jar 
+    docker load < postgres-9-6-2.jar
     docker tag b3b8a2229953 ${registry_host}/postgres:9.6.2
     docker push ${registry_host}/postgres:9.6.2
     #sonarqube end
@@ -215,7 +218,7 @@ function docker_upload_image() {
     docker tag dac437e264bd ${registry_host}/bitnami/harbor-notary-server:1.10.0-debian-9-r3
     docker tag ef51b2e2f1cf ${registry_host}/bitnami/harbor-notary-signer:1.10.0-debian-9-r3
     docker tag e98944d2dbd6 ${registry_host}/bitnami/nginx:1.16.1-debian-9-r116
-    docker tag bd03f4313216 ${registry_host}/bitnami/minideb:stretch
+    docker tag ff2799e30418 ${registry_host}/bitnami/minideb:stretch
     docker tag d770c426a6fa ${registry_host}/bitnami/postgresql:11.6.0-debian-9-r0
     docker tag f76c863e298b ${registry_host}/bitnami/postgres-exporter:0.7.0-debian-9-r12
     docker tag 75ff9b143e44 ${registry_host}/bitnami/redis:5.0.7-debian-9-r0

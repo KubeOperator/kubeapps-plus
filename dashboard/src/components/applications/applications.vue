@@ -211,7 +211,7 @@ export default {
   margin-top: 1.875em;
 }
 .dashborad {
-  height: calc(100vh - 160px);
+  height: calc(100vh - 120px);
 }
 .catalog-content {
   padding: 1em;

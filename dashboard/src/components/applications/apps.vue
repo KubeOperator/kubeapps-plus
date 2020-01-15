@@ -1,5 +1,5 @@
 <template>
-  <div style="height: calc(100vh - 160px);" class="main_page" v-loading.fullscreen.lock="loading" element-loading-text="Loading" element-loading-background="rgba(0, 0, 0, 0.1)">
+  <div style="height: calc(100vh - 120px);" class="main_page" v-loading.fullscreen.lock="loading" element-loading-text="Loading" element-loading-background="rgba(0, 0, 0, 0.1)">
     <el-row>
       <el-col :span="4" :offset="2">
         <el-card :body-style="{ padding: '0px'}" style="text-align:left">
@@ -126,7 +126,7 @@
         </div>
       </el-col>
     </el-row>
-    <el-dialog title="$t('message.tips')" :visible.sync="dialogVisible" width="30%">
+    <el-dialog :title="$t('message.tips')" :visible.sync="dialogVisible" width="30%">
       <h3>{{$t('message.delete_chart')}}</h3>
       <el-switch :width="80" v-model="purge" :active-text="this.$t('message.delete_valume')"></el-switch>
       <span slot="footer" class="dialog-footer">

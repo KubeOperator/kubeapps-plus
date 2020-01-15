@@ -102,7 +102,7 @@
 
 <style scoped>
     .main_login {
-        height: calc(100vh - 160px);
+        height: calc(100vh - 120px);
     }
 
     .item {

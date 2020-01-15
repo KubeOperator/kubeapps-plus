@@ -154,7 +154,7 @@
 
     .catalog-content {
         padding: 1em;
-        height: calc(100vh - 160px);
+        height: calc(100vh - 120px);
     }
 
     .grid-content {

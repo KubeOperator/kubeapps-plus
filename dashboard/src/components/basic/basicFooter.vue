@@ -15,7 +15,7 @@
 
 <style scoped>
     .footer {
-        height: 100px;
+        height: 60px;
         background-color: rgb(0, 74, 113);
     }
 

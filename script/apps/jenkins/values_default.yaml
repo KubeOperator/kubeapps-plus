@@ -27,7 +27,7 @@ image:
 ## User of the application
 ## ref: https://github.com/bitnami/bitnami-docker-jenkins#configuration
 ##
-jenkinsUser: admin
+jenkinsUser: user
 
 ## Application password
 ## Defaults to a random 10-character alphanumeric string if not set

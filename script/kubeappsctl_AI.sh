@@ -55,8 +55,9 @@ function set_docker_config() {
     secret=$(base64 -w 0 utils/docker-config.json)
     all_variables_secret="secret=${secret}"
     #替换Secert
-    resourcefile=`cat apps/userdefined-secret.yaml`
+    resourcefile=`cat secerts/notebook-secret.yaml`
     printf "$all_variables_secret\ncat << EOF\n$resourcefile\nEOF" | bash >apps/tensorflow-notebook/templates/userdefined-secret.yaml
+    resourcefile=`cat secerts/serving-secret.yaml`
     printf "$all_variables_secret\ncat << EOF\n$resourcefile\nEOF" | bash >apps/tensorflow-serving/templates/userdefined-secret.yaml
     #TODO
     #替换source

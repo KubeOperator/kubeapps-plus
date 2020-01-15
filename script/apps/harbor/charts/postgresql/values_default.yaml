@@ -6,7 +6,7 @@ global:
   postgresql: {}
   imageRegistry: imageregistryvalue
   imagePullSecrets:
-  - kubeapps-registry-fit2cloud-com-key
+  - harbor-registry-fit2cloud-com-key
 #   storageClass: myStorageClass
 
 ## Bitnami PostgreSQL image version

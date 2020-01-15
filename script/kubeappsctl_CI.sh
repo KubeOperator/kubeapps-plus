@@ -55,10 +55,13 @@ function set_docker_config() {
     secret=$(base64 -w 0 utils/docker-config.json)
     all_variables_secret="secret=${secret}"
     #替换Secert
-    resourcefile=`cat apps/userdefined-secret.yaml`
+    resourcefile=`cat secrets/jenkins-secret.yaml`
     printf "$all_variables_secret\ncat << EOF\n$resourcefile\nEOF" | bash >apps/jenkins/templates/userdefined-secret.yaml
+    resourcefile=`cat secrets/gitlab-secret.yaml`
     printf "$all_variables_secret\ncat << EOF\n$resourcefile\nEOF" | bash >apps/gitlab-ce/templates/userdefined-secret.yaml
+    resourcefile=`cat secrets/sonar-secret.yaml`
     printf "$all_variables_secret\ncat << EOF\n$resourcefile\nEOF" | bash >apps/sonarqube/templates/userdefined-secret.yaml
+    resourcefile=`cat secrets/harbor-secret.yaml`
     printf "$all_variables_secret\ncat << EOF\n$resourcefile\nEOF" | bash >apps/harbor/templates/userdefined-secret.yaml
      
     #TODO

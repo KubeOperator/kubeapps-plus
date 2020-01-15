@@ -6,7 +6,7 @@ imageRegistry: imageregistryvalue
 ## Kubernetes configuration
 ## support NodePort, LoadBalancer
 ##
-serviceType: LoadBalancer
+serviceType: NodePort
 
 ## expose the service to the grpc client
 port: 9090

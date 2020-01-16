@@ -30,7 +30,7 @@ spec:
       tolerations: {{- include "jenkins.tplValue" (dict "value" .Values.tolerations "context" $) | nindent 8 }}
       {{- end }}
       imagePullSecrets:
-      - name: kubeapps-registry-fit2cloud-com-key
+      - name: jenkins-registry-fit2cloud-com-key
       containers:
         - name: jenkins
           image: "{{ .Values.imageRegistry }}/{{ .Values.image.registry }}/{{ .Values.image.repository }}:{{ .Values.image.tag }}"

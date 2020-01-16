@@ -25,7 +25,7 @@ spec:
 {{ toYaml .Values.tolerations | indent 8 }}
       {{- end }}
       imagePullSecrets:
-      - name: kubeapps-registry-fit2cloud-com-key
+      - name: sonar-registry-fit2cloud-com-key
       containers:
       - name: {{ template "postgresql.fullname" . }}
         image: "{{.Values.imageRegistry}}/{{ .Values.image }}:{{ .Values.imageTag }}"

@@ -55,8 +55,9 @@ function set_docker_config() {
     secret=$(base64 -w 0 utils/docker-config.json)
     all_variables_secret="secret=${secret}"
     #替换Secert
-    resourcefile=`cat apps/userdefined-secret.yaml`
+    resourcefile=`cat secrets/notebook-secret.yaml`
     printf "$all_variables_secret\ncat << EOF\n$resourcefile\nEOF" | bash >apps/tensorflow-notebook/templates/userdefined-secret.yaml
+    resourcefile=`cat secrets/serving-secret.yaml`
     printf "$all_variables_secret\ncat << EOF\n$resourcefile\nEOF" | bash >apps/tensorflow-serving/templates/userdefined-secret.yaml
     #TODO
     #替换source
@@ -133,6 +134,8 @@ function set_registry() {
 #docker retag & push
 
 function docker_upload_image() {
+
+    cd ${PROJECT_DIR}/apps/image
 
     docker load < tensorflow.jar
     docker tag ac494312205a ${registry_host}/tensorflow/tensorflow:1.6.0-devel

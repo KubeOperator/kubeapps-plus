@@ -23,4 +23,4 @@ tensorboard:
     tag: 1.6.0-devel
     pullPolicy: IfNotPresent
 service:
-  type: LoadBalancer
+  type: NodePort

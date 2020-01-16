@@ -34,7 +34,7 @@ imagePullPolicy: IfNotPresent
 # Secrets must be manually created in the namespace.
 # ref: https://kubernetes.io/docs/concepts/containers/images/#specifying-imagepullsecrets-on-a-pod
 imagePullSecrets:
-  - name: kubeapps-registry-fit2cloud-com-key
+  - name: sonar-registry-fit2cloud-com-key
 
 ## Node selector
 ## ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#nodeselector

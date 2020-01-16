@@ -5,8 +5,8 @@
             <el-row :gutter="20" style="margin-bottom: 1em;">
                 <el-col :span="3">
                     <div class="grid-content grid-img">
-                        <img v-if="!catalog.icon && catalog.name.search('gitlab')>=0" src="../../assets/image/charts/gitlab-stack-110x117.png" class="image">
-                        <img v-else-if="!catalog.icon && !catalog.name.search(gitlab)>=0" src="../../assets/image/default.png" class="image">
+                        <img v-if="!catalog.icon && catalog.id.search('gitlab')>=0" src="../../assets/image/charts/gitlab-stack-110x117.png" class="image">
+                        <img v-else-if="!catalog.icon && !catalog.id.search(gitlab)>=0" src="../../assets/image/default.png" class="image">
                         <img v-else-if="(catalog.icon.search('harbor')>=0)" src="../../assets/image/charts/harbor-stack-110x117.png" class="image" require>
                         <img v-else-if="(catalog.icon.search('jenkins')>=0)" src="../../assets/image/charts/jenkins-stack-110x117.png" class="image" require>
                         <img v-else-if="(catalog.icon.search('sonarqube')>=0)" src="../../assets/image/charts/sonarqube-stack-110x117.png" class="image" require>

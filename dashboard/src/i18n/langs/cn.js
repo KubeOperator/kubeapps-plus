@@ -5,7 +5,7 @@ const cn = {
         'login': '登录',
         'view': '查看',
         'delete_chart': '确定删除此应用吗？',
-        'delete_valume': '删除存储',
+        'delete_valume': '删除应用',
         'Search_charts' : '搜索应用',
         'cancel': '取 消',
         'confirm': '确 定',
@@ -25,8 +25,8 @@ const cn = {
         'service_broker': '服务代理',
         'show_deleted_apps' : '显示已删除应用',
         'deploy_app':'部署应用',
-        'refresh': '刷新',
-        'refresh_all': '刷新全部',
+        'refresh': '同步',
+        'refresh_all': '全部同步',
         'repo': '仓库名称',
         'url': '网址',
         'actions': '操作',
@@ -114,6 +114,7 @@ const cn = {
         'custom_cannot_be_empty' : '完整的授权抬头不允许为空, 请填写完整的授权抬头',
         'sure_add': '是否添加?',
         'save_now_please': '正在保存, 请稍等',
+        'if_close': '确认关闭？'
     },
     ...zhLocale
 }

@@ -126,9 +126,9 @@
         </div>
       </el-col>
     </el-row>
-    <el-dialog :title="$t('message.tips')" :visible.sync="dialogVisible" width="30%">
-      <h3>{{$t('message.delete_chart')}}</h3>
-      <el-switch :width="80" v-model="purge" :active-text="this.$t('message.delete_valume')"></el-switch>
+    <el-dialog :title="$t('message.tips')" :visible.sync="dialogVisible" width="30%" center>
+      <h3 style="margin-top: 0">{{$t('message.delete_chart')}}</h3>
+      <el-switch :width="60" v-model="purge" :active-text="this.$t('message.delete_valume')"></el-switch>
       <span slot="footer" class="dialog-footer">
         <el-button @click="dialogVisible = false">{{$t('message.cancel')}}</el-button>
         <el-button type="primary" @click="deleteapp">{{$t('message.confirm')}}</el-button>
@@ -185,7 +185,7 @@ export default {
     printdebug(data, log) {
     },
     handleClose(done) {
-      this.$confirm("确认关闭？").then(_ => {
+      this.$confirm(this.$t('message.if_close')).then(_ => {
         done(_);
       });
     },
@@ -283,8 +283,8 @@ export default {
       this.loading = false;
     },
     open(data) {
-      this.$alert(data, "密钥", {
-        confirmButtonText: "确定"
+      this.$alert(data, this.$t('message.secrets'), {
+        confirmButtonText: this.$t('message.sure')
         // callback: action => {
         //   this.$message({
         //     type: "info",

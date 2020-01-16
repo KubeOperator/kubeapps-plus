@@ -81,11 +81,10 @@
     import apiSetting from "../utils/apiSetting.js";
     import http from "../utils/httpAxios.js";
     import common from '../common/common.js';
-    // import loading from '../utils/loading.js';
     import noticeMessage from "../utils/noticeMessage";
     import enerty from '../entity/entity.js';
     import getParamApi from "../utils/getParamApi";
-
+    /* eslint-disable */
     let catalogList = []
     export default {
         name: "catalog",
@@ -106,7 +105,6 @@
                     if (res.status == 200) {
                         this.getList(res.data.data)
                     } else {
-                        //Error Message
                         noticeMessage(this, res.data, 'error');
                     }
                 }).catch(msg => {
@@ -116,7 +114,6 @@
             },
             getList: async function(data){
                 this.catalogList = []
-                /* eslint-disable */
                 for (let [index, chart] of data.entries()) {
                     if(chart.attributes.icon){
                         await http(getParamApi(apiSetting.kubernetes.getImage, chart.attributes.icon)).then(res => {

@@ -112,8 +112,9 @@ const en = {
         'password_cannot_be_empty': 'Password is not allowed to be empty, please fill in the password',
         'token_cannot_be_empty': 'Token is not allowed to be empty, please fill in the token',
         'custom_cannot_be_empty': 'The complete authorization header is not allowed to be empty, please fill in the complete authorization header',
-        'sure_add': 'Add it?',
+        'sure_add': 'Add it sure?',
         'save_now_please': 'Saving, please wait',
+        'if_close': 'Are you sure you want to close?'
     },
     ...enLocale
 }

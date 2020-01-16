@@ -17,14 +17,12 @@
                             class="item"
                             effect="dark"
                             :content=" $t('message.token_warn_alert') "
-                            placement="bottom"
-                    >
+                            placement="bottom">
                         <el-input
                                 style="margin-top: 20px;"
                                 :placeholder="$t('message.token_placeholder')"
                                 v-model="input"
-                                show-password
-                        ></el-input>
+                                show-password></el-input>
                     </el-tooltip>
                     <el-button
                             plain
@@ -51,7 +49,6 @@
     import apiSetting from "../utils/apiSetting.js";
     import http from "../utils/httpAxios.js";
     import errorMessage from '../utils/errorMessage.js';
-    // import getParamApi from "../utils/getParamApi";
     import noticeMessage from "../utils/noticeMessage";
 
     export default {
@@ -69,16 +66,13 @@
                         http(apiSetting.kubernetes.getNamespaces).then(res => {
                             if (res.status == 200) {
                                 this.$store.commit('initNamespace', res.data)
-                                // this.$store.dispatch('getRelease')
                                 this.getConfigJson()
                                 this.$router.push("applications");
                             } else {
-                                //Error Message
                                 errorMessage(this, res);
                             }
                         });
                     } else {
-                        //Error Message
                         errorMessage(this, res);
                     }
                 },msg =>{
@@ -90,10 +84,10 @@
                     if (res.status == 200) {
                         sessionStorage.setItem('nameSpace', res.data.namespace ? res.data.namespace : 'kubeapps-plus')
                     } else {
-                        noticeMessage(this, ' 请求获取namespace失败: ' + res, 'error')
+                        noticeMessage(this, this.$t('message.update_failed') + res, 'error')
                     }
                 }).catch(msg => {
-                    noticeMessage(this, ' 请求失败: ' + msg.data, 'error')
+                    noticeMessage(this, this.$t('message.update_failed') + msg.data, 'error')
                 })
             }
         }

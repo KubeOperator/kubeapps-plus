@@ -34,8 +34,9 @@ function set_docker_config() {
     cwd=$(pwd)
     cd ${PROJECT_DIR}
     url=$1
-    user=$2
-    password=$3
+    project=$2
+    user=$3
+    password=$4
     authed=$(echo -n ${user}:${password} | base64)
     #bug
     # sed -i '/registry/c\ \"\'${url}'\",' utils/docker-config.json
@@ -69,19 +70,19 @@ function set_docker_config() {
     # registryfile=`cat apps/jenkins/values.yaml`
     # all_variables_source="imageregistry=\"${url}\""
     # printf "$all_variables_source\ncat << EOF\n$registryfile\nEOF" | bash >apps/jenkins/values.yaml
-    sed "s/imageregistryvalue/\"${url}\"/g" apps/jenkins/values_default.yaml > apps/jenkins/values.yaml
+    sed "s/imageregistryvalue/\"${url}\/${project}\"/g" apps/jenkins/values_default.yaml > apps/jenkins/values.yaml
     #Gitlab
-    sed "s/imageregistryvalue/\"${url}\"/g" apps/gitlab-ce/values_default.yaml > apps/gitlab-ce/values.yaml
-    sed "s/imageregistryvalue/\"${url}\"/g" apps/gitlab-ce/charts/postgresql/values_default.yaml > apps/gitlab-ce/charts/postgresql/values.yaml
-    sed "s/imageregistryvalue/\"${url}\"/g" apps/gitlab-ce/charts/redis/values_default.yaml > apps/gitlab-ce/charts/redis/values.yaml
+    sed "s/imageregistryvalue/\"${url}\/${project}\"/g" apps/gitlab-ce/values_default.yaml > apps/gitlab-ce/values.yaml
+    sed "s/imageregistryvalue/\"${url}\/${project}\"/g" apps/gitlab-ce/charts/postgresql/values_default.yaml > apps/gitlab-ce/charts/postgresql/values.yaml
+    sed "s/imageregistryvalue/\"${url}\/${project}\"/g" apps/gitlab-ce/charts/redis/values_default.yaml > apps/gitlab-ce/charts/redis/values.yaml
 
     #
-    sed "s/imageregistryvalue/\"${url}\"/g" apps/sonarqube/values_default.yaml > apps/sonarqube/values.yaml
-    sed "s/imageregistryvalue/\"${url}\"/g" apps/sonarqube/charts/mysql/values_default.yaml > apps/sonarqube/charts/mysql/values.yaml
-    sed "s/imageregistryvalue/\"${url}\"/g" apps/sonarqube/charts/postgresql/values_default.yaml > apps/sonarqube/charts/postgresql/values.yaml
-    sed "s/imageregistryvalue/\"${url}\"/g" apps/harbor/values_default.yaml > apps/harbor/values.yaml
-    sed "s/imageregistryvalue/\"${url}\"/g" apps/harbor/charts/postgresql/values_default.yaml > apps/harbor/charts/postgresql/values.yaml
-    sed "s/imageregistryvalue/\"${url}\"/g" apps/harbor/charts/redis/values_default.yaml > apps/harbor/charts/redis/values.yaml
+    sed "s/imageregistryvalue/\"${url}\/${project}\"/g" apps/sonarqube/values_default.yaml > apps/sonarqube/values.yaml
+    sed "s/imageregistryvalue/\"${url}\/${project}\"/g" apps/sonarqube/charts/mysql/values_default.yaml > apps/sonarqube/charts/mysql/values.yaml
+    sed "s/imageregistryvalue/\"${url}\/${project}\"/g" apps/sonarqube/charts/postgresql/values_default.yaml > apps/sonarqube/charts/postgresql/values.yaml
+    sed "s/imageregistryvalue/\"${url}\/${project}\"/g" apps/harbor/values_default.yaml > apps/harbor/values.yaml
+    sed "s/imageregistryvalue/\"${url}\/${project}\"/g" apps/harbor/charts/postgresql/values_default.yaml > apps/harbor/charts/postgresql/values.yaml
+    sed "s/imageregistryvalue/\"${url}\/${project}\"/g" apps/harbor/charts/redis/values_default.yaml > apps/harbor/charts/redis/values.yaml
 
 
 }
@@ -107,11 +108,14 @@ function env_check() {
     echo "安装 Push Plugins 完成"
 }
 registry_host=""
+registry_project=""
 registry_user=""
 registry_pass=""
 function set_external_registry() {
 
     read_from_input registry_host "请输入registry的域名" "" "${registry_host}"
+
+    read_from_input registry_project "请输入registry的项目名" "" "${registry_project}"
 
     read_from_input registry_user "请输入registry的用户名" "" "${registry_user}"
 
@@ -123,14 +127,15 @@ function set_external_registry() {
     #     set_external_registry
     #     return
     # fi
-    set_docker_config ${registry_host} ${registry_user} ${registry_pass}
+    set_docker_config ${registry_host} ${registry_project} ${registry_user} ${registry_pass}
 }
 
 function set_internal_registry() {
     registry_host="registry.kubeapps.fit2cloud.com"
+    registry_project="kubeapps-plus"
     registry_user="admin"
     registry_pass="admin123"
-    set_docker_config ${registry_host} ${registry_user} ${registry_pass}
+    set_docker_config ${registry_host} ${registry_project} ${registry_user} ${registry_pass}
 }
 
 function set_registry() {
@@ -153,40 +158,40 @@ function docker_upload_image() {
     cd ${PROJECT_DIR}/apps/image
     docker load <jenkins.jar
     docker load <jenkins-exporter.jar
-    docker tag 30a01ef4eaab ${registry_host}/docker.io/bitnami/jenkins:2.204.1-debian-9-r0
-    docker tag ffca41295e0d ${registry_host}/docker.io/bitnami/jenkins-exporter:0.20171225.0-debian-9-r127
-    docker push ${registry_host}/docker.io/bitnami/jenkins:2.204.1-debian-9-r0
-    docker push ${registry_host}/docker.io/bitnami/jenkins-exporter:0.20171225.0-debian-9-r127
+    docker tag 30a01ef4eaab ${registry_host}/${registry_project}/docker.io/bitnami/jenkins:2.204.1-debian-9-r0
+    docker tag ffca41295e0d ${registry_host}/${registry_project}/docker.io/bitnami/jenkins-exporter:0.20171225.0-debian-9-r127
+    docker push ${registry_host}/${registry_project}/docker.io/bitnami/jenkins:2.204.1-debian-9-r0
+    docker push ${registry_host}/${registry_project}/docker.io/bitnami/jenkins-exporter:0.20171225.0-debian-9-r127
     #jenkins end
 
     #gitlab start
     docker load < gitlab.jar
-    docker tag 6099ff61e4ff ${registry_host}/gitlab/gitlab:lts
-    docker push ${registry_host}/gitlab/gitlab:lts
+    docker tag 6099ff61e4ff ${registry_host}/${registry_project}/gitlab/gitlab:lts
+    docker push ${registry_host}/${registry_project}/gitlab/gitlab:lts
     docker load < postgres.jar
-    docker tag be622cf06787 ${registry_host}/postgres:9.6
-    docker push ${registry_host}/postgres:9.6
+    docker tag be622cf06787 ${registry_host}/${registry_project}/postgres:9.6
+    docker push ${registry_host}/${registry_project}/postgres:9.6
     docker load < redis.jar
-    docker tag 40856dba0c5d ${registry_host}/bitnami/redis:3.2.9-r2
-    docker push ${registry_host}/bitnami/redis:3.2.9-r2
+    docker tag 40856dba0c5d ${registry_host}/${registry_project}/bitnami/redis:3.2.9-r2
+    docker push ${registry_host}/${registry_project}/bitnami/redis:3.2.9-r2
     #gitlab end
 
     #sonarqube start
     docker load <sonarqube.jar
-    docker tag ea9ce8f562b5 ${registry_host}/sonarqube/sonarqube:lts
-    docker push ${registry_host}/sonarqube/sonarqube:lts
+    docker tag ea9ce8f562b5 ${registry_host}/${registry_project}/sonarqube/sonarqube:lts
+    docker push ${registry_host}/${registry_project}/sonarqube/sonarqube:lts
     docker load < mysql-5.7.jar
-    docker tag 4b3b6b994512 ${registry_host}/mysql:5.7.14
-    docker push ${registry_host}/mysql:5.7.14
+    docker tag 4b3b6b994512 ${registry_host}/${registry_project}/mysql:5.7.14
+    docker push ${registry_host}/${registry_project}/mysql:5.7.14
     docker load < busybox-125.jar
-    docker tag 2b8fd9751c4c ${registry_host}/busybox:1.25.0
-    docker push ${registry_host}/busybox:1.25.0
+    docker tag 2b8fd9751c4c ${registry_host}/${registry_project}/busybox:1.25.0
+    docker push ${registry_host}/${registry_project}/busybox:1.25.0
     docker load < busybox-131.jar
-    docker tag 6d5fcfe5ff17 ${registry_host}/busybox:1.31.0
-    docker push ${registry_host}/busybox:1.31.0
+    docker tag 6d5fcfe5ff17 ${registry_host}/${registry_project}/busybox:1.31.0
+    docker push ${registry_host}/${registry_project}/busybox:1.31.0
     docker load < postgres-9-6-2.jar
-    docker tag b3b8a2229953 ${registry_host}/postgres:9.6.2
-    docker push ${registry_host}/postgres:9.6.2
+    docker tag b3b8a2229953 ${registry_host}/${registry_project}/postgres:9.6.2
+    docker push ${registry_host}/${registry_project}/postgres:9.6.2
     #sonarqube end
 
     #harbor start
@@ -208,40 +213,40 @@ function docker_upload_image() {
     docker load < redis-sentinel.jar
     docker load < redis-exporter.jar
 
-    docker tag d463d8c692e8 ${registry_host}/bitnami/harbor-portal:1.10.0-debian-9-r0
-    docker tag adef6d703e66 ${registry_host}/bitnami/harbor-core:1.10.0-debian-9-r3
-    docker tag 057377fcb879 ${registry_host}/bitnami/harbor-jobservice:1.10.0-debian-9-r3
-    docker tag 9d612e5956c4 ${registry_host}/bitnami/chartmuseum:0.11.0-debian-9-r1
-    docker tag 8afee10225bd ${registry_host}/bitnami/harbor-registry:1.10.0-debian-9-r3
-    docker tag 810432b24ea0 ${registry_host}/bitnami/harbor-registryctl:1.10.0-debian-9-r3
-    docker tag 4970db9b1e5f ${registry_host}/bitnami/harbor-clair:1.10.0-debian-9-r3
-    docker tag dac437e264bd ${registry_host}/bitnami/harbor-notary-server:1.10.0-debian-9-r3
-    docker tag ef51b2e2f1cf ${registry_host}/bitnami/harbor-notary-signer:1.10.0-debian-9-r3
-    docker tag 14f7a3ce8fb7 ${registry_host}/bitnami/nginx:1.16.1-debian-9-r116
-    docker tag ff2799e30418 ${registry_host}/bitnami/minideb:stretch
-    docker tag d770c426a6fa ${registry_host}/bitnami/postgresql:11.6.0-debian-9-r0
-    docker tag f76c863e298b ${registry_host}/bitnami/postgres-exporter:0.7.0-debian-9-r12
-    docker tag 75ff9b143e44 ${registry_host}/bitnami/redis:5.0.7-debian-9-r0
-    docker tag 4f8dcc20b014 ${registry_host}/bitnami/redis-sentinel:5.0.6-debian-9-r6
-    docker tag 2f6296b551e9 ${registry_host}/bitnami/redis-exporter:1.3.4-debian-9-r4
+    docker tag d463d8c692e8 ${registry_host}/${registry_project}/bitnami/harbor-portal:1.10.0-debian-9-r0
+    docker tag adef6d703e66 ${registry_host}/${registry_project}/bitnami/harbor-core:1.10.0-debian-9-r3
+    docker tag 057377fcb879 ${registry_host}/${registry_project}/bitnami/harbor-jobservice:1.10.0-debian-9-r3
+    docker tag 9d612e5956c4 ${registry_host}/${registry_project}/bitnami/chartmuseum:0.11.0-debian-9-r1
+    docker tag 8afee10225bd ${registry_host}/${registry_project}/bitnami/harbor-registry:1.10.0-debian-9-r3
+    docker tag 810432b24ea0 ${registry_host}/${registry_project}/bitnami/harbor-registryctl:1.10.0-debian-9-r3
+    docker tag 4970db9b1e5f ${registry_host}/${registry_project}/bitnami/harbor-clair:1.10.0-debian-9-r3
+    docker tag dac437e264bd ${registry_host}/${registry_project}/bitnami/harbor-notary-server:1.10.0-debian-9-r3
+    docker tag ef51b2e2f1cf ${registry_host}/${registry_project}/bitnami/harbor-notary-signer:1.10.0-debian-9-r3
+    docker tag 14f7a3ce8fb7 ${registry_host}/${registry_project}/bitnami/nginx:1.16.1-debian-9-r116
+    docker tag ff2799e30418 ${registry_host}/${registry_project}/bitnami/minideb:stretch
+    docker tag d770c426a6fa ${registry_host}/${registry_project}/bitnami/postgresql:11.6.0-debian-9-r0
+    docker tag f76c863e298b ${registry_host}/${registry_project}/bitnami/postgres-exporter:0.7.0-debian-9-r12
+    docker tag 75ff9b143e44 ${registry_host}/${registry_project}/bitnami/redis:5.0.7-debian-9-r0
+    docker tag 4f8dcc20b014 ${registry_host}/${registry_project}/bitnami/redis-sentinel:5.0.6-debian-9-r6
+    docker tag 2f6296b551e9 ${registry_host}/${registry_project}/bitnami/redis-exporter:1.3.4-debian-9-r4
 
 
-    docker push ${registry_host}/bitnami/harbor-portal:1.10.0-debian-9-r0
-    docker push ${registry_host}/bitnami/harbor-core:1.10.0-debian-9-r3
-    docker push ${registry_host}/bitnami/harbor-jobservice:1.10.0-debian-9-r3
-    docker push ${registry_host}/bitnami/chartmuseum:0.11.0-debian-9-r1
-    docker push ${registry_host}/bitnami/harbor-registry:1.10.0-debian-9-r3
-    docker push ${registry_host}/bitnami/harbor-registryctl:1.10.0-debian-9-r3
-    docker push ${registry_host}/bitnami/harbor-clair:1.10.0-debian-9-r3
-    docker push ${registry_host}/bitnami/harbor-notary-server:1.10.0-debian-9-r3
-    docker push ${registry_host}/bitnami/harbor-notary-signer:1.10.0-debian-9-r3
-    docker push ${registry_host}/bitnami/nginx:1.16.1-debian-9-r116
-    docker push ${registry_host}/bitnami/minideb:stretch
-    docker push ${registry_host}/bitnami/postgresql:11.6.0-debian-9-r0
-    docker push ${registry_host}/bitnami/postgres-exporter:0.7.0-debian-9-r12
-    docker push ${registry_host}/bitnami/redis:5.0.7-debian-9-r0
-    docker push ${registry_host}/bitnami/redis-sentinel:5.0.6-debian-9-r6
-    docker push ${registry_host}/bitnami/redis-exporter:1.3.4-debian-9-r4
+    docker push ${registry_host}/${registry_project}/bitnami/harbor-portal:1.10.0-debian-9-r0
+    docker push ${registry_host}/${registry_project}/bitnami/harbor-core:1.10.0-debian-9-r3
+    docker push ${registry_host}/${registry_project}/bitnami/harbor-jobservice:1.10.0-debian-9-r3
+    docker push ${registry_host}/${registry_project}/bitnami/chartmuseum:0.11.0-debian-9-r1
+    docker push ${registry_host}/${registry_project}/bitnami/harbor-registry:1.10.0-debian-9-r3
+    docker push ${registry_host}/${registry_project}/bitnami/harbor-registryctl:1.10.0-debian-9-r3
+    docker push ${registry_host}/${registry_project}/bitnami/harbor-clair:1.10.0-debian-9-r3
+    docker push ${registry_host}/${registry_project}/bitnami/harbor-notary-server:1.10.0-debian-9-r3
+    docker push ${registry_host}/${registry_project}/bitnami/harbor-notary-signer:1.10.0-debian-9-r3
+    docker push ${registry_host}/${registry_project}/bitnami/nginx:1.16.1-debian-9-r116
+    docker push ${registry_host}/${registry_project}/bitnami/minideb:stretch
+    docker push ${registry_host}/${registry_project}/bitnami/postgresql:11.6.0-debian-9-r0
+    docker push ${registry_host}/${registry_project}/bitnami/postgres-exporter:0.7.0-debian-9-r12
+    docker push ${registry_host}/${registry_project}/bitnami/redis:5.0.7-debian-9-r0
+    docker push ${registry_host}/${registry_project}/bitnami/redis-sentinel:5.0.6-debian-9-r6
+    docker push ${registry_host}/${registry_project}/bitnami/redis-exporter:1.3.4-debian-9-r4
     #harbor end
 }
 

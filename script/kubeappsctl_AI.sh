@@ -34,8 +34,9 @@ function set_docker_config() {
     cwd=$(pwd)
     cd ${PROJECT_DIR}
     url=$1
-    user=$2
-    password=$3
+    project=$2
+    user=$3
+    password=$4
     authed=$(echo -n ${user}:${password} | base64)
     #bug
     # sed -i '/registry/c\ \"\'${url}'\",' utils/docker-config.json
@@ -66,8 +67,8 @@ function set_docker_config() {
     # printf "$all_variables_source\ncat << EOF\n$registryfile\nEOF" | bash >apps/jenkins/values.yaml
 
     # 替换变量
-    sed "s/imageregistryvalue/\"${url}\"/g" apps/tensorflow-notebook/values_default.yaml > apps/tensorflow-notebook/values.yaml
-    sed "s/imageregistryvalue/\"${url}\"/g" apps/tensorflow-serving/values_default.yaml > apps/tensorflow-serving/values.yaml
+    sed "s/imageregistryvalue/\"${url}\/${project}\"/g" apps/tensorflow-notebook/values_default.yaml > apps/tensorflow-notebook/values.yaml
+    sed "s/imageregistryvalue/\"${url}\/${project}\"/g" apps/tensorflow-serving/values_default.yaml > apps/tensorflow-serving/values.yaml
 
 
 }
@@ -93,11 +94,14 @@ function env_check() {
     echo "安装 Push Plugins 完成"
 }
 registry_host=""
+registry_project=""
 registry_user=""
 registry_pass=""
 function set_external_registry() {
 
     read_from_input registry_host "请输入registry的域名" "" "${registry_host}"
+
+    read_from_input registry_project "请输入registry的项目名" "" "${registry_project}"
 
     read_from_input registry_user "请输入registry的用户名" "" "${registry_user}"
 
@@ -109,14 +113,15 @@ function set_external_registry() {
     #     set_external_registry
     #     return
     # fi
-    set_docker_config ${registry_host} ${registry_user} ${registry_pass}
+    set_docker_config ${registry_host} ${registry_project} ${registry_user} ${registry_pass}
 }
 
 function set_internal_registry() {
     registry_host="registry.kubeapps.fit2cloud.com"
+    registry_project="kubeapps-plus"
     registry_user="admin"
     registry_pass="admin123"
-    set_docker_config ${registry_host} ${registry_user} ${registry_pass}
+    set_docker_config ${registry_host} ${registry_project} ${registry_user} ${registry_pass}
 }
 
 function set_registry() {
@@ -138,12 +143,12 @@ function docker_upload_image() {
     cd ${PROJECT_DIR}/apps/image
 
     docker load < tensorflow.jar
-    docker tag ac494312205a ${registry_host}/tensorflow/tensorflow:1.6.0-devel
-    docker push ${registry_host}/tensorflow/tensorflow:1.6.0-devel
+    docker tag ac494312205a ${registry_host}/${registry_project}/tensorflow/tensorflow:1.6.0-devel
+    docker push ${registry_host}/${registry_project}/tensorflow/tensorflow:1.6.0-devel
 
     docker load < tf-model-server.jar
-    docker tag e468a5495acb ${registry_host}/cheyang/tf-model-server:1.4
-    docker push ${registry_host}/cheyang/tf-model-server:1.4
+    docker tag e468a5495acb ${registry_host}/${registry_project}/cheyang/tf-model-server:1.4
+    docker push ${registry_host}/${registry_project}/cheyang/tf-model-server:1.4
 
 
 }

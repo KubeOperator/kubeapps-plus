@@ -1,17 +1,17 @@
 <template>
     <div class="catalog-content" v-loading.fullscreen.lock="loading" element-loading-text="Loading" element-loading-background="rgba(0, 0, 0, 0.1)">
         <!-- header start -->
-        <el-row>
+        <el-row style="border-bottom: 2px solid #f1f1f1;">
             <el-col :span="24">
                 <div class="grid-content">
-                    <h1 style="float: left">{{chartName}}</h1>
+                    <h1 style="float: left;margin: 0 0 0 1em !important;">{{chartName}}</h1>
                 </div>
             </el-col>
         </el-row>
         <!-- header end -->
 
         <!-- 间隔线 start -->
-        <el-divider></el-divider>
+<!--        <el-divider></el-divider>-->
         <!-- 间隔线 end -->
 
         <!-- foot start -->
@@ -95,9 +95,9 @@
                 modePath: 'ace/mode/yaml', // 同上
                 rules: {
                     releaseName: [
-                        { required: true, message: '请输入名称', trigger: 'blur' },
-                        { min: 1, max: 53, message: '长度必须在 1 到 53 个字符', trigger: 'blur' },
-                        { pattern: /(([A-Za-z0-9][-A-Za-z0-9_.]*)?[A-Za-z0-9])+$/, message: '只支持英文字母与数字，中间用 - 连接',trigger: 'blur' }
+                        { required: true, message: this.$t('message.please_input'), trigger: 'blur' },
+                        { min: 1, max: 53, message: this.$t('message.must_1_53_characters'), trigger: 'blur' },
+                        { pattern: /(([A-Za-z0-9][-A-Za-z0-9_.]*)?[A-Za-z0-9])+$/, message: this.$t('message.en_letter_number'),trigger: 'blur' }
                     ]
                 }
             }
@@ -175,31 +175,31 @@
                     }
                 });
                if(!flag){
-                   noticeMessage(this, ' 名称校验不通过，请重新填写 ', 'warning')
+                   noticeMessage(this, this.$t('message.name_verification_failed'), 'warning')
                    return;
                }
 //                 let namespace = 'namespace: ' + this.$store.state.namespaces.activeSpace
 //                 this.value_yaml = `${namespace}
 // ${this.aceEditor.getValue()}`
                 if (!releaseName) {
-                    noticeMessage(this, ' 名称不允许为空, 请填写名称 ', 'warning')
+                    noticeMessage(this, this.$t('message.name_cannot_be_empty'), 'warning')
                 } else if (!version) {
-                    noticeMessage(this, ' 版本不允许为空, 请填写版本 ', 'warning')
+                    noticeMessage(this, this.$t('message.version_cannot_be_empty'), 'warning')
                 } else if (!this.aceEditor.getValue()) {
-                    noticeMessage(this, ' 值(YAML)不允许为空, 请填写值(YAML) ', 'warning')
+                    noticeMessage(this, this.$t('yaml_cannot_be_empty'), 'warning')
                 } else {
-                    await this.$confirm('即将开始部署, 是否继续?', '提示', {
-                        confirmButtonText: '确定',
-                        cancelButtonText: '取消',
+                    await this.$confirm(this.$t('message.start_deployment'), this.$t('message.tips'), {
+                        confirmButtonText: this.$t('message.sure'),
+                        cancelButtonText: this.$t('message.cancle'),
                         type: 'warning'
                     }).then(() => {
-                        noticeMessage(this, ' 正在部署, 请稍等 ', 'success')
+                        noticeMessage(this, this.$t('message.deploy_now'), 'success')
                         this.loading = true
                         this.deploy(releaseName, version, chartName)
                     }).catch(() => {
                         this.$message({
                             type: 'info',
-                            message: '已取消部署'
+                            message: this.$t('message.cancel_deploy')
                         });
                     });
                 }
@@ -220,16 +220,15 @@
                 await http(getParamApi(apiSetting.kubernetes.deployReleases, this.$store.state.namespaces.activeSpace, 'releases'), params).then((res) => {
                     this.timeout(14000);
                     if (res.status == 200) {
-                        noticeMessage(this, releaseName + ' 部署成功! ', 'success')
+                        noticeMessage(this, releaseName + this.$t('message.deploy_success'), 'success')
                         this.$router.push('/apps/ns/' + this.$store.state.namespaces.activeSpace + '/' + releaseName)
                     } else if (res.status == 409){
-                        noticeMessage(this, releaseName + ' 部署重复: ' + res.data.message, 'warning')
+                        noticeMessage(this, releaseName + this.$t('message.deployment_duplicate') + res.data.message, 'warning')
                     } else {
-                        console.log('部署失败', res)
-                        noticeMessage(this, releaseName + ' 部署失败: ' + res.data.message, 'error')
+                        noticeMessage(this, releaseName + this.$t('message.deployment_failed') + res.data.message, 'error')
                     }
                 }).catch(msg => {
-                    noticeMessage(this, releaseName + ' 请求失败: ' + msg.data, 'error')
+                    noticeMessage(this, releaseName + this.$t('message.request_failed') + msg.data, 'error')
                 })
                 this.loading = false
             },
@@ -244,7 +243,7 @@
 
     .catalog-content {
         padding: 1em;
-        height: calc(100vh - 160px);
+        height: calc(100vh - 120px);
     }
 
     .foot-gril {

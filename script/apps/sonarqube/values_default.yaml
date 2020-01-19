@@ -8,10 +8,10 @@ imageRegistry: imageregistryvalue
 deploymentStrategy: {}
 
 image:
-  repository: sonarqube
+  repository: sonarqube/sonarqube
   tag: lts
   # If using a private repository, the name of the imagePullSecret to use
-  # pullSecret: my-repo-secret
+  pullSecret: sonar-registry-fit2cloud-com-key
 
 # Set security context for sonarqube pod
 securityContext:
@@ -23,7 +23,7 @@ elasticsearch:
   bootstrapChecks: true
 
 service:
-  type: ClusterIP
+  type: NodePort
   externalPort: 9000
   internalPort: 9000
   labels:
@@ -34,10 +34,10 @@ service:
   #   - 0.0.0.0/0
   # loadBalancerIP: 1.2.3.4
 ingress:
-  enabled: false
+  enabled: true
   # Used to create an Ingress record.
   hosts:
-    - name: sonar.organization.com
+    - name: sonar.apps.fit2cloud.com
       # default paths for "/" and "/*" will be added
       path: /
       # If a different path is defined, that path and {path}/* will be added to the ingress resource

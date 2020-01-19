@@ -18,6 +18,8 @@ spec:
       labels:
         app: {{ template "gitlab-ce.fullname" . }}
     spec:
+      imagePullSecrets:
+        - name: gitlab-registry-fit2cloud-com-key
       containers:
       - name: {{ template "gitlab-ce.fullname" . }}
         image: "{{ .Values.imageRegistry }}/{{ .Values.image.repository }}:{{ .Values.image.tag }}"

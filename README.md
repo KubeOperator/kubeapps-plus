@@ -12,6 +12,8 @@ KubeApps Plus 是 [KubeOperator](https://github.com/KubeOperator/KubeOperator) �
 
 其他的应用可以通过自定义 Helm Chart 仓库进行安装。
 
+ ![gitlab-1](docs/img/gitlab-apps.png)
+
 ## 主要功能
 
 - 从 Helm Chart 仓库中浏览并部署 Helm Chart 应用；
@@ -25,14 +27,37 @@ KubeApps Plus 是 [KubeOperator](https://github.com/KubeOperator/KubeOperator) �
 - 手动安装：使用如下脚本自行在已有 K8s 集群中安装。详情请参考： [KubeApps Plus 安装指南](chart/README.md)；
 
 ```bash
+# 登录 K8s 集群的 master 节点
 git clone https://github.com/KubeOperator/kubeapps-plus.git
 cd kubeapps-plus
 helm install --name kubeapps-plus --namespace kubeapps-plus ./chart
 ```
 
+## 安装 Helm Charts 离线包
+
+Helm Chart 离线包包括两个离线包，一个是 CI 相关的应用包括 Gitlab、Harbor、Jenkins 和 Sonarqube，另外一个是 AI 机器学习应用包括 Tensorflow-notebook 和 Tensorflow-serving，用户可以根据需要下载并安装。
+请自行下载 Chart 离线包，并复制到目标机器的 /tmp 目录下。
+
+- 下载链接: https://github.com/KubeOperator/KubeOperator/releases
+
+默认使用本地 ChartMuseum 仓库，如果需要修改仓库地址，请修改 kubeappsctl.sh 文件里的 repo_url、repo_username、repo_password 等参数。
+安装过程中需要手动输入的信息，选择默认值，即选择不使用外部 Docker Image registry 和不使用外部 Chart 仓库。
+
+```bash
+# 首先登录 master 节点，其次进入 tmp (或其他自定义)目录
+cd /tmp
+wget http://xxx.xxx.xxx.xxx/kubeapps-plus/kubeapps-plus-package-v1.0-CI-xx.tar.gz
+# 解压文件到本目录
+tar zxvf kubeapps-plus-package-v1.0-CI-xx.tar.gz
+# 解压后会出现一个 kubeapps-plus-CI 目录
+cd kubeapps-plus-CI
+# 执行 kubeappsctl.sh shell 文件,将会下载镜像并推送到本地(或自定义)仓库
+./kubeappsctl.sh start
+```
+
 ## 使用 KubeApps Plus
 
-- 具体请参考：[KubeApps Plus 使用指南](docs/user/getting-started.md)
+- 具体请参考：[KubeApps Plus 使用指南](docs/user/getting-started.md)；
 
 ## KubeApps Plus 开发指南
 

@@ -5,11 +5,9 @@
                 mode="horizontal"
                 text-color="#ffffff"
                 background-color="#004971"
-                active-text-color="#ffb876"
-        >
+                active-text-color="#ffb876">
             <el-menu-item index="1">
-                <img src="../../assets/image/logo.svg" alt class="logo_header"/>
-                <i class="icon_font" style="color: #fc5a4a;margin-top: 5px;">&#xeb9b;</i>
+                <img src="../../assets/image/logo.png" alt class="logo_header"/>
             </el-menu-item>
             <el-menu-item
                     index="2"
@@ -42,6 +40,7 @@
                     {{$t('message.configuration')}}
                 </template>
                 <el-menu-item index="6-1" @click="appRepositories">{{$t('message.app_repositories')}}</el-menu-item>
+                <el-menu-item index="6-2" @click="updateNamespace">{{$t('message.update_namespace')}}</el-menu-item>
 <!--                <el-menu-item index="6-2" @click="serviceBroker">{{$t('message.service_broker')}}</el-menu-item>-->
             </el-submenu>
             <el-submenu index="7" class="header-right" v-if="this.$route.path != '/'">
@@ -59,7 +58,10 @@
 </template>
 
 <script>
-    // import Store from "../store/store.js";
+    import http from "../utils/httpAxios";
+    import apiSetting from "../utils/apiSetting";
+    import noticeMessage from "../utils/noticeMessage";
+
     export default {
         name: "basicHeader",
         props: {
@@ -95,7 +97,17 @@
             changeActiveSpace(name) {
                 this.$store.commit("updateActiveSapce", name);
                 this.$store.dispatch('getRelease')
-                //todo 处理加载逻辑
+            },
+            updateNamespace() {
+                noticeMessage(this, this.$t('message.update_wait'), 'success')
+                http(apiSetting.kubernetes.getNamespaces).then(res => {
+                    if (res.status == 200) {
+                        noticeMessage(this, this.$t('message.update_success'), 'success')
+                        this.$store.commit('initNamespace', res.data)
+                    } else {
+                        noticeMessage(this, this.$t('message.update_failed') + res.data, 'error')
+                    }
+                });
             }
         },
         computed: {

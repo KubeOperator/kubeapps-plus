@@ -4,26 +4,19 @@
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
-  name: {{ template "harbor.registry" . }}
+  name: {{ include "harbor.registry" . }}
   {{- if eq .Values.persistence.resourcePolicy "keep" }}
   annotations:
     helm.sh/resource-policy: keep
   {{- end }}
-  labels:
-{{ include "harbor.labels" . | indent 4 }}
-    component: registry
+  labels: {{- include "harbor.labels" . | nindent 4 }}
+    app.kubernetes.io/component: registry
 spec:
-  accessModes: 
+  accessModes:
     - {{ $registry.accessMode }}
   resources:
     requests:
       storage: {{ $registry.size }}
-  {{- if $registry.storageClass }}
-    {{- if eq "-" $registry.storageClass }}
-  storageClassName: ""
-    {{- else }}
-  storageClassName: {{ $registry.storageClass }}
-    {{- end }}
-  {{- end }}
+  {{ include "harbor.registry.storageClass" . }}
 {{- end }}
 {{- end }}

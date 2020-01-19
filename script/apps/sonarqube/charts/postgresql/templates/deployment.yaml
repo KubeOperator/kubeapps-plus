@@ -24,9 +24,11 @@ spec:
       tolerations:
 {{ toYaml .Values.tolerations | indent 8 }}
       {{- end }}
+      imagePullSecrets:
+      - name: sonar-registry-fit2cloud-com-key
       containers:
       - name: {{ template "postgresql.fullname" . }}
-        image: "{{ .Values.image }}:{{ .Values.imageTag }}"
+        image: "{{.Values.imageRegistry}}/{{ .Values.image }}:{{ .Values.imageTag }}"
         imagePullPolicy: {{ default "" .Values.imagePullPolicy | quote }}
         env:
         - name: POSTGRES_USER
@@ -76,7 +78,7 @@ spec:
           subPath: {{ .Values.persistence.subPath }}
 {{- if .Values.metrics.enabled }}
       - name: metrics
-        image: "{{ .Values.metrics.image }}:{{ .Values.metrics.imageTag }}"
+        image: "{{.Values.imageRegistry}}/{{ .Values.metrics.image }}:{{ .Values.metrics.imageTag }}"
         imagePullPolicy: {{ default "" .Values.metrics.imagePullPolicy | quote }}
         env:
         - name: DATA_SOURCE_NAME

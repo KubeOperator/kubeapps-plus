@@ -1,14 +1,25 @@
 <template>
-  <div style="height: calc(100vh - 160px);" class="main_page" v-loading.fullscreen.lock="loading" element-loading-text="Loading" element-loading-background="rgba(0, 0, 0, 0.1)">
+  <div style="height: calc(100vh - 120px);" class="main_page" v-loading.fullscreen.lock="loading" element-loading-text="Loading" element-loading-background="rgba(0, 0, 0, 0.1)">
     <el-row>
       <el-col :span="4" :offset="2">
         <el-card :body-style="{ padding: '0px'}" style="text-align:left">
           <div class="catalog-image">
-            <img v-show="catalog.icon" :src="catalog.icon" class="image" />
-            <img v-show="!catalog.icon" src="../../assets/image/default.png" class="image" />
+            <img v-if="!catalog.icon" src="../../assets/image/default.png" class="image">
+            <img v-else-if="(catalog.icon.search('tensorflow')>=0)" src="../../assets/image/charts/tensorflow-stack-110x117.png" class="image" require>
+            <img v-else-if="(catalog.icon.search('gitlab')>=0)" src="../../assets/image/charts/gitlab-stack-110x117.png" class="image">
+            <img v-else-if="(catalog.icon.search('harbor')>=0)" src="../../assets/image/charts/harbor-stack-110x117.png" class="image" require>
+            <img v-else-if="(catalog.icon.search('jenkins')>=0)" src="../../assets/image/charts/jenkins-stack-110x117.png" class="image" require>
+            <img v-else-if="(catalog.icon.search('sonarqube')>=0)" src="../../assets/image/charts/sonarqube-stack-110x117.png" class="image" require>
+            <img v-else-if="(catalog.icon.search('gitlab')>=0)" src="../../assets/image/charts/gitlab-stack-110x117.png" class="image" require>
+            <img v-else-if="(catalog.icon.search('istio')>=0)" src="../../assets/image/charts/istio-110x117.png" class="image" require>
+            <img v-else-if="(catalog.icon.search('grafana')>=0)" src="../../assets/image/charts/grafana-stack-110x117.png" class="image" require>
+            <img v-else-if="(catalog.icon.search('kubeapps-plus')>=0)" src="../../assets/image/charts/kubeapps-plus-stack-110x117.png" class="image" require>
+            <img v-else-if="(catalog.icon.search('loki')>=0)" src="../../assets/image/charts/loki-stack-110x117.png" class="image" require>
+            <img v-else-if="(catalog.icon.search('prometheus')>=0)" src="../../assets/image/charts/prometheus-stack-110x117.png" class="image" require>
+            <img v-else :src="catalog.icon" class="image" require>
           </div>
           <div style="padding: 1em;">
-            <h5 class="catalog-label" style="font-size: 18px;">{{catalog.releaseName}}</h5>
+            <h5 class="catalog-label" style="font-size: 18px;">{{catalog.releaseName}} ({{catalog.name}})</h5>
             <p class="catalog-label" style="font-size: 14px;">{{catalog.description}}</p>
             <el-divider></el-divider>
             <p class="label" style="font-size: 12px;">{{'App Version: ' + catalog.appv}}</p>
@@ -115,9 +126,9 @@
         </div>
       </el-col>
     </el-row>
-    <el-dialog title="提示" :visible.sync="dialogVisible" width="30%">
-      <p>{{$t('message.delete_chart')}}</p>
-      <el-switch v-model="purge" :active-text="this.$t('message.delete_valume')"></el-switch>
+    <el-dialog :title="$t('message.tips')" :visible.sync="dialogVisible" width="30%" center>
+      <h3 style="margin-top: 0">{{$t('message.delete_chart')}}</h3>
+      <el-switch :width="60" v-model="purge" :active-text="this.$t('message.delete_valume')"></el-switch>
       <span slot="footer" class="dialog-footer">
         <el-button @click="dialogVisible = false">{{$t('message.cancel')}}</el-button>
         <el-button type="primary" @click="deleteapp">{{$t('message.confirm')}}</el-button>
@@ -134,41 +145,47 @@ import "ace-builds/src-noconflict/mode-javascript"; // 默认设置的语言模�
 import apiSetting from "../utils/apiSetting.js";
 import http from "../utils/httpAxios.js";
 import jsyaml from "js-yaml";
+import noticeMessage from "../utils/noticeMessage";
+import getParamApi from "../utils/getParamApi";
 // import { Base64 } from "js-base64";
 /* eslint-disable */
 export default {
   created: function() {
-    this.url.url =
-      apiSetting.kubernetes.getdetailone.url +
-      this.$route.params.namespace +
-      "/releases/" +
-      this.$route.params.id;
+    this.url = getParamApi(apiSetting.kubernetes.getdetailone, this.$route.params.namespace, 'releases', this.$route.params.id)
   },
   mounted: function() {
     this.getResources();
   },
   methods: {
     deleteapp() {
-      let baseurl = apiSetting.kubernetes.deleteapp;
-      baseurl.url =
-        baseurl.url +
-        this.$route.params.namespace +
-        "/releases/" +
-        this.$route.params.id;
-      if (this.purge) {
-        baseurl.url = baseurl.url + "?purge=true";
-      }
-      http(baseurl).then(
-
+      console.log(this.catalog.name)
+      let baseurl = getParamApi(apiSetting.kubernetes.deleteapp, this.$route.params.namespace, 'releases', this.catalog.name, this.purge ? '?purge=true' : '');
+      noticeMessage(this, this.$t('message.wait_delete'), 'success')
+      this.loading = true
+      http(baseurl).then((res)=> {
+        this.timeout(2000);
+        if (res.status == 200) {
+          noticeMessage(this, this.$t('message.delete_success'), 'success')
+          this.loading = false
           this.$router.push("/applications")
-      );
+        } else {
+          console.log(res)
+          noticeMessage(this, this.$t('message.delete_failed') + res.data.message, 'error')
+          this.loading = false
+        }
+      });
+    },
+    timeout: async function(ms) {
+      await new Promise((resolve) => {
+        setTimeout(resolve, ms);
+      })
     },
     getdebug() {
     },
     printdebug(data, log) {
     },
     handleClose(done) {
-      this.$confirm("确认关闭？").then(_ => {
+      this.$confirm(this.$t('message.if_close')).then(_ => {
         done(_);
       });
     },
@@ -181,6 +198,7 @@ export default {
         this.catalog.appv = res.data.data.chart.metadata.appVersion;
         this.catalog.releaseName = res.data.data.chart.metadata.name;
         this.catalog.chartv = res.data.data.chart.metadata.version;
+        this.catalog.name = res.data.data.name;
         this.note = res.data.data.info.status.notes;
         this.aceEditor = ace.edit(this.$refs.ace, {
           maxLines: 30, // 最大行数, 超过会自动出现滚动条
@@ -233,6 +251,8 @@ export default {
                 ? res.data.status.availableReplicas
                 : 0
             });
+          } else {
+            noticeMessage(this, this.$t('message.error') + res.data.message, 'error')
           }
         });
       }
@@ -248,22 +268,23 @@ export default {
         http(_basicurl).then(res => {
           this.serviceDetail.push({
             name: res.data.metadata["name"],
-            type: res.data.spec.type,
-            cluster: res.data.spec.clusterIP,
+            type: res.data.spec ? res.data.spec.type : '',
+            cluster: res.data.spec ? res.data.spec.clusterIP : '',
             //TO_DO
             external: "NONE",
-            port:
+            port: res.data.spec ?
               res.data.spec.ports[0].port +
               "/" +
               res.data.spec.ports[0].protocol
+                    : ''
           });
         });
       }
       this.loading = false;
     },
     open(data) {
-      this.$alert(data, "密钥", {
-        confirmButtonText: "确定"
+      this.$alert(data, this.$t('message.secrets'), {
+        confirmButtonText: this.$t('message.sure')
         // callback: action => {
         //   this.$message({
         //     type: "info",

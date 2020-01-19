@@ -1,9 +1,9 @@
 <template>
     <div class="footer">
-        <img class="login_footer" src="../../assets/image/logo-white.png"/>
-        <div class="login_footer_p">
-            <i class="iconfont">&#xea0a;</i>
-        </div>
+<!--        <img class="login_footer" src="../../assets/image/logo-white.png"/>-->
+<!--        <div class="login_footer_p">-->
+<!--            <i class="iconfont">&#xea0a;</i>-->
+<!--        </div>-->
     </div>
 </template>
 
@@ -15,7 +15,7 @@
 
 <style scoped>
     .footer {
-        height: 100px;
+        height: 60px;
         background-color: rgb(0, 74, 113);
     }
 

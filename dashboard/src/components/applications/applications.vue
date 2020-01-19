@@ -1,18 +1,18 @@
 <template>
   <div class="dashborad" element-loading-text="Loading" element-loading-background="rgba(0, 0, 0, 0.1)">
-    <el-row style="margin-top:10px;border-bottom: 2px solid #f1f1f1;">
-      <el-col :md="6" :lg="4">
-        <h1 class="app_title" style="margin:0.27em">{{$t('message.application')}}</h1>
-      </el-col>
-      <el-col :md="{span:4,offest:2}" :lg="3">
-        <div style="margin: 1.2em 0;">
+    <el-row style="border-bottom: 2px solid #f1f1f1;">
+<!--      <el-col :md="6" :lg="4">-->
+<!--        <h1 class="app_title" >{{$t('message.application')}}</h1>-->
+<!--      </el-col>-->
+      <el-col :md="{span:12,offest:2}" :lg="7">
+        <div style="margin: 1em 0 0 2em;">
           <el-input :placeholder="this.$t('message.Search_charts')" v-model="search">
             <i slot="prefix" class="el-input__icon el-icon-search"></i>
           </el-input>
         </div>
       </el-col>
-      <el-col :md="6" :lg="4">
-        <div style="margin: 1.8em 0;">
+      <el-col :md="8" :lg="4">
+        <div style="margin: 1.6em 0;">
           <el-switch
             v-model="showdelete"
             :active-text="this.$t('message.show_deleted_apps')"
@@ -21,11 +21,16 @@
         </div>
       </el-col>
       <el-col :md="{span:4,offest:2}" :lg="{span:6,offset:7}">
-        <div style="margin: 1.2em 0;">
+        <div style="margin: 1em 0;">
           <el-button type="primary" @click="getReleaseApp">{{$t('message.deploy_app')}} &nbsp;<i class="el-icon-d-arrow-right"/></el-button>
         </div>
       </el-col>
     </el-row>
+
+    <!-- 间隔线 start -->
+<!--    <el-divider></el-divider>-->
+    <!-- 间隔线 end -->
+
     <el-row :gutter="24" v-show="this.releases.length==0">
       <el-col :span="20" :offset="2">
         <div class="alert margin-c margin-t-bigger">
@@ -75,13 +80,24 @@
         v-show="(catalog.status!='DELETED' || showdelete) && (catalog.releaseName.search(search)>=0)"
       >
         <el-card
-          style="cursor:point;"
           :body-style="{ padding: '0px'}"
-          @click.native="$router.push('/apps/ns/'+ catalog.namespace + '/' + catalog.releaseName)"
-        >
+          @click.native="$router.push('/apps/ns/'+ catalog.namespace + '/' + catalog.releaseName)">
           <div class="catalog-image">
-            <img v-show="catalog.icon" :src="catalog.icon" class="image" />
-            <img v-show="!catalog.icon" src="../../assets/image/default.png" class="image" />
+            <a>
+              <img v-if="!catalog.icon" src="../../assets/image/default.png" class="image">
+              <img v-else-if="(catalog.icon.search('tensorflow')>=0)" src="../../assets/image/charts/tensorflow-stack-110x117.png" class="image" require>
+              <img v-else-if="(catalog.icon.search('gitlab')>=0)" src="../../assets/image/charts/gitlab-stack-110x117.png" class="image">
+              <img v-else-if="(catalog.icon.search('harbor')>=0)" src="../../assets/image/charts/harbor-stack-110x117.png" class="image" require>
+              <img v-else-if="(catalog.icon.search('jenkins')>=0)" src="../../assets/image/charts/jenkins-stack-110x117.png" class="image" require>
+              <img v-else-if="(catalog.icon.search('sonarqube')>=0)" src="../../assets/image/charts/sonarqube-stack-110x117.png" class="image" require>
+              <img v-else-if="(catalog.icon.search('gitlab')>=0)" src="../../assets/image/charts/gitlab-stack-110x117.png" class="image" require>
+              <img v-else-if="(catalog.icon.search('istio')>=0)" src="../../assets/image/charts/istio-110x117.png" class="image" require>
+              <img v-else-if="(catalog.icon.search('grafana')>=0)" src="../../assets/image/charts/grafana-stack-110x117.png" class="image" require>
+              <img v-else-if="(catalog.icon.search('kubeapps-plus')>=0)" src="../../assets/image/charts/kubeapps-plus-stack-110x117.png" class="image" require>
+              <img v-else-if="(catalog.icon.search('loki')>=0)" src="../../assets/image/charts/loki-stack-110x117.png" class="image" require>
+              <img v-else-if="(catalog.icon.search('prometheus')>=0)" src="../../assets/image/charts/prometheus-stack-110x117.png" class="image" require>
+              <img v-else :src="catalog.icon" class="image" require>
+            </a>
           </div>
           <div style="padding: 1em;">
             <h3 class="catalog-label">{{catalog.releaseName}}</h3>
@@ -100,8 +116,11 @@
                 :type="checkType(catalog.status)"
                 size="small"
                 class="button-right"
-                round
-              >{{catalog.status | uppercase }}</el-button>
+                round>
+                <span v-if="catalog.status == 'DELETED'">{{$t('message.delete_status')}}</span>
+                <span v-else-if="catalog.status == 'DEPLOYED'">{{$t('message.deployed_status')}}</span>
+                <span v-else>{{$t('message.failed_status')}}</span>
+              </el-button>
             </div>
           </div>
         </el-card>
@@ -137,12 +156,12 @@ export default {
       this.$router.push("/catalog");
     },
     checkType(type) {
-      if (type == "DELETE") {
+      if (type == "DELETED") {
         return "warning";
-      } else if (type == "FAILED") {
-        return "danger";
-      } else {
+      } else if (type == "DEPLOYED"){
         return "success";
+      } else {
+        return "danger";
       }
     }
   },
@@ -192,7 +211,7 @@ export default {
   margin-top: 1.875em;
 }
 .dashborad {
-  height: calc(100vh - 160px);
+  height: calc(100vh - 120px);
 }
 .catalog-content {
   padding: 1em;

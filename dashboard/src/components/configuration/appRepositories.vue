@@ -1,15 +1,20 @@
 <template>
     <div class="app-repositories-content" v-loading.fullscreen.lock="loading" element-loading-text="Loading" element-loading-background="rgba(0, 0, 0, 0.1)">
-        <el-row>
-            <el-col :span="24">
+        <!-- header start -->
+        <el-row style="border-bottom: 2px solid #f1f1f1;">
+            <el-col :md="6" :lg="4">
                 <div class="grid-content">
-                    <h1 style="float: left">{{$t('message.app_repositories')}}</h1>
+                    <h2 class="app-type">{{$t('message.app_repositories')}}</h2>
                 </div>
             </el-col>
         </el-row>
+        <!-- header end -->
 
-        <el-divider></el-divider>
+        <!-- 间隔线 start -->
+<!--        <el-divider></el-divider>-->
+        <!-- 间隔线 end -->
 
+        <!-- foot start -->
         <el-table
                 :data="tableData"
                 stripe
@@ -46,6 +51,7 @@
         <el-button class="gred-btn" type="primary" icon="el-icon-refresh" @click="refreshAll()">
             {{$t('message.refresh_all')}}
         </el-button>
+        <!-- foot end -->
     </div>
 </template>
 
@@ -93,18 +99,18 @@
                 this.$router.push({name: 'addRepositories', params: params})
             },
             deleteSubmit: async function(row){
-                await this.$confirm('是否确定删除?', '提示', {
-                    confirmButtonText: '确定',
-                    cancelButtonText: '取消',
+                await this.$confirm(this.$t('message.sure_delete'), this.$t('message.tips'), {
+                    confirmButtonText: this.$t('message.sure'),
+                    cancelButtonText: this.$t('message.cancle'),
                     type: 'warning'
                 }).then(() => {
-                    noticeMessage(this, ' 正在删除, 请稍等 ', 'success')
+                    noticeMessage(this, this.$t('message.wait_delete'), 'success')
                     this.loading = true
                     this.deleteRepo(row)
                 }).catch(() => {
                     this.$message({
                         type: 'info',
-                        message: '已取消删除'
+                        message: this.$t('message.cancle')
                     });
                 });
             },
@@ -113,13 +119,13 @@
                 let namespace = row.metadata.namespace
                 await http(getParamApi(apiSetting.kubernetes.delAppRepositorie, namespace, 'apprepositories', name), {}).then((res) => {
                     if (res.status == 200) {
-                        noticeMessage(this, name + ' 删除成功! ', 'success')
+                        noticeMessage(this, name + this.$t('message.delete_success'), 'success')
                         this.refreshAll()
                     } else {
-                        noticeMessage(this, name + ' 删除失败: ' + res, 'error')
+                        noticeMessage(this, name + this.$t('message.delete_failed') + res, 'error')
                     }
                 }).catch(msg => {
-                    noticeMessage(this, name + ' 请求失败: ' + msg.data, 'error')
+                    noticeMessage(this, name + this.$t('message.request_failed') + msg.data, 'error')
                 })
                 this.loading = false
             }
@@ -130,16 +136,19 @@
 <style scoped>
     .app-repositories-content {
         padding: 1em;
-        height: calc(100vh - 160px);
+        height: calc(100vh - 120px);
     }
 
     .grid-content {
         border-radius: 4px;
-        min-height: 5em;
     }
 
     .gred-btn {
         margin: 2em;
         float: left;
+    }
+
+    .app-type {
+        margin:0.27em
     }
 </style>

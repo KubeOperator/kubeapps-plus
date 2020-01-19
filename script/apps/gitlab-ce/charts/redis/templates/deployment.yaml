@@ -8,6 +8,8 @@ metadata:
     release: "{{ .Release.Name }}"
     heritage: "{{ .Release.Service }}"
 spec:
+  imagePullSecrets:
+    - name: gitlab-registry-fit2cloud-com-key
   selector:
     matchLabels:
       app: {{ template "redis.fullname" . }}
@@ -16,6 +18,8 @@ spec:
       labels:
         app: {{ template "redis.fullname" . }}
     spec:
+      imagePullSecrets:
+        - name: gitlab-registry-fit2cloud-com-key
       {{- if .Values.nodeSelector }}
       nodeSelector:
 {{ toYaml .Values.nodeSelector | indent 8 }}

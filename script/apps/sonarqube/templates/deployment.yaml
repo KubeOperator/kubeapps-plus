@@ -41,7 +41,7 @@ spec:
             - "-c"
             - 'mkdir -p $(printf "/opt/sonarqube/${1-%s\n}" temp logs data extensions/downloads extensions/plugins/tmp extensions/plugins) &&
                chown 999:999 -R $(printf "/opt/sonarqube/${1-%s\n}" temp logs data extensions/downloads extensions/plugins/tmp extensions/plugins)'
-          image: busybox:1.31
+          image: {{.Values.imageRegistry}}/busybox:1.31.0
           imagePullPolicy: IfNotPresent
           securityContext:
             privileged: true
@@ -66,7 +66,7 @@ spec:
             subPath: plugins
       {{- if .Values.elasticsearch.configureNode }}
         - name: init-sysctl
-          image: {{ default "busybox:1.31" .Values.plugins.initSysctlContainerImage }}
+          image: {{.Values.imageRegistry}}/busybox:1.31.0
           command:
           - sysctl
           - -w

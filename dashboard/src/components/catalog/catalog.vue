@@ -1,26 +1,25 @@
 <template>
     <div class="catalog-content" v-loading.fullscreen.lock="loading" element-loading-text="Loading" element-loading-background="rgba(0, 0, 0, 0.1)">
         <!-- header start -->
-        <el-row>
-            <el-col :span="24">
-                <div class="grid-content">
-                    <h1 style="float: left">{{$t('message.catalog')}}</h1>
-                    <el-input class="catalog-search"
-                              :placeholder="$t('message.search_charts')"
-                              prefix-icon="el-icon-search"
-                              v-model="input"
-                              clearable>
-                    </el-input>
-                    <!--          <el-button size="medium" icon="el-icon-search" class="catalog-search-btn" @click="handleSelect(input)">-->
-                    <!--            {{$t('message.search')}}-->
-                    <!--          </el-button>-->
-                </div>
-            </el-col>
+        <el-row style="border-bottom: 2px solid #f1f1f1;">
+<!--            <el-col :md="6" :lg="4">-->
+<!--                <div class="grid-content">-->
+<!--                    <h1 class="app-type">{{$t('message.catalog')}}</h1>-->
+<!--                </div>-->
+<!--            </el-col>-->
+<!--            <el-col :md="{span:24,offest:2}" :lg="6">-->
+            <el-input class="catalog-search"
+                      :placeholder="$t('message.search_charts')"
+                      prefix-icon="el-icon-search"
+                      v-model="input"
+                      clearable>
+            </el-input>
+<!--            </el-col>-->
         </el-row>
         <!-- header end -->
 
         <!-- 间隔线 start -->
-        <el-divider></el-divider>
+<!--        <el-divider></el-divider>-->
         <!-- 间隔线 end -->
 
         <!-- foot start -->
@@ -38,6 +37,11 @@
                             <img v-else-if="(catalog.attributes.icon.search('sonarqube')>=0)" src="../../assets/image/charts/sonarqube-stack-110x117.png" class="image" require>
                             <img v-else-if="(catalog.attributes.icon.search('gitlab')>=0)" src="../../assets/image/charts/gitlab-stack-110x117.png" class="image" require>
                             <img v-else-if="(catalog.attributes.icon.search('istio')>=0)" src="../../assets/image/charts/istio-110x117.png" class="image" require>
+                            <img v-else-if="(catalog.attributes.icon.search('tensorflow')>=0)" src="../../assets/image/charts/tensorflow-stack-110x117.png" class="image" require>
+                            <img v-else-if="(catalog.attributes.icon.search('grafana')>=0)" src="../../assets/image/charts/grafana-stack-110x117.png" class="image" require>
+                            <img v-else-if="(catalog.attributes.icon.search('kubeapps-plus')>=0)" src="../../assets/image/charts/kubeapps-plus-stack-110x117.png" class="image" require>
+                            <img v-else-if="(catalog.attributes.icon.search('loki')>=0)" src="../../assets/image/charts/loki-stack-110x117.png" class="image" require>
+                            <img v-else-if="(catalog.attributes.icon.search('prometheus')>=0)" src="../../assets/image/charts/prometheus-stack-110x117.png" class="image" require>
                             <img v-else :src="catalog.attributes.icon" class="image" require>
                         </a>
                     </div>
@@ -52,15 +56,16 @@
                                 catalog.relationships.latestChartVersion.data.version}}
                             </el-button>
                             <el-button size="medium" type="primary" class="button-right" v-if="catalog.id.indexOf('stable') > -1
-                                || catalog.id.indexOf('bitnami') > -1 || catalog.id.indexOf('svc-cat') > -1" round>
+                                || catalog.id.indexOf('bitnami') > -1 || catalog.id.indexOf('svc-cat') > -1"
+                                @click.native="$router.push('/repositories')" round>
                                 {{catalog.id | splitName(catalog.id)}}
                             </el-button>
                             <el-button type="warning" class="button-right" v-else-if="catalog.id.indexOf('incubator') > -1"
-                                       round>
+                                       @click.native="$router.push('/repositories')" round>
                                 {{catalog.id | splitName(catalog.id)}}
                             </el-button>
                             <el-button type="success" class="button-right" v-else
-                                       round>
+                                       @click.native="$router.push('/repositories')" round>
                                 {{catalog.id | splitName(catalog.id)}}
                             </el-button>
                         </div>
@@ -76,11 +81,10 @@
     import apiSetting from "../utils/apiSetting.js";
     import http from "../utils/httpAxios.js";
     import common from '../common/common.js';
-    // import loading from '../utils/loading.js';
     import noticeMessage from "../utils/noticeMessage";
     import enerty from '../entity/entity.js';
     import getParamApi from "../utils/getParamApi";
-
+    /* eslint-disable */
     let catalogList = []
     export default {
         name: "catalog",
@@ -101,7 +105,6 @@
                     if (res.status == 200) {
                         this.getList(res.data.data)
                     } else {
-                        //Error Message
                         noticeMessage(this, res.data, 'error');
                     }
                 }).catch(msg => {
@@ -111,7 +114,6 @@
             },
             getList: async function(data){
                 this.catalogList = []
-                /* eslint-disable */
                 for (let [index, chart] of data.entries()) {
                     if(chart.attributes.icon){
                         await http(getParamApi(apiSetting.kubernetes.getImage, chart.attributes.icon)).then(res => {
@@ -149,7 +151,7 @@
 
     .catalog-content {
         padding: 1em;
-        height: calc(100vh - 160px);
+        height: calc(100vh - 120px);
     }
 
     .grid-content {
@@ -157,18 +159,14 @@
         min-height: 5em;
     }
 
-    .catalog-search {
-        float: left;
-        width: 40%;
-        margin: 30px 0 0 1em;
+    .app-type {
+        margin:0.27em
     }
 
-    .catalog-search-btn {
-        float: left;
-        width: 16%;
-        margin: 35px 0 0 1em;
-        padding: 11.5px 20px;
-        height: 38px;
+    .catalog-search {
+        float: right;
+        width: 40%;
+        margin: 0px;;
     }
 
     .bottom {

@@ -16,6 +16,16 @@ spec:
       labels:
         app: {{ template "postgresql.fullname" . }}
     spec:
+      {{- if .Values.nodeSelector }}
+      nodeSelector:
+{{ toYaml .Values.nodeSelector | indent 8 }}
+      {{- end }}
+      {{- if .Values.tolerations }}
+      tolerations:
+{{ toYaml .Values.tolerations | indent 8 }}
+      {{- end }}
+      imagePullSecrets:
+      - name: gitlab-registry-fit2cloud-com-key
       containers:
       - name: {{ template "postgresql.fullname" . }}
         image: "{{ .Values.imageRegistry }}/{{ .Values.image }}:{{ .Values.imageTag }}"

@@ -1,0 +1,11 @@
+{{- if contains "LoadBalancer" .Values.service.type }}
+     NOTE: It may take a few minutes for the LoadBalancer IP to be available.
+           You can watch the status of by running 'kubectl get svc -w {{ template "tensorflow-notebook.fullname" . }}'
+  export SERVICE_IP=$(kubectl get svc --namespace {{ .Release.Namespace }} {{ template "tensorflow-notebook.fullname" . }} -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
+  echo notebook_url=http://$SERVICE_IP:8888
+  echo tensorboard_url=http://$SERVICE_IP:6006
+{{- else if contains "NodePort" .Values.service.type }}
+  export NODE_PORT=$(kubectl get --namespace {{ .Release.Namespace }} -o jsonpath="{.spec.ports[1].nodePort}" services {{ template "tensorflow-notebook.fullname" . }})
+  export NODE_IP=$(kubectl get nodes --namespace {{ .Release.Namespace }} -o jsonpath="{.items[0].status.addresses[0].address}")
+  echo "Tensorflow-notebook URL: http://$NODE_IP:$NODE_PORT/"
+{{- end }}

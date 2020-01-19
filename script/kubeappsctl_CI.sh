@@ -267,7 +267,7 @@ function docker_upload_image() {
 
 function set_external_chartrepo() {
     repo_url=""
-    read_from_input repo_url "请输入Chart Repo的主机域名 例: https://registry.fit2cloud.com/chartrepo/operator，注意必须输入完整地址: http://$url/chartrepo/$project" "" "${repo_url}"
+    read_from_input repo_url "请输入Chart Repo访问地址 例: https://xx.xx.xx.xx/chartrepo/myproject，注意必须输入带协议的完整地址" "" "${repo_url}"
 
     repo_username=""
     read_from_input repo_username "请输入Repo的用户名" "" "${repo_username}"

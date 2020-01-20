@@ -90,7 +90,7 @@ function env_check() {
         echo "请先安装Helm"
     fi
     #安装Helm Push Plugins
-    mv ${UTILS_DIR}/push $(helm home)/plugins/
+    \cp -rf ${UTILS_DIR}/push/ $(helm home)/plugins/
     echo "安装 Push Plugins 完成"
 }
 registry_host=""

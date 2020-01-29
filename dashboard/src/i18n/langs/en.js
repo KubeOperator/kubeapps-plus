@@ -114,7 +114,8 @@ const en = {
         'custom_cannot_be_empty': 'The complete authorization header is not allowed to be empty, please fill in the complete authorization header',
         'sure_add': 'Add it sure?',
         'save_now_please': 'Saving, please wait',
-        'if_close': 'Are you sure you want to close?'
+        'if_close': 'Are you sure you want to close?',
+        'please_check': 'Please choose',
     },
     ...enLocale
 }

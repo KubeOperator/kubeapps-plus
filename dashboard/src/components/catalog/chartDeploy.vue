@@ -24,14 +24,14 @@
                         <el-form :model="form" :rules="rules" :ref="form.releaseName" label-width="100px" class="ruleForm">
                             <el-form-item prop="releaseName">
                                 <el-input style="width: 100%;"
-                                  v-model="form.releaseName" placeholder="请输入内容" required></el-input>
+                                  v-model="form.releaseName" :placeholder="$t('message.please_input')" required></el-input>
                             </el-form-item>
                         </el-form>
                     </div>
 
                     <div>
                         <label>{{$t('message.version')}}</label>
-                        <el-select style="width: 100%;" v-model="version" @change="onChange(version)" placeholder="请选择">
+                        <el-select style="width: 100%;" v-model="version" @change="onChange(version)" :placeholder="$t('message.please_check')">
                             <el-option
                                     v-for="item in options"
                                     :key="item.value"

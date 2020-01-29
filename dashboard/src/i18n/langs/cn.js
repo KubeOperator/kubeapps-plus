@@ -114,7 +114,8 @@ const cn = {
         'custom_cannot_be_empty' : '完整的授权抬头不允许为空, 请填写完整的授权抬头',
         'sure_add': '是否添加?',
         'save_now_please': '正在保存, 请稍等',
-        'if_close': '确认关闭？'
+        'if_close': '确认关闭？',
+        'please_check': '请选择'
     },
     ...zhLocale
 }

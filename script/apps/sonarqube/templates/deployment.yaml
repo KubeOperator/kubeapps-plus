@@ -140,10 +140,8 @@ spec:
             - mountPath: /tmp/result
               name: concat-dir
       {{- end }}
-      {{- if .Values.image.pullSecret }}
       imagePullSecrets:
-      - name: {{ .Values.image.pullSecret }}
-      {{- end }}
+      - name: {{ .Release.Name }}-sonar-registry-fit2cloud-com-key
       containers:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.imageRegistry }}/{{ .Values.image.repository }}:{{ .Values.image.tag }}"

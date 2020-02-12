@@ -21,7 +21,8 @@ spec:
         annotations: {{- include "harbor.tplValue" (dict "value" .Values.notary.podAnnotations "context" $) | nindent 8 }}
         {{- end }}
     spec:
-{{- include "harbor.imagePullSecrets" . | indent 6 }}
+      imagePullSecrets:
+        - name: {{ .Release.Name }}-harbor-registry-fit2cloud-com-key
       {{- if .Values.notary.affinity }}
       affinity: {{- include "harbor.tplValue" (dict "value" .Values.notary.affinity "context" $) | nindent 8 }}
       {{- end }}

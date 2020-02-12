@@ -5,7 +5,7 @@
 global:
   imageRegistry: imageregistryvalue
   imagePullSecrets:
-    - harbor-registry-fit2cloud-com-key
+    - {{ .Release.Name }}-harbor-registry-fit2cloud-com-key
 #   storageClass: myStorageClass
 
 ## Bitnami Harbor Core image

@@ -44,7 +44,8 @@ spec:
 {{ toYaml .Values.metrics.podAnnotations | indent 8 }}
       {{- end }}
     spec:
-{{- include "redis.imagePullSecrets" . | indent 6 }}
+      imagePullSecrets:
+        - name: {{ .Release.Name }}-harbor-registry-fit2cloud-com-key
       {{- if .Values.securityContext.enabled }}
       securityContext:
         fsGroup: {{ .Values.securityContext.fsGroup }}

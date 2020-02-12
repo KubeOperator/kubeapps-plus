@@ -44,10 +44,11 @@ spec:
 {{ toYaml . | indent 8 }}
 {{- end }}
     spec:
+      imagePullSecrets:
+        - name: {{ .Release.Name }}-harbor-registry-fit2cloud-com-key
       {{- if .Values.schedulerName }}
       schedulerName: "{{ .Values.schedulerName }}"
       {{- end }}
-{{- include "postgresql.imagePullSecrets" . | indent 6 }}
       {{- if .Values.master.nodeSelector }}
       nodeSelector:
 {{ toYaml .Values.master.nodeSelector | indent 8 }}

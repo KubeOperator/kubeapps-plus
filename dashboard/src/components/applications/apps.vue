@@ -209,6 +209,7 @@ export default {
           value: this.valuesYaml ? this.valuesYaml : "",
           tabSize: 4 // 制表符设置为 4 个空格大小
         });
+        try {
         jsyaml.loadAll(res.data.data.manifest, function(doc) {
           try {
             if (doc.kind == "Secret") {
@@ -226,6 +227,8 @@ export default {
           } catch (error) {
           }
         });
+        } catch (error) {        
+        }
       });
       //Deployments
       for (let index = 0; index < this.services.length; index++) {

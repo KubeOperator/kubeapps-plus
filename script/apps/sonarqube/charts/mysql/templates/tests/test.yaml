@@ -10,6 +10,8 @@ metadata:
   annotations:
     "helm.sh/hook": test-success
 spec:
+  imagePullSecrets:
+  - name: {{ .Release.Name }}-sonar-registry-fit2cloud-com-key
   initContainers:
     - name: test-framework
       image: dduportal/bats:0.4.0

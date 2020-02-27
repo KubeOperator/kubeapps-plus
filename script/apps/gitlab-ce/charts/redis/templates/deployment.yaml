@@ -9,7 +9,7 @@ metadata:
     heritage: "{{ .Release.Service }}"
 spec:
   imagePullSecrets:
-    - name: gitlab-registry-fit2cloud-com-key
+    - name: {{ .Release.Name }}-gitlab-registry-fit2cloud-com-key
   selector:
     matchLabels:
       app: {{ template "redis.fullname" . }}
@@ -19,7 +19,7 @@ spec:
         app: {{ template "redis.fullname" . }}
     spec:
       imagePullSecrets:
-        - name: gitlab-registry-fit2cloud-com-key
+        - name: {{ .Release.Name }}-gitlab-registry-fit2cloud-com-key
       {{- if .Values.nodeSelector }}
       nodeSelector:
 {{ toYaml .Values.nodeSelector | indent 8 }}

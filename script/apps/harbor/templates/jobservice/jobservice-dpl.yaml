@@ -21,7 +21,8 @@ spec:
         {{- include "harbor.tplValue" (dict "value" .Values.jobservice.podAnnotations "context" $) | nindent 8 }}
         {{- end }}
     spec:
-{{- include "harbor.imagePullSecrets" . | indent 6 }}
+      imagePullSecrets:
+        - name: {{ .Release.Name }}-harbor-registry-fit2cloud-com-key
       {{- if .Values.jobservice.affinity }}
       affinity: {{- include "harbor.tplValue" (dict "value" .Values.jobservice.affinity "context" $) | nindent 8 }}
       {{- end }}

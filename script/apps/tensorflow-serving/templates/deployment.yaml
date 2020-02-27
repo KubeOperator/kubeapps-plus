@@ -27,7 +27,7 @@ spec:
         app: {{ template "tensorflow-serving.name" . }}
     spec:
       imagePullSecrets:
-        - name: serving-registry-fit2cloud-com-key
+        - name: {{ .Release.Name }}-serving-registry-fit2cloud-com-key
       containers:
         - name: serving
           image: "{{ .Values.imageRegistry }}/{{ .Values.image.repository }}:{{ .Values.image.tag }}"

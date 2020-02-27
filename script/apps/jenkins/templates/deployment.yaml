@@ -19,7 +19,8 @@ spec:
         {{- end }}
       {{- end }}
     spec:
-{{- include "jenkins.imagePullSecrets" . | indent 6 }}
+      imagePullSecrets:
+        - name: {{ .Release.Name }}-jenkins-registry-fit2cloud-com-key
       {{- if .Values.affinity }}
       affinity: {{- include "jenkins.tplValue" (dict "value" .Values.affinity "context" $) | nindent 8 }}
       {{- end }}
@@ -30,7 +31,7 @@ spec:
       tolerations: {{- include "jenkins.tplValue" (dict "value" .Values.tolerations "context" $) | nindent 8 }}
       {{- end }}
       imagePullSecrets:
-      - name: jenkins-registry-fit2cloud-com-key
+      - name: {{ .Release.Name }}-jenkins-registry-fit2cloud-com-key
       containers:
         - name: jenkins
           image: "{{ .Values.imageRegistry }}/{{ .Values.image.registry }}/{{ .Values.image.repository }}:{{ .Values.image.tag }}"

@@ -16,10 +16,8 @@ spec:
       labels:
         app: {{ template "mysql.fullname" . }}
     spec:
-      {{- if .Values.imagePullSecrets }}
       imagePullSecrets:
-{{ toYaml .Values.imagePullSecrets | indent 8 }}
-      {{- end }}
+      - name: {{ .Release.Name }}-sonar-registry-fit2cloud-com-key
       initContainers:
       - name: "remove-lost-found"
         image: "{{.Values.imageRegistry}}/busybox:1.25.0"

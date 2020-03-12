@@ -197,6 +197,11 @@ export default {
         this.catalog.icon = res.data.data.chart.metadata.icon;
         this.catalog.appv = res.data.data.chart.metadata.appVersion;
         this.catalog.releaseName = res.data.data.chart.metadata.name;
+        if(res.data.data.chart.metadata.name === 'jenkins'){
+          if(res.data.data.info.Description === "Install complete"){
+            this.status = true
+          }
+        }
         this.catalog.chartv = res.data.data.chart.metadata.version;
         this.catalog.name = res.data.data.name;
         this.note = res.data.data.info.status.notes;

@@ -198,7 +198,7 @@ export default {
         this.catalog.appv = res.data.data.chart.metadata.appVersion;
         this.catalog.releaseName = res.data.data.chart.metadata.name;
         if(res.data.data.chart.metadata.name === 'jenkins'){
-          if(res.data.data.info.Description ==="Install complete"){
+          if(res.data.data.info.Description === "Install complete"){
             this.status = true
           }
         }

@@ -402,7 +402,7 @@ server:
     name: argocd-server
 
   ingress:
-    enabled: true
+    enabled: false
     annotations: {}
     labels: {}
 
@@ -411,7 +411,7 @@ server:
     ## Secrets must be manually created in the namespace
     ##
     hosts:
-      ['argocd.apps.fit2cloud.com']
+      []
       # - argocd.example.com
     paths:
       - /

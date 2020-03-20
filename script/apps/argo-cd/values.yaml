@@ -402,7 +402,7 @@ server:
     name: argocd-server
 
   ingress:
-    enabled: false
+    enabled: true
     annotations: {}
     labels: {}
 
@@ -411,7 +411,7 @@ server:
     ## Secrets must be manually created in the namespace
     ##
     hosts:
-      []
+      ['argocd.apps.fit2cloud.com']
       # - argocd.example.com
     paths:
       - /
@@ -433,7 +433,7 @@ server:
   ## reference https://github.com/argoproj/argo-cd/blob/master/docs/operator-manual/argocd-cm.yaml
   config:
     # Argo CD's externally facing base URL (optional). Required when configuring SSO
-    url: https://argocd.example.com
+    url: https://argocd.apps.fit2cloud.com
     # Argo CD instance label key
     application.instanceLabelKey: argocd.argoproj.io/instance
     # repositories: |

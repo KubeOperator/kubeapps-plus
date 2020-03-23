@@ -45,6 +45,7 @@
                             <img v-else-if="(catalog.attributes.icon.search('kubeapps')>=0)" src="../../assets/image/charts/kubeapps-plus-stack-110x117.png" class="image" require>
                             <img v-else-if="(catalog.attributes.icon.search('loki')>=0)" src="../../assets/image/charts/loki-stack-110x117.png" class="image" require>
                             <img v-else-if="(catalog.attributes.icon.search('prometheus')>=0)" src="../../assets/image/charts/prometheus-stack-110x117.png" class="image" require>
+                            <img v-else-if="(catalog.attributes.icon.search('argo')>=0)" src="../../assets/image/charts/argo-110x117.png" class="image" require>
                             <img v-else :src="catalog.attributes.icon" class="image" require>
                         </a>
                     </div>
@@ -146,8 +147,17 @@
                             noticeMessage(this, msg, 'error');
                         })
                     }else {
+                        // chart.attributes.icon = common.searchIcon(chart.attributes.name)
+                        // this.catalogList.sort().push(chart)
+                        if (common.searchIcon('argo')) {
+                        chart.attributes.icon = common.searchIcon(chart.attributes.name.replace('-cd',''))
+                        this.catalogList.sort().push(chart)
+                        console.log(chart.attributes.name.replace(/-[a-z]/,''))
+                        }else {
                         chart.attributes.icon = common.searchIcon(chart.attributes.name)
                         this.catalogList.sort().push(chart)
+                        // console.log(chart.attributes.name.replace('-cd',''))
+                        }
                     }
                 }
             },

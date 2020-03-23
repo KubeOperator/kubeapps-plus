@@ -47,7 +47,8 @@ const imageIcon2 = {
     grafana: '../../assets/image/charts/grafana-stack-110x117.png',
     'kubeapps-plus': '../../assets/image/charts/kubeapps-plus-stack-110x117.png',
     loki: '../../assets/image/charts/loki-stack-110x117.png',
-    prometheus: '../../assets/image/charts/prometheus-stack-110x117.png'
+    prometheus: '../../assets/image/charts/prometheus-stack-110x117.png',
+    argo: '../../assets/image/charts/argo-110x117.png'
 }
 
 const imageIcon = {
@@ -70,7 +71,8 @@ const imageIcon = {
     gitlab: 'https://dyltqmyl993wv.cloudfront.net/assets/stacks/gitlab/img/gitlab-stack-110x117.png',
     sonarqube: 'https://dyltqmyl993wv.cloudfront.net/assets/stacks/sonarqube/img/sonarqube-stack-110x117.png',
     istio: 'https://hub.kubeapps.com/api/chartsvc/v1/assets/ibm-charts/ibm-istio/logo',
-    tensorflow: 'https://dyltqmyl993wv.cloudfront.net/assets/stacks/tensorflow-serving/img/tensorflow-serving-stack-110x117.png'
+    tensorflow: 'https://dyltqmyl993wv.cloudfront.net/assets/stacks/tensorflow-serving/img/tensorflow-serving-stack-110x117.png',
+    argo: 'https://raw.githubusercontent.com/argoproj/argo/master/docs/assets/argo.png'
 }
 
 var searchIcon = function (val){

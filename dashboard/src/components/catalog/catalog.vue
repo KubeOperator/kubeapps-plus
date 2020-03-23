@@ -150,7 +150,6 @@
                         if (common.searchIcon('argo')) {
                         chart.attributes.icon = common.searchIcon(chart.attributes.name.replace('-cd',''))
                         this.catalogList.sort().push(chart)
-                        console.log(chart.attributes.name.replace(/-[a-z]/,''))
                         }else {
                         chart.attributes.icon = common.searchIcon(chart.attributes.name)
                         this.catalogList.sort().push(chart)

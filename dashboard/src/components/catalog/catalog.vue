@@ -2,34 +2,34 @@
     <div class="catalog-content" v-loading.fullscreen.lock="loading" element-loading-text="Loading" element-loading-background="rgba(0, 0, 0, 0.1)">
         <!-- header start -->
         <el-row style="border-bottom: 2px solid #f1f1f1;">
-<!--            <el-col :md="6" :lg="4">-->
-<!--                <div class="grid-content">-->
-<!--                    <h1 class="app-type">{{$t('message.catalog')}}</h1>-->
-<!--                </div>-->
-<!--            </el-col>-->
-<!--            <el-col :md="{span:24,offest:2}" :lg="6">-->
-            <div class="catalog-div">
-                <el-button plain v-for="(label_, index) in labelList" :key="index" class="catalog-button">{{label_.value}}</el-button>
-            </div>
+<!--            <div class="catalog-div">-->
+<!--                <el-button plain v-for="(label_, index) in labelList" :key="index" class="catalog-button" @click.native="onChangeLabel(label_.key)" :class="{ active: label_.isActive }">-->
+<!--                    {{label_.value}}-->
+<!--                </el-button>-->
+<!--            </div>-->
+            <el-tabs class="catalog-div" type="card" @tab-click="onChangeLabel">
+                <el-tab-pane v-for="label_ in labelList" :key="label_.key" class="catalog-button" :label="label_.value" :name="label_.key">
+                </el-tab-pane>
+            </el-tabs>
             <el-input class="catalog-search"
                       :placeholder="$t('message.search_charts')"
                       prefix-icon="el-icon-search"
                       v-model="input"
                       clearable>
             </el-input>
-<!--            </el-col>-->
         </el-row>
         <!-- header end -->
 
         <!-- 间隔线 start -->
-<!--        <el-divider></el-divider>-->
         <!-- 间隔线 end -->
 
         <!-- foot start -->
         <el-row :gutter="20" class="el-row-body">
             <el-col :xs="24" :sm="12" :md="8" :lg="6" :xl="4" v-for="(catalog, index) in catalogList"
                     :key="index" class="el-col" v-show="(catalog.attributes.name.search(input)>=0
-              || catalog.attributes.description.search(input)>=0)">
+              || catalog.attributes.description.search(input)>=0)
+              && (label!='All'?(label!='Other'?catalog.attributes.keywords[0].search(label)>=0: true):true
+                && label!='All'?(label!='Other'?catalog.attributes.keywords[1].search(label)>=0: true):true)">
                 <el-card :body-style="{ padding: '0px' }">
                     <div class="catalog-image" @click="goDetails(catalog)">
                         <a>
@@ -72,8 +72,8 @@
                                        @click.native="$router.push('/repositories')" round>
                                 {{catalog.id | splitName(catalog.id)}}
                             </el-button>
-                            <el-button size="medium" type="primary" class="button-right" round>
-                                {{catalog.label ? catalog.label : '其它'}}
+                            <el-button size="medium" type="primary" class="button-right" v-for="(label, index) in catalog.attributes.keywords" :key="index" v-show="label=='AI' || label=='CI' || label=='CD' || label=='Management'" round>
+                                {{label ? label : '其它'}}
                             </el-button>
                         </div>
                     </div>
@@ -92,14 +92,15 @@
     import enerty from '../entity/entity.js';
     import getParamApi from "../utils/getParamApi";
     /* eslint-disable */
+    let label = "";
     let catalogList = [];
     let labelList = [
-        {key: 'All', value: '全部'},
-        {key: 'AI', value: 'AI'},
-        {key: 'CI', value: 'CI'},
-        {key: 'CD', value: 'CD'},
-        {key: 'Management', value: '管理'},
-        {key: 'Other', value: '其它'}
+        {key: 'All', value: '全部', isActive: true},
+        {key: 'AI', value: 'AI', isActive: false},
+        {key: 'CI', value: 'CI', isActive: false},
+        {key: 'CD', value: 'CD', isActive: false},
+        {key: 'Management', value: '管理', isActive: false},
+        {key: 'Other', value: '其它', isActive: false}
         ];
     export default {
         name: "catalog",
@@ -110,7 +111,7 @@
                 loading: true,
                 catalogList: catalogList,
                 labelList: labelList,
-                label_: ""
+                label: label
             }
         },
         created() {
@@ -168,6 +169,10 @@
                 sessionStorage.setItem('chartName', catalog.id)
                 sessionStorage.setItem('catalogDetailsByParams', JSON.stringify(params))
                 this.$router.push({name: 'catalogDetails', params: params})
+            },
+            onChangeLabel(tab, event){
+                console.log(tab)
+                this.label = tab.name;
             }
         }
     };

@@ -16,6 +16,8 @@
             <img v-else-if="(catalog.icon.search('kubeapps')>=0)" src="../../assets/image/charts/kubeapps-plus-stack-110x117.png" class="image" require>
             <img v-else-if="(catalog.icon.search('loki')>=0)" src="../../assets/image/charts/loki-stack-110x117.png" class="image" require>
             <img v-else-if="(catalog.icon.search('prometheus')>=0)" src="../../assets/image/charts/prometheus-stack-110x117.png" class="image" require>
+            <img v-else-if="(catalog.icon.search('argo')>=0)" src="../../assets/image/charts/argo-110x117.png" class="image" require>
+
             <img v-else :src="catalog.icon" class="image" require>
           </div>
           <div style="padding: 1em;">

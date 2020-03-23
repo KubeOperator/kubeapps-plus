@@ -147,8 +147,6 @@
                             noticeMessage(this, msg, 'error');
                         })
                     }else {
-                        // chart.attributes.icon = common.searchIcon(chart.attributes.name)
-                        // this.catalogList.sort().push(chart)
                         if (common.searchIcon('argo')) {
                         chart.attributes.icon = common.searchIcon(chart.attributes.name.replace('-cd',''))
                         this.catalogList.sort().push(chart)
@@ -156,7 +154,6 @@
                         }else {
                         chart.attributes.icon = common.searchIcon(chart.attributes.name)
                         this.catalogList.sort().push(chart)
-                        // console.log(chart.attributes.name.replace('-cd',''))
                         }
                     }
                 }

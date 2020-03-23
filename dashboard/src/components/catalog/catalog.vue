@@ -8,6 +8,9 @@
 <!--                </div>-->
 <!--            </el-col>-->
 <!--            <el-col :md="{span:24,offest:2}" :lg="6">-->
+            <div class="catalog-div">
+                <el-button plain v-for="(label_, index) in labelList" :key="index" class="catalog-button">{{label_.value}}</el-button>
+            </div>
             <el-input class="catalog-search"
                       :placeholder="$t('message.search_charts')"
                       prefix-icon="el-icon-search"
@@ -68,6 +71,9 @@
                                        @click.native="$router.push('/repositories')" round>
                                 {{catalog.id | splitName(catalog.id)}}
                             </el-button>
+                            <el-button size="medium" type="primary" class="button-right" round>
+                                {{catalog.label ? catalog.label : '其它'}}
+                            </el-button>
                         </div>
                     </div>
                 </el-card>
@@ -85,7 +91,15 @@
     import enerty from '../entity/entity.js';
     import getParamApi from "../utils/getParamApi";
     /* eslint-disable */
-    let catalogList = []
+    let catalogList = [];
+    let labelList = [
+        {key: 'All', value: '全部'},
+        {key: 'AI', value: 'AI'},
+        {key: 'CI', value: 'CI'},
+        {key: 'CD', value: 'CD'},
+        {key: 'Management', value: '管理'},
+        {key: 'Other', value: '其它'}
+        ];
     export default {
         name: "catalog",
         data() {
@@ -93,7 +107,9 @@
                 input: '',
                 currentDate: new Date(),
                 loading: true,
-                catalogList: catalogList
+                catalogList: catalogList,
+                labelList: labelList,
+                label_: ""
             }
         },
         created() {
@@ -167,6 +183,16 @@
         float: right;
         width: 40%;
         margin: 0px;;
+    }
+
+    .catalog-div {
+        float: left;
+        width: 55%;
+        margin: 0px;;
+    }
+
+    .catalog-button {
+        float: left;
     }
 
     .bottom {

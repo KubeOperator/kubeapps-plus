@@ -4,6 +4,7 @@ description: Jenkins 是一个开源的持续集成工具。
 engine: gotpl
 home: https://jenkins.io/
 icon: https://bitnami.com/assets/stacks/jenkins/img/jenkins-stack-110x117.png
+label: CD
 keywords:
 - jenkins
 - ci

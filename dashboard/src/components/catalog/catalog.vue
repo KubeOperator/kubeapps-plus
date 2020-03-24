@@ -169,11 +169,6 @@
                 this.$router.push({name: 'catalogDetails', params: params})
             },
             onChangeLabel(tab, event){
-<<<<<<< HEAD
-                console.log(tab)
-                console.log(event)
-=======
->>>>>>> 7b30db7da6ca3ad027e85212602b0aac40f2a9da
                 this.label = tab.name;
             }
         }

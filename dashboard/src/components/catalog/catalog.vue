@@ -45,6 +45,9 @@
                             <img v-else-if="(catalog.attributes.icon.search('loki')>=0)" src="../../assets/image/charts/loki-stack-110x117.png" class="image" require>
                             <img v-else-if="(catalog.attributes.icon.search('prometheus')>=0)" src="../../assets/image/charts/prometheus-stack-110x117.png" class="image" require>
                             <img v-else-if="(catalog.attributes.icon.search('argo')>=0)" src="../../assets/image/charts/argo-110x117.png" class="image" require>
+                            <img v-else-if="(catalog.attributes.icon.search('weave'))" src="../../assets/image/charts/weave-scope-110x117.png" class="image" require>
+                            <img v-else-if="(catalog.attributes.icon.search('tensorflow-notebook'))" src="../../assets/image/charts/tensorflow-110x117.png" class="image" require>
+                            <img v-else-if="(catalog.attributes.icon.search('tensorflow-serving'))" src="../../assets/image/charts/tensorflow-110x117.png" class="image" require>
                             <img v-else :src="catalog.attributes.icon" class="image" require>
                         </a>
                     </div>
@@ -149,14 +152,8 @@
                             noticeMessage(this, msg, 'error');
                         })
                     }else {
-                        if (common.searchIcon('argo')) {
-                            chart.attributes.icon = common.searchIcon(chart.attributes.name.replace('-cd',''))
-                            this.catalogList.sort().push(chart)
-                            console.log(chart.attributes.name.replace(/-[a-z]/,''))
-                        }else {
                             chart.attributes.icon = common.searchIcon(chart.attributes.name)
                             this.catalogList.sort().push(chart)
-                        }
                     }
                 }
             },
@@ -169,11 +166,6 @@
                 this.$router.push({name: 'catalogDetails', params: params})
             },
             onChangeLabel(tab, event){
-<<<<<<< HEAD
-                console.log(tab)
-                console.log(event)
-=======
->>>>>>> 7b30db7da6ca3ad027e85212602b0aac40f2a9da
                 this.label = tab.name;
             }
         }

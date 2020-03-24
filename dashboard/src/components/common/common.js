@@ -24,31 +24,31 @@ var search = function (key, json) {
 }
 
 const imageIcon2 = {
-    apache: '../../assets/image/charts/apache-stack-110x117.png',
+    apache: '@/assets/image/charts/apache-stack-110x117.png',
     docker: '',
-    drupal: '../../assets/image/charts/drupal-stack-110x117.png',
-    elasticsearch: '../.././assets/image/charts/elasticsearch-curator-stack-110x117.png',
-    etcd: '../../assets/image/charts/etcd-stack-110x117.png',
-    harbor: '../../assets/image/charts/harbor-stack-110x117.png',
-    jenkins: '../../assets/image/charts/jenkins-stack-110x117.png',
-    kafka: '../../assets/image/charts/kafka-stack-110x117.png',
-    mysql: '../../assets/image/charts/mysql-stack-110x117.png',
-    mongodb: '../../assets/image/charts/mongodb-sharded-stack-110x117.png',
-    nginx: '../../assets/image/charts/nginx-stack-110x117.png',
-    rabbitmq: '../../assets/image/charts/rabbitmq-stack-110x117.png',
-    redis: '../../assets/image/charts/redis-stack-110x117.png',
-    tomcat: '../../assets/image/charts/tomcat-stack-110x117.png',
-    wordpress: '../../assets/image/charts/wordpress-stack-110x117.png',
-    zookeeper: '../../assets/image/charts/zookeeper-stack-110x117.png',
-    gitlab: '../../assets/image/charts/gitlab-stack-110x117.png',
-    sonarqube: '../../assets/image/charts/sonarqube-stack-110x117.png',
-    istio: '../../assets/image/charts/istio-110x117.png',
-    tensorflow: '../../assets/image/charts/tensorflow-stack-110x117.png',
-    grafana: '../../assets/image/charts/grafana-stack-110x117.png',
-    'kubeapps-plus': '../../assets/image/charts/kubeapps-plus-stack-110x117.png',
-    loki: '../../assets/image/charts/loki-stack-110x117.png',
-    prometheus: '../../assets/image/charts/prometheus-stack-110x117.png',
-    argo: '../../assets/image/charts/argo-110x117.png'
+    drupal: '@/assets/image/charts/drupal-stack-110x117.png',
+    elasticsearch: '@/assets/image/charts/elasticsearch-curator-stack-110x117.png',
+    etcd: '@/assets/image/charts/etcd-stack-110x117.png',
+    harbor: '@/assets/image/charts/harbor-stack-110x117.png',
+    jenkins: '@/assets/image/charts/jenkins-stack-110x117.png',
+    kafka: '@/assets/image/charts/kafka-stack-110x117.png',
+    mysql: '@/assets/image/charts/mysql-stack-110x117.png',
+    mongodb: '@/assets/image/charts/mongodb-sharded-stack-110x117.png',
+    nginx: '@/assets/image/charts/nginx-stack-110x117.png',
+    rabbitmq: '@/assets/image/charts/rabbitmq-stack-110x117.png',
+    redis: '@/assets/image/charts/redis-stack-110x117.png',
+    tomcat: '@/assets/image/charts/tomcat-stack-110x117.png',
+    wordpress: '@/assets/image/charts/wordpress-stack-110x117.png',
+    zookeeper: '@/assets/image/charts/zookeeper-stack-110x117.png',
+    gitlab: '@/assets/image/charts/gitlab-stack-110x117.png',
+    sonarqube: '@/assets/image/charts/sonarqube-stack-110x117.png',
+    istio: '@/assets/image/charts/istio-110x117.png',
+    tensorflow: '@/assets/image/charts/tensorflow-stack-110x117.png',
+    grafana: '@/assets/image/charts/grafana-stack-110x117.png',
+    'kubeapps-plus': '@/assets/image/charts/kubeapps-plus-stack-110x117.png',
+    loki: '@/assets/image/charts/loki-stack-110x117.png',
+    prometheus: '@/assets/image/charts/prometheus-stack-110x117.png',
+    argo: '@/assets/image/charts/argo-110x117.png'
 }
 
 const imageIcon = {
@@ -76,7 +76,7 @@ const imageIcon = {
 }
 
 var searchIcon = function (val){
-    return imageIcon[val]
+    return imageIcon[val];
 }
 
 const common = {search, searchIcon}

@@ -8,14 +8,17 @@
 <!--                </el-button>-->
 <!--            </div>-->
             <el-tabs class="catalog-div" type="card" @tab-click="onChangeLabel">
-                <el-tab-pane v-for="label_ in labelList" :key="label_.key" class="catalog-button" :label="label_.value" :name="label_.key">
+                <el-tab-pane v-for="label_ in labelList" 
+                :key="label_.key" class="catalog-button" 
+                :label="label_.value" 
+                :name="label_.key">
                 </el-tab-pane>
             </el-tabs>
             <el-input class="catalog-search"
-                      :placeholder="$t('message.search_charts')"
-                      prefix-icon="el-icon-search"
-                      v-model="input"
-                      clearable>
+                :placeholder="$t('message.search_charts')"
+                prefix-icon="el-icon-search"
+                v-model="input"
+                clearable>
             </el-input>
         </el-row>
         <!-- header end -->
@@ -168,6 +171,7 @@
             },
             onChangeLabel(tab, event){
                 console.log(tab)
+                console.log(event)
                 this.label = tab.name;
             }
         }

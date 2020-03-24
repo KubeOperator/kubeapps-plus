@@ -12,10 +12,10 @@
                 </el-tab-pane>
             </el-tabs>
             <el-input class="catalog-search"
-                      :placeholder="$t('message.search_charts')"
-                      prefix-icon="el-icon-search"
-                      v-model="input"
-                      clearable>
+                :placeholder="$t('message.search_charts')"
+                prefix-icon="el-icon-search"
+                v-model="input"
+                clearable>
             </el-input>
         </el-row>
         <!-- header end -->
@@ -169,6 +169,11 @@
                 this.$router.push({name: 'catalogDetails', params: params})
             },
             onChangeLabel(tab, event){
+<<<<<<< HEAD
+                console.log(tab)
+                console.log(event)
+=======
+>>>>>>> 7b30db7da6ca3ad027e85212602b0aac40f2a9da
                 this.label = tab.name;
             }
         }

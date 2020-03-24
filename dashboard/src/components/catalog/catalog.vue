@@ -2,16 +2,13 @@
     <div class="catalog-content" v-loading.fullscreen.lock="loading" element-loading-text="Loading" element-loading-background="rgba(0, 0, 0, 0.1)">
         <!-- header start -->
         <el-row style="border-bottom: 2px solid #f1f1f1;">
-<!--            <div class="catalog-div">-->
-<!--                <el-button plain v-for="(label_, index) in labelList" :key="index" class="catalog-button" @click.native="onChangeLabel(label_.key)" :class="{ active: label_.isActive }">-->
-<!--                    {{label_.value}}-->
-<!--                </el-button>-->
-<!--            </div>-->
-            <el-tabs class="catalog-div" type="card" @tab-click="onChangeLabel">
-                <el-tab-pane v-for="label_ in labelList" 
-                :key="label_.key" class="catalog-button" 
-                :label="label_.value" 
-                :name="label_.key">
+            <!--            <div class="catalog-div">-->
+            <!--                <el-button plain v-for="(label_, index) in labelList" :key="index" class="catalog-button" @click.native="onChangeLabel(label_.key)" :class="{ active: label_.isActive }">-->
+            <!--                    {{label_.value}}-->
+            <!--                </el-button>-->
+            <!--            </div>-->
+            <el-tabs class="catalog-div" v-model="activeName" type="card" @tab-click="onChangeLabel" style="margin: 0 20px 0 20px;">
+                <el-tab-pane v-for="label_ in labelList" :key="label_.key" class="catalog-button" :label="label_.value" :name="label_.key">
                 </el-tab-pane>
             </el-tabs>
             <el-input class="catalog-search"
@@ -31,8 +28,7 @@
             <el-col :xs="24" :sm="12" :md="8" :lg="6" :xl="4" v-for="(catalog, index) in catalogList"
                     :key="index" class="el-col" v-show="(catalog.attributes.name.search(input)>=0
               || catalog.attributes.description.search(input)>=0)
-              && (label!='All'?(label!='Other'?catalog.attributes.keywords[0].search(label)>=0: true):true
-                && label!='All'?(label!='Other'?catalog.attributes.keywords[1].search(label)>=0: true):true)">
+              && label!='All'?(label!='Other'?catalog.attributes.keywords[0].search(label)>=0: (catalog.attributes.keywords[0]!='AI'&&catalog.attributes.keywords[0]!='CI'&&catalog.attributes.keywords[0]!='CD'&&catalog.attributes.keywords[0]!='Management')):true">
                 <el-card :body-style="{ padding: '0px' }">
                     <div class="catalog-image" @click="goDetails(catalog)">
                         <a>
@@ -64,7 +60,7 @@
                             </el-button>
                             <el-button size="medium" type="primary" class="button-right" v-if="catalog.id.indexOf('stable') > -1
                                 || catalog.id.indexOf('bitnami') > -1 || catalog.id.indexOf('svc-cat') > -1"
-                                @click.native="$router.push('/repositories')" round>
+                                       @click.native="$router.push('/repositories')" round>
                                 {{catalog.id | splitName(catalog.id)}}
                             </el-button>
                             <el-button type="warning" class="button-right" v-else-if="catalog.id.indexOf('incubator') > -1"
@@ -75,8 +71,8 @@
                                        @click.native="$router.push('/repositories')" round>
                                 {{catalog.id | splitName(catalog.id)}}
                             </el-button>
-                            <el-button size="medium" type="primary" class="button-right" v-for="(label, index) in catalog.attributes.keywords" :key="index" v-show="label=='AI' || label=='CI' || label=='CD' || label=='Management'" round>
-                                {{label ? label : '其它'}}
+                            <el-button size="medium" type="primary" class="button-right" v-for="(label_, index) in catalog.attributes.keywords" :key="index" v-show="(label=='All' || label_=='AI' || label_=='CI' || label_=='CD' || label_=='Management' || label=='Other') && index==0" round>
+                                {{(label_=='AI'||label_=='CI'||label_=='CD'||label_=='Management')? label_ : '其它'}}
                             </el-button>
                         </div>
                     </div>
@@ -104,7 +100,7 @@
         {key: 'CD', value: 'CD', isActive: false},
         {key: 'Management', value: '管理', isActive: false},
         {key: 'Other', value: '其它', isActive: false}
-        ];
+    ];
     export default {
         name: "catalog",
         data() {
@@ -114,10 +110,12 @@
                 loading: true,
                 catalogList: catalogList,
                 labelList: labelList,
-                label: label
+                label: label,
+                activeName: 'All'
             }
         },
         created() {
+            this.label = 'All'
             this.init()
         },
         methods: {
@@ -152,11 +150,12 @@
                         })
                     }else {
                         if (common.searchIcon('argo')) {
-                        chart.attributes.icon = common.searchIcon(chart.attributes.name.replace('-cd',''))
-                        this.catalogList.sort().push(chart)
+                            chart.attributes.icon = common.searchIcon(chart.attributes.name.replace('-cd',''))
+                            this.catalogList.sort().push(chart)
+                            console.log(chart.attributes.name.replace(/-[a-z]/,''))
                         }else {
-                        chart.attributes.icon = common.searchIcon(chart.attributes.name)
-                        this.catalogList.sort().push(chart)
+                            chart.attributes.icon = common.searchIcon(chart.attributes.name)
+                            this.catalogList.sort().push(chart)
                         }
                     }
                 }
@@ -170,8 +169,11 @@
                 this.$router.push({name: 'catalogDetails', params: params})
             },
             onChangeLabel(tab, event){
+<<<<<<< HEAD
                 console.log(tab)
                 console.log(event)
+=======
+>>>>>>> 7b30db7da6ca3ad027e85212602b0aac40f2a9da
                 this.label = tab.name;
             }
         }

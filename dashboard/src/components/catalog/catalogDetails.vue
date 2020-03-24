@@ -5,20 +5,7 @@
             <el-row :gutter="20" style="margin-bottom: 1em;">
                 <el-col :span="3">
                     <div class="grid-content grid-img">
-                        <img v-if="!catalog.icon && catalog.id.search('gitlab')>=0" src="../../assets/image/charts/gitlab-stack-110x117.png" class="image">
-                        <img v-else-if="!catalog.icon && !catalog.id.search(gitlab)>=0" src="../../assets/image/default.png" class="image">
-                        <img v-else-if="(catalog.icon.search('harbor')>=0)" src="../../assets/image/charts/harbor-stack-110x117.png" class="image" require>
-                        <img v-else-if="(catalog.icon.search('jenkins')>=0)" src="../../assets/image/charts/jenkins-stack-110x117.png" class="image" require>
-                        <img v-else-if="(catalog.icon.search('sonarqube')>=0)" src="../../assets/image/charts/sonarqube-stack-110x117.png" class="image" require>
-                        <img v-else-if="(catalog.icon.search('gitlab')>=0)" src="../../assets/image/charts/gitlab-stack-110x117.png" class="image" require>
-                        <img v-else-if="(catalog.icon.search('istio')>=0)" src="../../assets/image/charts/istio-110x117.png" class="image" require>
-                        <img v-else-if="(catalog.icon.search('tensorflow')>=0)" src="../../assets/image/charts/tensorflow-stack-110x117.png" class="image" require>
-                        <img v-else-if="(catalog.icon.search('grafana')>=0)" src="../../assets/image/charts/grafana-stack-110x117.png" class="image" require>
-                        <img v-else-if="(catalog.icon.search('kubeapps')>=0)" src="../../assets/image/charts/kubeapps-plus-stack-110x117.png" class="image" require>
-                        <img v-else-if="(catalog.icon.search('loki')>=0)" src="../../assets/image/charts/loki-stack-110x117.png" class="image" require>
-                        <img v-else-if="(catalog.icon.search('prometheus')>=0)" src="../../assets/image/charts/prometheus-stack-110x117.png" class="image" require>
-                        <img v-else-if="(catalog.icon.search('argo')>=0)" src="../../assets/image/charts/argo-110x117.png" class="image" require>
-                        <img v-else :src="catalog.icon" class="image" require>
+                        <img :src="require(`@/assets/image/charts/${catalog.icon}`)" class="image">
                     </div>
                 </el-col>
                 <el-col :span="20">
@@ -173,7 +160,7 @@
                             if (res.status == 200) {
                                 icon = res.request.responseURL;
                                 if(!icon){
-                                    icon = common.searchIcon(this.catalog.name)
+                                    icon = common.searchCatelogIcon(this.catalog.name)
                                 }
                                 this.catalog.icon = icon
                             } else {
@@ -186,7 +173,7 @@
                         this.catalog.icon = icon
                     }
                 }else {
-                    icon = common.searchIcon(this.catalog.name)
+                    icon = common.searchCatelogIcon(this.catalog.name)
                     this.catalog.icon = icon
                 }
             },

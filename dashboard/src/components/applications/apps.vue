@@ -4,21 +4,7 @@
       <el-col :span="4" :offset="2">
         <el-card :body-style="{ padding: '0px'}" style="text-align:left">
           <div class="catalog-image">
-            <img v-if="!catalog.icon" src="../../assets/image/default.png" class="image">
-            <img v-else-if="(catalog.icon.search('tensorflow')>=0)" src="../../assets/image/charts/tensorflow-stack-110x117.png" class="image" require>
-            <img v-else-if="(catalog.icon.search('gitlab')>=0)" src="../../assets/image/charts/gitlab-stack-110x117.png" class="image">
-            <img v-else-if="(catalog.icon.search('harbor')>=0)" src="../../assets/image/charts/harbor-stack-110x117.png" class="image" require>
-            <img v-else-if="(catalog.icon.search('jenkins')>=0)" src="../../assets/image/charts/jenkins-stack-110x117.png" class="image" require>
-            <img v-else-if="(catalog.icon.search('sonarqube')>=0)" src="../../assets/image/charts/sonarqube-stack-110x117.png" class="image" require>
-            <img v-else-if="(catalog.icon.search('gitlab')>=0)" src="../../assets/image/charts/gitlab-stack-110x117.png" class="image" require>
-            <img v-else-if="(catalog.icon.search('istio')>=0)" src="../../assets/image/charts/istio-110x117.png" class="image" require>
-            <img v-else-if="(catalog.icon.search('loki')>=0)" src="../../assets/image/charts/loki-stack-110x117.png" class="image" require>
-            <img v-else-if="(catalog.icon.search('grafana')>=0)" src="../../assets/image/charts/grafana-stack-110x117.png" class="image" require>
-            <img v-else-if="(catalog.icon.search('kubeapps')>=0)" src="../../assets/image/charts/kubeapps-plus-stack-110x117.png" class="image" require>
-            <img v-else-if="(catalog.icon.search('prometheus')>=0)" src="../../assets/image/charts/prometheus-stack-110x117.png" class="image" require>
-            <img v-else-if="(catalog.icon.search('argo')>=0)" src="../../assets/image/charts/argo-110x117.png" class="image" require>
-
-            <img v-else :src="catalog.icon" class="image" require>
+            <img :src="require(`@/assets/image/charts/${searchAppIcon(catalog.icon)}`)" class="image">
           </div>
           <div style="padding: 1em;">
             <h5 class="catalog-label" style="font-size: 18px;">{{catalog.releaseName}} ({{catalog.name}})</h5>
@@ -140,6 +126,7 @@
 </template>
 
 <script>
+import common from '../common/common.js';
 import ace from "ace-builds";
 import "ace-builds/webpack-resolver"; // 在 webpack 环境中使用必须要导入
 import "ace-builds/src-noconflict/theme-monokai"; // 默认设置的主题
@@ -160,7 +147,6 @@ export default {
   },
   methods: {
     deleteapp() {
-      console.log(this.catalog.name)
       let baseurl = getParamApi(apiSetting.kubernetes.deleteapp, this.$route.params.namespace, 'releases', this.catalog.name, this.purge ? '?purge=true' : '');
       noticeMessage(this, this.$t('message.wait_delete'), 'success')
       this.loading = true
@@ -171,7 +157,6 @@ export default {
           this.loading = false
           this.$router.push("/applications")
         } else {
-          console.log(res)
           noticeMessage(this, this.$t('message.delete_failed') + res.data.message, 'error')
           this.loading = false
         }
@@ -302,6 +287,9 @@ export default {
         //   });
         // }
       });
+    },
+    searchAppIcon(val){
+      return common.searchApplicationIcon(val)
     }
   },
   data() {

@@ -1,4 +1,8 @@
 //vue.config.js
+// const path = require('path')
+// function resolve(dir) {
+//     return path.join(__dirname, dir)
+// }
 module.exports = {
     assetsDir: './',
     devServer: {
@@ -21,5 +25,27 @@ module.exports = {
             }
         },
         before: require('./mock')
-    }
+    },
+    // configureWebpack:{
+    //     resolve:{
+    //         alias:{
+    //             '@':resolve('src')
+    //         }
+    //     },
+    //     module: {
+    //         rules: [
+    //             {
+    //                 test: /\.(png|jpg|gif)$/,
+    //                 use: [
+    //                     {
+    //                         loader: 'url-loader',
+    //                         options: {
+    //                             limit: 1
+    //                         }
+    //                     }
+    //                 ]
+    //             }
+    //         ]
+    //     }
+    // }
 }

@@ -32,20 +32,7 @@
                 <el-card :body-style="{ padding: '0px' }">
                     <div class="catalog-image" @click="goDetails(catalog)">
                         <a>
-                            <img v-if="!catalog.attributes.icon && catalog.attributes.name.search('gitlab')>=0" src="../../assets/image/charts/gitlab-stack-110x117.png" class="image">
-                            <img v-else-if="!catalog.attributes.icon && !catalog.attributes.name.search(gitlab)>=0" src="../../assets/image/default.png" class="image">
-                            <img v-else-if="(catalog.attributes.icon.search('harbor')>=0)" src="../../assets/image/charts/harbor-stack-110x117.png" class="image" require>
-                            <img v-else-if="(catalog.attributes.icon.search('jenkins')>=0)" src="../../assets/image/charts/jenkins-stack-110x117.png" class="image" require>
-                            <img v-else-if="(catalog.attributes.icon.search('sonarqube')>=0)" src="../../assets/image/charts/sonarqube-stack-110x117.png" class="image" require>
-                            <img v-else-if="(catalog.attributes.icon.search('gitlab')>=0)" src="../../assets/image/charts/gitlab-stack-110x117.png" class="image" require>
-                            <img v-else-if="(catalog.attributes.icon.search('istio')>=0)" src="../../assets/image/charts/istio-110x117.png" class="image" require>
-                            <img v-else-if="(catalog.attributes.icon.search('tensorflow')>=0)" src="../../assets/image/charts/tensorflow-stack-110x117.png" class="image" require>
-                            <img v-else-if="(catalog.attributes.icon.search('loki')>=0)" src="../../assets/image/charts/loki-stack-110x117.png" class="image" require>
-                            <img v-else-if="(catalog.attributes.icon.search('grafana')>=0)" src="../../assets/image/charts/grafana-stack-110x117.png" class="image" require>
-                            <img v-else-if="(catalog.attributes.icon.search('kubeapps')>=0)" src="../../assets/image/charts/kubeapps-plus-stack-110x117.png" class="image" require>
-                            <img v-else-if="(catalog.attributes.icon.search('prometheus')>=0)" src="../../assets/image/charts/prometheus-stack-110x117.png" class="image" require>
-                            <img v-else-if="(catalog.attributes.icon.search('argo')>=0)" src="../../assets/image/charts/argo-110x117.png" class="image" require>
-                            <img v-else :src="catalog.attributes.icon" class="image" require>
+                            <img :src="require(`@/assets/image/charts/${catalog.attributes.icon}`)" class="image">
                         </a>
                     </div>
                     <div style="padding: 1em;">
@@ -56,6 +43,7 @@
                                 <i class="iconfont">&#xe67b;</i>&nbsp;
                                 {{catalog.relationships.latestChartVersion.data.app_version ?
                                 catalog.relationships.latestChartVersion.data.app_version :
+
                                 catalog.relationships.latestChartVersion.data.version}}
                             </el-button>
                             <el-button size="medium" type="primary" class="button-right" v-if="catalog.id.indexOf('stable') > -1
@@ -111,7 +99,8 @@
                 catalogList: catalogList,
                 labelList: labelList,
                 label: label,
-                activeName: 'All'
+                activeName: 'All',
+                str: 'redis-stack-110x117.png'
             }
         },
         created() {
@@ -139,7 +128,7 @@
                             if (res.status == 200) {
                                 chart.attributes.icon = res.request.responseURL;
                                 if(!chart.attributes.icon){
-                                    chart.attributes.icon = common.searchIcon(chart.attributes.name)
+                                    chart.attributes.icon = common.searchCatelogIcon(chart.attributes.name)
                                 }
                                 this.catalogList.sort().push(chart)
                             } else {
@@ -149,14 +138,8 @@
                             noticeMessage(this, msg, 'error');
                         })
                     }else {
-                        if (common.searchIcon('argo')) {
-                            chart.attributes.icon = common.searchIcon(chart.attributes.name.replace('-cd',''))
-                            this.catalogList.sort().push(chart)
-                            console.log(chart.attributes.name.replace(/-[a-z]/,''))
-                        }else {
-                            chart.attributes.icon = common.searchIcon(chart.attributes.name)
-                            this.catalogList.sort().push(chart)
-                        }
+                        chart.attributes.icon = common.searchCatelogIcon(chart.attributes.name)
+                        this.catalogList.sort().push(chart)
                     }
                 }
             },
@@ -170,6 +153,9 @@
             },
             onChangeLabel(tab, event){
                 this.label = tab.name;
+            },
+            getRequire(val){
+                return (val)
             }
         }
     };

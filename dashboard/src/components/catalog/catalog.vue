@@ -12,10 +12,10 @@
                 </el-tab-pane>
             </el-tabs>
             <el-input class="catalog-search"
-                :placeholder="$t('message.search_charts')"
-                prefix-icon="el-icon-search"
-                v-model="input"
-                clearable>
+                      :placeholder="$t('message.search_charts')"
+                      prefix-icon="el-icon-search"
+                      v-model="input"
+                      clearable>
             </el-input>
         </el-row>
         <!-- header end -->
@@ -32,20 +32,7 @@
                 <el-card :body-style="{ padding: '0px' }">
                     <div class="catalog-image" @click="goDetails(catalog)">
                         <a>
-                            <img v-if="!catalog.attributes.icon && catalog.attributes.name.search('gitlab')>=0" src="../../assets/image/charts/gitlab-stack-110x117.png" class="image">
-                            <img v-else-if="!catalog.attributes.icon && !catalog.attributes.name.search(gitlab)>=0" src="../../assets/image/default.png" class="image">
-                            <img v-else-if="(catalog.attributes.icon.search('harbor')>=0)" src="../../assets/image/charts/harbor-stack-110x117.png" class="image" require>
-                            <img v-else-if="(catalog.attributes.icon.search('jenkins')>=0)" src="../../assets/image/charts/jenkins-stack-110x117.png" class="image" require>
-                            <img v-else-if="(catalog.attributes.icon.search('sonarqube')>=0)" src="../../assets/image/charts/sonarqube-stack-110x117.png" class="image" require>
-                            <img v-else-if="(catalog.attributes.icon.search('gitlab')>=0)" src="../../assets/image/charts/gitlab-stack-110x117.png" class="image" require>
-                            <img v-else-if="(catalog.attributes.icon.search('istio')>=0)" src="../../assets/image/charts/istio-110x117.png" class="image" require>
-                            <img v-else-if="(catalog.attributes.icon.search('tensorflow')>=0)" src="../../assets/image/charts/tensorflow-stack-110x117.png" class="image" require>
-                            <img v-else-if="(catalog.attributes.icon.search('loki')>=0)" src="../../assets/image/charts/loki-stack-110x117.png" class="image" require>
-                            <img v-else-if="(catalog.attributes.icon.search('grafana')>=0)" src="../../assets/image/charts/grafana-stack-110x117.png" class="image" require>
-                            <img v-else-if="(catalog.attributes.icon.search('kubeapps')>=0)" src="../../assets/image/charts/kubeapps-plus-stack-110x117.png" class="image" require>
-                            <img v-else-if="(catalog.attributes.icon.search('prometheus')>=0)" src="../../assets/image/charts/prometheus-stack-110x117.png" class="image" require>
-                            <img v-else-if="(catalog.attributes.icon.search('argo')>=0)" src="../../assets/image/charts/argo-110x117.png" class="image" require>
-                            <img v-else :src="catalog.attributes.icon" class="image" require>
+                            <img :src="require(`@/assets/image/charts/${catalog.attributes.icon}`)" class="image">
                         </a>
                     </div>
                     <div style="padding: 1em;">
@@ -140,7 +127,7 @@
                             if (res.status == 200) {
                                 chart.attributes.icon = res.request.responseURL;
                                 if(!chart.attributes.icon){
-                                    chart.attributes.icon = common.searchIcon(chart.attributes.name)
+                                    chart.attributes.icon = common.searchCatelogIcon(chart.attributes.name)
                                 }
                                 this.catalogList.sort().push(chart)
                             } else {

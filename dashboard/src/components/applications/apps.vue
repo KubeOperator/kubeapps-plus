@@ -162,6 +162,9 @@ export default {
         }
       });
     },
+    searchAppIcon(val){
+        return common.searchApplicationIcon(val)
+    },
     timeout: async function(ms) {
       await new Promise((resolve) => {
         setTimeout(resolve, ms);
@@ -288,9 +291,6 @@ export default {
         // }
       });
     },
-    searchAppIcon(val){
-      return common.searchApplicationIcon(val)
-    }
   },
   data() {
     return {

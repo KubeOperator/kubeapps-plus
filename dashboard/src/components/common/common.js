@@ -43,11 +43,9 @@ const imageIcon2 = {
     gitlab: 'https://dyltqmyl993wv.cloudfront.net/assets/stacks/gitlab/img/gitlab-stack-110x117.png',
     sonarqube: 'https://dyltqmyl993wv.cloudfront.net/assets/stacks/sonarqube/img/sonarqube-stack-110x117.png',
     istio: 'https://hub.kubeapps.com/api/chartsvc/v1/assets/ibm-charts/ibm-istio/logo',
-    tensorflow: 'https://dyltqmyl993wv.cloudfront.net/assets/stacks/tensorflow-serving/img/tensorflow-serving-stack-110x117.png',
+    'tensorflow-notebook': 'https://dyltqmyl993wv.cloudfront.net/assets/stacks/tensorflow-serving/img/tensorflow-serving-stack-110x117.png',
+    'tensorflow-serving': 'https://dyltqmyl993wv.cloudfront.net/assets/stacks/tensorflow-serving/img/tensorflow-serving-stack-110x117.png',
     'argo-cd': 'https://raw.githubusercontent.com/argoproj/argo/master/docs/assets/argo.png'
-    'weave-scope': '@/assets/image/charts/weave-scope-110x117.png',
-    'tensorflow-serving': "@/assets/image/charts/tensorflow-110x117.png",
-    'tensorflow-notebook': "@/assets/image/charts/tensorflow-110x117.png"
 }
 
 const imageIcon = {
@@ -78,8 +76,6 @@ const imageIcon = {
     loki: '@/assets/image/charts/loki-stack-110x117.png',
     prometheus: '@/assets/image/charts/prometheus-stack-110x117.png',
     'weave-scope': '@/assets/image/charts/weave-scope-110x117.png',
-    'tensorflow-serving': "@/assets/image/charts/tensorflow-110x117.png",
-    'tensorflow-notebook': "@/assets/image/charts/tensorflow-110x117.png"
     'argo-cd': '@/assets/image/charts/argo-110x117.png'
 }
 

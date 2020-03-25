@@ -4,7 +4,8 @@
       <el-col :span="4" :offset="2">
         <el-card :body-style="{ padding: '0px'}" style="text-align:left">
           <div class="catalog-image">
-            <img :src="require(`@/assets/image/charts/${searchAppIcon(catalog.icon)}`)" class="image">
+            <img v-if="catalog.icon.indexOf('http')> -1" :src="catalog.icon" class="image">
+            <img v-else :src="require(`@/assets/image/charts/${searchAppIcon(catalog.icon)}`)" class="image">
           </div>
           <div style="padding: 1em;">
             <h5 class="catalog-label" style="font-size: 18px;">{{catalog.releaseName}} ({{catalog.name}})</h5>

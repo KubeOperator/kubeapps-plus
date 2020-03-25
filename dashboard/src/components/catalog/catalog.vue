@@ -32,7 +32,8 @@
                 <el-card :body-style="{ padding: '0px' }">
                     <div class="catalog-image" @click="goDetails(catalog)">
                         <a>
-                            <img :src="require(`@/assets/image/charts/${catalog.attributes.icon}`)" class="image">
+                            <img v-if="catalog.attributes.icon.search('http')>0" :src="catalog.attributes.icon" class="image">
+                            <img v-else :src="require(`@/assets/image/charts/${catalog.attributes.icon}`)" class="image">
                         </a>
                     </div>
                     <div style="padding: 1em;">

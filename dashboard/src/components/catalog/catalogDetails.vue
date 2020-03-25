@@ -5,7 +5,8 @@
             <el-row :gutter="20" style="margin-bottom: 1em;">
                 <el-col :span="3">
                     <div class="grid-content grid-img">
-                        <img :src="require(`@/assets/image/charts/${catalog.icon}`)" class="image">
+                        <img v-if="catalog.icon.indexOf('http')>-1" :src="catalog.icon" class="image">
+                        <img v-else :src="require(`@/assets/image/charts/${catalog.icon}`)" class="image">
                     </div>
                 </el-col>
                 <el-col :span="20">

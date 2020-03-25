@@ -71,53 +71,43 @@ const imageIcon = {
     istio: '@/assets/image/charts/istio-110x117.png',
     'tensorflow-notebook': '@/assets/image/charts/tensorflow-stack-110x117.png',
     'tensorflow-serving': '@/assets/image/charts/tensorflow-stack-110x117.png',
+    loki: '@/assets/image/charts/loki-stack-110x117.png',
     grafana: '@/assets/image/charts/grafana-stack-110x117.png',
     'kubeapps-plus': '@/assets/image/charts/kubeapps-plus-stack-110x117.png',
-    loki: '@/assets/image/charts/loki-stack-110x117.png',
     prometheus: '@/assets/image/charts/prometheus-stack-110x117.png',
     'weave-scope': '@/assets/image/charts/weave-scope-110x117.png',
+    argo: '@/assets/image/charts/argo-110x117.png',
     'argo-cd': '@/assets/image/charts/argo-110x117.png'
 }
 
-var searchCatelogIcon = function (val) {
-    let str = imageIcon[val];
-    return str ? str.split('charts/')[1] : 'default.png';
+var searchCatelogIcon = function (val, src) {
+    let flag = false;
+    for(let i in imageIcon){
+        if(imageIcon[i].indexOf(val) > -1){
+            flag = true;
+            break;
+        }
+    }
+    if (flag) {
+        let str = imageIcon[val];
+        return str ? str.split('charts/')[1] : 'default.png';
+    }
+    return src;
 }
 
 var searchApplicationIcon = function (val) {
-    let auto_ = 'default';
+    let auto_ = 'default.png';
     if (!val) {
         return auto_;
     }
-    if (val.indexOf('tensorflow-notebook') >= 0) {
-        auto_ = 'tensorflow-notebook';
-    } else if (val.indexOf('tensorflow-serving') >= 0) {
-        auto_ = 'tensorflow-serving';
-    } else if (val.indexOf('gitlab-ce') >= 0) {
-        auto_ = 'gitlab-ce';
-    } else if (val.indexOf('harbor') >= 0) {
-        auto_ = 'harbor';
-    } else if (val.indexOf('jenkins') >= 0) {
-        auto_ = 'jenkins';
-    } else if (val.indexOf('sonarqube') >= 0) {
-        auto_ = 'sonarqube';
-    } else if (val.indexOf('istio') >= 0) {
-        auto_ = 'istio';
-    } else if (val.indexOf('loki') >= 0) {
-        auto_ = 'loki';
-    } else if (val.indexOf('grafana') >= 0) {
-        auto_ = 'grafana';
-    } else if (val.indexOf('kubeapps-plus') >= 0) {
-        auto_ = 'kubeapps-plus';
-    } else if (val.indexOf('prometheus') >= 0) {
-        auto_ = 'prometheus';
-    } else if (val.indexOf('argo-cd') >= 0) {
-        auto_ = 'argo-cd';
-    } else if (val.indexOf('weave-scope') >= 0) {
-        auto_ = 'weave-scope';
+    for(let i in imageIcon){
+        if(val.indexOf(i) > -1){
+            auto_ = i;
+            break;
+        }
     }
     let str = imageIcon[auto_];
-    return str ? str.split('charts/')[1] : 'default.png';
+    return str ? str.split('charts/')[1] : auto_;
 }
 
 const common = {search, searchCatelogIcon, searchApplicationIcon}

@@ -126,9 +126,7 @@
                         await http(getParamApi(apiSetting.kubernetes.getImage, chart.attributes.icon)).then(res => {
                             if (res.status == 200) {
                                 chart.attributes.icon = res.request.responseURL;
-                                if(!chart.attributes.icon){
-                                    chart.attributes.icon = common.searchCatelogIcon(chart.attributes.name)
-                                }
+                                chart.attributes.icon = common.searchCatelogIcon(chart.attributes.name, chart.attributes.icon)
                                 this.catalogList.sort().push(chart)
                             } else {
                                 noticeMessage(this, res.data, 'error');
@@ -137,7 +135,7 @@
                             noticeMessage(this, msg, 'error');
                         })
                     }else {
-                        chart.attributes.icon = common.searchCatelogIcon(chart.attributes.name)
+                        chart.attributes.icon = common.searchCatelogIcon(chart.attributes.name, null)
                         this.catalogList.sort().push(chart)
                     }
                 }

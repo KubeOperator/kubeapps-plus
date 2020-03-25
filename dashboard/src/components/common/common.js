@@ -83,7 +83,7 @@ const imageIcon = {
 var searchCatelogIcon = function (val, src) {
     let flag = false;
     for(let i in imageIcon){
-        if(imageIcon[i].indexOf(val) > -1){
+        if(i.indexOf(val) > -1){
             flag = true;
             break;
         }

@@ -167,7 +167,7 @@ dex:
   name: dex-server
 
   image:
-    repository: quay.io/dexidp/dex
+    repository: dexidp/dex #quay.io/dexidp/dex
     tag: v2.14.0
     imagePullPolicy: IfNotPresent
   initImage:

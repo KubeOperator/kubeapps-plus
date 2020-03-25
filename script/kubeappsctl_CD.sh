@@ -147,11 +147,11 @@ function docker_upload_image() {
     docker push ${registry_host}/${registry_project}/argoproj/argocd:v1.4.2
 
     docker load < dex-v2.14.0.tar
-    docker tag 0f88f9be5839 ${registry_host}/${registry_project}/dexidp/dex:v2.14.0
+    docker tag 0fcdb3f72d43 ${registry_host}/${registry_project}/dexidp/dex:v2.14.0
     docker push ${registry_host}/${registry_project}/dexidp/dex:v2.14.0
 
     docker load < redis-5.0.3.tar
-    docker tag 0fcdb3f72d43 ${registry_host}/${registry_project}/redis:5.0.3
+    docker tag 0f88f9be5839 ${registry_host}/${registry_project}/redis:5.0.3
     docker push ${registry_host}/${registry_project}/redis:5.0.3
 }
 

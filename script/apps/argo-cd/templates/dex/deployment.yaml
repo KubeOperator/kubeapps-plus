@@ -36,16 +36,14 @@ spec:
 {{- toYaml .Values.dex.podLabels | nindent 8 }}
         {{- end }}
     spec:
-      {{- with .Values.global.imagePullSecrets }}
-      imagePullSecrets:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
+      imagePullSecrets: 
+      - name: {{ .Release.Name }}-argo-cd-registry-fit2cloud-com-key
       {{- if .Values.global.securityContext }}
       securityContext: {{- toYaml .Values.global.securityContext | nindent 8 }}
       {{- end }}
       initContainers:
       - name: copyutil
-        image: {{ default .Values.global.image.repository .Values.dex.initImage.repository }}:{{ default .Values.global.image.tag .Values.dex.initImage.tag }}
+        image: {{ .Values.imageRegistry }}/{{ default .Values.global.image.repository .Values.dex.initImage.repository }}:{{ default .Values.global.image.tag .Values.dex.initImage.tag }}
         imagePullPolicy: {{ default .Values.global.image.imagePullPolicy .Values.dex.initImage.imagePullPolicy }}
         resources:
 {{- toYaml .Values.dex.resources | nindent 10 }}
@@ -61,7 +59,7 @@ spec:
           name: static-files
       containers:
       - name: {{ .Values.dex.name }}
-        image: {{ .Values.dex.image.repository }}:{{ .Values.dex.image.tag }}
+        image: {{ .Values.imageRegistry }}/{{ .Values.dex.image.repository }}:{{ .Values.dex.image.tag }}
         imagePullPolicy: {{ .Values.dex.image.imagePullPolicy }}
         command:
         - /shared/argocd-util

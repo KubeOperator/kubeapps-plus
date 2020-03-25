@@ -35,10 +35,8 @@ spec:
 {{- toYaml .Values.redis.podLabels | nindent 8 }}
         {{- end }}
     spec:
-      {{- with .Values.global.imagePullSecrets }}
-      imagePullSecrets:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
+      imagePullSecrets: 
+      - name: {{ .Release.Name }}-argo-cd-registry-fit2cloud-com-key
       automountServiceAccountToken: false
       {{- if .Values.global.securityContext }}
       securityContext: {{- toYaml .Values.global.securityContext | nindent 8 }}
@@ -50,7 +48,7 @@ spec:
         - ""
         - --appendonly
         - "no"
-        image: {{ .Values.redis.image.repository }}:{{ .Values.redis.image.tag }}
+        image: {{ .Values.imageRegistry }}/{{ .Values.redis.image.repository }}:{{ .Values.redis.image.tag }}
         imagePullPolicy: {{ .Values.redis.image.imagePullPolicy}}
         {{- if .Values.redis.containerSecurityContext }}
         securityContext: {{- toYaml .Values.redis.containerSecurityContext | nindent 10 }}

@@ -2,7 +2,7 @@ apiVersion: v1
 appVersion: 2.0.0-rc3
 description: 用于Kubernetes集群的通用web UI
 home: https://github.com/kubernetes/dashboard
-icon: https://raw.githubusercontent.com/kubernetes/kubernetes/master/logo/logo.svg
+icon: https://github.com/kubernetes/kubernetes/blob/master/logo/logo.png
 keywords:
 - Management
 maintainers:

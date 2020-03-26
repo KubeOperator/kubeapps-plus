@@ -1,0 +1,159 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ template "kubernetes-dashboard.fullname" . }}
+{{- if .Values.annotations }}
+  annotations:
+{{ toYaml .Values.annotations | indent 4 }}
+{{- end }}
+  labels:
+    k8s-app: {{ template "kubernetes-dashboard.name" . }}
+    chart: {{ template "kubernetes-dashboard.chart" . }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+{{- if .Values.labels }}
+{{ toYaml .Values.labels | indent 4 }}
+{{- end }}
+  namespace: {{ .Release.Namespace }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      k8s-app: {{ template "kubernetes-dashboard.name" . }}
+      release: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        k8s-app: {{ template "kubernetes-dashboard.name" . }}
+        release: {{ .Release.Name }}
+    spec:
+      imagePullSecrets:
+        - name: {{ .Release.Name }}-dashboard-registry-fit2cloud-com-key
+      serviceAccountName: {{ template "kubernetes-dashboard.serviceAccountName" . }}
+      containers:
+      - name: {{ .Chart.Name }}
+        image: "{{ .Values.imageRegistry }}/{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        args:
+          - --namespace={{ .Release.Namespace }}
+          - --auto-generate-certificates
+        ports:
+{{- if .Values.enableInsecureLogin }}
+        - name: http
+          containerPort: 9090
+          protocol: TCP
+{{- else }}
+        - name: https
+          containerPort: 8443
+          protocol: TCP
+{{- end }}
+        volumeMounts:
+        - name: kubernetes-dashboard-certs
+          mountPath: /certs
+          # Create on-disk volume to store exec logs
+        - mountPath: /tmp
+          name: tmp-volume
+        livenessProbe:
+          httpGet:
+{{- if .Values.enableInsecureLogin }}
+            scheme: HTTP
+            path: /
+            port: 9090
+{{- else }}
+            scheme: HTTPS
+            path: /
+            port: 8443
+{{- end }}
+          initialDelaySeconds: {{ .Values.livenessProbe.initialDelaySeconds }}
+          timeoutSeconds: {{ .Values.livenessProbe.timeoutSeconds }}
+{{- if .Values.dashboardContainerSecurityContext }}
+        securityContext:
+{{ toYaml .Values.dashboardContainerSecurityContext | indent 10 }}
+{{- end }}
+        resources:
+{{ toYaml .Values.resources | indent 10 }}
+    {{- if .Values.image.pullSecrets }}
+      imagePullSecrets:
+      {{- range .Values.image.pullSecrets }}
+        - name: {{ . }}
+      {{- end }}
+    {{- end }}
+    {{- if .Values.nodeSelector }}
+      nodeSelector:
+{{ toYaml .Values.nodeSelector | indent 8 }}
+    {{- end }}
+      volumes:
+      - name: kubernetes-dashboard-certs
+        secret:
+          secretName: kubernetes-dashboard-certs
+      - name: tmp-volume
+        emptyDir: {}
+    {{- if .Values.tolerations }}
+      tolerations:
+{{ toYaml .Values.tolerations | indent 8 }}
+    {{- end }}
+    {{- if .Values.affinity }}
+      affinity:
+{{ toYaml .Values.affinity | indent 8 }}
+    {{- end }}
+---
+
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  labels:
+    k8s-app: {{ template "kubernetes-dashboard.name" . }}-metrics-scraper
+    chart: {{ template "kubernetes-dashboard.chart" . }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+  name: {{ .Release.Name }}-metrics-scraper
+  namespace: {{ .Release.Namespace }}
+spec:
+  replicas: 1
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      k8s-app: {{ template "kubernetes-dashboard.name" . }}-metrics-scraper
+  template:
+    metadata:
+      labels:
+        k8s-app: {{ template "kubernetes-dashboard.name" . }}-metrics-scraper
+    spec:
+      imagePullSecrets:
+        - name: {{ .Release.Name }}-dashboard-registry-fit2cloud-com-key
+      containers:
+        - name: dashboard-metrics-scraper
+          image: "{{ .Values.imageRegistry }}/{{ .Values.metrics_scraper.image.repository }}:{{ .Values.metrics_scraper.image.tag }}"
+          ports:
+            - containerPort: 8000
+              name: http
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              scheme: HTTP
+              path: /
+              port: 8000
+            initialDelaySeconds: 30
+            timeoutSeconds: 30
+          volumeMounts:
+          - mountPath: /tmp
+            name: tmp-volume
+{{- if .Values.dashboardContainerSecurityContext }}
+          securityContext:
+{{ toYaml .Values.dashboardContainerSecurityContext | indent 12 }}
+{{- end }}
+      serviceAccountName: {{ template "kubernetes-dashboard.serviceAccountName" . }}
+     {{- if .Values.nodeSelector }}
+      nodeSelector:
+{{ toYaml .Values.nodeSelector | indent 8 }}
+     {{- end }}
+      # Comment the following tolerations if Dashboard must not be deployed on master
+      # Deploying to a master node breaks istio, so disabled by default. We can
+      # make this optional with a values_default.yaml entry eventually
+      tolerations:
+        - key: node-role.kubernetes.io/master
+          effect: NoSchedule
+      volumes:
+        - name: tmp-volume
+          emptyDir: {}

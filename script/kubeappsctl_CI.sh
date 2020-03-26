@@ -66,6 +66,8 @@ function set_docker_config() {
     printf "$all_variables_secret\ncat << EOF\n$resourcefile\nEOF" | bash >apps/harbor/templates/userdefined-secret.yaml
     resourcefile=`cat secrets/weave-scope-secret.yaml`
     printf "$all_variables_secret\ncat << EOF\n$resourcefile\nEOF" | bash >apps/weave-scope/templates/userdefined-secret.yaml
+    resourcefile=`cat secrets/dashboard-secret.yaml`
+    printf "$all_variables_secret\ncat << EOF\n$resourcefile\nEOF" | bash >apps/kubernetes-dashboard/templates/userdefined-secret.yaml
      
     #TODO
     #替换source
@@ -86,6 +88,7 @@ function set_docker_config() {
     sed "s/imageregistryvalue/\"${url}\/${project}\"/g" apps/harbor/charts/postgresql/values_default.yaml > apps/harbor/charts/postgresql/values.yaml
     sed "s/imageregistryvalue/\"${url}\/${project}\"/g" apps/harbor/charts/redis/values_default.yaml > apps/harbor/charts/redis/values.yaml
     sed "s/imageregistryvalue/\"${url}\/${project}\"/g" apps/weave-scope/values_default.yaml > apps/weave-scope/values.yaml
+    sed "s/imageregistryvalue/\"${url}\/${project}\"/g" apps/kubernetes-dashboard/values_default.yaml > apps/kubernetes-dashboard/values.yaml
 
 }
 
@@ -256,6 +259,15 @@ function docker_upload_image() {
     docker tag 4178113a354d ${registry_host}/${registry_project}/weaveworks/scope:1.12.0
     docker push ${registry_host}/${registry_project}/weaveworks/scope:1.12.0
     #weave-scope end
+
+    #kubernetes-dashboard start
+    docker load < dashboard.tar
+    docker tag 4a0a1cf1b459 ${registry_host}/${registry_project}/kubernetesui/dashboard:v2.0.0-rc3
+    docker push ${registry_host}/${registry_project}/kubernetesui/dashboard:v2.0.0-rc3
+    docker load < metrics-scraper.tar
+    docker tag 3327f0dbcb4a ${registry_host}/${registry_project}/kubernetesui/metrics-scraper:v1.0.3
+    docker push ${registry_host}/${registry_project}/kubernetesui/metrics-scraper:v1.0.3
+    #kubernetes-dashboard end
 }
 
 #打包Helm Chart
@@ -318,6 +330,9 @@ function upload_chart() {
     helm package .
     helm push . localrepo -f
     cd ${PROJECT_DIR}/apps/weave-scope
+    helm package .
+    helm push . localrepo -f
+    cd ${PROJECT_DIR}/apps/kubernetes-dashboard
     helm package .
     helm push . localrepo -f
     if [ $? -eq 0 ]; then

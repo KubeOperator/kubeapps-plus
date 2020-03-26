@@ -1,0 +1,14 @@
+apiVersion: v1
+appVersion: 2.0.0-rc3
+description: 用于Kubernetes集群的通用web UI
+home: https://github.com/kubernetes/dashboard
+icon: https://raw.githubusercontent.com/kubernetes/kubernetes/master/logo/logo.svg
+keywords:
+- Management
+maintainers:
+- email: wanghe@fit2cloud.com
+  name: wanghe
+name: kubernetes-dashboard
+sources:
+- https://github.com/kubernetes/dashboard
+version: 1.0.0

@@ -56,18 +56,29 @@ function set_docker_config() {
     secret=$(base64 -w 0 utils/docker-config.json)
     all_variables_secret="secret=${secret}"
     #替换Secert
+    # jenkins
     resourcefile=`cat secrets/jenkins-secret.yaml`
     printf "$all_variables_secret\ncat << EOF\n$resourcefile\nEOF" | bash >apps/jenkins/templates/userdefined-secret.yaml
+    # gitlab
     resourcefile=`cat secrets/gitlab-secret.yaml`
     printf "$all_variables_secret\ncat << EOF\n$resourcefile\nEOF" | bash >apps/gitlab-ce/templates/userdefined-secret.yaml
+    # sonar
     resourcefile=`cat secrets/sonar-secret.yaml`
     printf "$all_variables_secret\ncat << EOF\n$resourcefile\nEOF" | bash >apps/sonarqube/templates/userdefined-secret.yaml
+    # harbor
     resourcefile=`cat secrets/harbor-secret.yaml`
     printf "$all_variables_secret\ncat << EOF\n$resourcefile\nEOF" | bash >apps/harbor/templates/userdefined-secret.yaml
+    # weave-scope
     resourcefile=`cat secrets/weave-scope-secret.yaml`
     printf "$all_variables_secret\ncat << EOF\n$resourcefile\nEOF" | bash >apps/weave-scope/templates/userdefined-secret.yaml
+
+    # dashboard
     resourcefile=`cat secrets/dashboard-secret.yaml`
     printf "$all_variables_secret\ncat << EOF\n$resourcefile\nEOF" | bash >apps/kubernetes-dashboard/templates/userdefined-secret.yaml
+
+    # argo
+    resourcefile=`cat secrets/argo-cd-secret.yaml`
+    printf "$all_variables_secret\ncat << EOF\n$resourcefile\nEOF" | bash >apps/argo-cd/templates/argocd-configs/userdefined-secret.yaml
      
     #TODO
     #替换source
@@ -75,12 +86,10 @@ function set_docker_config() {
     # all_variables_source="imageregistry=\"${url}\""
     # printf "$all_variables_source\ncat << EOF\n$registryfile\nEOF" | bash >apps/jenkins/values.yaml
     sed "s/imageregistryvalue/\"${url}\/${project}\"/g" apps/jenkins/values_default.yaml > apps/jenkins/values.yaml
-    #Gitlab
+    # CI
     sed "s/imageregistryvalue/\"${url}\/${project}\"/g" apps/gitlab-ce/values_default.yaml > apps/gitlab-ce/values.yaml
     sed "s/imageregistryvalue/\"${url}\/${project}\"/g" apps/gitlab-ce/charts/postgresql/values_default.yaml > apps/gitlab-ce/charts/postgresql/values.yaml
     sed "s/imageregistryvalue/\"${url}\/${project}\"/g" apps/gitlab-ce/charts/redis/values_default.yaml > apps/gitlab-ce/charts/redis/values.yaml
-
-    #
     sed "s/imageregistryvalue/\"${url}\/${project}\"/g" apps/sonarqube/values_default.yaml > apps/sonarqube/values.yaml
     sed "s/imageregistryvalue/\"${url}\/${project}\"/g" apps/sonarqube/charts/mysql/values_default.yaml > apps/sonarqube/charts/mysql/values.yaml
     sed "s/imageregistryvalue/\"${url}\/${project}\"/g" apps/sonarqube/charts/postgresql/values_default.yaml > apps/sonarqube/charts/postgresql/values.yaml
@@ -88,7 +97,11 @@ function set_docker_config() {
     sed "s/imageregistryvalue/\"${url}\/${project}\"/g" apps/harbor/charts/postgresql/values_default.yaml > apps/harbor/charts/postgresql/values.yaml
     sed "s/imageregistryvalue/\"${url}\/${project}\"/g" apps/harbor/charts/redis/values_default.yaml > apps/harbor/charts/redis/values.yaml
     sed "s/imageregistryvalue/\"${url}\/${project}\"/g" apps/weave-scope/values_default.yaml > apps/weave-scope/values.yaml
+
+    # kubernetes-dashboard
     sed "s/imageregistryvalue/\"${url}\/${project}\"/g" apps/kubernetes-dashboard/values_default.yaml > apps/kubernetes-dashboard/values.yaml
+    # argo-cd
+    sed "s/imageregistryvalue/\"${url}\/${project}\"/g" apps/argo-cd/values_default.yaml > apps/argo-cd/values.yaml
 
 }
 
@@ -268,6 +281,21 @@ function docker_upload_image() {
     docker tag 3327f0dbcb4a ${registry_host}/${registry_project}/kubernetesui/metrics-scraper:v1.0.3
     docker push ${registry_host}/${registry_project}/kubernetesui/metrics-scraper:v1.0.3
     #kubernetes-dashboard end
+
+
+    #argo start 
+    docker load < argocd-v1.4.2.tar
+    docker tag ecd0b4c4156f ${registry_host}/${registry_project}/argoproj/argocd:v1.4.2
+    docker push ${registry_host}/${registry_project}/argoproj/argocd:v1.4.2
+
+    docker load < dex-v2.14.0.tar
+    docker tag 0fcdb3f72d43 ${registry_host}/${registry_project}/dexidp/dex:v2.14.0
+    docker push ${registry_host}/${registry_project}/dexidp/dex:v2.14.0
+
+    docker load < redis-5.0.3.tar
+    docker tag 0f88f9be5839 ${registry_host}/${registry_project}/redis:5.0.3
+    docker push ${registry_host}/${registry_project}/redis:5.0.3
+    #argo end
 }
 
 #打包Helm Chart
@@ -333,6 +361,9 @@ function upload_chart() {
     helm package .
     helm push . localrepo -f
     cd ${PROJECT_DIR}/apps/kubernetes-dashboard
+    helm package .
+    helm push . localrepo -f
+    cd ${PROJECT_DIR}/apps/argo-cd
     helm package .
     helm push . localrepo -f
     if [ $? -eq 0 ]; then

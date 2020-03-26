@@ -84,7 +84,7 @@
           @click.native="$router.push('/apps/ns/'+ catalog.namespace + '/' + catalog.releaseName)">
           <div class="catalog-image">
             <a>
-              <img v-if="catalog.icon.indexOf('http')> -1" :src="catalog.icon" class="image">
+              <img v-if="catalog.icon.indexOf('http') > -1" :src="catalog.icon" class="image">
               <img v-else :src="require(`@/assets/image/charts/${searchAppIcon(catalog.icon)}`)" class="image">
             </a>
           </div>

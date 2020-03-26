@@ -4,7 +4,7 @@
       <el-col :span="4" :offset="2">
         <el-card :body-style="{ padding: '0px'}" style="text-align:left">
           <div class="catalog-image">
-            <img v-if="catalog.icon.indexOf('http')> -1" :src="catalog.icon" class="image">
+            <img v-if="isLocalImage(catalog.icon)" :src="catalog.icon" class="image">
             <img v-else :src="require(`@/assets/image/charts/${searchAppIcon(catalog.icon)}`)" class="image">
           </div>
           <div style="padding: 1em;">
@@ -165,6 +165,12 @@ export default {
     },
     searchAppIcon(val){
         return common.searchApplicationIcon(val)
+    },
+    isLocalImage(url){
+      if(common.searchApplicationIcon(url).indexOf('http') > -1){
+        return true;
+      }
+      return false;
     },
     timeout: async function(ms) {
       await new Promise((resolve) => {

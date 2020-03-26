@@ -12,7 +12,7 @@
             <p class="catalog-label" style="font-size: 14px;">{{catalog.description}}</p>
             <el-divider></el-divider>
             <p class="label" style="font-size: 12px;">{{'App Version: ' + catalog.appv}}</p>
-            <p class="label" style="font-size: 12px;">{{'App Version: ' + catalog.chartv}}</p>
+            <p class="label" style="font-size: 12px;">{{'Chart Version: ' + catalog.chartv}}</p>
           </div>
         </el-card>
       </el-col>

@@ -2,7 +2,7 @@ appVersion: 9.5.10
 name: gitlab-ce
 description: GitLab 是一个基于 Web 的 DevOps 版本控制工具。
 home: https://www.kubeoperator.io
-icon: https://gitlab.com/uploads/group/avatar/6543/gitlab-logo-square.png
+icon: gitlab-logo-square.png
 keywords:
 - CI
 version: 1.0.0

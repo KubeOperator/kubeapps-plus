@@ -17,4 +17,4 @@ maintainers:
   - name: Bitnami
     email: containers@bitnami.com
 engine: gotpl
-icon: https://bitnami.com/assets/stacks/harbor-core/img/harbor-core-stack-220x234.png
+icon: harbor-core-stack-220x234.png

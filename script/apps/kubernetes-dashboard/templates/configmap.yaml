@@ -1,0 +1,11 @@
+---
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  labels:
+    k8s-app: {{ template "kubernetes-dashboard.name" . }}
+    chart: {{ template "kubernetes-dashboard.chart" . }}
+    heritage: {{ .Release.Service }}
+    release: {{ .Release.Name }}    
+  name: {{ .Release.Name }}-settings
+  namespace: {{ .Release.Namespace }}

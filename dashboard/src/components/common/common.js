@@ -78,7 +78,8 @@ const imageIcon = {
     prometheus: '@/assets/image/charts/prometheus-stack-110x117.png',
     'weave-scope': '@/assets/image/charts/weave-scope-110x117.png',
     argo: '@/assets/image/charts/argo-110x117.png',
-    'argo-cd': '@/assets/image/charts/argo-110x117.png'
+    'argo-cd': '@/assets/image/charts/argo-110x117.png',
+    'kubernetes-dashboard': '@/assets/image/charts/kubernetes-110x117.png'
 }
 
 var searchCatelogIcon = function (val, src) {
@@ -101,7 +102,7 @@ var searchApplicationIcon = function (val) {
     if (!val) {
         return auto_;
     }
-    for(let i in imageIcon){
+    for(let i in imageIcon){ 
         if(val.indexOf(i) > -1){
             auto_ = i;
             break;

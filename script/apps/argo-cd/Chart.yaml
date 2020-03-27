@@ -2,7 +2,7 @@ apiVersion: v1
 appVersion: 1.4.2
 description: ArgoCD 是一个声明式的 GitOps 持续交付工具。
 home: https://github.com/argoproj/argo-helm
-icon: argo-cd.png
+icon: local://argo-cd.png
 keywords:
 - CD
 maintainers:

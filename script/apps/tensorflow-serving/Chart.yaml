@@ -9,6 +9,6 @@ sources:
 maintainers:
 - name: cheyang
   email: cheyang@163.com
-icon: tensorflow-serving-110x117.png
+icon: local://tensorflow-serving-110x117.png
 keywords:
   - AI

@@ -3,7 +3,7 @@ appVersion: 2.204.1
 description: Jenkins 是一个开源的持续集成工具。
 engine: gotpl
 home: https://jenkins.io/
-icon: jenkins-stack-110x117.png
+icon: local://jenkins-stack-110x117.png
 keywords:
 - CI
 - CD

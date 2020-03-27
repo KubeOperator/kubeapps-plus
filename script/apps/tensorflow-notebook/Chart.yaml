@@ -10,6 +10,6 @@ home: https://www.tensorflow.org
 maintainers:
   - name: cheyang
     email: cheyang@163.com
-icon: tensorflow-notebook-110x117.png
+icon: local://tensorflow-notebook-110x117.png
 keywords:
   - AI

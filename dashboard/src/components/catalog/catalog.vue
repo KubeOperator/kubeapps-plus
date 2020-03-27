@@ -112,18 +112,13 @@
                 await http(apiSetting.kubernetes.getCharts).then(res => {
                     if (res.status == 200) {
                         this.getList(res.data.data);
-                        console.log('成功')
                     } else {
                         noticeMessage(this, res.data, 'error');
-                        console.log('失败1')
                     }
                 }).catch(msg => {
                     noticeMessage(this, msg, 'error');
-                    console.log('请求失败')
                 })
-                console.log('把 loading 关闭')
                 this.loading = false
-                console.log('loading 的状态:',this.loading)
             },
             getList: async function(data){
                 this.catalogList = []

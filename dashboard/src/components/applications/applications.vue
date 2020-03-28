@@ -84,19 +84,8 @@
           @click.native="$router.push('/apps/ns/'+ catalog.namespace + '/' + catalog.releaseName)">
           <div class="catalog-image">
             <a>
-              <img v-if="!catalog.icon" src="../../assets/image/default.png" class="image">
-              <img v-else-if="(catalog.icon.search('tensorflow')>=0)" src="../../assets/image/charts/tensorflow-stack-110x117.png" class="image" require>
-              <img v-else-if="(catalog.icon.search('gitlab')>=0)" src="../../assets/image/charts/gitlab-stack-110x117.png" class="image">
-              <img v-else-if="(catalog.icon.search('harbor')>=0)" src="../../assets/image/charts/harbor-stack-110x117.png" class="image" require>
-              <img v-else-if="(catalog.icon.search('jenkins')>=0)" src="../../assets/image/charts/jenkins-stack-110x117.png" class="image" require>
-              <img v-else-if="(catalog.icon.search('sonarqube')>=0)" src="../../assets/image/charts/sonarqube-stack-110x117.png" class="image" require>
-              <img v-else-if="(catalog.icon.search('gitlab')>=0)" src="../../assets/image/charts/gitlab-stack-110x117.png" class="image" require>
-              <img v-else-if="(catalog.icon.search('istio')>=0)" src="../../assets/image/charts/istio-110x117.png" class="image" require>
-              <img v-else-if="(catalog.icon.search('grafana')>=0)" src="../../assets/image/charts/grafana-stack-110x117.png" class="image" require>
-              <img v-else-if="(catalog.icon.search('kubeapps')>=0)" src="../../assets/image/charts/kubeapps-plus-stack-110x117.png" class="image" require>
-              <img v-else-if="(catalog.icon.search('loki')>=0)" src="../../assets/image/charts/loki-stack-110x117.png" class="image" require>
-              <img v-else-if="(catalog.icon.search('prometheus')>=0)" src="../../assets/image/charts/prometheus-stack-110x117.png" class="image" require>
-              <img v-else :src="catalog.icon" class="image" require>
+              <img v-if="isLocalImage(catalog.icon)" :src="catalog.icon" class="image">
+              <img v-else :src="require(`@/assets/image/charts/${searchAppIcon(catalog.chartMetadata.name)}`)" class="image">
             </a>
           </div>
           <div style="padding: 1em;">
@@ -133,6 +122,7 @@
 // import Store from "./store/store.js";
 // import apiSetting from "../utils/apiSetting.js";
 // import http from "../utils/httpAxios.js";
+import common from '../common/common.js';
 export default {
   name: "dashboard",
   data() {
@@ -163,6 +153,15 @@ export default {
       } else {
         return "danger";
       }
+    },
+    searchAppIcon(val){
+        return common.searchApplicationIcon(val)
+    },
+    isLocalImage(url){
+        if(common.searchApplicationIcon(url).indexOf('http') > -1){
+            return true;
+        }
+        return false;
     }
   },
   computed: {
@@ -190,8 +189,8 @@ export default {
 };
 </script>
 <style scoped>
-.app_title {
-}
+/* .app_title {
+} */
 .el-row {
   margin: 0px !important;
 }

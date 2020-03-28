@@ -1,51 +1,39 @@
 <template>
-    <div class="catalog-content" v-loading.fullscreen.lock="loading" element-loading-text="Loading" element-loading-background="rgba(0, 0, 0, 0.1)">
+    <div class="catalog-content" v-loading.fullscreen.lock="loading" element-loading-text="Loading..." element-loading-background="rgba(0, 0, 0, 0.1)">
         <!-- header start -->
         <el-row style="border-bottom: 2px solid #f1f1f1;">
-<!--            <el-col :md="6" :lg="4">-->
-<!--                <div class="grid-content">-->
-<!--                    <h1 class="app-type">{{$t('message.catalog')}}</h1>-->
-<!--                </div>-->
-<!--            </el-col>-->
-<!--            <el-col :md="{span:24,offest:2}" :lg="6">-->
-            <div class="catalog-div">
-                <el-button plain v-for="(label_, index) in labelList" :key="index" class="catalog-button">{{label_.value}}</el-button>
-            </div>
+            <!--            <div class="catalog-div">-->
+            <!--                <el-button plain v-for="(label_, index) in labelList" :key="index" class="catalog-button" @click.native="onChangeLabel(label_.key)" :class="{ active: label_.isActive }">-->
+            <!--                    {{label_.value}}-->
+            <!--                </el-button>-->
+            <!--            </div>-->
+            <el-tabs class="catalog-div" v-model="activeName" type="card" @tab-click="onChangeLabel" style="margin: 0 20px 0 20px;">
+                <el-tab-pane v-for="label_ in labelList" :key="label_.key" class="catalog-button" :label="label_.value" :name="label_.key">
+                </el-tab-pane>
+            </el-tabs>
             <el-input class="catalog-search"
                       :placeholder="$t('message.search_charts')"
                       prefix-icon="el-icon-search"
                       v-model="input"
                       clearable>
             </el-input>
-<!--            </el-col>-->
         </el-row>
         <!-- header end -->
 
         <!-- 间隔线 start -->
-<!--        <el-divider></el-divider>-->
         <!-- 间隔线 end -->
 
         <!-- foot start -->
         <el-row :gutter="20" class="el-row-body">
             <el-col :xs="24" :sm="12" :md="8" :lg="6" :xl="4" v-for="(catalog, index) in catalogList"
                     :key="index" class="el-col" v-show="(catalog.attributes.name.search(input)>=0
-              || catalog.attributes.description.search(input)>=0)">
+              || catalog.attributes.description.search(input)>=0)
+              && label!='All'?(label!='Other'?catalog.attributes.keywords[0].search(label)>=0: (catalog.attributes.keywords[0]!='AI'&&catalog.attributes.keywords[0]!='CI'&&catalog.attributes.keywords[0]!='CD'&&catalog.attributes.keywords[0]!='Management')):true">
                 <el-card :body-style="{ padding: '0px' }">
                     <div class="catalog-image" @click="goDetails(catalog)">
                         <a>
-                            <img v-if="!catalog.attributes.icon && catalog.attributes.name.search('gitlab')>=0" src="../../assets/image/charts/gitlab-stack-110x117.png" class="image">
-                            <img v-else-if="!catalog.attributes.icon && !catalog.attributes.name.search(gitlab)>=0" src="../../assets/image/default.png" class="image">
-                            <img v-else-if="(catalog.attributes.icon.search('harbor')>=0)" src="../../assets/image/charts/harbor-stack-110x117.png" class="image" require>
-                            <img v-else-if="(catalog.attributes.icon.search('jenkins')>=0)" src="../../assets/image/charts/jenkins-stack-110x117.png" class="image" require>
-                            <img v-else-if="(catalog.attributes.icon.search('sonarqube')>=0)" src="../../assets/image/charts/sonarqube-stack-110x117.png" class="image" require>
-                            <img v-else-if="(catalog.attributes.icon.search('gitlab')>=0)" src="../../assets/image/charts/gitlab-stack-110x117.png" class="image" require>
-                            <img v-else-if="(catalog.attributes.icon.search('istio')>=0)" src="../../assets/image/charts/istio-110x117.png" class="image" require>
-                            <img v-else-if="(catalog.attributes.icon.search('tensorflow')>=0)" src="../../assets/image/charts/tensorflow-stack-110x117.png" class="image" require>
-                            <img v-else-if="(catalog.attributes.icon.search('grafana')>=0)" src="../../assets/image/charts/grafana-stack-110x117.png" class="image" require>
-                            <img v-else-if="(catalog.attributes.icon.search('kubeapps')>=0)" src="../../assets/image/charts/kubeapps-plus-stack-110x117.png" class="image" require>
-                            <img v-else-if="(catalog.attributes.icon.search('loki')>=0)" src="../../assets/image/charts/loki-stack-110x117.png" class="image" require>
-                            <img v-else-if="(catalog.attributes.icon.search('prometheus')>=0)" src="../../assets/image/charts/prometheus-stack-110x117.png" class="image" require>
-                            <img v-else :src="catalog.attributes.icon" class="image" require>
+                            <img v-if="catalog.attributes.icon.search('http')>0" :src="catalog.attributes.icon" class="image">
+                            <img v-else :src="require(`@/assets/image/charts/${catalog.attributes.icon}`)" class="image">
                         </a>
                     </div>
                     <div style="padding: 1em;">
@@ -56,11 +44,12 @@
                                 <i class="iconfont">&#xe67b;</i>&nbsp;
                                 {{catalog.relationships.latestChartVersion.data.app_version ?
                                 catalog.relationships.latestChartVersion.data.app_version :
+
                                 catalog.relationships.latestChartVersion.data.version}}
                             </el-button>
                             <el-button size="medium" type="primary" class="button-right" v-if="catalog.id.indexOf('stable') > -1
                                 || catalog.id.indexOf('bitnami') > -1 || catalog.id.indexOf('svc-cat') > -1"
-                                @click.native="$router.push('/repositories')" round>
+                                       @click.native="$router.push('/repositories')" round>
                                 {{catalog.id | splitName(catalog.id)}}
                             </el-button>
                             <el-button type="warning" class="button-right" v-else-if="catalog.id.indexOf('incubator') > -1"
@@ -71,8 +60,8 @@
                                        @click.native="$router.push('/repositories')" round>
                                 {{catalog.id | splitName(catalog.id)}}
                             </el-button>
-                            <el-button size="medium" type="primary" class="button-right" round>
-                                {{catalog.label ? catalog.label : '其它'}}
+                            <el-button size="medium" type="primary" class="button-right" v-for="(label_, index) in catalog.attributes.keywords" :key="index" v-show="(label=='All' || label_=='AI' || label_=='CI' || label_=='CD' || label_=='Management' || label=='Other') && index==0" round>
+                                {{(label_=='AI'||label_=='CI'||label_=='CD'||label_=='Management')? label_ : '其它'}}
                             </el-button>
                         </div>
                     </div>
@@ -91,15 +80,16 @@
     import enerty from '../entity/entity.js';
     import getParamApi from "../utils/getParamApi";
     /* eslint-disable */
+    let label = "";
     let catalogList = [];
     let labelList = [
-        {key: 'All', value: '全部'},
-        {key: 'AI', value: 'AI'},
-        {key: 'CI', value: 'CI'},
-        {key: 'CD', value: 'CD'},
-        {key: 'Management', value: '管理'},
-        {key: 'Other', value: '其它'}
-        ];
+        {key: 'All', value: '全部', isActive: true},
+        {key: 'AI', value: 'AI', isActive: false},
+        {key: 'CI', value: 'CI', isActive: false},
+        {key: 'CD', value: 'CD', isActive: false},
+        {key: 'Management', value: '管理', isActive: false},
+        {key: 'Other', value: '其它', isActive: false}
+    ];
     export default {
         name: "catalog",
         data() {
@@ -109,17 +99,19 @@
                 loading: true,
                 catalogList: catalogList,
                 labelList: labelList,
-                label_: ""
+                label: label,
+                activeName: 'All'
             }
         },
         created() {
+            this.label = 'All'
             this.init()
         },
         methods: {
             init: async function () {
                 await http(apiSetting.kubernetes.getCharts).then(res => {
                     if (res.status == 200) {
-                        this.getList(res.data.data)
+                        this.getList(res.data.data);
                     } else {
                         noticeMessage(this, res.data, 'error');
                     }
@@ -135,9 +127,7 @@
                         await http(getParamApi(apiSetting.kubernetes.getImage, chart.attributes.icon)).then(res => {
                             if (res.status == 200) {
                                 chart.attributes.icon = res.request.responseURL;
-                                if(!chart.attributes.icon){
-                                    chart.attributes.icon = common.searchIcon(chart.attributes.name)
-                                }
+                                chart.attributes.icon = common.searchCatelogIcon(chart.attributes.name, chart.attributes.icon)
                                 this.catalogList.sort().push(chart)
                             } else {
                                 noticeMessage(this, res.data, 'error');
@@ -146,7 +136,7 @@
                             noticeMessage(this, msg, 'error');
                         })
                     }else {
-                        chart.attributes.icon = common.searchIcon(chart.attributes.name)
+                        chart.attributes.icon = common.searchCatelogIcon(chart.attributes.name)
                         this.catalogList.sort().push(chart)
                     }
                 }
@@ -158,6 +148,9 @@
                 sessionStorage.setItem('chartName', catalog.id)
                 sessionStorage.setItem('catalogDetailsByParams', JSON.stringify(params))
                 this.$router.push({name: 'catalogDetails', params: params})
+            },
+            onChangeLabel(tab, event){
+                this.label = tab.name;
             }
         }
     };

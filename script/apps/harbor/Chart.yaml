@@ -4,10 +4,8 @@ version: 3.0.10
 appVersion: 1.10.0
 description: Harbor 是一个开源的容器镜像管理仓库。
 keywords:
-  - docker
-  - registry
-  - vulnerability
-  - scan
+  - CI
+  - CD
 home: https://goharbor.io/
 sources:
   - https://github.com/bitnami/bitnami-docker-harbor-core
@@ -19,5 +17,4 @@ maintainers:
   - name: Bitnami
     email: containers@bitnami.com
 engine: gotpl
-icon: https://bitnami.com/assets/stacks/harbor-core/img/harbor-core-stack-220x234.png
-label: CD
+icon: local://harbor-core-stack-220x234.png

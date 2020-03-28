@@ -85,7 +85,7 @@
           <div class="catalog-image">
             <a>
               <img v-if="isLocalImage(catalog.icon)" :src="catalog.icon" class="image">
-              <img v-else :src="require(`@/assets/image/charts/${searchAppIcon(catalog.icon)}`)" class="image">
+              <img v-else :src="require(`@/assets/image/charts/${searchAppIcon(catalog.chartMetadata.name)}`)" class="image">
             </a>
           </div>
           <div style="padding: 1em;">
@@ -189,8 +189,8 @@ export default {
 };
 </script>
 <style scoped>
-.app_title {
-}
+/* .app_title {
+} */
 .el-row {
   margin: 0px !important;
 }

@@ -172,7 +172,7 @@ apprepository:
   ##
   replicaCount: 1
   ## Schedule for syncing apprepositories. Every ten minutes by default
-  # crontab: "*/10 * * * *"
+  crontab: "*/5 * * * *"
   ## Bitnami Kubeapps AppRepository Controller image
   ## ref: https://hub.docker.com/r/bitnami/kubeapps-apprepository-controller/tags/
   ##

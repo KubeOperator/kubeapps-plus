@@ -82,5 +82,5 @@ func init() {
 	flag.StringVar(&mongoURL, "mongo-url", "localhost", "MongoDB URL (see https://godoc.org/labix.org/v2/mgo#Dial for format)")
 	flag.StringVar(&mongoSecretName, "mongo-secret-name", "mongodb", "Kubernetes secret name for MongoDB credentials")
 	flag.StringVar(&userAgentComment, "user-agent-comment", "", "UserAgent comment used during outbound requests")
-	flag.StringVar(&crontab, "crontab", "*/10 * * * *", "CronTab to specify schedule")
+	flag.StringVar(&crontab, "crontab", "*/5 * * * *", "CronTab to specify schedule")
 }

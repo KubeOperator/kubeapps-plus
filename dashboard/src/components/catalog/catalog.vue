@@ -119,7 +119,7 @@
                 await http(apiSetting.kubernetes.getCharts).then(res => {
                     if (res.status == 200) {
                         this.getList(res.data.data);
-                        if ( res.data.data.length < 100){
+                        if ( res.data.data.length < 1){
                             this.chartMessage()
                         }
                     } else {

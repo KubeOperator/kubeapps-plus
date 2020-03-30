@@ -119,7 +119,7 @@
                 await http(apiSetting.kubernetes.getCharts).then(res => {
                     if (res.status == 200) {
                         this.getList(res.data.data);
-                        if ( res.data.data.length < 1){
+                        if ( res.data.data.length < 100){
                             this.chartMessage()
                         }
                     } else {
@@ -165,7 +165,7 @@
             chartMessage() {
                 this.$message({
                 showClose: true,
-                message: '注意：Kubeapps-plus 应用商店默认是没有应用的哦！需要你手动上传 chart 离线包或者配置使用你自己的 chart 仓库。',
+                message: '注意：Kubeapps-plus 应用商店默认是没有应用的哦！需要你手动上传 chart 离线包或者配置使用你自己的 chart 仓库。配置参考链接: https://docs.kubeoperator.io/KubeOperator-v2.4/kubeapps-plus',
                 type: 'warning'
             });
       },

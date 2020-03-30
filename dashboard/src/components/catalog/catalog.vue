@@ -82,14 +82,6 @@
     /* eslint-disable */
     let label = "";
     let catalogList = [];
-    let labelList = [
-        {key: 'All', value: '全部', isActive: true},
-        {key: 'AI', value: 'AI', isActive: false},
-        {key: 'CI', value: 'CI', isActive: false},
-        {key: 'CD', value: 'CD', isActive: false},
-        {key: 'Management', value: '管理', isActive: false},
-        {key: 'Other', value: '其它', isActive: false}
-    ];
     export default {
         name: "catalog",
         data() {
@@ -98,9 +90,24 @@
                 currentDate: new Date(),
                 loading: true,
                 catalogList: catalogList,
-                labelList: labelList,
                 label: label,
-                activeName: 'All'
+                activeName: 'All',
+                lang: 'zh-CN',
+                changeLang: '切换English'
+            }
+        },
+        computed: {
+            labelList() {
+                let list = [
+                {key: 'All', value: this.$t("message.all_app"), isActive: true},
+                {key: 'AI', value: this.$t("message.ai"), isActive: false},
+                {key: 'CI', value: this.$t("message.ci"), isActive: false},
+                {key: 'CD', value: this.$t("message.cd"), isActive: false},
+                {key: 'Management',value: this.$t("message.management_app"), isActive: false},
+                {key: 'Other', value: this.$t("message.other_app"), isActive: false}
+                ]
+                return list
+
             }
         },
         created() {
@@ -180,8 +187,8 @@
 
     .catalog-div {
         float: left;
-        width: 55%;
-        margin: 0px;;
+        width: 55% ;
+        margin: 0px;
     }
 
     .catalog-button {

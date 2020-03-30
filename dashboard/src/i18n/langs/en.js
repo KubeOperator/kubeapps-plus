@@ -116,6 +116,12 @@ const en = {
         'save_now_please': 'Saving, please wait',
         'if_close': 'Are you sure you want to close?',
         'please_check': 'Please choose',
+        'ci': 'CI',
+        'cd': 'CD',
+        'ai': 'AI',
+        'all_app': 'All',
+        'management_app': 'management',
+        'other_app': 'other'
     },
     ...enLocale
 }

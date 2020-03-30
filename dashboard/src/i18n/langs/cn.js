@@ -115,7 +115,13 @@ const cn = {
         'sure_add': '是否添加?',
         'save_now_please': '正在保存, 请稍等',
         'if_close': '确认关闭？',
-        'please_check': '请选择'
+        'please_check': '请选择',
+        'ci': 'CI',
+        'cd': 'CD',
+        'ai': 'AI',
+        'all_app': '全部',
+        'management_app': '管理',
+        'other_app': '其他'
     },
     ...zhLocale
 }

@@ -93,7 +93,7 @@
                 label: label,
                 activeName: 'All',
                 lang: 'zh-CN',
-                changeLang: '切换English'
+                changeLang: '切换English',
             }
         },
         computed: {
@@ -119,6 +119,9 @@
                 await http(apiSetting.kubernetes.getCharts).then(res => {
                     if (res.status == 200) {
                         this.getList(res.data.data);
+                        if ( res.data.data.length < 1){
+                            this.chartMessage()
+                        }
                     } else {
                         noticeMessage(this, res.data, 'error');
                     }
@@ -158,7 +161,14 @@
             },
             onChangeLabel(tab, event){
                 this.label = tab.name;
-            }
+            },
+            chartMessage() {
+                this.$message({
+                showClose: true,
+                message: '注意：Kubeapps-plus 应用商店默认是没有应用的哦！需要你手动上传 chart 离线包或者配置使用你自己的 chart 仓库。',
+                type: 'warning'
+            });
+      },
         }
     };
 </script>

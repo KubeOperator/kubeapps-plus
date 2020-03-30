@@ -283,3 +283,8 @@
 
 </style>
 
+<style>
+    .el-tabs__item {
+        width: 120px !important;
+    }
+</style>

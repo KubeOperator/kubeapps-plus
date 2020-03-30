@@ -175,13 +175,13 @@
     .catalog-search {
         float: right;
         width: 40%;
-        margin: 0px;;
+        margin: 0px;
     }
 
     .catalog-div {
         float: left;
         width: 55%;
-        margin: 0px;;
+        margin: 0px;
     }
 
     .catalog-button {

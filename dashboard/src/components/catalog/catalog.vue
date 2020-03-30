@@ -182,7 +182,7 @@
     .catalog-search {
         float: right;
         width: 40%;
-        margin: 0px;;
+        margin: 0px;
     }
 
     .catalog-div {
@@ -287,4 +287,8 @@
     .el-tabs__item {
         width: 120px !important;
     }
+    .el-tabs__nav-wrap {
+        margin-top: 4px;
+    }
+
 </style>

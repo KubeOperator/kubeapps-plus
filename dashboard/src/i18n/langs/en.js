@@ -120,8 +120,8 @@ const en = {
         'cd': 'CD',
         'ai': 'AI',
         'all_app': 'All',
-        'management_app': 'management',
-        'other_app': 'other'
+        'management_app': 'Management',
+        'other_app': 'Other'
     },
     ...enLocale
 }

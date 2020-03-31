@@ -15,6 +15,5 @@ name of the server pod. You can get the pod name by running:
 kubectl get pods -n {{ .Release.Namespace }} -l app.kubernetes.io/name={{ include "argo-cd.name" . }}-server -o name | cut -d'/' -f 2
 
 
-3. You can get the URL name by running: 
-
-echo "http://`kubectl get ingresses -n {{ .Release.Namespace }} -l app.kubernetes.io/name={{ include "argo-cd.name" . }}-server  |grep -iv NAME|awk '{print $2}'`"
+3.  You can get the login url by running:
+echo "http://`kubectl get ingresses  -n {{ .Release.Namespace }} -l app.kubernetes.io/name={{ include "argo-cd.name" . }}-server |grep -v HOSTS|awk '{print $2}'`"

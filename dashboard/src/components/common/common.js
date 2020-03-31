@@ -75,6 +75,7 @@ const imageIcon = {
     loki: '@/assets/image/charts/loki-stack-110x117.png',
     grafana: '@/assets/image/charts/grafana-stack-110x117.png',
     'kubeapps-plus': '@/assets/image/charts/kubeapps-plus-stack-110x117.png',
+    kubeapps: '@/assets/image/charts/kubeapps-plus-stack-110x117.png',
     prometheus: '@/assets/image/charts/prometheus-stack-110x117.png',
     'weave-scope': '@/assets/image/charts/weave-scope-110x117.png',
     argo: '@/assets/image/charts/argo-110x117.png',

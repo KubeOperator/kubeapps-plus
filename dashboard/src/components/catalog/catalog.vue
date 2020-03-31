@@ -197,7 +197,7 @@
 
     .catalog-div {
         float: left;
-        width: 55% ;
+        width: 55%;
         margin: 0px;
     }
 

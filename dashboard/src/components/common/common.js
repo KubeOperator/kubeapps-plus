@@ -83,6 +83,8 @@ const imageIcon = {
     'kubernetes-dashboard': '@/assets/image/charts/kubernetes-dashboard-110x117.png',
 }
 
+const onlyOneApp = ['argo','kubernetes-dashboard']
+
 var searchCatelogIcon = function (val, src) {
     let flag = false;
     for(let i in imageIcon){
@@ -96,6 +98,17 @@ var searchCatelogIcon = function (val, src) {
         return str ? str.split('charts/')[1] : 'default.png';
     }
     return src;
+}
+
+var searchOnlyApp = function (val) {
+    let flag = false;
+    for ( let i = 0,len = onlyOneApp.length;i < len ;i++ ){
+        if (val.indexOf(onlyOneApp[i]) > -1){
+            flag = true;
+            break;
+        }
+    }
+    return flag;
 }
 
 var searchApplicationIcon = function (val) {
@@ -113,5 +126,5 @@ var searchApplicationIcon = function (val) {
     return str ? str.split('charts/')[1] : auto_;
 }
 
-const common = {search, searchCatelogIcon, searchApplicationIcon}
+const common = {search, searchCatelogIcon, searchApplicationIcon,searchOnlyApp}
 export default common

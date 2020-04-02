@@ -13,7 +13,7 @@
                     <div class="grid-content">
                         <h3 class="h1" style="margin: 0 !important;">
                             <span>{{catalog.id}}</span>
-                        <el-tooltip v-if="isOnlyOne" placement="bottom">
+                        <el-tooltip v-if="isOnlyOne" placement="bottom" >
                             <div slot="content">为避免资源冲突,此应用在一个<br/>NameSpace 中只能部署一次。</div>
                             <el-button type="success" style="float: right;"
                                        size="medium" icon="el-icon-download"

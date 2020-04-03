@@ -7,7 +7,7 @@
             <!--                    {{label_.value}}-->
             <!--                </el-button>-->
             <!--            </div>-->
-            <el-tabs class="catalog-div" v-model="activeName" type="card" @tab-click="onChangeLabel" style="margin: 0 20px 0 20px;">
+            <el-tabs class="catalog-div" v-model="activeName" type="card" @tab-click="onChangeLabel" style="margin: 0;">
                 <el-tab-pane v-for="label_ in labelList" :key="label_.key" class="catalog-button" :label="label_.value" :name="label_.key">
                 </el-tab-pane>
             </el-tabs>

@@ -19,9 +19,9 @@
       <el-col :span="14" :offset="2" style="text-align:left">
         <el-row>
           <el-col :span="3">
-            <el-button
-              :type="(this.status)?'success':'warning'"
-            >{{(this.status) ? $t('message.ready'): $t('message.not_ready')}}</el-button>
+            <el-button :type="(this.status)?'success':'warning'">
+            {{(this.status) ? $t('message.ready'): $t('message.not_ready')}}
+            </el-button>
           </el-col>
           <!-- <el-col :offset="14" :span="3">
           <el-button @click="getdebug">Upgrade</el-button>-->
@@ -194,10 +194,8 @@ export default {
         this.catalog.icon = res.data.data.chart.metadata.icon;
         this.catalog.appv = res.data.data.chart.metadata.appVersion;
         this.catalog.releaseName = res.data.data.chart.metadata.name;
-        if(res.data.data.chart.metadata.name === 'jenkins'){
-          if(res.data.data.info.Description === "Install complete"){
-            this.status = true
-          }
+        if(res.data.data.info.Description === "Install complete"){
+          this.status = true
         }
         this.catalog.chartv = res.data.data.chart.metadata.version;
         this.catalog.name = res.data.data.name;
@@ -321,7 +319,7 @@ export default {
       purge: false,
       loading: true,
       themePath: "ace/theme/monokai", // 不导入 webpack-resolver, 该模块路径会报错
-      modePath: "ace/mode/yaml" // 同上
+      modePath: "ace/mode/yaml", // 同上
     };
   }
 };

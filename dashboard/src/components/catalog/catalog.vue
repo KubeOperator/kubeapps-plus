@@ -33,7 +33,7 @@
                 <el-card :body-style="{ padding: '0px' }">
                     <div class="catalog-image" @click="goDetails(catalog)">
                         <a>
-                            <img v-if="catalog.attributes.icon.search('http')>0" :src="catalog.attributes.icon" class="image">
+                            <img v-if="catalog.attributes.icon.search('http')>=0" :src="catalog.attributes.icon" class="image">
                             <img v-else :src="require(`@/assets/image/charts/${catalog.attributes.icon}`)" class="image">
                         </a>
                     </div>
@@ -133,7 +133,7 @@
             },
             getList: async function(data){
                 this.catalogList = []
-                for (let [index, chart] of data.entries()) {
+                for (let [index, chart] of Object.entries(data)) {
                     if(chart.attributes.icon){
                         await http(getParamApi(apiSetting.kubernetes.getImage, chart.attributes.icon)).then(res => {
                             if (res.status == 200) {

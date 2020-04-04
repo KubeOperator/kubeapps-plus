@@ -27,13 +27,15 @@
         <el-row :gutter="20" class="el-row-body">
                         <!-- <el-col :xs="24" :sm="12" :md="8" :lg="6" :xl="4" v-for="(catalog, index) in catalogList" -->
             <el-col :xs="24" :sm="12" :md="8" :lg="6" :xl="6" v-for="(catalog, index) in catalogList"
-                    :key="index" class="el-col" v-show="(catalog.attributes.name.search(input)>=0)
-                    && (label != 'All' ? (label != 'Other' ? (catalog.attributes.keywords[0].search(label) >=0 
-                    ? true : catalog.attributes.keywords[0]= 'Other')
-                    : catalog.attributes.keywords[0]!='AI'
-                    && catalog.attributes.keywords[0]!='CI'
-                    && catalog.attributes.keywords[0]!='CD'
-                    && catalog.attributes.keywords[0]!='Management') : !!catalog.attributes.keywords[0])">
+                    :key="index" class="el-col" v-show="(catalog.attributes.name.search(input)>=0) &&
+                    (label != 'All' ?
+                    (label != 'Other' ?
+                    catalog.attributes.keywords.indexOf(label) >= 0 :
+                    (catalog.attributes.keywords[0] != 'AI' &&
+                    catalog.attributes.keywords[0] != 'CI' &&
+                    catalog.attributes.keywords[0] != 'CD' &&
+                    catalog.attributes.keywords[0] != 'Management')) :
+                    true)">
                 <el-card :body-style="{ padding: '0px' }">
                     <div class="catalog-image" @click="goDetails(catalog)">
                         <a>
@@ -166,7 +168,6 @@
             },
             onChangeLabel(tab, event){
                 this.label = tab.name;
-                console.log('this.label:',tab.name,'label-status',!this.label)
             },
             chartMessage() {
                 this.$message({

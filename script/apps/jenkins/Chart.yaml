@@ -6,7 +6,6 @@ home: https://jenkins.io/
 icon: local://jenkins-stack-110x117.png
 keywords:
 - CI
-- CD
 maintainers:
 - email: containers@bitnami.com
   name: Bitnami

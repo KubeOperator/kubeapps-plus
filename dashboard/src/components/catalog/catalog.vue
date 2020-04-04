@@ -27,9 +27,13 @@
         <el-row :gutter="20" class="el-row-body">
                         <!-- <el-col :xs="24" :sm="12" :md="8" :lg="6" :xl="4" v-for="(catalog, index) in catalogList" -->
             <el-col :xs="24" :sm="12" :md="8" :lg="6" :xl="6" v-for="(catalog, index) in catalogList"
-                    :key="index" class="el-col" v-show="(catalog.attributes.name.search(input)>=0
-              || catalog.attributes.description.search(input)>=0)
-              && (label!='All'?(label!='Other'?catalog.attributes.keywords[0].search(label)>=0: (catalog.attributes.keywords[0]!='AI'&&catalog.attributes.keywords[0]!='CI'&&catalog.attributes.keywords[0]!='CD'&&catalog.attributes.keywords[0]!='Management')):!!catalog.attributes.keywords[0])">
+                    :key="index" class="el-col" v-show="(catalog.attributes.name.search(input)>=0)
+                    && (label != 'All' ? (label != 'Other' ? (catalog.attributes.keywords[0].search(label) >=0 
+                    ? true : catalog.attributes.keywords[0]= 'Other')
+                    : catalog.attributes.keywords[0]!='AI'
+                    && catalog.attributes.keywords[0]!='CI'
+                    && catalog.attributes.keywords[0]!='CD'
+                    && catalog.attributes.keywords[0]!='Management') : !!catalog.attributes.keywords[0])">
                 <el-card :body-style="{ padding: '0px' }">
                     <div class="catalog-image" @click="goDetails(catalog)">
                         <a>
@@ -45,7 +49,6 @@
                                 <i class="iconfont">&#xe67b;</i>&nbsp;
                                 {{catalog.relationships.latestChartVersion.data.app_version ?
                                 catalog.relationships.latestChartVersion.data.app_version :
-
                                 catalog.relationships.latestChartVersion.data.version}}
                             </el-button>
                             <el-button size="medium" type="primary" class="button-right" v-if="catalog.id.indexOf('stable') > -1
@@ -61,7 +64,8 @@
                                        @click.native="$router.push('/repositories')" round>
                                 {{catalog.id | splitName(catalog.id)}}
                             </el-button>
-                            <el-button size="medium" type="primary" class="button-right" v-for="(label_, index) in catalog.attributes.keywords" :key="index" v-show="(label=='All' || label_=='AI' || label_=='CI' || label_=='CD' || label_=='Management' || label=='Other') && index==0" round>
+                            <el-button size="medium" type="primary" class="button-right" v-for="(label_, index) in catalog.attributes.keywords" 
+                                :key="index" v-show="(label=='All' || label_=='AI' || label_=='CI' || label_=='CD' || label_=='Management' || label=='Other') && index==0" round>
                                 {{(label_=='AI'||label_=='CI'||label_=='CD'||label_=='Management')? label_ : '其它'}}
                             </el-button>
                         </div>
@@ -162,11 +166,12 @@
             },
             onChangeLabel(tab, event){
                 this.label = tab.name;
+                console.log('this.label:',tab.name,'label-status',!this.label)
             },
             chartMessage() {
                 this.$message({
                 showClose: true,
-                message: '注意：Kubeapps-plus 应用商店默认是没有应用的哦！需要你手动上传 chart 离线包或者配置使用你自己的 chart 仓库。配置参考链接: https://docs.kubeoperator.io/KubeOperator-v2.4/kubeapps-plus',
+                message: '提示：Kubeapps-plus 应用商店默认是没有应用的哦！需要你手动上传 chart 离线包或者配置使用你自己的 chart 仓库。配置参考链接: https://docs.kubeoperator.io/KubeOperator-v2.4/kubeapps-plus',
                 type: 'warning'
             });
       },

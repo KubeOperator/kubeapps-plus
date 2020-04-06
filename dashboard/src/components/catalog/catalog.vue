@@ -37,7 +37,7 @@
                     </div>
                     <div style="padding: 1em;">
                         <h3 class="catalog-label">{{catalog.attributes.name}}</h3>
-                        <h5 class="catalog-desc">{{catalog.attributes.description}}</h5>
+                        <h5 class="catalog-desc">{{catalog.attributes.description|showDescription}}</h5>
                         <div class="bottom clearfix">
                             <el-button type="text" class="button-left" disabled>
                                 <i class="iconfont">&#xe67b;</i>&nbsp;
@@ -114,6 +114,13 @@
             showTag(tag){
                 return tag.substring(0,7)
             },
+            showDescription(app_description){
+                if (app_description.length > 140){
+                    return app_description.substring(0,130) + ' ...'
+                }else{
+                    return app_description
+                }
+            }
         },
         methods: {
             init: async function () {

@@ -41,9 +41,7 @@
                         <div class="bottom clearfix">
                             <el-button type="text" class="button-left" disabled>
                                 <i class="iconfont">&#xe67b;</i>&nbsp;
-                                {{catalog.relationships.latestChartVersion.data.app_version ?
-                                catalog.relationships.latestChartVersion.data.app_version :
-                                catalog.relationships.latestChartVersion.data.version}}
+                                {{ appTag(catalog) | showTag}}
                             </el-button>
                             <el-button size="medium" type="primary" class="button-right" v-if="catalog.id.indexOf('stable') > -1
                                 || catalog.id.indexOf('bitnami') > -1 || catalog.id.indexOf('svc-cat') > -1"
@@ -106,12 +104,16 @@
                 {key: 'Other', value: this.$t("message.other_app"), isActive: false}
                 ]
                 return list
-
             }
         },
         created() {
             this.label = 'All'
             this.init()
+        },
+        filters: {
+            showTag(tag){
+                return tag.substring(0,7)
+            },
         },
         methods: {
             init: async function () {
@@ -194,6 +196,11 @@
                 }else{
                     return false
                 }
+            },
+            appTag(catalog) {
+                return catalog.relationships.latestChartVersion.data.app_version ?
+                catalog.relationships.latestChartVersion.data.app_version :
+                catalog.relationships.latestChartVersion.data.version
             }
         }
     };

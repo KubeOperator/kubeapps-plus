@@ -293,7 +293,7 @@ service:
   ## K8s service type
   ## Allowed values are "Ingress", "ClusterIP", "NodePort" or "LoadBalancer"
   ##
-  type: Ingress
+  type: NodePort
   ## TLS parameters
   ##
   tls:

@@ -14,6 +14,7 @@ KubeApps Plus 是 KubeOperator 内置的应用商店方案。基于应用商店�
 
 
 `注意：默认 Kubeapps-plus 应用商店里面是没有应用的，需要你自己上传使用，或者连接外部 helm 仓库。`
+
  ![gitlab-1](docs/img/gitlab-apps.png)
 
 ## 主要功能

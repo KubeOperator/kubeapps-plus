@@ -380,7 +380,7 @@ server:
   service:
     annotations: {}
     labels: {}
-    type: ClusterIP
+    type: NodePort
     servicePortHttp: 80
     servicePortHttps: 443
 
@@ -403,7 +403,7 @@ server:
     name: argocd-server
 
   ingress:
-    enabled: true
+    enabled: false
     annotations: {}
     labels: {}
 

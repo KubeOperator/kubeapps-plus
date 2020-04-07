@@ -5,7 +5,6 @@ appVersion: 1.10.0
 description: Harbor 是一个开源的容器镜像管理仓库。
 keywords:
   - CI
-  - CD
 home: https://goharbor.io/
 sources:
   - https://github.com/bitnami/bitnami-docker-harbor-core

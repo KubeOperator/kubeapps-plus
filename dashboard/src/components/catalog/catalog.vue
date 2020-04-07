@@ -7,7 +7,7 @@
             <!--                    {{label_.value}}-->
             <!--                </el-button>-->
             <!--            </div>-->
-            <el-tabs class="catalog-div" v-model="activeName" type="card" @tab-click="onChangeLabel" style="margin: 0 20px 0 20px;">
+            <el-tabs class="catalog-div" v-model="activeName" type="card" @tab-click="onChangeLabel" style="margin: 0;">
                 <el-tab-pane v-for="label_ in labelList" :key="label_.key" class="catalog-button" :label="label_.value" :name="label_.key">
                 </el-tab-pane>
             </el-tabs>
@@ -25,27 +25,23 @@
 
         <!-- foot start -->
         <el-row :gutter="20" class="el-row-body">
-            <el-col :xs="24" :sm="12" :md="8" :lg="6" :xl="4" v-for="(catalog, index) in catalogList"
-                    :key="index" class="el-col" v-show="(catalog.attributes.name.search(input)>=0
-              || catalog.attributes.description.search(input)>=0)
-              && (label!='All'?(label!='Other'?catalog.attributes.keywords[0].search(label)>=0: (catalog.attributes.keywords[0]!='AI'&&catalog.attributes.keywords[0]!='CI'&&catalog.attributes.keywords[0]!='CD'&&catalog.attributes.keywords[0]!='Management')):!!catalog.attributes.keywords[0])">
+                        <!-- <el-col :xs="24" :sm="12" :md="8" :lg="6" :xl="4" v-for="(catalog, index) in catalogList" -->
+            <el-col :xs="24" :sm="12" :md="8" :lg="6" :xl="6" v-for="(catalog, index) in catalogList"
+                    :key="index" class="el-col" v-show="appIsShow(catalog)">
                 <el-card :body-style="{ padding: '0px' }">
                     <div class="catalog-image" @click="goDetails(catalog)">
                         <a>
-                            <img v-if="catalog.attributes.icon.search('http')>0" :src="catalog.attributes.icon" class="image">
+                            <img v-if="imgIsShow(catalog)" :src="catalog.attributes.icon" class="image">
                             <img v-else :src="require(`@/assets/image/charts/${catalog.attributes.icon}`)" class="image">
                         </a>
                     </div>
                     <div style="padding: 1em;">
                         <h3 class="catalog-label">{{catalog.attributes.name}}</h3>
-                        <h5 class="catalog-desc">{{catalog.attributes.description}}</h5>
+                        <h5 class="catalog-desc">{{catalog.attributes.description|showDescription}}</h5>
                         <div class="bottom clearfix">
                             <el-button type="text" class="button-left" disabled>
                                 <i class="iconfont">&#xe67b;</i>&nbsp;
-                                {{catalog.relationships.latestChartVersion.data.app_version ?
-                                catalog.relationships.latestChartVersion.data.app_version :
-
-                                catalog.relationships.latestChartVersion.data.version}}
+                                {{ appTag(catalog) | showTag}}
                             </el-button>
                             <el-button size="medium" type="primary" class="button-right" v-if="catalog.id.indexOf('stable') > -1
                                 || catalog.id.indexOf('bitnami') > -1 || catalog.id.indexOf('svc-cat') > -1"
@@ -60,7 +56,8 @@
                                        @click.native="$router.push('/repositories')" round>
                                 {{catalog.id | splitName(catalog.id)}}
                             </el-button>
-                            <el-button size="medium" type="primary" class="button-right" v-for="(label_, index) in catalog.attributes.keywords" :key="index" v-show="(label=='All' || label_=='AI' || label_=='CI' || label_=='CD' || label_=='Management' || label=='Other') && index==0" round>
+                            <el-button size="medium" type="primary" class="button-right" v-for="(label_, index) in catalog.attributes.keywords" 
+                                :key="index" v-show="(label=='All' || label_=='AI' || label_=='CI' || label_=='CD' || label_=='Management' || label=='Other') && index==0" round>
                                 {{(label_=='AI'||label_=='CI'||label_=='CD'||label_=='Management')? label_ : '其它'}}
                             </el-button>
                         </div>
@@ -107,12 +104,23 @@
                 {key: 'Other', value: this.$t("message.other_app"), isActive: false}
                 ]
                 return list
-
             }
         },
         created() {
             this.label = 'All'
             this.init()
+        },
+        filters: {
+            showTag(tag){
+                return tag.substring(0,7)
+            },
+            showDescription(app_description){
+                if (app_description.length > 140){
+                    return app_description.substring(0,130) + ' ...'
+                }else{
+                    return app_description
+                }
+            }
         },
         methods: {
             init: async function () {
@@ -132,7 +140,7 @@
             },
             getList: async function(data){
                 this.catalogList = []
-                for (let [index, chart] of data.entries()) {
+                for (let [index, chart] of Object.entries(data)) {
                     if(chart.attributes.icon){
                         await http(getParamApi(apiSetting.kubernetes.getImage, chart.attributes.icon)).then(res => {
                             if (res.status == 200) {
@@ -145,7 +153,11 @@
                         }).catch(msg => {
                             noticeMessage(this, msg, 'error');
                         })
-                    }else {
+                    }else if (!chart.attributes.icon) {
+                        chart.attributes.icon = common.searchCatelogIcon(chart.attributes.name)
+                        this.catalogList.sort().push(chart)
+                    }
+                    else {
                         chart.attributes.icon = common.searchCatelogIcon(chart.attributes.name)
                         this.catalogList.sort().push(chart)
                     }
@@ -165,10 +177,38 @@
             chartMessage() {
                 this.$message({
                 showClose: true,
-                message: '注意：Kubeapps-plus 应用商店默认是没有应用的哦！需要你手动上传 chart 离线包或者配置使用你自己的 chart 仓库。配置参考链接: https://docs.kubeoperator.io/KubeOperator-v2.4/kubeapps-plus',
+                message: '提示：Kubeapps-plus 应用商店默认是没有应用的哦！需要你手动上传 chart 离线包或者配置使用你自己的 chart 仓库。配置参考链接: https://docs.kubeoperator.io/KubeOperator-v2.4/kubeapps-plus',
                 type: 'warning'
             });
-      },
+            },
+            appIsShow(app){
+                if (app.attributes.name.search(this.input)>=0 ){
+                    if (this.label != 'All' ?
+                    (this.label != 'Other' ?
+                    app.attributes.keywords.indexOf(this.label) >= 0 :
+                    (app.attributes.keywords[0] != 'AI' &&
+                    app.attributes.keywords[0] != 'CI' &&
+                    app.attributes.keywords[0] != 'CD' &&
+                    app.attributes.keywords[0] != 'Management')) :
+                    true){
+                        return true
+                    }
+                }
+            },
+            imgIsShow(catalog){
+                if(!catalog.attributes.icon){
+                    return true
+                }else if (catalog.attributes.icon.search('http') >= 0){
+                    return true
+                }else{
+                    return false
+                }
+            },
+            appTag(catalog) {
+                return catalog.relationships.latestChartVersion.data.app_version ?
+                catalog.relationships.latestChartVersion.data.app_version :
+                catalog.relationships.latestChartVersion.data.version
+            }
         }
     };
 </script>

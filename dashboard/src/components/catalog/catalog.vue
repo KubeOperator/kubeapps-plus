@@ -177,7 +177,7 @@
             chartMessage() {
                 this.$message({
                 showClose: true,
-                message: '提示：Kubeapps-plus 应用商店默认是没有应用的哦！需要你手动上传 chart 离线包或者配置使用你自己的 chart 仓库。配置参考链接: https://docs.kubeoperator.io/KubeOperator-v2.4/kubeapps-plus',
+                message: '提示：Kubeapps-plus 应用商店默认是没有应用的哦！需要你手动上传 chart 离线包或者配置使用你自己的 chart 仓库。配置参考链接: https://github.com/KubeOperator/kubeapps-plus',
                 type: 'warning'
             });
             },

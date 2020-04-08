@@ -416,7 +416,6 @@ server:
       # - argocd.example.com
     paths:
       - /
-    tlsEnable: false
     tls:
       []
       # - secretName: argocd-example-tls

@@ -15,13 +15,14 @@ From outside the cluster, the server URL(s) are:
 {{- else if contains "NodePort" .Values.service.type }}
 
 Get the Kubernetes Dashboard URL by running:
-  export NODE_PORT=$(kubectl get -n {{ .Release.Namespace }} -o jsonpath="{.spec.ports[0].nodePort}" services {{ template "kubernetes-dashboard.fullname" . }})
-  export NODE_IP=$(kubectl get nodes -o jsonpath="{.items[0].status.addresses[0].address}")
-{{- if .Values.enableInsecureLogin }}
-  echo http://$NODE_IP:$NODE_PORT/
-{{- else }}
-  echo https://$NODE_IP:$NODE_PORT/
-{{- end }}
+
+    export NODE_PORT=$(kubectl get -n {{ .Release.Namespace }} -o jsonpath="{.spec.ports[0].nodePort}" services {{ template "kubernetes-dashboard.fullname" . }})
+    export NODE_IP=$(kubectl get nodes -o jsonpath="{.items[0].status.addresses[0].address}")
+  {{- if .Values.enableInsecureLogin }}
+    echo http://$NODE_IP:$NODE_PORT/
+  {{- else }}
+    echo https://$NODE_IP:$NODE_PORT/
+  {{- end }}
 
 {{- else if contains "LoadBalancer" .Values.service.type }}
 

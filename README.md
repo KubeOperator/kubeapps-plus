@@ -9,9 +9,6 @@ KubeApps Plus 是 KubeOperator 内置的应用商店方案。基于应用商店�
 
 - CI / CD 应用场景：GitLab、Jenkins、Harbor、Sonarqube、ArgoCD 等；
 - GPU / AI 应用场景：Tensorflow 等;
-- Serverless 应用场景：Knative 等；
-- 数据库应用场景：MySQL、Redis 等;
-
 
 `注意：默认 Kubeapps-plus 应用商店里面是没有应用的，需要你自己上传使用，或者连接外部 helm 仓库。`
 
